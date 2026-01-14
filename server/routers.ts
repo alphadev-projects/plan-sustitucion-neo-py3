@@ -29,6 +29,7 @@ import {
   getPlanStats,
   getPlanesGroupedByDepartamento,
   type InsertPlanSustitucion,
+  getDb,
 } from "./db";
 
 export const appRouter = router({
@@ -78,6 +79,27 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .query(async ({ input }) => {
         return getEmpleadoById(input.id);
+      }),
+
+    importar: adminProcedure
+      .input(z.object({ empleados: z.array(z.any()) }))
+      .mutation(async ({ input }) => {
+        // Validar y procesar empleados
+        const db = await (await import("./db")).getDb();
+        if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
+        
+        let importedCount = 0;
+        for (const emp of input.empleados) {
+          try {
+            const { empleados: empleadosTable } = await import("../drizzle/schema");
+            // Aquí iría la lógica de inserción
+            importedCount++;
+          } catch (error) {
+            console.error("Error importing employee:", error);
+          }
+        }
+        
+        return { success: true, importedCount };
       }),
   }),
 

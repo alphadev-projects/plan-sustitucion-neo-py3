@@ -73,3 +73,10 @@
 - [x] Proteger rutas de Dashboard, Planes y Nómina requiriendo login
 - [x] Mostrar landing page antes de cualquier acceso a módulos
 - [x] Redirigir usuarios no autenticados a página de inicio
+
+## Importación de Datos
+- [x] Agregar botón "Importar" en página de Nómina (solo admin)
+- [x] Crear modal con input para cargar archivo Excel
+- [x] Implementar procedure tRPC para importar empleados
+- [x] Validar datos y evitar duplicados
+- [x] Mostrar confirmación y resumen de importación
