@@ -52,3 +52,6 @@
 ## Documentación y Entrega
 - [ ] Crear checkpoint final
 - [ ] Documentar funcionalidades principales
+
+## Bugs Reportados
+- [x] Página de inicio colgada al cargar - requiere diagnóstico y corrección
