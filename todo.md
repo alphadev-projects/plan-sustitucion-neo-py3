@@ -97,3 +97,10 @@
 - [x] Actualizar rutas para usar autenticación local
 - [x] Remover OAuth y usar solo autenticación local
 - [ ] Crear página de cambio de contraseña
+
+## Reorganización del Flujo de Acceso
+- [x] Eliminar landing page y redirigir directamente a login
+- [x] Actualizar ruta raíz (/) para ir a login
+- [x] Remover opciones de edición/descarga para usuarios estándar
+- [x] Agregar permisos de carga/actualización para administradores
+- [x] Validar flujo completo de acceso por rol

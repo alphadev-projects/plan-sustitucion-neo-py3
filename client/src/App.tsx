@@ -5,7 +5,6 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Planes from "./pages/Planes";
@@ -16,7 +15,7 @@ import GestionUsuarios from "./pages/GestionUsuarios";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Home} />
+      <Route path="/" component={Login} />
       <Route path="/login" component={Login} />
       <Route path="/dashboard">
         {(props) => (
@@ -34,7 +33,7 @@ function Router() {
       </Route>
       <Route path="/planes/nuevo">
         {(props) => (
-          <ProtectedRoute requiredRole="admin">
+          <ProtectedRoute>
             <NuevoPlan {...props} />
           </ProtectedRoute>
         )}

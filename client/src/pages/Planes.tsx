@@ -120,10 +120,12 @@ export default function Planes() {
               <CardTitle>Planes Registrados</CardTitle>
               <CardDescription>{filteredPlanes.length} planes encontrados</CardDescription>
             </div>
-            <Button variant="outline" size="sm" onClick={handleExport} className="gap-2">
-              <Download className="h-4 w-4" />
-              Exportar
-            </Button>
+            {isAdmin && (
+              <Button variant="outline" size="sm" onClick={handleExport} className="gap-2">
+                <Download className="h-4 w-4" />
+                Exportar
+              </Button>
+            )}
           </CardHeader>
           <CardContent>
             {isLoading ? (

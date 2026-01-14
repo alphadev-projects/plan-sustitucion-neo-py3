@@ -126,10 +126,12 @@ export default function Nomina() {
                 </DialogContent>
               </Dialog>
             )}
-            <Button variant="outline" size="sm" onClick={handleExport} className="gap-2">
-              <Download className="h-4 w-4" />
-              Exportar
-            </Button>
+            {isAdmin && (
+              <Button variant="outline" size="sm" onClick={handleExport} className="gap-2">
+                <Download className="h-4 w-4" />
+                Exportar
+              </Button>
+            )}
           </div>
         </div>
 
