@@ -1,9 +1,12 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, empleados, planesSustitucion, InsertPlanSustitucion } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
+
+// Re-export types for convenience
+export type { Empleado, InsertEmpleado, PlanSustitucion, InsertPlanSustitucion } from "../drizzle/schema";
 
 // Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
@@ -13,6 +16,18 @@ export async function getDb() {
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
+    }
+  }
+  return _db;
+}
+
+// Inicializar base de datos de forma síncrona para evitar problemas en tests
+export function initDb() {
+  if (!_db && process.env.DATABASE_URL) {
+    try {
+      _db = drizzle(process.env.DATABASE_URL);
+    } catch (error) {
+      console.warn("[Database] Failed to connect:", error);
     }
   }
   return _db;
@@ -89,4 +104,135 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Helpers para empleados
+export async function getAllEmpleados() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(empleados);
+}
+
+export async function getEmpleadosByDepartamento(departamento: string) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(empleados).where(eq(empleados.departamento, departamento));
+}
+
+export async function searchEmpleados(query: string) {
+  const db = await getDb();
+  if (!db) return [];
+  // Búsqueda simple por nombre o cédula
+  const results = await db.select().from(empleados);
+  const lowerQuery = query.toLowerCase();
+  return results.filter(
+    (e) =>
+      e.nombre.toLowerCase().includes(lowerQuery) ||
+      e.cedula.toLowerCase().includes(lowerQuery) ||
+      e.cargo.toLowerCase().includes(lowerQuery)
+  );
+}
+
+export async function getDepartamentos() {
+  const db = await getDb();
+  if (!db) return [];
+  const results = await db.select().from(empleados);
+  const depts = new Set(results.map((e) => e.departamento));
+  return Array.from(depts).sort();
+}
+
+export async function getSedes() {
+  const db = await getDb();
+  if (!db) return [];
+  const results = await db.select().from(empleados);
+  const sedes = new Set(results.map((e) => e.sede));
+  return Array.from(sedes).sort();
+}
+
+export async function getAreas() {
+  const db = await getDb();
+  if (!db) return [];
+  const results = await db.select().from(empleados);
+  const areas = new Set(results.map((e) => e.area));
+  return Array.from(areas).sort();
+}
+
+export async function getEmpleadoById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(empleados).where(eq(empleados.id, id));
+  return result.length > 0 ? result[0] : null;
+}
+
+// Helpers para planes de sustitución
+export async function getAllPlanes() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(planesSustitucion);
+}
+
+export async function createPlan(plan: InsertPlanSustitucion) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(planesSustitucion).values(plan);
+  return result;
+}
+
+export async function updatePlan(id: number, plan: Partial<InsertPlanSustitucion>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.update(planesSustitucion).set(plan).where(eq(planesSustitucion.id, id));
+}
+
+export async function deletePlan(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.delete(planesSustitucion).where(eq(planesSustitucion.id, id));
+}
+
+export async function getPlanById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(planesSustitucion).where(eq(planesSustitucion.id, id));
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getPlansByDepartamento(departamento: string) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(planesSustitucion).where(eq(planesSustitucion.departamento, departamento));
+}
+
+export async function getPlanStats() {
+  const db = await getDb();
+  if (!db) return { totalPlanes: 0, puestosClaveCount: 0, departamentosConCobertura: 0, departamentosSinCobertura: [] };
+
+  const planes = await db.select().from(planesSustitucion);
+  const empleadosList = await db.select().from(empleados);
+
+  const totalPlanes = planes.length;
+  const puestosClaveCount = planes.filter((p) => p.puestoClave === "Si").length;
+
+  const departamentosConPlanes = new Set(planes.map((p) => p.departamento));
+  const todosDepartamentos = new Set(empleadosList.map((e) => e.departamento));
+
+  const departamentosSinCobertura = Array.from(todosDepartamentos).filter(
+    (d) => !departamentosConPlanes.has(d)
+  );
+
+  return {
+    totalPlanes,
+    puestosClaveCount,
+    departamentosConCobertura: departamentosConPlanes.size,
+    departamentosSinCobertura,
+  };
+}
+
+export async function getPlanesGroupedByDepartamento() {
+  const db = await getDb();
+  if (!db) return {};
+  const planes = await db.select().from(planesSustitucion);
+  const grouped: Record<string, number> = {};
+  planes.forEach((p) => {
+    grouped[p.departamento] = (grouped[p.departamento] || 0) + 1;
+  });
+  return grouped;
+}

@@ -25,4 +25,35 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+// Tabla de empleados para gestión de nómina
+export const empleados = mysqlTable("empleados", {
+  id: int("id").autoincrement().primaryKey(),
+  sede: varchar("sede", { length: 100 }).notNull(),
+  cedula: varchar("cedula", { length: 20 }).notNull().unique(),
+  nombre: varchar("nombre", { length: 255 }).notNull(),
+  area: varchar("area", { length: 150 }).notNull(),
+  departamento: varchar("departamento", { length: 150 }).notNull(),
+  cargo: varchar("cargo", { length: 200 }).notNull(),
+});
+
+export type Empleado = typeof empleados.$inferSelect;
+export type InsertEmpleado = typeof empleados.$inferInsert;
+
+// Tabla de planes de sustitución
+export const planesSustitucion = mysqlTable("planes_sustitucion", {
+  id: int("id").autoincrement().primaryKey(),
+  empleadoId: int("empleadoId").notNull(),
+  departamento: varchar("departamento", { length: 150 }).notNull(),
+  colaborador: varchar("colaborador", { length: 255 }).notNull(),
+  cargo: varchar("cargo", { length: 200 }).notNull(),
+  departamentoReemplazo: varchar("departamentoReemplazo", { length: 150 }).notNull(),
+  reemplazo: varchar("reemplazo", { length: 255 }).notNull(),
+  cargoReemplazo: varchar("cargoReemplazo", { length: 200 }).notNull(),
+  puestoClave: mysqlEnum("puestoClave", ["Si", "No"]).default("No").notNull(),
+  usuario: varchar("usuario", { length: 100 }).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PlanSustitucion = typeof planesSustitucion.$inferSelect;
+export type InsertPlanSustitucion = typeof planesSustitucion.$inferInsert;
