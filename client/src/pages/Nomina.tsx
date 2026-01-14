@@ -90,7 +90,7 @@ export default function Nomina() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Nómina</h1>
-            <p className="text-muted-foreground mt-2">Catálogo completo de colaboradors</p>
+            <p className="text-muted-foreground mt-2">Catálogo completo de colaboradores</p>
           </div>
           <div className="flex gap-2">
             {isAdmin && (
@@ -138,7 +138,7 @@ export default function Nomina() {
         <Card>
           <CardHeader>
             <CardTitle>Filtros</CardTitle>
-            <CardDescription>Busca y filtra colaboradors por diferentes criterios</CardDescription>
+            <CardDescription>Busca y filtra colaboradores por diferentes criterios</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -205,8 +205,8 @@ export default function Nomina() {
 
         <Card>
           <CardHeader>
-            <CardTitle>colaboradors</CardTitle>
-            <CardDescription>Total: {filteredColaboradors.length} colaboradors</CardDescription>
+            <CardTitle>colaboradores</CardTitle>
+            <CardDescription>Total: {filteredColaboradors.length} colaboradores</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
