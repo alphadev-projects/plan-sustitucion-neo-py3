@@ -260,6 +260,28 @@ class SDKServer {
     // Regular authentication flow
     const cookies = this.parseCookies(req.headers.cookie);
     const sessionCookie = cookies.get(COOKIE_NAME);
+    
+    // Intentar parsear como JSON (autenticación local)
+    try {
+      const sessionData = JSON.parse(sessionCookie || "");
+      if (sessionData.userId && sessionData.role) {
+        // Es una sesión local, retornar un usuario genérico
+        return {
+          id: sessionData.userId,
+          openId: `local-${sessionData.userId}`,
+          name: null,
+          email: null,
+          loginMethod: "local",
+          role: sessionData.role,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          lastSignedIn: new Date(),
+        } as User;
+      }
+    } catch (e) {
+      // No es JSON, intentar verificar como JWT de OAuth
+    }
+    
     const session = await this.verifySession(sessionCookie);
 
     if (!session) {

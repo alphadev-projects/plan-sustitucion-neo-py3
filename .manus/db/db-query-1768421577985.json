@@ -1,0 +1,17 @@
+{
+  "query": "SELECT id, usuario, nombre, role, activo FROM usuarios_locales WHERE usuario = 'alexisrobledo';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, usuario, nombre, role, activo FROM usuarios_locales WHERE usuario = 'alexisrobledo';",
+  "rows": [
+    {
+      "id": "2",
+      "usuario": "alexisrobledo",
+      "nombre": "Alexis Robledo",
+      "role": "admin",
+      "activo": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tusuario\tnombre\trole\tactivo\n2\talexisrobledo\tAlexis Robledo\tadmin\t1\n",
+  "stderr": "",
+  "execution_time_ms": 382
+}
