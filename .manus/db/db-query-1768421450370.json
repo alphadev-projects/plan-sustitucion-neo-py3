@@ -1,0 +1,9 @@
+{
+  "query": "DELETE FROM usuarios_locales WHERE usuario = 'alexisrobledo'; INSERT INTO usuarios_locales (usuario, contraseña, nombre, email, role, activo) VALUES ('alexisrobledo', '$2b$10$3pjzvGddjeMPbFVe8WRZk.EjlW1GYGaSlgQ7EjBySkoe.EYyZwxs2', 'Alexis Robledo', 'admin@system.local', 'admin', 1);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute DELETE FROM usuarios_locales WHERE usuario = 'alexisrobledo'; INSERT INTO usuarios_locales (usuario, contraseña, nombre, email, role, activo) VALUES ('alexisrobledo', '$2b$10$3pjzvGddjeMPbFVe8WRZk.EjlW1GYGaSlgQ7EjBySkoe.EYyZwxs2', 'Alexis Robledo', 'admin@system.local', 'admin', 1);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 453
+}
