@@ -12,7 +12,7 @@ import * as XLSX from "xlsx";
 
 export default function Nomina() {
   const { isAdmin } = useRole();
-  const { data: empleados, isLoading } = trpc.empleados.list.useQuery();
+  const { data: colaboradors, isLoading } = trpc.empleados.list.useQuery();
   const { data: departamentos } = trpc.empleados.departamentos.useQuery();
   const { data: sedes } = trpc.empleados.sedes.useQuery();
   const { data: areas } = trpc.empleados.areas.useQuery();
@@ -25,7 +25,7 @@ export default function Nomina() {
   const [importOpen, setImportOpen] = useState(false);
   const [importFile, setImportFile] = useState<File | null>(null);
 
-  const filteredEmpleados = (empleados || []).filter((emp) => {
+  const filteredColaboradors = (colaboradors || []).filter((emp: any) => {
     const matchSearch =
       emp.nombre.toLowerCase().includes(searchQuery.toLowerCase()) ||
       emp.cedula.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -37,7 +37,7 @@ export default function Nomina() {
   });
 
   const handleExport = () => {
-    const data = filteredEmpleados.map((emp) => ({
+    const data = filteredColaboradors.map((emp: any) => ({
       Nombre: emp.nombre,
       "C.I.": emp.cedula,
       Cargo: emp.cargo,
@@ -90,7 +90,7 @@ export default function Nomina() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Nómina</h1>
-            <p className="text-muted-foreground mt-2">Catálogo completo de empleados</p>
+            <p className="text-muted-foreground mt-2">Catálogo completo de colaboradors</p>
           </div>
           <div className="flex gap-2">
             {isAdmin && (
@@ -103,9 +103,9 @@ export default function Nomina() {
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Importar Empleados</DialogTitle>
+                    <DialogTitle>Importar colaboradors</DialogTitle>
                     <DialogDescription>
-                      Carga un archivo Excel con la información de empleados
+                      Carga un archivo Excel con la información de colaboradors
                     </DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4">
@@ -138,7 +138,7 @@ export default function Nomina() {
         <Card>
           <CardHeader>
             <CardTitle>Filtros</CardTitle>
-            <CardDescription>Busca y filtra empleados por diferentes criterios</CardDescription>
+            <CardDescription>Busca y filtra colaboradors por diferentes criterios</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -162,7 +162,7 @@ export default function Nomina() {
                   className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 >
                   <option value="">Todos</option>
-                  {departamentos?.map((dept) => (
+                  {departamentos?.map((dept: string) => (
                     <option key={dept} value={dept}>
                       {dept}
                     </option>
@@ -177,7 +177,7 @@ export default function Nomina() {
                   className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 >
                   <option value="">Todos</option>
-                  {sedes?.map((sede) => (
+                  {sedes?.map((sede: string) => (
                     <option key={sede} value={sede}>
                       {sede}
                     </option>
@@ -192,7 +192,7 @@ export default function Nomina() {
                   className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 >
                   <option value="">Todos</option>
-                  {areas?.map((area) => (
+                  {areas?.map((area: string) => (
                     <option key={area} value={area}>
                       {area}
                     </option>
@@ -205,8 +205,8 @@ export default function Nomina() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Empleados</CardTitle>
-            <CardDescription>Total: {filteredEmpleados.length} empleados</CardDescription>
+            <CardTitle>colaboradors</CardTitle>
+            <CardDescription>Total: {filteredColaboradors.length} colaboradors</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -225,17 +225,17 @@ export default function Nomina() {
                   {isLoading ? (
                     <tr>
                       <td colSpan={6} className="text-center py-8 text-muted-foreground">
-                        Cargando empleados...
+                        Cargando colaboradors...
                       </td>
                     </tr>
-                  ) : filteredEmpleados.length === 0 ? (
+                  ) : filteredColaboradors.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="text-center py-8 text-muted-foreground">
-                        No hay empleados que coincidan con los filtros
+                        No hay colaboradores que coincidan con los filtros
                       </td>
                     </tr>
                   ) : (
-                    filteredEmpleados.map((emp) => (
+                    filteredColaboradors.map((emp: any) => (
                       <tr key={emp.id} className="border-b hover:bg-muted/50">
                         <td className="py-3 px-4">{emp.nombre}</td>
                         <td className="py-3 px-4">{emp.cedula}</td>

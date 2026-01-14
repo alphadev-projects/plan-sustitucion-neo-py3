@@ -78,7 +78,7 @@ export default function Home() {
                 <Users className="h-14 w-14 text-blue-500 mb-4" />
                 <h3 className="text-xl font-semibold text-white mb-3">Catálogo de Nómina</h3>
                 <p className="text-slate-400">
-                  Accede al catálogo completo de empleados con búsqueda avanzada y filtros por departamento.
+                  Accede al catálogo completo de colaboradors con búsqueda avanzada y filtros por departamento.
                 </p>
               </div>
             </div>
@@ -104,7 +104,7 @@ export default function Home() {
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="text-blue-400 font-bold mt-1">✓</span>
-                      <span>Cargar y gestionar datos de empleados</span>
+                      <span>Cargar y gestionar datos de colaboradors</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="text-blue-400 font-bold mt-1">✓</span>
@@ -130,7 +130,7 @@ export default function Home() {
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="text-slate-400 font-bold mt-1">✓</span>
-                      <span>Buscar y filtrar empleados</span>
+                      <span>Buscar y filtrar colaboradors</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="text-slate-400 font-bold mt-1">✓</span>

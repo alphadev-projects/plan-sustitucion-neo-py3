@@ -11,13 +11,13 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 export default function NuevoPlan() {
   const [, setLocation] = useLocation();
   const [departamento, setDepartamento] = useState("");
-  const [empleadoId, setEmpleadoId] = useState("");
+  const [colaboradorId, setcolaboradorId] = useState("");
   const [departamentoReemplazo, setDepartamentoReemplazo] = useState("");
   const [reemplazoId, setReemplazoId] = useState("");
   const [puestoClave, setPuestoClave] = useState(false);
 
   const { data: departamentos } = trpc.empleados.departamentos.useQuery();
-  const { data: empleados } = trpc.empleados.listByDepartamento.useQuery(
+  const { data: colaboradors } = trpc.empleados.listByDepartamento.useQuery(
     { departamento },
     { enabled: !!departamento }
   );
@@ -28,23 +28,23 @@ export default function NuevoPlan() {
 
   const createPlan = trpc.planes.create.useMutation();
 
-  const empleadoSeleccionado = empleados?.find((e) => e.id === parseInt(empleadoId));
+  const colaboradorSeleccionado = colaboradors?.find((e) => e.id === parseInt(colaboradorId));
   const reemplazoSeleccionado = reemplazos?.find((e) => e.id === parseInt(reemplazoId));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!empleadoSeleccionado || !reemplazoSeleccionado) {
+    if (!colaboradorSeleccionado || !reemplazoSeleccionado) {
       alert("Por favor selecciona colaborador y reemplazo");
       return;
     }
 
     try {
       await createPlan.mutateAsync({
-        empleadoId: empleadoSeleccionado.id,
-        departamento: empleadoSeleccionado.departamento,
-        colaborador: empleadoSeleccionado.nombre,
-        cargo: empleadoSeleccionado.cargo,
+        empleadoId: colaboradorSeleccionado.id,
+        departamento: colaboradorSeleccionado.departamento,
+        colaborador: colaboradorSeleccionado.nombre,
+        cargo: colaboradorSeleccionado.cargo,
         departamentoReemplazo: reemplazoSeleccionado.departamento,
         reemplazo: reemplazoSeleccionado.nombre,
         cargoReemplazo: reemplazoSeleccionado.cargo,
@@ -90,12 +90,12 @@ export default function NuevoPlan() {
                     value={departamento}
                     onChange={(e) => {
                       setDepartamento(e.target.value);
-                      setEmpleadoId("");
+                      setcolaboradorId("");
                     }}
                     className="w-full px-3 py-2 border rounded-lg bg-background"
                   >
                     <option value="">Selecciona un departamento</option>
-                    {(departamentos || []).map((dept) => (
+                    {(departamentos || []).map((dept: string) => (
                       <option key={dept} value={dept}>
                         {dept}
                       </option>
@@ -104,16 +104,16 @@ export default function NuevoPlan() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="empleado">Colaborador</Label>
+                  <Label htmlFor="colaborador">Colaborador</Label>
                   <select
-                    id="empleado"
-                    value={empleadoId}
-                    onChange={(e) => setEmpleadoId(e.target.value)}
+                    id="colaborador"
+                    value={colaboradorId}
+                    onChange={(e) => setcolaboradorId(e.target.value)}
                     disabled={!departamento}
                     className="w-full px-3 py-2 border rounded-lg bg-background disabled:opacity-50"
                   >
                     <option value="">Selecciona un colaborador</option>
-                    {(empleados || []).map((emp) => (
+                    {(colaboradors || []).map((emp: any) => (
                       <option key={emp.id} value={emp.id}>
                         {emp.nombre}
                       </option>
@@ -122,15 +122,15 @@ export default function NuevoPlan() {
                 </div>
               </div>
 
-              {empleadoSeleccionado && (
+              {colaboradorSeleccionado && (
                 <div className="bg-accent/50 p-4 rounded-lg space-y-2">
                   <div>
                     <p className="text-sm text-muted-foreground">Cargo</p>
-                    <p className="font-medium">{empleadoSeleccionado.cargo}</p>
+                    <p className="font-medium">{colaboradorSeleccionado.cargo}</p>
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Área</p>
-                    <p className="font-medium">{empleadoSeleccionado.area}</p>
+                    <p className="font-medium">{colaboradorSeleccionado.area}</p>
                   </div>
                 </div>
               )}
@@ -151,7 +151,7 @@ export default function NuevoPlan() {
                       className="w-full px-3 py-2 border rounded-lg bg-background"
                     >
                       <option value="">Selecciona un departamento</option>
-                      {(departamentos || []).map((dept) => (
+                      {(departamentos || []).map((dept: string) => (
                         <option key={dept} value={dept}>
                           {dept}
                         </option>
@@ -169,7 +169,7 @@ export default function NuevoPlan() {
                       className="w-full px-3 py-2 border rounded-lg bg-background disabled:opacity-50"
                     >
                       <option value="">Selecciona un reemplazo</option>
-                      {(reemplazos || []).map((emp) => (
+                      {(reemplazos || []).map((emp: any) => (
                         <option key={emp.id} value={emp.id}>
                           {emp.nombre}
                         </option>
@@ -214,7 +214,7 @@ export default function NuevoPlan() {
                 </Button>
                 <Button
                   type="submit"
-                  disabled={!empleadoSeleccionado || !reemplazoSeleccionado || createPlan.isPending}
+                  disabled={!colaboradorSeleccionado || !reemplazoSeleccionado || createPlan.isPending}
                   className="gap-2"
                 >
                   {createPlan.isPending && <Loader2 className="h-4 w-4 animate-spin" />}

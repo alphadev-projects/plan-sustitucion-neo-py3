@@ -29,6 +29,8 @@ export default function Planes() {
 
   const handleExport = () => {
     const data = filteredPlanes.map((plan) => ({
+      "Fecha y Hora": new Date(plan.createdAt).toLocaleString(),
+      Usuario: plan.usuario,
       Colaborador: plan.colaborador,
       Departamento: plan.departamento,
       Cargo: plan.cargo,
@@ -36,8 +38,6 @@ export default function Planes() {
       "Dpto. Reemplazo": plan.departamentoReemplazo,
       "Cargo Reemplazo": plan.cargoReemplazo,
       "Puesto Clave": plan.puestoClave,
-      Usuario: plan.usuario,
-      Fecha: new Date(plan.createdAt).toLocaleDateString(),
     }));
 
     const ws = XLSX.utils.json_to_sheet(data);
@@ -137,6 +137,8 @@ export default function Planes() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b">
+                      <th className="text-left py-3 px-4 font-medium">Fecha y Hora</th>
+                      <th className="text-left py-3 px-4 font-medium">Usuario</th>
                       <th className="text-left py-3 px-4 font-medium">Colaborador</th>
                       <th className="text-left py-3 px-4 font-medium">Departamento</th>
                       <th className="text-left py-3 px-4 font-medium">Cargo</th>
@@ -148,6 +150,8 @@ export default function Planes() {
                   <tbody>
                     {filteredPlanes.map((plan) => (
                       <tr key={plan.id} className="border-b hover:bg-accent/50 transition-colors">
+                        <td className="py-3 px-4 text-sm whitespace-nowrap">{new Date(plan.createdAt).toLocaleString()}</td>
+                        <td className="py-3 px-4 text-sm font-medium">{plan.usuario}</td>
                         <td className="py-3 px-4">{plan.colaborador}</td>
                         <td className="py-3 px-4">{plan.departamento}</td>
                         <td className="py-3 px-4 text-sm text-muted-foreground">{plan.cargo}</td>

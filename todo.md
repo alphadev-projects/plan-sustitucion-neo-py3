@@ -104,3 +104,8 @@
 - [x] Remover opciones de edición/descarga para usuarios estándar
 - [x] Agregar permisos de carga/actualización para administradores
 - [x] Validar flujo completo de acceso por rol
+
+## Mejoras de Tabla de Planes
+- [x] Agregar columna de Fecha y Hora de Registro
+- [x] Agregar columna de Usuario (quién registró)
+- [x] Cambiar terminología de empleado a colaborador en toda la aplicación
