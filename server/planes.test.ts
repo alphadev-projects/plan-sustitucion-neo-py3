@@ -8,7 +8,7 @@ const mockUser = {
   email: "test@example.com",
   name: "Test User",
   loginMethod: "test",
-  role: "user" as const,
+  role: "admin" as const,
   createdAt: new Date(),
   updatedAt: new Date(),
   lastSignedIn: new Date(),
@@ -48,7 +48,7 @@ describe("planes procedures", () => {
     expect(typeof result).toBe("object");
   });
 
-  it("should create a plan", async () => {
+  it("should create a plan with admin role", async () => {
     const result = await caller.planes.create({
       empleadoId: 1,
       departamento: "Test Dept",

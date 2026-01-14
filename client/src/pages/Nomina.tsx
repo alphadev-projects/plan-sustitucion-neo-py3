@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useRole } from "@/hooks/useRole";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Info } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,6 +11,7 @@ import { Download, Search } from "lucide-react";
 import * as XLSX from "xlsx";
 
 export default function Nomina() {
+  const { isAdmin } = useRole();
   const { data: empleados, isLoading } = trpc.empleados.list.useQuery();
   const { data: departamentos } = trpc.empleados.departamentos.useQuery();
   const { data: sedes } = trpc.empleados.sedes.useQuery();
@@ -48,6 +52,14 @@ export default function Nomina() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
+        {!isAdmin && (
+          <Alert>
+            <Info className="h-4 w-4" />
+            <AlertDescription>
+              Tienes acceso de solo lectura a la nómina. No puedes editar ni eliminar datos.
+            </AlertDescription>
+          </Alert>
+        )}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Nómina</h1>

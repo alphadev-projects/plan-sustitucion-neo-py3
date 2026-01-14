@@ -1,8 +1,17 @@
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+
+// Procedure que requiere rol de administrador
+const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
+  if (ctx.user?.role !== "admin") {
+    throw new TRPCError({ code: "FORBIDDEN", message: "Se requiere permisos de administrador" });
+  }
+  return next({ ctx });
+});
 import {
   getAllEmpleados,
   getEmpleadosByDepartamento,
@@ -90,7 +99,7 @@ export const appRouter = router({
         return getPlansByDepartamento(input.departamento);
       }),
 
-    create: protectedProcedure
+    create: adminProcedure
       .input(
         z.object({
           empleadoId: z.number(),
@@ -126,7 +135,7 @@ export const appRouter = router({
         return { success: true };
       }),
 
-    update: protectedProcedure
+    update: adminProcedure
       .input(
         z.object({
           id: z.number(),
@@ -165,7 +174,7 @@ export const appRouter = router({
         return { success: true };
       }),
 
-    delete: protectedProcedure
+    delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await deletePlan(input.id);

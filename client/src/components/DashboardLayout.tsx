@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useRole } from "@/hooks/useRole";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -27,10 +28,10 @@ import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
-const menuItems = [
-  { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
-  { icon: FileText, label: "Planes de Sustitución", path: "/planes" },
-  { icon: Users, label: "Nómina", path: "/nomina" },
+const allMenuItems = [
+  { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard", requiresAdmin: true },
+  { icon: FileText, label: "Planes de Sustitución", path: "/planes", requiresAdmin: true },
+  { icon: Users, label: "Nómina", path: "/nomina", requiresAdmin: false },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
@@ -108,11 +109,13 @@ function DashboardLayoutContent({
   setSidebarWidth,
 }: DashboardLayoutContentProps) {
   const { user, logout } = useAuth();
+  const { isAdmin } = useRole();
   const [location, setLocation] = useLocation();
   const { state, toggleSidebar } = useSidebar();
   const isCollapsed = state === "collapsed";
   const [isResizing, setIsResizing] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
+  const menuItems = allMenuItems.filter(item => !item.requiresAdmin || isAdmin);
   const activeMenuItem = menuItems.find(item => item.path === location);
   const isMobile = useIsMobile();
 

@@ -55,3 +55,16 @@
 
 ## Bugs Reportados
 - [x] Página de inicio colgada al cargar - requiere diagnóstico y corrección
+
+## Sistema de Roles y Permisos
+- [x] Actualizar schema de usuarios con roles (admin/standard)
+- [x] Crear procedures tRPC para gestión de roles
+- [x] Implementar middleware de autorización en procedures
+- [x] Crear landing page de presentación sin autenticación
+- [x] Implementar login con asignación de roles
+- [x] Crear componentes de control de acceso por rol
+- [x] Actualizar Dashboard para solo administradores
+- [x] Actualizar Planes para permisos diferenciados
+- [x] Actualizar Nómina para acceso de estándar (solo lectura)
+- [x] Agregar funcionalidad de carga de datos (admin only)
+- [x] Agregar funcionalidad de eliminación (admin only)
