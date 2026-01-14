@@ -262,7 +262,12 @@ function DashboardLayoutContent({
             </div>
           </div>
         )}
-        <main className="flex-1 p-4">{children}</main>
+        <main className="flex-1 flex flex-col">
+          <div className="flex-1 p-4">{children}</div>
+          <footer className="border-t bg-muted/30 p-4 text-center text-xs text-muted-foreground">
+            <p>Desarrollado por Alexis Robledo</p>
+          </footer>
+        </main>
       </SidebarInset>
     </>
   );

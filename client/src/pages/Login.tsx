@@ -35,7 +35,10 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-lg">
-        <CardHeader className="space-y-2">
+        <CardHeader className="space-y-4">
+          <div className="flex justify-center mb-2">
+            <img src="/logo.png" alt="Logo" className="h-16 w-auto" />
+          </div>
           <CardTitle className="text-2xl font-bold text-center">Iniciar Sesión</CardTitle>
           <CardDescription className="text-center">
             Sistema de Gestión de Planes de Sustitución

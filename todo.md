@@ -109,3 +109,7 @@
 - [x] Agregar columna de Fecha y Hora de Registro
 - [x] Agregar columna de Usuario (quién registró)
 - [x] Cambiar terminología de empleado a colaborador en toda la aplicación
+
+## Branding y Créditos
+- [x] Agregar logo en página de login
+- [x] Agregar firma de crédito "Desarrollado por Alexis Robledo" en footer
