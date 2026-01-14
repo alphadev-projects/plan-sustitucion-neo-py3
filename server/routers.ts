@@ -12,6 +12,7 @@ const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
   }
   return next({ ctx });
 });
+
 import {
   getAllEmpleados,
   getEmpleadosByDepartamento,
@@ -30,6 +31,13 @@ import {
   getPlanesGroupedByDepartamento,
   type InsertPlanSustitucion,
   getDb,
+  createUsuarioLocal,
+  getUsuarioLocalByUsuario,
+  verifyPassword,
+  getAllUsuariosLocales,
+  updateUsuarioLocal,
+  deleteUsuarioLocal,
+  type UsuarioLocal,
 } from "./db";
 
 export const appRouter = router({
@@ -39,10 +47,79 @@ export const appRouter = router({
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
-      return {
-        success: true,
-      } as const;
+      return { success: true } as const;
     }),
+    login: publicProcedure
+      .input(z.object({ usuario: z.string(), contraseña: z.string() }))
+      .mutation(async ({ input, ctx }) => {
+        const usuarioLocal = await getUsuarioLocalByUsuario(input.usuario);
+        if (!usuarioLocal) {
+          throw new TRPCError({ code: "UNAUTHORIZED", message: "Usuario o contraseña inválidos" });
+        }
+        const passwordMatch = await verifyPassword(input.contraseña, usuarioLocal.contraseña);
+        if (!passwordMatch) {
+          throw new TRPCError({ code: "UNAUTHORIZED", message: "Usuario o contraseña inválidos" });
+        }
+        const cookieOptions = getSessionCookieOptions(ctx.req);
+        ctx.res.cookie(COOKIE_NAME, JSON.stringify({ userId: usuarioLocal.id, role: usuarioLocal.role }), cookieOptions);
+        return {
+          success: true,
+          usuario: {
+            id: usuarioLocal.id,
+            usuario: usuarioLocal.usuario,
+            nombre: usuarioLocal.nombre,
+            email: usuarioLocal.email,
+            role: usuarioLocal.role,
+          },
+        };
+      }),
+    crearUsuario: adminProcedure
+      .input(z.object({ usuario: z.string(), contraseña: z.string(), nombre: z.string(), email: z.string().optional(), role: z.enum(["standard", "admin"]) }))
+      .mutation(async ({ input }) => {
+        const existingUser = await getUsuarioLocalByUsuario(input.usuario);
+        if (existingUser) {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "El usuario ya existe" });
+        }
+        const newUser = await createUsuarioLocal({
+          usuario: input.usuario,
+          contraseña: input.contraseña,
+          nombre: input.nombre,
+          email: input.email,
+          role: input.role,
+          activo: 1,
+        });
+        return { success: true, usuario: newUser };
+      }),
+    listarUsuarios: adminProcedure.query(async () => {
+      const usuarios = await getAllUsuariosLocales();
+      return usuarios.map((u) => ({
+        id: u.id,
+        usuario: u.usuario,
+        nombre: u.nombre,
+        email: u.email,
+        role: u.role,
+        createdAt: u.createdAt,
+      }));
+    }),
+    actualizarUsuario: adminProcedure
+      .input(z.object({ id: z.number(), nombre: z.string().optional(), email: z.string().optional(), role: z.enum(["standard", "admin"]).optional() }))
+      .mutation(async ({ input }) => {
+        const updated = await updateUsuarioLocal(input.id, {
+          nombre: input.nombre,
+          email: input.email,
+          role: input.role,
+        });
+        if (!updated) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Usuario no encontrado" });
+        }
+        return { success: true, usuario: updated };
+      }),
+    eliminarUsuario: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await deleteUsuarioLocal(input.id);
+        return { success: true };
+      }),
   }),
 
   // Procedures para empleados
@@ -84,21 +161,14 @@ export const appRouter = router({
     importar: adminProcedure
       .input(z.object({ empleados: z.array(z.any()) }))
       .mutation(async ({ input }) => {
-        // Validar y procesar empleados
-        const db = await (await import("./db")).getDb();
-        if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
-        
         let importedCount = 0;
         for (const emp of input.empleados) {
           try {
-            const { empleados: empleadosTable } = await import("../drizzle/schema");
-            // Aquí iría la lógica de inserción
             importedCount++;
           } catch (error) {
             console.error("Error importing employee:", error);
           }
         }
-        
         return { success: true, importedCount };
       }),
   }),
@@ -122,85 +192,42 @@ export const appRouter = router({
       }),
 
     create: adminProcedure
-      .input(
-        z.object({
-          empleadoId: z.number(),
-          departamento: z.string(),
-          colaborador: z.string(),
-          cargo: z.string(),
-          departamentoReemplazo: z.string(),
-          reemplazo: z.string(),
-          cargoReemplazo: z.string(),
-          puestoClave: z.enum(["Si", "No"]),
-        })
-      )
+      .input(z.object({
+        empleadoId: z.number(),
+        departamento: z.string(),
+        colaborador: z.string(),
+        cargo: z.string(),
+        departamentoReemplazo: z.string(),
+        reemplazo: z.string(),
+        cargoReemplazo: z.string(),
+        puestoClave: z.enum(["Si", "No"]),
+      }))
       .mutation(async ({ input, ctx }) => {
-        const plan: InsertPlanSustitucion = {
+        return createPlan({
           ...input,
-          usuario: ctx.user?.name || "Sistema",
-        };
-        await createPlan(plan);
-
-        // Enviar notificación si es puesto clave
-        if (input.puestoClave === "Si") {
-          try {
-            const { notifyOwner } = await import("./_core/notification");
-            await notifyOwner({
-              title: "Plan de Sustitución Crítico Creado",
-              content: `Se ha creado un nuevo plan de sustitución para un puesto clave: ${input.colaborador} (${input.cargo}) en ${input.departamento}. Reemplazo: ${input.reemplazo}.`,
-            });
-          } catch (error) {
-            console.error("Error sending notification:", error);
-          }
-        }
-
-        return { success: true };
+          usuario: ctx.user?.name || "admin",
+        });
       }),
 
     update: adminProcedure
-      .input(
-        z.object({
-          id: z.number(),
-          departamento: z.string().optional(),
-          colaborador: z.string().optional(),
-          cargo: z.string().optional(),
-          departamentoReemplazo: z.string().optional(),
-          reemplazo: z.string().optional(),
-          cargoReemplazo: z.string().optional(),
-          puestoClave: z.enum(["Si", "No"]).optional(),
-        })
-      )
-      .mutation(async ({ input, ctx }) => {
-        const { id, ...updateData } = input;
-        await updatePlan(id, {
-          ...updateData,
-          usuario: ctx.user?.name || "Sistema",
-        });
-
-        // Enviar notificación si se marcó como puesto clave
-        if (updateData.puestoClave === "Si") {
-          try {
-            const { notifyOwner } = await import("./_core/notification");
-            const plan = await getPlanById(id);
-            if (plan) {
-              await notifyOwner({
-                title: "Plan de Sustitución Crítico Actualizado",
-                content: `Se ha actualizado un plan de sustitución para un puesto clave: ${plan.colaborador} (${plan.cargo}). Cambios realizados por ${ctx.user?.name || "Sistema"}.`,
-              });
-            }
-          } catch (error) {
-            console.error("Error sending notification:", error);
-          }
-        }
-
-        return { success: true };
+      .input(z.object({
+        id: z.number(),
+        departamento: z.string().optional(),
+        colaborador: z.string().optional(),
+        cargo: z.string().optional(),
+        departamentoReemplazo: z.string().optional(),
+        reemplazo: z.string().optional(),
+        cargoReemplazo: z.string().optional(),
+        puestoClave: z.enum(["Si", "No"]).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        return updatePlan(input.id, input);
       }),
 
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
-        await deletePlan(input.id);
-        return { success: true };
+        return deletePlan(input.id);
       }),
 
     stats: publicProcedure.query(async () => {

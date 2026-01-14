@@ -25,6 +25,22 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
+// Tabla de usuarios locales para autenticación con usuario/contraseña
+export const usuariosLocales = mysqlTable("usuarios_locales", {
+  id: int("id").autoincrement().primaryKey(),
+  usuario: varchar("usuario", { length: 100 }).notNull().unique(),
+  contraseña: varchar("contraseña", { length: 255 }).notNull(),
+  nombre: varchar("nombre", { length: 255 }).notNull(),
+  email: varchar("email", { length: 320 }),
+  role: mysqlEnum("role", ["standard", "admin"]).default("standard").notNull(),
+  activo: int("activo").default(1).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type UsuarioLocal = typeof usuariosLocales.$inferSelect;
+export type InsertUsuarioLocal = typeof usuariosLocales.$inferInsert;
+
 // Tabla de empleados para gestión de nómina
 export const empleados = mysqlTable("empleados", {
   id: int("id").autoincrement().primaryKey(),

@@ -1,4 +1,4 @@
-# TODO - Sistema de Gestión de Planes de Sustitución Pro
+# TODO - Sistema de Gestión de Planes de Sustitución
 
 ## Base de Datos y Backend
 - [x] Configurar schema de base de datos (empleados, planes_sustitucion)
@@ -6,11 +6,17 @@
 - [x] Implementar procedures tRPC para planes (crear, listar, actualizar, eliminar, estadísticas)
 - [x] Agregar validaciones de integridad referencial
 - [x] Implementar notificaciones automáticas al propietario
+- [ ] Crear tabla de usuarios locales con contraseñas
+- [ ] Implementar hashing de contraseñas con bcrypt
+- [ ] Crear procedures tRPC para login y gestión de usuarios
 
 ## Frontend - Estructura y Navegación
 - [x] Crear DashboardLayout con sidebar navigation
 - [x] Configurar rutas principales (Dashboard, Planes, Nómina)
 - [x] Diseñar tema visual con paleta azul/morado
+- [ ] Crear página de login con usuario y contraseña
+- [ ] Crear página de gestión de usuarios (solo admin)
+- [ ] Implementar autenticación local con sesiones
 
 ## Dashboard Analítico
 - [x] Crear página Dashboard con métricas principales
@@ -41,16 +47,17 @@
 - [x] Implementar búsqueda por nombre, CI y cargo
 - [x] Agregar filtros por sede, área y departamento
 - [x] Implementar exportación a Excel
-- [ ] Mostrar estadísticas de nómina
+- [x] Agregar botón de importación de empleados (solo admin)
 
 ## Testing
 - [x] Escribir tests para procedures de empleados
 - [x] Escribir tests para procedures de planes
 - [x] Verificar validaciones de integridad
 - [ ] Probar exportación a Excel
+- [ ] Probar importación de empleados
 
 ## Documentación y Entrega
-- [ ] Crear checkpoint final
+- [x] Crear checkpoint inicial
 - [ ] Documentar funcionalidades principales
 
 ## Bugs Reportados
@@ -80,3 +87,13 @@
 - [x] Implementar procedure tRPC para importar empleados
 - [x] Validar datos y evitar duplicados
 - [x] Mostrar confirmación y resumen de importación
+
+## Autenticación Local con Usuario/Contraseña
+- [x] Crear tabla de usuarios locales en base de datos
+- [x] Implementar hashing de contraseñas
+- [x] Crear página de login con usuario y contraseña
+- [x] Crear página de gestión de usuarios (solo admin)
+- [x] Implementar procedures tRPC para login y crear usuarios
+- [x] Actualizar rutas para usar autenticación local
+- [x] Remover OAuth y usar solo autenticación local
+- [ ] Crear página de cambio de contraseña

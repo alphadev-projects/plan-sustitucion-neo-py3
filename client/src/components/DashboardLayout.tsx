@@ -32,6 +32,7 @@ const allMenuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard", requiresAdmin: true },
   { icon: FileText, label: "Planes de Sustitución", path: "/planes", requiresAdmin: true },
   { icon: Users, label: "Nómina", path: "/nomina", requiresAdmin: false },
+  { icon: Users, label: "Gestión de Usuarios", path: "/usuarios", requiresAdmin: true },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";

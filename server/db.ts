@@ -173,7 +173,8 @@ export async function createPlan(plan: InsertPlanSustitucion) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   const result = await db.insert(planesSustitucion).values(plan);
-  return result;
+  const createdPlan = await db.select().from(planesSustitucion).where(eq(planesSustitucion.id, result[0].insertId)).limit(1);
+  return { success: true, plan: createdPlan[0] };
 }
 
 export async function updatePlan(id: number, plan: Partial<InsertPlanSustitucion>) {
@@ -236,3 +237,78 @@ export async function getPlanesGroupedByDepartamento() {
   });
   return grouped;
 }
+
+// Funciones para usuarios locales
+import { usuariosLocales, type InsertUsuarioLocal, type UsuarioLocal } from "../drizzle/schema";
+import bcrypt from "bcrypt";
+
+export async function createUsuarioLocal(data: InsertUsuarioLocal): Promise<UsuarioLocal> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  // Hash de la contraseña
+  const hashedPassword = await bcrypt.hash(data.contraseña, 10);
+
+  const result = await db.insert(usuariosLocales).values({
+    ...data,
+    contraseña: hashedPassword,
+  });
+
+  const usuario = await db
+    .select()
+    .from(usuariosLocales)
+    .where(eq(usuariosLocales.usuario, data.usuario))
+    .limit(1);
+
+  return usuario[0]!;
+}
+
+export async function getUsuarioLocalByUsuario(usuario: string): Promise<UsuarioLocal | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db
+    .select()
+    .from(usuariosLocales)
+    .where(eq(usuariosLocales.usuario, usuario))
+    .limit(1);
+
+  return result[0];
+}
+
+export async function verifyPassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
+  return bcrypt.compare(plainPassword, hashedPassword);
+}
+
+export async function getAllUsuariosLocales(): Promise<UsuarioLocal[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db.select().from(usuariosLocales).where(eq(usuariosLocales.activo, 1));
+}
+
+export async function updateUsuarioLocal(id: number, data: Partial<InsertUsuarioLocal>): Promise<UsuarioLocal | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const updateData: any = { ...data };
+  if (data.contraseña) {
+    updateData.contraseña = await bcrypt.hash(data.contraseña, 10);
+  }
+
+  await db.update(usuariosLocales).set(updateData).where(eq(usuariosLocales.id, id));
+
+  const result = await db.select().from(usuariosLocales).where(eq(usuariosLocales.id, id)).limit(1);
+
+  return result[0];
+}
+
+export async function deleteUsuarioLocal(id: number): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+
+  await db.update(usuariosLocales).set({ activo: 0 }).where(eq(usuariosLocales.id, id));
+}
+
+// Re-export types
+export type { UsuarioLocal, InsertUsuarioLocal } from "../drizzle/schema";
