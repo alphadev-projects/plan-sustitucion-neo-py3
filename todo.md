@@ -68,3 +68,8 @@
 - [x] Actualizar Nómina para acceso de estándar (solo lectura)
 - [x] Agregar funcionalidad de carga de datos (admin only)
 - [x] Agregar funcionalidad de eliminación (admin only)
+
+## Correcciones de Autenticación
+- [x] Proteger rutas de Dashboard, Planes y Nómina requiriendo login
+- [x] Mostrar landing page antes de cualquier acceso a módulos
+- [x] Redirigir usuarios no autenticados a página de inicio

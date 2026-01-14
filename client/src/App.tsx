@@ -4,6 +4,7 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Planes from "./pages/Planes";
@@ -13,12 +14,36 @@ import Nomina from "./pages/Nomina";
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/dashboard"} component={Dashboard} />
-      <Route path={"/planes"} component={Planes} />
-      <Route path={"/planes/nuevo"} component={NuevoPlan} />
-      <Route path={"/nomina"} component={Nomina} />
-      <Route path={"/404"} component={NotFound} />
+      <Route path="/" component={Home} />
+      <Route path="/dashboard">
+        {(props) => (
+          <ProtectedRoute requiredRole="admin">
+            <Dashboard {...props} />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/planes">
+        {(props) => (
+          <ProtectedRoute requiredRole="admin">
+            <Planes {...props} />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/planes/nuevo">
+        {(props) => (
+          <ProtectedRoute requiredRole="admin">
+            <NuevoPlan {...props} />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/nomina">
+        {(props) => (
+          <ProtectedRoute>
+            <Nomina {...props} />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
   );
