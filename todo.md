@@ -119,3 +119,7 @@
 - [ ] Verificar que la base de datos está conectada correctamente
 - [ ] Validar que todos los módulos funcionan en producción
 - [ ] Configurar dominio personalizado (opcional)
+
+## Cambio de Logo
+- [x] Reemplazar logo anterior por nuevo logo NEO
+- [x] Actualizar página de login con nuevo logo
