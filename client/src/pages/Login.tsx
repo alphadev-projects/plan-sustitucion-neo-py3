@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,15 +15,16 @@ export default function Login() {
   const loginMutation = trpc.auth.login.useMutation();
   const { user, refresh } = useAuth();
 
-  // Si ya está autenticado, redirigir según rol
-  if (user) {
-    if (user.role === "admin") {
-      setLocation("/dashboard");
-    } else {
-      setLocation("/nomina");
+  // Redirigir si ya está autenticado
+  useEffect(() => {
+    if (user) {
+      if (user.role === "admin") {
+        setLocation("/dashboard");
+      } else {
+        setLocation("/nomina");
+      }
     }
-    return null;
-  }
+  }, [user, setLocation]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,18 +40,16 @@ export default function Login() {
         toast.success("Sesión iniciada correctamente");
         // Refrescar el estado de autenticación
         await refresh();
-        // Redirigir según el rol
-        const role = result.usuario?.role;
-        if (role === "admin") {
-          setLocation("/dashboard");
-        } else {
-          setLocation("/nomina");
-        }
       }
     } catch (error: any) {
       toast.error(error.message || "Error al iniciar sesión");
     }
   };
+
+  // Si ya está autenticado, no mostrar nada (el useEffect se encargará de redirigir)
+  if (user) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
