@@ -212,7 +212,7 @@ export const appRouter = router({
         return getPlansByDepartamento(input.departamento);
       }),
 
-    create: adminProcedure
+    create: protectedProcedure
       .input(z.object({
         empleadoId: z.number(),
         departamento: z.string(),
@@ -226,7 +226,7 @@ export const appRouter = router({
       .mutation(async ({ input, ctx }) => {
         return createPlan({
           ...input,
-          usuario: ctx.user?.name || "admin",
+          usuario: ctx.user?.name || "usuario",
         });
       }),
 

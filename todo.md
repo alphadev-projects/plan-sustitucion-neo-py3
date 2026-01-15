@@ -139,3 +139,14 @@
 - [x] Documentar formato correcto de columnas
 - [x] Corregir procedure de importación en routers.ts
 - [x] Implementar función importarEmpleados en db.ts
+
+## Actualización de Permisos - Usuarios Estándar
+- [x] Permitir que usuarios estándar creen planes de sustitución
+- [x] Permitir que usuarios estándar vean Planes (solo lectura)
+- [x] Restringir acceso a Dashboard solo para administradores
+- [x] Restringir eliminación de registros solo para administradores
+- [x] Restringir edición de planes solo para administradores
+- [x] Actualizar procedimiento createPlan para permitir usuarios estándar
+- [x] Actualizar procedimiento deletePlan para solo administradores
+- [x] Actualizar procedimiento updatePlan para solo administradores
+- [x] Actualizar rutas protegidas en App.tsx

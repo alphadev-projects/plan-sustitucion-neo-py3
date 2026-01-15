@@ -54,14 +54,12 @@ export default function Planes() {
             <h1 className="text-3xl font-bold tracking-tight">Planes de Sustitución</h1>
             <p className="text-muted-foreground mt-2">Gestión y seguimiento de planes de sustitución</p>
           </div>
-          {isAdmin && (
-            <Link href="/planes/nuevo">
-              <Button className="gap-2">
-                <Plus className="h-4 w-4" />
-                Nuevo Plan
-              </Button>
-            </Link>
-          )}
+          <Link href="/planes/nuevo">
+            <Button className="gap-2">
+              <Plus className="h-4 w-4" />
+              Nuevo Plan
+            </Button>
+          </Link>
         </div>
 
         <Card>

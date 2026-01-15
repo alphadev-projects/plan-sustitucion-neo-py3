@@ -26,7 +26,7 @@ function Router() {
       </Route>
       <Route path="/planes">
         {(props) => (
-          <ProtectedRoute requiredRole="admin">
+          <ProtectedRoute>
             <Planes {...props} />
           </ProtectedRoute>
         )}
