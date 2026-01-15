@@ -1,0 +1,1890 @@
+[
+  {
+    "Nombre": "ABIGAIL YEGROS RIOS",
+    "C.I.": 5757021,
+    "Cargo": "Comunicador",
+    "Departamento": "Marketing",
+    "Area": "Comercial",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ABRAHAN VIANCONI VILLALBA",
+    "C.I.": 5987963,
+    "Cargo": "Ejecutivo de Ventas Corporativas",
+    "Departamento": "Desarrollo de Negocios",
+    "Area": "Comercial",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALAN JAVIER CASCO IBARRA",
+    "C.I.": 5475411,
+    "Cargo": "Supervisor de Central de Servicios Tecnicos",
+    "Departamento": "Relacionamiento con el Cliente",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALBERTO DAVID SERVIN MEIRA",
+    "C.I.": 5225855,
+    "Cargo": "Programador",
+    "Departamento": "Desarrollo y Tecnología",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALBERTO JAVIER CABALLERO GONZALEZ",
+    "C.I.": 5395590,
+    "Cargo": "Tecnico de Mantenimiento Predial",
+    "Departamento": "Servicios Generales",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALCIDES RAMON AMARILLA ULLON",
+    "C.I.": 5903243,
+    "Cargo": "Tecnico de Planta Externa",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALCIDES RUBEN BALBUENA BRITEZ ",
+    "C.I.": 6021156,
+    "Cargo": "Tecnico de Planta Externa II",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALDA CAROLINA CANO VILLALBA",
+    "C.I.": 2132709,
+    "Cargo": "Analista de Seleccion e Integracion",
+    "Departamento": "Desarrollo Humano",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALDO CEVERO BLANCO GIMENEZ",
+    "C.I.": 4064133,
+    "Cargo": "Agente de Negociaciones",
+    "Departamento": "Negociaciones",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALEJANDRO VALENTIN MARTINEZ STIETZ",
+    "C.I.": 5244360,
+    "Cargo": "Analista de NOC",
+    "Departamento": "NOC",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALEX MARTINEZ SANDOVAL",
+    "C.I.": 4961788,
+    "Cargo": "Supervisor de Contabilidad",
+    "Departamento": "Contabilidad",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALEX JUNIOR CARDOZO PEREZ",
+    "C.I.": 6963129,
+    "Cargo": "Diseñador Grafico Junior",
+    "Departamento": "Marketing",
+    "Area": "Comercial",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALEXIS PRIETO ORTEGA",
+    "C.I.": 7009509,
+    "Cargo": "Tecnico de Planta Externa II",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALEXIS DAVID CABALLERO BENITEZ",
+    "C.I.": 4731060,
+    "Cargo": "Tecnico de Soporte II",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALEXIS RICARDO ROBLEDO MOLINAS",
+    "C.I.": 4297996,
+    "Cargo": "Supervisor de Desarrollo Organizacional y SYSO",
+    "Departamento": "Desarrollo Humano",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALVARO DANIEL BRITEZ",
+    "C.I.": 6943811,
+    "Cargo": "Tecnico de Soporte I",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ALVARO SEBASTIAN DUARTE SOLIS",
+    "C.I.": 5652955,
+    "Cargo": "Auxiliar de Stock Operativo",
+    "Departamento": "Stock",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ANA RAFAELA CARDOZO PERALTA",
+    "C.I.": 6812657,
+    "Cargo": "Back Office de Negociaciones",
+    "Departamento": "Negociaciones",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ANDERSON MACATRAO PIRES DE HOLANDA ARAUJO",
+    "C.I.": 8061648407,
+    "Cargo": "Jefe de Relacionamiento con el Cliente",
+    "Departamento": "Relacionamiento con el Cliente",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ANDREA YANINA FRANCO BRUN",
+    "C.I.": 5937269,
+    "Cargo": "Agente de Cobranzas",
+    "Departamento": "Negociaciones",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ANDRES VAZQUEZ SANTOS",
+    "C.I.": 5893613,
+    "Cargo": "Ejecutivo Externo de Retencion",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ANGEL BENITEZ ALDERETE",
+    "C.I.": 5463168,
+    "Cargo": "Analista de Logistica",
+    "Departamento": "Logistica",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ANGEL JOSUE GONZALEZ BENITEZ",
+    "C.I.": 5433610,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ANGEL MARCIAL CASCO IBARRA",
+    "C.I.": 6545316,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ANGEL SAMUEL DOMINGUEZ GONZALEZ",
+    "C.I.": 4811904,
+    "Cargo": "Agente de Negociaciones",
+    "Departamento": "Negociaciones",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ANIBAL IVAN LOPEZ DUARTE",
+    "C.I.": 5463009,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ANTONELA MAGALI MARTINEZ ESPINOLA",
+    "C.I.": 5780160,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ANTONIA ELIZABETH LUGO MIRANDA",
+    "C.I.": 6111944,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ANTONIO MATHIAS LEON CANTERO",
+    "C.I.": 5694086,
+    "Cargo": "Tecnico de Soporte I",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ARIEL DE JESUS CACERES MONTIEL",
+    "C.I.": 5809479,
+    "Cargo": "Tecnico Instalador II",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ARIEL MOISES VERA AVALOS",
+    "C.I.": 4822670,
+    "Cargo": "Tecnico en Salud y Seguridad Ocupacional",
+    "Departamento": "Desarrollo Humano",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ARMANDO MANUEL DIARTE VELAZQUEZ",
+    "C.I.": 5213431,
+    "Cargo": "Programador",
+    "Departamento": "Desarrollo y Tecnología",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ARNALDO ANDRES ALFONSO BAEZ",
+    "C.I.": 5234588,
+    "Cargo": "Ejecutivo de Relacionamiento",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ARNALDO ARIEL CANTERO CARDOZO",
+    "C.I.": 5541521,
+    "Cargo": "Asistente de Stock Operativo",
+    "Departamento": "Stock Operativo",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ARNALDO DE JESUS NOGUERA NUÑEZ",
+    "C.I.": 6022787,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "AXEL RAFAEL OJEDA VARELA",
+    "C.I.": 6272569,
+    "Cargo": "Ejecutivo Externo de Retencion",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "BELINDA DEJESUS GARCIA FERNANDEZ",
+    "C.I.": 6772303,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "BERNARDO JUNIOR PEREZ SANCHEZ",
+    "C.I.": 5096813,
+    "Cargo": "Supervisor de Soporte & Instalaciones - ASU",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "BIANCA MONSERRAT FERNANDEZ BENITEZ",
+    "C.I.": 5847919,
+    "Cargo": "Community Manager",
+    "Departamento": "Marketing",
+    "Area": "Comercial",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "BLANCA IDALIA ACOSTA PAREDES",
+    "C.I.": 6364996,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CAMILA ANAHI CARDOZO GONZALEZ",
+    "C.I.": 6228054,
+    "Cargo": "Analista Tecnico de Control",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CARLOS ALBERTO SANCHEZ PENAYO",
+    "C.I.": 5247934,
+    "Cargo": "Especialista de Procesos",
+    "Departamento": "Inteligencia de Negocios",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CARLOS ARTURO BENITEZ DUARTE",
+    "C.I.": 3508633,
+    "Cargo": "Analista de Stock Operativo",
+    "Departamento": "Stock Operativo",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CARLOS DARIO GONZALEZ FERNANDEZ",
+    "C.I.": 3812664,
+    "Cargo": "Auxiliar de Stock Operativo",
+    "Departamento": "Stock Operativo",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CARLOS DAVID BARUA PORTILLO",
+    "C.I.": 4845208,
+    "Cargo": "Auxiliar de Flota",
+    "Departamento": "Flota",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CARLOS ENRRIQUE CANTERO ARANDA",
+    "C.I.": 3638607,
+    "Cargo": "Analista de Stock Institucional y Flota - ASU",
+    "Departamento": "Stock",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "CARLOS JAVIER MARTINEZ DUARTE",
+    "C.I.": 5971162,
+    "Cargo": "Analista tecnico de Control",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CARLOS RAMON GUILLEN",
+    "C.I.": 6087216,
+    "Cargo": "Tecnico Instalador I",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CARMEN MERCEDES FRETES TOLEDO",
+    "C.I.": 4775306,
+    "Cargo": "Analista de Auditoria Interna",
+    "Departamento": "Cumplimiento y Auditoria",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CARMEN VIVIANA COLMAN GARCETE",
+    "C.I.": 5603459,
+    "Cargo": "Agente de Negociaciones",
+    "Departamento": "Negociaciones",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CELESTE ANTONELLA MEDINA MEDINA",
+    "C.I.": 6234414,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CESAR LUIS  ENRIQUEZ ENCISO ",
+    "C.I.": 5293699,
+    "Cargo": "Lider de Turno",
+    "Departamento": "Relacionamiento con el Cliente",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CHRISTIAN ALFREDO GONZALEZ DUARTE",
+    "C.I.": 5642935,
+    "Cargo": "Tecnico de Soporte II",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CICERO SIMOES BORGES",
+    "C.I.": "22296413-2",
+    "Cargo": "Especialista en inteligencia de Negocios",
+    "Departamento": "Inteligencia de Negocios",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CINTHIA CAROLINA AGUERO RIOS",
+    "C.I.": 7555478,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CINTIA VERONICA CABRERA TORREZ",
+    "C.I.": 4720637,
+    "Cargo": "Jefe de Desarrollo Humano",
+    "Departamento": "Desarrollo Humano",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CLARA RUTH RIVEROS GONZALEZ",
+    "C.I.": 4321380,
+    "Cargo": "Supervisor de Ventas Activas - ASU",
+    "Departamento": "Ventas Activas",
+    "Area": "Comercial",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "CRISTHIAN DAVID CORONEL RIQUELME",
+    "C.I.": 6234353,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CRISTHIAN DAVID PERALTA JARA",
+    "C.I.": 6936582,
+    "Cargo": "Ejecutivo Externo de Retencion",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CRISTHIAN RAUL GUERRERO UGARTE",
+    "C.I.": 6200029,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CRISTIAN DAVID BENITEZ BAREIRO",
+    "C.I.": 4569794,
+    "Cargo": "Analista Tecnico de Control",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "CYNTHIA LORENA LEGAL GONZALEZ",
+    "C.I.": 5155122,
+    "Cargo": "Supervisor de Finanzas",
+    "Departamento": "Finanzas",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DAHIANA JAQUELINE BENITEZ BRUTSCH",
+    "C.I.": 5055804,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DAIHANA BELEN SANGUINEZ URUNAGA",
+    "C.I.": 5326119,
+    "Cargo": "Asistente de Desarrollo Organizacional",
+    "Departamento": "Desarrollo Humano",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DALILA DAHIANA CORREA DURE",
+    "C.I.": 4697522,
+    "Cargo": "Analista de Contabilidad ",
+    "Departamento": "Contabilidad",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DANIELA JAZMIN GONZALEZ DOMINGUEZ",
+    "C.I.": 6552491,
+    "Cargo": "Recepcionista y Caja",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "DANIELLA ARAMI FIORE ARRIAZA",
+    "C.I.": 4989982,
+    "Cargo": "Ejecutivo de Marketing BTL",
+    "Departamento": "Marketing",
+    "Area": "Comercial",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "DAVID EFRAIN IBERBUDEN GONZALEZ",
+    "C.I.": 5623048,
+    "Cargo": "Ejecutivo de Relacionamiento",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DEBORA ALEXANDRA GAMEZ ROMERO",
+    "C.I.": 4139138,
+    "Cargo": "Supervisora de Central de Servicios Administrativo",
+    "Departamento": "Relacionamiento con el Cliente",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DEISSY LORENA INSFRAN OJEDA",
+    "C.I.": 6278897,
+    "Cargo": "Analista de Control de Ventas - CDE",
+    "Departamento": "Control de Operaciones",
+    "Area": "Operaciones",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DEISY AYELEN LOPEZ ORREGO",
+    "C.I.": 5708741,
+    "Cargo": "Analista de Finanzas",
+    "Departamento": "Finanzas",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DENIS MARCELO FERNANDEZ SALA",
+    "C.I.": 5909671,
+    "Cargo": "Tecnico de Soporte II",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DENIS RAMON ORTIZ ROMAN",
+    "C.I.": 5143418,
+    "Cargo": "Analista de NOC",
+    "Departamento": "NOC",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DENIS RAUL ROMERO GAUTO",
+    "C.I.": 4778476,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DERLIS ANTONIO\n AMARILLA MARTINEZ\n",
+    "C.I.": 6273072,
+    "Cargo": "Tecnico de Planta Externa II",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DERLIS RENE GOMEZ FERNANDEZ",
+    "C.I.": 5814663,
+    "Cargo": "Tecnico Instalador II",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DERLYS ARIEL  PORTILLO MARTINEZ",
+    "C.I.": 5187463,
+    "Cargo": "Tecnico de Soporte I",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DIEGO ARMANDO PAIVA TORRES",
+    "C.I.": 5603343,
+    "Cargo": "Tecnico de Soporte II",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DIEGO ARNALDO ROMERO GALLARDO",
+    "C.I.": 4827082,
+    "Cargo": "Encargado de Mantenimiento Preventivo",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DIEGO DAMIAN  MARTINEZ AMARILLA",
+    "C.I.": 5199039,
+    "Cargo": "Lider de Turno",
+    "Departamento": "Relacionamiento con el Cliente",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DIEGO HERNAN RODRIGUEZ MALDONADO",
+    "C.I.": 6864239,
+    "Cargo": "Supervisor de Mantenimiento Correctivo",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DIEGO MARTIN  CARDOZO NUÑEZ",
+    "C.I.": 5300446,
+    "Cargo": "Analista TI",
+    "Departamento": "Servicios Generales",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DIEGO RUBEN GONZALEZ FELTES",
+    "C.I.": 5388134,
+    "Cargo": "Tecnico Informatico - ASU",
+    "Departamento": "Ingenieria de Redes & Preventa B2B",
+    "Area": "Operaciones Tecnicas",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "DINO PAOLO SPINA BELINGUERI",
+    "C.I.": 4959677,
+    "Cargo": "Analista Financiero de Contratos",
+    "Departamento": "Finanzas",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "DOMINGO JAVIER RECALDO GIMENEZ",
+    "C.I.": 5629986,
+    "Cargo": "Tecnico de Planta Externa I - ASUN",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "EDILBERTO MIRANDA ALCARAZ",
+    "C.I.": 4474705,
+    "Cargo": "Jefe de Inteligencia de Negocios",
+    "Departamento": "Inteligencia de Negocios",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "EDUARDO JAVIER PEREZ BAREIRO",
+    "C.I.": 3923435,
+    "Cargo": "Tecnico de Soporte I",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "EDUARDO RAMON VALLEJOS FLORES",
+    "C.I.": 4041022,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "EDWIN JAVIER OCAMPOS RIVEROS",
+    "C.I.": 5068425,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ELIAS EDUARDO GAMARRA CAÑIZA",
+    "C.I.": 5098322,
+    "Cargo": "Operador de Monitoreo y Control",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ELIAS MANUEL ROJAS HUG",
+    "C.I.": 6557757,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ELIO CESAR MARTINEZ BAREIRO",
+    "C.I.": 5792693,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ENRIQUE MANUEL VAESKEN RUBIO",
+    "C.I.": 3481587,
+    "Cargo": "Ejecutivo de Relacionamiento",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "EPIFANIO JAVIER VAZQUEZ GONZALEZ",
+    "C.I.": 5655163,
+    "Cargo": "Ejecutivo de Relacionamiento",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ERIKA MILENA FLORES MOLINAS",
+    "C.I.": 7335343,
+    "Cargo": "Ejecutivo de Relacionamiento",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ERITH MANUEL FLECHA LUGO",
+    "C.I.": 3850127,
+    "Cargo": "Supervisor de Planta Externa Construccion - ASU",
+    "Departamento": "FTTX",
+    "Area": "Operaciones Tecnicas",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "EVELY MICAELA FLECHA ARMOA",
+    "C.I.": 6729140,
+    "Cargo": "Asesor de Ventas Activas - ASU",
+    "Departamento": "Ventas Activas",
+    "Area": "Comercial",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "EVER ORLANDO VERA PAIVA ",
+    "C.I.": 4130553,
+    "Cargo": "Líder de Compras ",
+    "Departamento": "Compras",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "FABIAN MAXIMO ESTIGARRIBIA MONTIEL",
+    "C.I.": 4979303,
+    "Cargo": "Auxiliar de Mantenimiento Predial",
+    "Departamento": "Servicios Generales",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "FABIO ROMAN GONCALEZ",
+    "C.I.": 7957081,
+    "Cargo": "Operador de Diseño de Redes",
+    "Departamento": "GIS",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "FABIO RENE ALUAN BARRETO",
+    "C.I.": 2460486,
+    "Cargo": "Analista Tecnico de Control",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "FABIOLA DAS NEVES MENDES",
+    "C.I.": 7075258,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "FABIOLA SOLEDAD FERNANDEZ DIAZ",
+    "C.I.": 5625508,
+    "Cargo": "Auxiliar TI",
+    "Departamento": "Servicios Generales",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "FATIMA MARICEL GOLNNER GIMENEZ",
+    "C.I.": 4570569,
+    "Cargo": "Jefe de Cumplimiento y Auditoria",
+    "Departamento": "Cumplimiento y Auditoria",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "FERNANDO JAVIER BARRETO FERNANDEZ",
+    "C.I.": 866287,
+    "Cargo": "Gerente de Sucursal -  ASU",
+    "Departamento": "Operaciones",
+    "Area": "Operaciones",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "GABRIEL STUART CANIZA SOLIS",
+    "C.I.": 5759028,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "GABRIELA GUADALUPE CABRERA AVALOS",
+    "C.I.": 3986684,
+    "Cargo": "Supervisor RCC Regional - ASU",
+    "Departamento": "Relacionamiento con el Cliente",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "GERMAN GONZALEZ LOPEZ",
+    "C.I.": 3269533,
+    "Cargo": "Tecnico de Soporte II",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "GERMAN ALEJANDRO GONZALEZ",
+    "C.I.": 3766680,
+    "Cargo": "Gerente de Infraestructura de Redes",
+    "Departamento": "Infraestructura de Redes",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "GERMAN ARMANDO LEIVA BOZZO",
+    "C.I.": 5291105,
+    "Cargo": "Gerente Comercial - ASU",
+    "Departamento": "Comercial",
+    "Area": "Comercial",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "GERSON ISAAC VALLEJOS RAMIREZ",
+    "C.I.": 5233433,
+    "Cargo": "Tecnico de mantenimiento Predial - ASU",
+    "Departamento": "Mantenimiento Predial",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "GILBERTO SOTO VAZQUEZ",
+    "C.I.": 4567510,
+    "Cargo": "Encargado Tecnico",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "GISELLE VERONICA OTAZO MORINIGO",
+    "C.I.": 4292809,
+    "Cargo": "Agente de Negociaciones",
+    "Departamento": "Negociaciones",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "HECTOR RAMON ROJAS BOGADO",
+    "C.I.": 3578450,
+    "Cargo": "Supervisor Tecnico de Soporte & Instalaciones",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "HELIO SEBASTIAO BORDON",
+    "C.I.": 9066126,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "HUGO MARCELO MAIDANA CHAVEZ",
+    "C.I.": 5569918,
+    "Cargo": "Tecnico de Planta Externa I - ASUN",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "HUGO NICOLAS CORONEL VILLALBA",
+    "C.I.": 4663004,
+    "Cargo": "Tecnico de Planta Externa I - ASUN",
+    "Departamento": "FTTX",
+    "Area": "Operaciones Tecnicas",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "IGNACIO JAVIER CALONGA GAUTO",
+    "C.I.": 6796445,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "INGRID GISSELL  SALINAS ROLON",
+    "C.I.": 8365771,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JAIME DAVID GAONA PEÑA",
+    "C.I.": 5322863,
+    "Cargo": "Tecnico de Planta Externa I",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JANISSE DANIELA LEIVA GUIMARAEZ",
+    "C.I.": 5442736,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JAVIER ARTURO VILLALBA GONZALEZ",
+    "C.I.": 4184887,
+    "Cargo": "Ejecutivo Externo de Retencion",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JESSICA NAIR QUIÑONEZ SANTANDER",
+    "C.I.": 4523643,
+    "Cargo": "Analista Administrativo de Operaciones",
+    "Departamento": "Operaciones",
+    "Area": "Operaciones",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JESUS MANUEL LUJAN PIRIS",
+    "C.I.": 2506168,
+    "Cargo": "Supervisor de Logistica y RMA",
+    "Departamento": "Logistica y RMA",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JHONATAN ALEXANDER VILLALBA PAIVA",
+    "C.I.": 5280534,
+    "Cargo": "Analista de NOC",
+    "Departamento": "NOC",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JHONY GABRIEL GUERRERO ORTEGA",
+    "C.I.": 4825082,
+    "Cargo": "Asesor de Ventas Activas - ASU",
+    "Departamento": "Ventas Activas",
+    "Area": "Comercial",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "JHONY MANUEL CHAMORRO CANO",
+    "C.I.": 6296120,
+    "Cargo": "Tecnico de Planta Externa II",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JOEL ENRIQUE ORTIZ ROLON",
+    "C.I.": 5814311,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JORGE ANTONIO IBARRA NOA",
+    "C.I.": 5649964,
+    "Cargo": "Auxiliar de Stock",
+    "Departamento": "Stock",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JORGE DANIEL CARDOZO CASCO",
+    "C.I.": 3357683,
+    "Cargo": "Supervisor de Servicios Generales",
+    "Departamento": "Servicios Generales",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JORGE JESUS VARGAS BRITEZ",
+    "C.I.": 6086364,
+    "Cargo": "Tecnico Instalador I",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JORGE LUIS GONZALEZ MARTINEZ",
+    "C.I.": 4033123,
+    "Cargo": "Lider de Ejecutivos Externos",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JOSE ANTONIO MONGES CABALLERO",
+    "C.I.": 6567454,
+    "Cargo": "Tecnico de Planta Externa II - ASUN",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "JOSE CLAUDIO INSFRAN ALFONSO",
+    "C.I.": 2245447,
+    "Cargo": "Operador Tecnico de RMA",
+    "Departamento": "RMA",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JOSE IGNACIO SAMUDIO OVELAR",
+    "C.I.": 5166134,
+    "Cargo": "Encargado de Planta Externa Construccion - ASU",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "JOSE LUIS MORAN",
+    "C.I.": 4471066,
+    "Cargo": "Analista de Stock Operativo",
+    "Departamento": "Stock Operativo",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JOSE MARIA ARECO RIOS",
+    "C.I.": 3263516,
+    "Cargo": "Supervisor Operativo de Planta Externa",
+    "Departamento": "FTTX & GIS",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JUAN MANUEL BRITOS AGUERO",
+    "C.I.": 7188748,
+    "Cargo": "Tecnico de Soporte I",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JUAN PABLO MEDINA ROJAS",
+    "C.I.": 4538511,
+    "Cargo": "Ejecutivo Externo de Retencion",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JUAN RAMON AGUIAR DELVALLE",
+    "C.I.": 6503518,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JULIO CESAR LOPEZ RAMIREZ",
+    "C.I.": 3400894,
+    "Cargo": "Supervisor de Flota",
+    "Departamento": "Flota",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JULIO CESAR CASTELLI BORJA\n",
+    "C.I.": 4107240,
+    "Cargo": "Tecnico de Planta Externa II",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JULIO CESAR ORTIZ PEREIRA",
+    "C.I.": 4591472,
+    "Cargo": "Auxiliar Creativo Audiovisual",
+    "Departamento": "Marketing",
+    "Area": "Comercial",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JUNIOR ALBERTO RESQUIN CAMPUZANO",
+    "C.I.": 5262640,
+    "Cargo": "Analista de Finanzas",
+    "Departamento": "Finanzas",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "JUNIOR EUGENIO OBREGON LARROZA",
+    "C.I.": 4444461,
+    "Cargo": "Auxiliar Tecnico de Mantenimiento Predial",
+    "Departamento": "Servicios Generales",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "KATHERIN LUCERO ALVAREZ GONZALEZ",
+    "C.I.": 6132419,
+    "Cargo": "Asistente de Auditoria Interna",
+    "Departamento": "Cumplimiento y Auditoria",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "KATHIA BELEN DUARTE SOLIS",
+    "C.I.": 4664214,
+    "Cargo": "Supervisora de Contencion de Daños",
+    "Departamento": "Relacionamiento con el Cliente",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LEIDY BELEN GARCIA CENTURION",
+    "C.I.": 4219465,
+    "Cargo": "Analista de Stock Patrimonial",
+    "Departamento": "Stock",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LIDA FERMINA CHAMORRO PENAYO",
+    "C.I.": 7100133,
+    "Cargo": "Ejecutivo de Retencion y Fidelizacion - ASU",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "LIDER FABIAN GUERRERO TROCHE",
+    "C.I.": 6286179,
+    "Cargo": "Ejecutivo de Relacionamiento",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LILIANA RAQUEL OCAMPO OBREGON ",
+    "C.I.": 6527988,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LIZ DIANA BURGOS ROLON",
+    "C.I.": 4998593,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LIZ MABEL AVALOS VERA",
+    "C.I.": 4329654,
+    "Cargo": "Encargado de Alianzas Estrategicas - CDE",
+    "Departamento": "Alianzas Estrategicas",
+    "Area": "Comercial",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LIZ NATALIA BOGADO PAIVA",
+    "C.I.": 7363275,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LIZ NOELIA BENITEZ SOTO",
+    "C.I.": 4881029,
+    "Cargo": "Ejecutivo de Relacionamiento",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LIZ YOHANA RAMOS OCAMPOS",
+    "C.I.": 5042762,
+    "Cargo": "Agente de Negociaciones",
+    "Departamento": "Negociaciones",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LUANA JAZMIN BOGADO GAUTO",
+    "C.I.": 6272563,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LUCAS ARIEL DUARTE RIVEROS",
+    "C.I.": 4701259,
+    "Cargo": "Asistente de Seleccion y Integracion",
+    "Departamento": "Desarrollo Humano",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LUCAS DAVID CARDOZO PERA",
+    "C.I.": 5141717,
+    "Cargo": "Analista Tecnico de Control",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LUIS ALFREDO RAMIREZ CHAMORRO",
+    "C.I.": 4204456,
+    "Cargo": "Especialista Creativo",
+    "Departamento": "Marketing",
+    "Area": "Comercial",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LUIS ARMANDO\n DUARTE GIMENEZ\n",
+    "C.I.": 5263616,
+    "Cargo": "Tecnico de Planta Externa I",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LUIS CARLOS BRITEZ ORTIZ",
+    "C.I.": 3630054,
+    "Cargo": "Especialista de NOC",
+    "Departamento": "NOC",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LUIS ENRIQUE BRIZUELA SOSA",
+    "C.I.": 5049634,
+    "Cargo": "Operador de Diseño de Redes",
+    "Departamento": "GIS",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LUIS ENRRIQUE SEGOVIA ORTIZ",
+    "C.I.": 5971512,
+    "Cargo": "Auxiliar de Compras",
+    "Departamento": "Compras",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "LUZ CLARA ZUELY ACOSTA ORTIZ",
+    "C.I.": 5789808,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MAIRA CAMILA ESCOBAR ROMERO",
+    "C.I.": 6551584,
+    "Cargo": "Asesor de Ventas Activas - ASU",
+    "Departamento": "Ventas Activas",
+    "Area": "Comercial",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "MANUEL BARRIOS MIRANDA",
+    "C.I.": 5536841,
+    "Cargo": "Supervisor de Stock",
+    "Departamento": "Stock",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MARCELA OTAZU ALVAREZ",
+    "C.I.": 6616902,
+    "Cargo": "Operador de Diseño de Redes",
+    "Departamento": "GIS",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MARCELO ARIEL CABRAL ORTIZ",
+    "C.I.": 5880153,
+    "Cargo": "Operador de Mantenimiento de Infra",
+    "Departamento": "Servicios Generales",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MARCELO JOSE LUIS GARAY MACIEL",
+    "C.I.": 6505073,
+    "Cargo": "Agente de Negociaciones",
+    "Departamento": "Negociaciones",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MARCELO NICOLAS DUARTE VELAZQUEZ\n",
+    "C.I.": 4755845,
+    "Cargo": "Supervisor de Diseño de Redes",
+    "Departamento": "GIS",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MARCOS ELIAS MAIZ VERA",
+    "C.I.": 5443890,
+    "Cargo": "Operador de Monitoreo y Control",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "MARIA CECILIA SANTACRUZ ARZAMENDIA",
+    "C.I.": 5835919,
+    "Cargo": "Analista de Auditoria Interna",
+    "Departamento": "Cumplimiento y Auditoria",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MARIA CRISTINA INSAURRALDE BENITEZ",
+    "C.I.": 4684272,
+    "Cargo": "Lider de Turno",
+    "Departamento": "Relacionamiento con el Cliente",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MARIA ISABEL VILLAMAYOR",
+    "C.I.": 5458383,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MARIA LAURA ORTIGOZA MELLID",
+    "C.I.": 5808952,
+    "Cargo": "Jefe de Operaciones Tecnicas",
+    "Departamento": "Operaciones Tecnicas",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MARIA VICTORIA BENITEZ BENITEZ",
+    "C.I.": 5800231,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MARIELA ACUÑA BENITEZ",
+    "C.I.": 4066855,
+    "Cargo": "Recepcionista",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MARIELA ROCIO ARELLANO GOMEZ",
+    "C.I.": 7796318,
+    "Cargo": "Back Office de Negociaciones",
+    "Departamento": "Negociaciones",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MARIO RAMON ARZAMENDIA ACOSTA",
+    "C.I.": 4760017,
+    "Cargo": "Ejecutivo de Retencion y Fidelizacion - ASU",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "MARLENE DAIANA SZEGODI GONZALEZ",
+    "C.I.": 8872472,
+    "Cargo": "Ejecutivo de Retencion y Fidelizacion - ASU",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "MATIAS ATILANO DUARTE BAEZA",
+    "C.I.": 5639341,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MATIAS DIOSNEL VAZQUEZ OVELAR",
+    "C.I.": 6123902,
+    "Cargo": "Asistente de Finanzas",
+    "Departamento": "Finanzas",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MATIAS EZEQUIEL GIMENEZ AGUILAR",
+    "C.I.": 5033166,
+    "Cargo": "Tecnico de Planta Externa I - ASUN",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "MAURICIO ALBERTO TOROSSI",
+    "C.I.": 7152115,
+    "Cargo": "Jefe de Alianzas Estrategicas",
+    "Departamento": "Alianzas Estrategicas",
+    "Area": "Comercial",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "MAYRA ARAMI HERMOSA CUBILLA",
+    "C.I.": 5689975,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MELKY MAGABI ORTIZ MULLER",
+    "C.I.": 4342811,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MICAELA SOLEDAD ESCOBAR FRANCO",
+    "C.I.": 6567238,
+    "Cargo": "Recepcionista",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MILAGRO CELESTE MELLID INSFRAN",
+    "C.I.": 7212983,
+    "Cargo": "Operador de Diseño de Redes",
+    "Departamento": "GIS",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MILTON JAVIER ORTIZ CACERES",
+    "C.I.": 6333298,
+    "Cargo": "Tecnico de Planta Externa I",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MYRIAM CELESTE CENTURION AREVALO",
+    "C.I.": 3846776,
+    "Cargo": "Analista de Clima y Cultura",
+    "Departamento": "Desarrollo Humano",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "MYRIAM RAQUEL PEREIRA CARDOZO",
+    "C.I.": 4724058,
+    "Cargo": "Ejecutivo de Relacionamiento",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "NATALIA  CAMPAGNOLLO CAPITANI",
+    "C.I.": 7371979,
+    "Cargo": "Analista de Remuneraciones",
+    "Departamento": "Desarrollo Humano",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "NATALIA LIZ PENAYO VERA",
+    "C.I.": 6947120,
+    "Cargo": "Ejecutivo de Relacionamiento",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "NATHALIA NOEMI RIVEROS",
+    "C.I.": 5127836,
+    "Cargo": "Auxiliar de Contabilidad",
+    "Departamento": "Contabilidad",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "NATHALIE DELMAR BENITEZ",
+    "C.I.": 6206270,
+    "Cargo": "Lider de Control Operativo",
+    "Departamento": "Control de Operaciones",
+    "Area": "Operaciones",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "NELLY CONCEPCION ACUÑA",
+    "C.I.": 5047597,
+    "Cargo": "Asistente de Finanzas",
+    "Departamento": "Finanzas",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "NERY LEANDRO PAIVA TORRES",
+    "C.I.": 4461048,
+    "Cargo": "Tecnico Instalador II",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "OLIVIERE JOSUE VER MELLSTREING RAMIREZ",
+    "C.I.": 7182535,
+    "Cargo": "Asistente de Stock Operativo - ASU",
+    "Departamento": "Stock",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "OMAR GABRIEL SALCEDO VERA",
+    "C.I.": 5045568,
+    "Cargo": "Ejecutivo de Ventas Corporativas - ASU",
+    "Departamento": "Desarrollo De Negocios",
+    "Area": "Comercial",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "OSCAR EMILIO  ORTIZ ALCARAZ",
+    "C.I.": 5376009,
+    "Cargo": "Encargado de Logistica y RMA - ASU",
+    "Departamento": "Logistica y RMA",
+    "Area": "Operaciones Tecnicas",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "OSCAR GABRIEL RAMIREZ GONZALEZ",
+    "C.I.": 5696208,
+    "Cargo": "Programador",
+    "Departamento": "Desarrollo y Tecnología",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "PAULINO SOLANO BENITEZ IRRAZABAL",
+    "C.I.": 2308027,
+    "Cargo": "Jefe de Operaciones Tecnicas y Logistica - ASU",
+    "Departamento": "Operaciones Tecnicas",
+    "Area": "Operaciones",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "PAULO CESAR MORAES",
+    "C.I.": 44444401,
+    "Cargo": "Especialista de Cumplimiento y Gobernanza Digital",
+    "Departamento": "Cumplimiento y Auditoria",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "PEDRO CESAR BENITEZ CURTIDO ",
+    "C.I.": 4220693,
+    "Cargo": "Ejecutivo Externo de Retencion",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "PEDRO FRANCISCO SALINAS CABALLERO",
+    "C.I.": 5876928,
+    "Cargo": "Tecnico Instalador I",
+    "Departamento": "FTTH",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "PIERO RAUL CARDENA SALINAS",
+    "C.I.": 3178851,
+    "Cargo": "Asistente de Remuneraciones",
+    "Departamento": "Desarrollo Humano",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "PYKASU ALBA GAMARRA SILVERO",
+    "C.I.": 4814105,
+    "Cargo": "Supervisor de Marketing",
+    "Departamento": "Marketing",
+    "Area": "Comercial",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "RAFAEL MAIDANA CHAVEZ",
+    "C.I.": 5700914,
+    "Cargo": "Tecnico de Planta Externa II - ASUN",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "RAQUEL MOLINAS GOMEZ",
+    "C.I.": 4653939,
+    "Cargo": "Auxiliar de Control Operativo",
+    "Departamento": "Control de Operaciones",
+    "Area": "Operaciones",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "REINA DE JESUS GARCIA CAÑETE",
+    "C.I.": 6033863,
+    "Cargo": "Auxiliar de Contabilidad",
+    "Departamento": "Contabilidad",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "RICARDO INTY VELIZ CANAVIRI",
+    "C.I.": 9282985,
+    "Cargo": "Director de Operaciones",
+    "Departamento": "Operaciones",
+    "Area": "Operaciones",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ROBERT ARTHUR NEUMANN",
+    "C.I.": "10268730-2",
+    "Cargo": "Jefe de Desarrollo y Tecnologia",
+    "Departamento": "Desarrollo y Tecnología",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "RODRIGO DANIEL OJEDA PEREIRA",
+    "C.I.": 5331989,
+    "Cargo": "Operador de Diseño de Redes",
+    "Departamento": "GIS",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "RODRIGO EMILIO VORPAGEL BOGARIN",
+    "C.I.": 4924112,
+    "Cargo": "Operador de Diseño de Redes",
+    "Departamento": "GIS",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "RODRIGO FABIAN DA COSTA ARAUJO",
+    "C.I.": 7430739,
+    "Cargo": "Operador de Monitoreo y Control",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ROLANDO AGUSTIN AREVALOS VALDEZ",
+    "C.I.": 3994703,
+    "Cargo": "Tecnico de Planta Externa I - ASUN",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "ROMINA SOLEDAD ROLIN CARDOZO",
+    "C.I.": 5718828,
+    "Cargo": "Lider de Fidelización",
+    "Departamento": "Fidelización",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "RONALD MOISES HUG ROJAS",
+    "C.I.": 5257931,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ROQUE EVER YEGROS COLMAN",
+    "C.I.": 2202753,
+    "Cargo": "Jefe Administrativo Financiero",
+    "Departamento": "Administración y Finanzas",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "ROSSANA PATRICIA HERMOSA CUBILLA",
+    "C.I.": 3678497,
+    "Cargo": "Especialista de Gobernanza de Datos y Experiencias del Usuario",
+    "Departamento": "Inteligencia de Negocios",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "SABRINA MAGALI GUAYUAN CANTERO",
+    "C.I.": 6299698,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "SANTIAGO GALEANO MENDIETA",
+    "C.I.": 4013220,
+    "Cargo": "Líder de Desarrollo y Tecnologia",
+    "Departamento": "Desarrollo y Tecnología",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "SANTIAGO EULOGIO TORRES ALONSO",
+    "C.I.": 3603035,
+    "Cargo": "Jefe de Desarrollo de Negocios",
+    "Departamento": "Desarrollo de Negocios",
+    "Area": "Comercial",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "SILVANA PAOLA ISASI GIMENEZ",
+    "C.I.": 3559712,
+    "Cargo": "Supervirsor de Control de Operaciones",
+    "Departamento": "Control de Operaciones",
+    "Area": "Operaciones",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "SOFIA BEATRIZ SACKMANN MARECO",
+    "C.I.": 6534336,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "TATIANA GISSELLE UGARTE ARECO",
+    "C.I.": 5587631,
+    "Cargo": "Operador de Diseño de Redes",
+    "Departamento": "GIS",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "TOBIAS MARCELO NOGUERA ORTIZ",
+    "C.I.": 6765536,
+    "Cargo": "Tecnico de Planta Externa II - ASUN",
+    "Departamento": "FTTX",
+    "Area": "Infraestructura de Redes",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "VERONICA MARIA CAROLINA LUSICH PEREZ",
+    "C.I.": 4198048,
+    "Cargo": "Agente de Central de Servicios Administrativos",
+    "Departamento": "Central de Servicios Administrativos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "VICTOR ARIEL VALIENTES ROJAS",
+    "C.I.": 2568212,
+    "Cargo": "Operador Tecnico de RMA",
+    "Departamento": "RMA",
+    "Area": "Infraestructura de Redes",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "VICTOR EDUARDO SAMUDIO VALDEZ",
+    "C.I.": 4361468,
+    "Cargo": "Asistente de Flota",
+    "Departamento": "Flota",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "VIVIAN BELEN BARBOZA VERA",
+    "C.I.": 5192109,
+    "Cargo": "Auxiliar de Control Operativo",
+    "Departamento": "Control de Operaciones",
+    "Area": "Operaciones",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "WALTER DAVID GONZALEZ ARECO",
+    "C.I.": 3785908,
+    "Cargo": "Supervisor Administartivo Financiero - ASU",
+    "Departamento": "Administración y Finanzas",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "ASU"
+  },
+  {
+    "Nombre": "WILDER MATIAS LOMAQUIZ ROBERTTI",
+    "C.I.": 7603077,
+    "Cargo": "Analista de Compras",
+    "Departamento": "Compras",
+    "Area": "Central de Servicios Compartidos",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "WILSON ANDRES PANIAGUA RAMIREZ",
+    "C.I.": 4596219,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  },
+  {
+    "Nombre": "YANINA BELEN ROMERO OJEDA",
+    "C.I.": 5675755,
+    "Cargo": "Analista Tecnico N2",
+    "Departamento": "Central de Servicios Tecnicos",
+    "Area": "Relacionamiento con el Cliente",
+    "Sede": "Matriz"
+  }
+]
