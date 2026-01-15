@@ -113,3 +113,9 @@
 ## Branding y Créditos
 - [x] Agregar logo en página de login
 - [x] Agregar firma de crédito "Desarrollado por Alexis Robledo" en footer
+
+## Publicación en Producción
+- [ ] Publicar aplicación desde GitHub a Manus
+- [ ] Verificar que la base de datos está conectada correctamente
+- [ ] Validar que todos los módulos funcionan en producción
+- [ ] Configurar dominio personalizado (opcional)
