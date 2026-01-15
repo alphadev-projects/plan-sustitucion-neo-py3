@@ -44,7 +44,21 @@ import {
 export const appRouter = router({
   system: systemRouter,
   auth: router({
-    me: publicProcedure.query((opts) => opts.ctx.user),
+    me: publicProcedure.query((opts) => {
+      const user = opts.ctx.user;
+      if (!user) return null;
+      return {
+        id: user.id,
+        openId: user.openId,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        loginMethod: user.loginMethod,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+        lastSignedIn: user.lastSignedIn,
+      };
+    }),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
@@ -63,14 +77,17 @@ export const appRouter = router({
         }
         const cookieOptions = getSessionCookieOptions(ctx.req);
         ctx.res.cookie(COOKIE_NAME, JSON.stringify({ userId: usuarioLocal.id, role: usuarioLocal.role }), cookieOptions);
+        // Retornar el usuario con todos los campos necesarios
         return {
           success: true,
           usuario: {
             id: usuarioLocal.id,
+            openId: `local-${usuarioLocal.id}`,
             usuario: usuarioLocal.usuario,
             nombre: usuarioLocal.nombre,
             email: usuarioLocal.email,
             role: usuarioLocal.role,
+            loginMethod: 'local',
           },
         };
       }),

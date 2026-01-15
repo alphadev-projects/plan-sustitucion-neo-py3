@@ -129,6 +129,7 @@
 - [x] Logo NEO no aparecía - RESUELTO: Archivo copiado y ruta actualizada
 - [x] Plantilla Excel no encontrada - RESUELTO: Disponible en /Plantilla_Nomina.xlsx
 - [x] Importación de nómina - RESUELTO: 236 colaboradores importados exitosamente
+- [x] Usuarios estándar no podían ingresar - RESUELTO: Rol ahora se retorna correctamente en auth.me
 
 ## Importación de Nómina - Plantilla Excel
 - [x] Crear archivo Excel de ejemplo para importación
