@@ -130,6 +130,8 @@
 - [x] Plantilla Excel no encontrada - RESUELTO: Disponible en /Plantilla_Nomina.xlsx
 - [x] Importación de nómina - RESUELTO: 236 colaboradores importados exitosamente
 - [x] Usuarios estándar no podían ingresar - RESUELTO: Rol ahora se retorna correctamente en auth.me
+- [x] Error de renderizado concurrente - RESUELTO: Eliminada duplicación de useAuth en DashboardLayout
+- [x] Inicio automático en página de login - RESUELTO: Eliminada duplicación de useAuth en Login.tsx
 
 ## Importación de Nómina - Plantilla Excel
 - [x] Crear archivo Excel de ejemplo para importación

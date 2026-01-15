@@ -260,11 +260,14 @@ class SDKServer {
     // Regular authentication flow
     const cookies = this.parseCookies(req.headers.cookie);
     const sessionCookie = cookies.get(COOKIE_NAME);
+    console.log("[Auth] Session cookie:", sessionCookie);
     
     // Intentar parsear como JSON (autenticación local)
     try {
       const sessionData = JSON.parse(sessionCookie || "");
+      console.log("[Auth] Parsed session data:", sessionData);
       if (sessionData.userId && sessionData.role) {
+        console.log("[Auth] Local authentication successful for user:", sessionData.userId);
         // Es una sesión local, retornar un usuario genérico
         return {
           id: sessionData.userId,

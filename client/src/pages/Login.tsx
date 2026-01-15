@@ -13,7 +13,7 @@ export default function Login() {
   const [contraseña, setContraseña] = useState("");
   const [, setLocation] = useLocation();
   const loginMutation = trpc.auth.login.useMutation();
-  const { user } = useAuth();
+  const { user, refresh } = useAuth();
 
   // Si ya está autenticado, redirigir según rol
   if (user) {
@@ -24,8 +24,6 @@ export default function Login() {
     }
     return null;
   }
-
-  const { refresh } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
