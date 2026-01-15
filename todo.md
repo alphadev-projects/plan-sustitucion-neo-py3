@@ -123,3 +123,10 @@
 ## Cambio de Logo
 - [x] Reemplazar logo anterior por nuevo logo NEO
 - [x] Actualizar página de login con nuevo logo
+
+## Importación de Nómina - Plantilla Excel
+- [x] Crear archivo Excel de ejemplo para importación
+- [x] Diagnosticar problema de importación de datos
+- [x] Documentar formato correcto de columnas
+- [x] Corregir procedure de importación en routers.ts
+- [x] Implementar función importarEmpleados en db.ts

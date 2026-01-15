@@ -312,3 +312,58 @@ export async function deleteUsuarioLocal(id: number): Promise<void> {
 
 // Re-export types
 export type { UsuarioLocal, InsertUsuarioLocal } from "../drizzle/schema";
+
+// Función para importar empleados desde Excel
+export async function importarEmpleados(empleadosData: Array<{
+  sede: string;
+  cedula: string;
+  nombre: string;
+  area: string;
+  departamento: string;
+  cargo: string;
+}>): Promise<{ importedCount: number; duplicatedCount: number; errors: string[] }> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  let importedCount = 0;
+  let duplicatedCount = 0;
+  const errors: string[] = [];
+
+  for (const emp of empleadosData) {
+    try {
+      // Validar que los campos requeridos existan
+      if (!emp.sede || !emp.cedula || !emp.nombre || !emp.area || !emp.departamento || !emp.cargo) {
+        errors.push(`Fila incompleta: ${emp.nombre || 'sin nombre'}`);
+        continue;
+      }
+
+      // Verificar si el empleado ya existe por cédula
+      const existingEmpleado = await db
+        .select()
+        .from(empleados)
+        .where(eq(empleados.cedula, emp.cedula))
+        .limit(1);
+
+      if (existingEmpleado.length > 0) {
+        duplicatedCount++;
+        continue;
+      }
+
+      // Insertar el empleado
+      await db.insert(empleados).values({
+        sede: emp.sede,
+        cedula: emp.cedula,
+        nombre: emp.nombre,
+        area: emp.area,
+        departamento: emp.departamento,
+        cargo: emp.cargo,
+      });
+
+      importedCount++;
+    } catch (error) {
+      errors.push(`Error al importar ${emp.nombre}: ${error instanceof Error ? error.message : 'Error desconocido'}`);
+    }
+  }
+
+  return { importedCount, duplicatedCount, errors };
+}

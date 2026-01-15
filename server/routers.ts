@@ -38,6 +38,7 @@ import {
   updateUsuarioLocal,
   deleteUsuarioLocal,
   type UsuarioLocal,
+  importarEmpleados,
 } from "./db";
 
 export const appRouter = router({
@@ -159,17 +160,17 @@ export const appRouter = router({
       }),
 
     importar: adminProcedure
-      .input(z.object({ empleados: z.array(z.any()) }))
+      .input(z.object({ empleados: z.array(z.object({
+        sede: z.string(),
+        cedula: z.string(),
+        nombre: z.string(),
+        area: z.string(),
+        departamento: z.string(),
+        cargo: z.string(),
+      })) }))
       .mutation(async ({ input }) => {
-        let importedCount = 0;
-        for (const emp of input.empleados) {
-          try {
-            importedCount++;
-          } catch (error) {
-            console.error("Error importing employee:", error);
-          }
-        }
-        return { success: true, importedCount };
+        const result = await importarEmpleados(input.empleados);
+        return { success: true, ...result };
       }),
   }),
 
