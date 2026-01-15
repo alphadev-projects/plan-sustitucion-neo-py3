@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { COOKIE_NAME } from "@shared/const";
+import { COOKIE_NAME, LOCAL_AUTH_COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
@@ -62,6 +62,7 @@ export const appRouter = router({
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
+      ctx.res.clearCookie(LOCAL_AUTH_COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
       return { success: true } as const;
     }),
     login: publicProcedure
@@ -77,8 +78,8 @@ export const appRouter = router({
         }
         const cookieOptions = getSessionCookieOptions(ctx.req);
         const cookieValue = JSON.stringify({ userId: usuarioLocal.id, role: usuarioLocal.role });
-        console.log("[Login] Setting cookie:", COOKIE_NAME, "=", cookieValue);
-        ctx.res.cookie(COOKIE_NAME, cookieValue, cookieOptions);
+        console.log("[Login] Setting local auth cookie:", LOCAL_AUTH_COOKIE_NAME, "=", cookieValue);
+        ctx.res.cookie(LOCAL_AUTH_COOKIE_NAME, cookieValue, cookieOptions);
         // Retornar el usuario con todos los campos necesarios
         return {
           success: true,

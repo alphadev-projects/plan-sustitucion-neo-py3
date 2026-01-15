@@ -259,31 +259,34 @@ class SDKServer {
   async authenticateRequest(req: Request): Promise<User> {
     // Regular authentication flow
     const cookies = this.parseCookies(req.headers.cookie);
+    
+    // Primero intentar autenticación local
+    const localAuthCookie = cookies.get("app_local_auth");
+    if (localAuthCookie) {
+      try {
+        const sessionData = JSON.parse(localAuthCookie);
+        console.log("[Auth] Parsed local session data:", sessionData);
+        if (sessionData.userId && sessionData.role) {
+          console.log("[Auth] Local authentication successful for user:", sessionData.userId);
+          return {
+            id: sessionData.userId,
+            openId: `local-${sessionData.userId}`,
+            name: null,
+            email: null,
+            loginMethod: "local",
+            role: sessionData.role,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            lastSignedIn: new Date(),
+          } as User;
+        }
+      } catch (e) {
+        console.log("[Auth] Failed to parse local auth cookie:", e);
+      }
+    }
+    
     const sessionCookie = cookies.get(COOKIE_NAME);
     console.log("[Auth] Session cookie:", sessionCookie);
-    
-    // Intentar parsear como JSON (autenticación local)
-    try {
-      const sessionData = JSON.parse(sessionCookie || "");
-      console.log("[Auth] Parsed session data:", sessionData);
-      if (sessionData.userId && sessionData.role) {
-        console.log("[Auth] Local authentication successful for user:", sessionData.userId);
-        // Es una sesión local, retornar un usuario genérico
-        return {
-          id: sessionData.userId,
-          openId: `local-${sessionData.userId}`,
-          name: null,
-          email: null,
-          loginMethod: "local",
-          role: sessionData.role,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          lastSignedIn: new Date(),
-        } as User;
-      }
-    } catch (e) {
-      // No es JSON, intentar verificar como JWT de OAuth
-    }
     
     const session = await this.verifySession(sessionCookie);
 
