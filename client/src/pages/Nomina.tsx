@@ -205,7 +205,7 @@ export default function Nomina() {
 
         <Card>
           <CardHeader>
-            <CardTitle>colaboradores</CardTitle>
+            <CardTitle>Colaboradores</CardTitle>
             <CardDescription>Total: {filteredColaboradors.length} colaboradores</CardDescription>
           </CardHeader>
           <CardContent>

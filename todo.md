@@ -123,6 +123,11 @@
 ## Cambio de Logo
 - [x] Reemplazar logo anterior por nuevo logo NEO
 - [x] Actualizar página de login con nuevo logo
+- [x] Corregir ruta del logo NEO en Login.tsx
+
+## Problemas Resueltos
+- [x] Logo NEO no aparecía - RESUELTO: Archivo copiado y ruta actualizada
+- [x] Plantilla Excel no encontrada - RESUELTO: Disponible en /Plantilla_Nomina.xlsx
 
 ## Importación de Nómina - Plantilla Excel
 - [x] Crear archivo Excel de ejemplo para importación

@@ -37,7 +37,7 @@ export default function Login() {
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-4">
           <div className="flex justify-center mb-2">
-            <img src="/logo.png" alt="Logo" className="h-16 w-auto" />
+            <img src="/logo-neo.png" alt="Logo NEO" className="h-16 w-auto" />
           </div>
           <CardTitle className="text-2xl font-bold text-center">Iniciar Sesión</CardTitle>
           <CardDescription className="text-center">
