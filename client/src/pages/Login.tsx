@@ -6,12 +6,26 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 export default function Login() {
   const [usuario, setUsuario] = useState("");
   const [contraseña, setContraseña] = useState("");
   const [, setLocation] = useLocation();
   const loginMutation = trpc.auth.login.useMutation();
+  const { user } = useAuth();
+
+  // Si ya está autenticado, redirigir según rol
+  if (user) {
+    if (user.role === "admin") {
+      setLocation("/dashboard");
+    } else {
+      setLocation("/nomina");
+    }
+    return null;
+  }
+
+  const { refresh } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +39,15 @@ export default function Login() {
       const result = await loginMutation.mutateAsync({ usuario, contraseña });
       if (result.success) {
         toast.success("Sesión iniciada correctamente");
-        setLocation("/dashboard");
+        // Refrescar el estado de autenticación
+        await refresh();
+        // Redirigir según el rol
+        const role = result.usuario?.role;
+        if (role === "admin") {
+          setLocation("/dashboard");
+        } else {
+          setLocation("/nomina");
+        }
       }
     } catch (error: any) {
       toast.error(error.message || "Error al iniciar sesión");
