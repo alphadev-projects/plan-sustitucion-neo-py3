@@ -157,3 +157,9 @@
 - [x] Agregar opción "NO APLICA" para reemplazo sin asignación - RESUELTO
 - [ ] Error en primer login con usuario estándar - Requiere refresh (PENDIENTE: investigar)
 - [x] Toggle "Marcar como puesto clave" muy a la derecha - RESUELTO: Toggle ahora está al lado del texto
+
+## Mejoras de UX - Ronda 3
+- [x] Agregar instrucciones en página de crear plan (pasos, datos a completar, cuándo marcar puesto clave) - RESUELTO
+- [x] Agregar instrucciones en módulo de nómina (explicar su propósito) - RESUELTO
+- [x] Mejorar navegación en Gestión de Usuarios (agregar sidebar con acceso a otros módulos) - RESUELTO
+- [x] Permitir navegar desde Gestión de Usuarios sin solo retroceso - RESUELTO

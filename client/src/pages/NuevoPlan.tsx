@@ -81,6 +81,30 @@ export default function NuevoPlan() {
           </div>
         </div>
 
+        <Card className="bg-blue-50 border-blue-200">
+          <CardHeader>
+            <CardTitle className="text-blue-900">📋 Instrucciones para crear un Plan de Sustitución</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm text-blue-800">
+            <div>
+              <p className="font-semibold">1. Selecciona el Departamento y Colaborador</p>
+              <p className="text-blue-700">Elige el departamento donde trabaja el colaborador y luego selecciona su nombre de la lista.</p>
+            </div>
+            <div>
+              <p className="font-semibold">2. Asigna un Reemplazo</p>
+              <p className="text-blue-700">Selecciona el departamento del reemplazo y luego elige la persona que lo sustituirá. Si no hay reemplazo disponible, selecciona "NO APLICA".</p>
+            </div>
+            <div>
+              <p className="font-semibold">3. Marca como Puesto Clave (Opcional)</p>
+              <p className="text-blue-700">Si este puesto es crítico para la organización, activa el toggle "Marcar como puesto clave" para que los administradores estén alertas.</p>
+            </div>
+            <div>
+              <p className="font-semibold">4. Guarda el Plan</p>
+              <p className="text-blue-700">Haz clic en "Crear Plan" para guardar los cambios.</p>
+            </div>
+          </CardContent>
+        </Card>
+
         <Card>
           <CardHeader>
             <CardTitle>Información del Plan</CardTitle>

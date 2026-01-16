@@ -79,11 +79,30 @@ export default function Nomina() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
+        <Card className="bg-green-50 border-green-200">
+          <CardHeader>
+            <CardTitle className="text-green-900">📊 Modulo de Nomina</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm text-green-800">
+            <p>Este modulo te permite <strong>visualizar y gestionar el catalogo completo de colaboradores</strong> de la organizacion.</p>
+            <div className="space-y-2 mt-3">
+              <p className="font-semibold">Funcionalidades disponibles:</p>
+              <ul className="list-disc list-inside text-green-700 space-y-1">
+                <li><strong>Buscar colaboradores:</strong> Por nombre, cedula de identidad o cargo</li>
+                <li><strong>Filtrar por:</strong> Departamento, area o sede</li>
+                <li><strong>Exportar datos:</strong> Descarga la lista en formato Excel (solo administradores)</li>
+                <li><strong>Importar colaboradores:</strong> Carga nuevos colaboradores desde un archivo Excel (solo administradores)</li>
+              </ul>
+            </div>
+            <p className="mt-3 text-green-700"><strong>Tip:</strong> Usa esta informacion para crear planes de sustitucion en el modulo Planes de Sustitucion.</p>
+          </CardContent>
+        </Card>
+
         {!isAdmin && (
           <Alert>
             <Info className="h-4 w-4" />
             <AlertDescription>
-              Tienes acceso de solo lectura a la nómina. No puedes editar ni eliminar datos.
+              Tienes acceso de solo lectura a la nomina. No puedes editar ni eliminar datos.
             </AlertDescription>
           </Alert>
         )}
