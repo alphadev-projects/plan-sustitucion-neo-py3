@@ -156,4 +156,4 @@
 - [x] Usuario registra como "usuario" en lugar del nombre real (natalia.c) - RESUELTO
 - [x] Agregar opción "NO APLICA" para reemplazo sin asignación - RESUELTO
 - [ ] Error en primer login con usuario estándar - Requiere refresh (PENDIENTE: investigar)
-- [x] Toggle "Marcar como puesto clave" muy a la derecha - RESUELTO: Ajustado layout
+- [x] Toggle "Marcar como puesto clave" muy a la derecha - RESUELTO: Toggle ahora está al lado del texto

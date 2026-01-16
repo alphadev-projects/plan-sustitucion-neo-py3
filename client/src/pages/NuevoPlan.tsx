@@ -208,16 +208,18 @@ export default function NuevoPlan() {
                 )}
               </div>
 
-              <div className="border-t pt-6 flex items-center justify-between gap-4">
-                <div className="space-y-2 flex-1">
-                  <Label htmlFor="puestoClave">Marcar como puesto clave</Label>
-                  <p className="text-sm text-muted-foreground">Este es un puesto crítico para la organización</p>
+              <div className="border-t pt-6">
+                <div className="flex items-center gap-3">
+                  <Switch
+                    id="puestoClave"
+                    checked={puestoClave}
+                    onCheckedChange={setPuestoClave}
+                  />
+                  <div className="space-y-1">
+                    <Label htmlFor="puestoClave" className="cursor-pointer">Marcar como puesto clave</Label>
+                    <p className="text-sm text-muted-foreground">Este es un puesto crítico para la organización</p>
+                  </div>
                 </div>
-                <Switch
-                  id="puestoClave"
-                  checked={puestoClave}
-                  onCheckedChange={setPuestoClave}
-                />
               </div>
 
               <div className="flex gap-4 pt-6">
