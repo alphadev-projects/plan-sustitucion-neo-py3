@@ -29,6 +29,7 @@ import {
   getPlansByDepartamento,
   getPlanStats,
   getPlanesGroupedByDepartamento,
+  getEmpleadosByCargoAndDepartamento,
   type InsertPlanSustitucion,
   getDb,
   createUsuarioLocal,
@@ -218,16 +219,54 @@ export const appRouter = router({
         departamento: z.string(),
         colaborador: z.string(),
         cargo: z.string(),
-        departamentoReemplazo: z.string(),
-        reemplazo: z.string(),
-        cargoReemplazo: z.string(),
+        tipoReemplazo: z.enum(["individual", "pool"]),
+        departamentoReemplazo: z.string().optional(),
+        reemplazo: z.string().optional(),
+        cargoReemplazo: z.string().optional(),
+        cargoPoolReemplazo: z.string().optional(),
+        departamentoPoolReemplazo: z.string().optional(),
         puestoClave: z.enum(["Si", "No"]),
       }))
       .mutation(async ({ input, ctx }) => {
-        return createPlan({
-          ...input,
-          usuario: ctx.user?.name || "usuario",
-        });
+        if (input.tipoReemplazo === "pool") {
+          const colaboradoresPool = await getEmpleadosByCargoAndDepartamento(
+            input.cargoPoolReemplazo!,
+            input.departamentoPoolReemplazo!
+          );
+          
+          const planesCreados = [];
+          for (const colaborador of colaboradoresPool) {
+            const plan = await createPlan({
+              empleadoId: input.empleadoId,
+              departamento: input.departamento,
+              colaborador: input.colaborador,
+              cargo: input.cargo,
+              departamentoReemplazo: input.departamentoPoolReemplazo!,
+              reemplazo: colaborador.nombre,
+              cargoReemplazo: input.cargoPoolReemplazo!,
+              tipoReemplazo: "pool",
+              cargoPoolReemplazo: input.cargoPoolReemplazo!,
+              departamentoPoolReemplazo: input.departamentoPoolReemplazo!,
+              puestoClave: input.puestoClave,
+              usuario: ctx.user?.name || "usuario",
+            });
+            planesCreados.push(plan);
+          }
+          return { success: true, planesCreados, totalCreados: planesCreados.length };
+        } else {
+          return createPlan({
+            empleadoId: input.empleadoId,
+            departamento: input.departamento,
+            colaborador: input.colaborador,
+            cargo: input.cargo,
+            departamentoReemplazo: input.departamentoReemplazo!,
+            reemplazo: input.reemplazo!,
+            cargoReemplazo: input.cargoReemplazo!,
+            tipoReemplazo: "individual",
+            puestoClave: input.puestoClave,
+            usuario: ctx.user?.name || "usuario",
+          });
+        }
       }),
 
     update: adminProcedure

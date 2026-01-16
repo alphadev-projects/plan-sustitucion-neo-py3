@@ -167,3 +167,13 @@
 ## Correcciones Ronda 4
 - [x] Corregir typo: "Planos" → "Planes" en sidebar (no encontrado en código)
 - [x] Agregar instrucciones en módulo Planes (no solo en NuevoPlan) - RESUELTO
+
+## Feature: Sustitución por Pool/Equipo
+- [x] Actualizar schema: agregar campo `tipoReemplazo` ("individual" | "pool") - RESUELTO
+- [x] Agregar campo `cargoPoolReemplazo` y `departamentoPoolReemplazo` para planes por pool - RESUELTO
+- [x] Actualizar procedimiento createPlan para soportar modalidad pool - RESUELTO
+- [x] Crear procedimiento para obtener colaboradores por cargo y departamento - RESUELTO
+- [ ] Actualizar UI NuevoPlan con selector de modalidad (Individual/Pool/No Aplica)
+- [ ] Actualizar vista Planes para mostrar tipo de reemplazo
+- [ ] Implementar edición de planes para administradores
+- [ ] Agregar tests para modalidad pool

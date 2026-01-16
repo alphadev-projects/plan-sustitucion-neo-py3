@@ -238,6 +238,13 @@ export async function getPlanesGroupedByDepartamento() {
   return grouped;
 }
 
+export async function getEmpleadosByCargoAndDepartamento(cargo: string, departamento: string) {
+  const db = await getDb();
+  if (!db) return [];
+  const results = await db.select().from(empleados);
+  return results.filter((e) => e.cargo === cargo && e.departamento === departamento);
+}
+
 // Funciones para usuarios locales
 import { usuariosLocales, type InsertUsuarioLocal, type UsuarioLocal } from "../drizzle/schema";
 import bcrypt from "bcrypt";

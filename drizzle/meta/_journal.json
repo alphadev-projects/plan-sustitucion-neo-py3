@@ -29,6 +29,13 @@
       "when": 1768406742768,
       "tag": "0003_good_praxagora",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1768595242424,
+      "tag": "0004_peaceful_freak",
+      "breakpoints": true
     }
   ]
 }

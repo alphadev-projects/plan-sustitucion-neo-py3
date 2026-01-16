@@ -54,6 +54,7 @@ describe("planes procedures", () => {
       departamento: "Test Dept",
       colaborador: "Test Colaborador",
       cargo: "Test Cargo",
+      tipoReemplazo: "individual",
       departamentoReemplazo: "Test Dept",
       reemplazo: "Test Reemplazo",
       cargoReemplazo: "Test Cargo",
