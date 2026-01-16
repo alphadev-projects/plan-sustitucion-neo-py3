@@ -30,12 +30,18 @@ export default function NuevoPlan() {
 
   const colaboradorSeleccionado = colaboradors?.find((e) => e.id === parseInt(colaboradorId));
   const reemplazoSeleccionado = reemplazos?.find((e) => e.id === parseInt(reemplazoId));
+  const esNoAplica = reemplazoId === "NO_APLICA";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!colaboradorSeleccionado || !reemplazoSeleccionado) {
-      alert("Por favor selecciona colaborador y reemplazo");
+    if (!colaboradorSeleccionado) {
+      alert("Por favor selecciona un colaborador");
+      return;
+    }
+
+    if (!reemplazoId) {
+      alert("Por favor selecciona un reemplazo o marca como NO APLICA");
       return;
     }
 
@@ -45,9 +51,9 @@ export default function NuevoPlan() {
         departamento: colaboradorSeleccionado.departamento,
         colaborador: colaboradorSeleccionado.nombre,
         cargo: colaboradorSeleccionado.cargo,
-        departamentoReemplazo: reemplazoSeleccionado.departamento,
-        reemplazo: reemplazoSeleccionado.nombre,
-        cargoReemplazo: reemplazoSeleccionado.cargo,
+        departamentoReemplazo: esNoAplica ? "N/A" : reemplazoSeleccionado!.departamento,
+        reemplazo: esNoAplica ? "NO APLICA" : reemplazoSeleccionado!.nombre,
+        cargoReemplazo: esNoAplica ? "N/A" : reemplazoSeleccionado!.cargo,
         puestoClave: puestoClave ? "Si" : "No",
       });
       setLocation("/planes");
@@ -148,7 +154,8 @@ export default function NuevoPlan() {
                         setDepartamentoReemplazo(e.target.value);
                         setReemplazoId("");
                       }}
-                      className="w-full px-3 py-2 border rounded-lg bg-background"
+                      disabled={esNoAplica}
+                      className="w-full px-3 py-2 border rounded-lg bg-background disabled:opacity-50"
                     >
                       <option value="">Selecciona un departamento</option>
                       {(departamentos || []).map((dept: string) => (
@@ -165,10 +172,11 @@ export default function NuevoPlan() {
                       id="reemplazo"
                       value={reemplazoId}
                       onChange={(e) => setReemplazoId(e.target.value)}
-                      disabled={!departamentoReemplazo}
+                      disabled={!departamentoReemplazo && !esNoAplica}
                       className="w-full px-3 py-2 border rounded-lg bg-background disabled:opacity-50"
                     >
                       <option value="">Selecciona un reemplazo</option>
+                      <option value="NO_APLICA">NO APLICA - Sin reemplazo asignado</option>
                       {(reemplazos || []).map((emp: any) => (
                         <option key={emp.id} value={emp.id}>
                           {emp.nombre}
@@ -178,7 +186,7 @@ export default function NuevoPlan() {
                   </div>
                 </div>
 
-                {reemplazoSeleccionado && (
+                {reemplazoSeleccionado && !esNoAplica && (
                   <div className="bg-accent/50 p-4 rounded-lg space-y-2 mt-4">
                     <div>
                       <p className="text-sm text-muted-foreground">Cargo</p>
@@ -190,10 +198,18 @@ export default function NuevoPlan() {
                     </div>
                   </div>
                 )}
+
+                {esNoAplica && (
+                  <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg mt-4">
+                    <p className="text-sm text-yellow-800">
+                      ⚠️ Este puesto actualmente no tiene reemplazo asignado
+                    </p>
+                  </div>
+                )}
               </div>
 
-              <div className="border-t pt-6 flex items-center justify-between">
-                <div className="space-y-2">
+              <div className="border-t pt-6 flex items-center justify-between gap-4">
+                <div className="space-y-2 flex-1">
                   <Label htmlFor="puestoClave">Marcar como puesto clave</Label>
                   <p className="text-sm text-muted-foreground">Este es un puesto crítico para la organización</p>
                 </div>
@@ -214,7 +230,7 @@ export default function NuevoPlan() {
                 </Button>
                 <Button
                   type="submit"
-                  disabled={!colaboradorSeleccionado || !reemplazoSeleccionado || createPlan.isPending}
+                  disabled={!colaboradorSeleccionado || !reemplazoId || createPlan.isPending}
                   className="gap-2"
                 >
                   {createPlan.isPending && <Loader2 className="h-4 w-4 animate-spin" />}

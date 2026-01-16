@@ -77,7 +77,7 @@ export const appRouter = router({
           throw new TRPCError({ code: "UNAUTHORIZED", message: "Usuario o contraseña inválidos" });
         }
         const cookieOptions = getSessionCookieOptions(ctx.req);
-        const cookieValue = JSON.stringify({ userId: usuarioLocal.id, role: usuarioLocal.role });
+        const cookieValue = JSON.stringify({ userId: usuarioLocal.id, usuario: usuarioLocal.usuario, role: usuarioLocal.role });
         console.log("[Login] Setting local auth cookie:", LOCAL_AUTH_COOKIE_NAME, "=", cookieValue);
         ctx.res.cookie(LOCAL_AUTH_COOKIE_NAME, cookieValue, cookieOptions);
         // Retornar el usuario con todos los campos necesarios

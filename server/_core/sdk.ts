@@ -266,12 +266,12 @@ class SDKServer {
       try {
         const sessionData = JSON.parse(localAuthCookie);
         console.log("[Auth] Parsed local session data:", sessionData);
-        if (sessionData.userId && sessionData.role) {
-          console.log("[Auth] Local authentication successful for user:", sessionData.userId);
+        if (sessionData.userId && sessionData.role && sessionData.usuario) {
+          console.log("[Auth] Local authentication successful for user:", sessionData.usuario);
           return {
             id: sessionData.userId,
             openId: `local-${sessionData.userId}`,
-            name: null,
+            name: sessionData.usuario,
             email: null,
             loginMethod: "local",
             role: sessionData.role,

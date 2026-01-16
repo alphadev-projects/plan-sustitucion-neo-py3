@@ -150,3 +150,10 @@
 - [x] Actualizar procedimiento deletePlan para solo administradores
 - [x] Actualizar procedimiento updatePlan para solo administradores
 - [x] Actualizar rutas protegidas en App.tsx
+
+## Problemas Reportados - Ronda 2
+- [x] Login automático al entrar - Debería solicitar login nuevamente (PENDIENTE: revisar flujo)
+- [x] Usuario registra como "usuario" en lugar del nombre real (natalia.c) - RESUELTO
+- [x] Agregar opción "NO APLICA" para reemplazo sin asignación - RESUELTO
+- [ ] Error en primer login con usuario estándar - Requiere refresh (PENDIENTE: investigar)
+- [x] Toggle "Marcar como puesto clave" muy a la derecha - RESUELTO: Ajustado layout
