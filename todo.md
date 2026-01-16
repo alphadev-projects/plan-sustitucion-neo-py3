@@ -163,3 +163,7 @@
 - [x] Agregar instrucciones en módulo de nómina (explicar su propósito) - RESUELTO
 - [x] Mejorar navegación en Gestión de Usuarios (agregar sidebar con acceso a otros módulos) - RESUELTO
 - [x] Permitir navegar desde Gestión de Usuarios sin solo retroceso - RESUELTO
+
+## Correcciones Ronda 4
+- [x] Corregir typo: "Planos" → "Planes" en sidebar (no encontrado en código)
+- [x] Agregar instrucciones en módulo Planes (no solo en NuevoPlan) - RESUELTO

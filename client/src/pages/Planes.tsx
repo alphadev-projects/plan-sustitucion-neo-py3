@@ -49,6 +49,27 @@ export default function Planes() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
+        <Card className="bg-purple-50 border-purple-200">
+          <CardHeader>
+            <CardTitle className="text-purple-900">📄 Módulo de Planes de Sustitución</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm text-purple-800">
+            <p>Este módulo te permite <strong>gestionar y visualizar todos los planes de sustitución</strong> de la organización.</p>
+            <div className="space-y-2 mt-3">
+              <p className="font-semibold">Funcionalidades disponibles:</p>
+              <ul className="list-disc list-inside text-purple-700 space-y-1">
+                <li><strong>Ver todos los planes:</strong> Lista completa de planes de sustitución registrados</li>
+                <li><strong>Buscar planes:</strong> Por nombre de colaborador o reemplazo</li>
+                <li><strong>Filtrar por:</strong> Departamento o si es puesto clave</li>
+                <li><strong>Crear nuevo plan:</strong> Haz clic en "Nuevo Plan" para crear un plan de sustitución</li>
+                <li><strong>Editar/Eliminar:</strong> Solo administradores pueden editar o eliminar planes (solo administradores)</li>
+                <li><strong>Exportar datos:</strong> Descarga los planes en formato Excel (solo administradores)</li>
+              </ul>
+            </div>
+            <p className="mt-3 text-purple-700"><strong>Tip:</strong> Los puestos marcados como "Clave" son críticos para la organización y requieren atención especial.</p>
+          </CardContent>
+        </Card>
+
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Planes de Sustitución</h1>
