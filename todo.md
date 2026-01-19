@@ -208,3 +208,10 @@
 - [x] Mejorar mensajes de error con instrucciones claras
 - [x] Crear 6 tests para validación de importación
 - [x] Todos los tests pasando (22/22)
+
+
+## Error Reportado - Cedula como Número
+- [x] Corregir: cedula llega como número en lugar de string (registro 243)
+- [x] Convertir todos los valores mapeados a strings
+- [x] Validar que otros campos también se convierten correctamente
+- [x] Probar con archivo que contiene cédulas numéricas

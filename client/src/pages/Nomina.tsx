@@ -40,6 +40,30 @@ export default function Nomina() {
     return matchSearch && matchDept && matchSede && matchArea;
   });
 
+  // Función auxiliar para convertir cualquier valor a string
+  const toString = (val: any): string => {
+    if (val === null || val === undefined) return "";
+    return String(val).trim();
+  };
+
+  const mapearEmpleados = (jsonData: any[]) => {
+    return jsonData.map((row: any) => {
+      const rowLower = Object.keys(row).reduce((acc: any, key: string) => {
+        acc[key.toLowerCase().trim()] = row[key];
+        return acc;
+      }, {});
+
+      return {
+        sede: toString(rowLower.sede || rowLower["sede"]),
+        cedula: toString(rowLower.cedula || rowLower["c.i."] || rowLower["ci"]),
+        nombre: toString(rowLower.nombre || rowLower["nombre"]),
+        area: toString(rowLower.area || rowLower["área"]),
+        departamento: toString(rowLower.departamento || rowLower["departamento"]),
+        cargo: toString(rowLower.cargo || rowLower["cargo"]),
+      };
+    });
+  };
+
   const handleFileSelect = async (file: File | undefined) => {
     if (!file) {
       setImportFile(null);
@@ -74,22 +98,8 @@ export default function Nomina() {
           return;
         }
 
-        // Mapear columnas
-        const empleadosMapeados = jsonData.map((row: any) => {
-          const rowLower = Object.keys(row).reduce((acc: any, key: string) => {
-            acc[key.toLowerCase().trim()] = row[key];
-            return acc;
-          }, {});
-
-          return {
-            sede: rowLower.sede || rowLower["sede"] || "",
-            cedula: rowLower.cedula || rowLower["c.i."] || rowLower["ci"] || "",
-            nombre: rowLower.nombre || rowLower["nombre"] || "",
-            area: rowLower.area || rowLower["área"] || "",
-            departamento: rowLower.departamento || rowLower["departamento"] || "",
-            cargo: rowLower.cargo || rowLower["cargo"] || "",
-          };
-        });
+        // Mapear columnas y convertir a strings
+        const empleadosMapeados = mapearEmpleados(jsonData);
 
         // Validar que hay datos mapeados correctamente
         const validEmpleados = empleadosMapeados.filter((emp: any) =>
@@ -147,24 +157,8 @@ export default function Nomina() {
           return;
         }
         
-        // Mapear columnas del archivo Excel a los campos esperados
-        // Soporta múltiples variaciones de nombres de columnas
-        const empleadosMapeados = jsonData.map((row: any) => {
-          // Crear un mapa de claves en minúsculas para búsqueda flexible
-          const rowLower = Object.keys(row).reduce((acc: any, key: string) => {
-            acc[key.toLowerCase().trim()] = row[key];
-            return acc;
-          }, {});
-          
-          return {
-            sede: rowLower.sede || rowLower["sede"] || "",
-            cedula: rowLower.cedula || rowLower["c.i."] || rowLower["ci"] || "",
-            nombre: rowLower.nombre || rowLower["nombre"] || "",
-            area: rowLower.area || rowLower["área"] || "",
-            departamento: rowLower.departamento || rowLower["departamento"] || "",
-            cargo: rowLower.cargo || rowLower["cargo"] || "",
-          };
-        });
+        // Mapear columnas y convertir a strings
+        const empleadosMapeados = mapearEmpleados(jsonData);
         
         // Validar que hay datos mapeados correctamente
         const validEmpleados = empleadosMapeados.filter((emp: any) => 
