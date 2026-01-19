@@ -177,3 +177,6 @@
 - [x] Actualizar vista Planes para mostrar tipo de reemplazo - RESUELTO
 - [ ] Implementar edición de planes para administradores
 - [ ] Agregar tests para modalidad pool
+
+## Correcciones Ronda 5
+- [x] Excluir colaborador seleccionado del pool de reemplazos (no debe aparecer dos veces) - RESUELTO

@@ -241,6 +241,10 @@ export const appRouter = router({
           
           const planesCreados = [];
           for (const colaborador of colaboradoresPool) {
+            // Excluir al colaborador seleccionado del pool
+            if (colaborador.nombre === input.colaborador) {
+              continue;
+            }
             const plan = await createPlan({
               empleadoId: input.empleadoId,
               departamento: input.departamento,
