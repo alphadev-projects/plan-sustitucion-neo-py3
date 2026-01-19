@@ -11,6 +11,11 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import * as XLSX from "xlsx";
 import { toast } from "sonner";
 
+interface ImportData {
+  preview: any[];
+  totalValidRecords: number;
+}
+
 export default function Nomina() {
   const { isAdmin } = useRole();
   const { data: colaboradors, isLoading } = trpc.empleados.list.useQuery();
@@ -26,8 +31,9 @@ export default function Nomina() {
   const [filterArea, setFilterArea] = useState("");
   const [importOpen, setImportOpen] = useState(false);
   const [importFile, setImportFile] = useState<File | null>(null);
-  const [importPreview, setImportPreview] = useState<any[] | null>(null);
+  const [importData, setImportData] = useState<ImportData | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
+  const [isProcessingFile, setIsProcessingFile] = useState(false);
 
   const filteredColaboradors = (colaboradors || []).filter((emp: any) => {
     const matchSearch =
@@ -67,8 +73,9 @@ export default function Nomina() {
   const handleFileSelect = async (file: File | undefined) => {
     if (!file) {
       setImportFile(null);
-      setImportPreview(null);
+      setImportData(null);
       setImportError(null);
+      setIsProcessingFile(false);
       return;
     }
 
@@ -76,12 +83,14 @@ export default function Nomina() {
     if (!file.name.endsWith('.xlsx') && !file.name.endsWith('.xls')) {
       setImportError("El archivo debe ser en formato Excel (.xlsx o .xls)");
       setImportFile(null);
-      setImportPreview(null);
+      setImportData(null);
+      setIsProcessingFile(false);
       return;
     }
 
     setImportFile(file);
     setImportError(null);
+    setIsProcessingFile(true);
 
     // Leer el archivo para mostrar preview
     const reader = new FileReader();
@@ -94,7 +103,8 @@ export default function Nomina() {
 
         if (!jsonData || jsonData.length === 0) {
           setImportError("El archivo no contiene datos");
-          setImportPreview(null);
+          setImportData(null);
+          setIsProcessingFile(false);
           return;
         }
 
@@ -108,15 +118,22 @@ export default function Nomina() {
 
         if (validEmpleados.length === 0) {
           setImportError("No se encontraron datos válidos. Verifica que las columnas sean: Sede, C.I., Nombre, Área, Departamento, Cargo");
-          setImportPreview(null);
+          setImportData(null);
+          setIsProcessingFile(false);
           return;
         }
 
-        setImportPreview(validEmpleados.slice(0, 5)); // Mostrar solo los primeros 5 registros
+        // Guardar todos los datos válidos pero mostrar solo los primeros 5 en preview
+        setImportData({
+          preview: validEmpleados.slice(0, 5),
+          totalValidRecords: validEmpleados.length,
+        });
         setImportError(null);
+        setIsProcessingFile(false);
       } catch (error) {
         setImportError("Error al leer el archivo. Asegúrate de que sea un archivo Excel válido.");
-        setImportPreview(null);
+        setImportData(null);
+        setIsProcessingFile(false);
       }
     };
     reader.readAsBinaryString(file);
@@ -139,7 +156,7 @@ export default function Nomina() {
   };
 
   const handleImport = async () => {
-    if (!importFile) {
+    if (!importFile || !importData) {
       toast.error("Por favor selecciona un archivo");
       return;
     }
@@ -178,7 +195,7 @@ export default function Nomina() {
         toast.success(`${validEmpleados.length} colaboradores importados exitosamente`);
         setImportOpen(false);
         setImportFile(null);
-        setImportPreview(null);
+        setImportData(null);
         setImportError(null);
         // Refrescar la lista de colaboradores
         await utils.empleados.list.invalidate();
@@ -249,7 +266,14 @@ export default function Nomina() {
                         accept=".xlsx,.xls"
                         onChange={(e) => handleFileSelect(e.target.files?.[0])}
                         className="block w-full text-sm text-slate-500"
+                        disabled={isProcessingFile}
                       />
+                      {isProcessingFile && (
+                        <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                          Procesando archivo...
+                        </p>
+                      )}
                     </div>
 
                     {importError && (
@@ -259,49 +283,56 @@ export default function Nomina() {
                       </Alert>
                     )}
 
-                    {importPreview && importPreview.length > 0 && (
+                    {importData && importData.totalValidRecords > 0 && (
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
                           <CheckCircle2 className="h-4 w-4 text-green-600" />
                           <p className="text-sm font-medium text-green-700">
-                            Vista previa: {importPreview.length} registros válidos encontrados
+                            Total de registros válidos: <strong>{importData.totalValidRecords}</strong>
                           </p>
                         </div>
-                        <div className="overflow-x-auto bg-slate-50 rounded-md p-3">
-                          <table className="w-full text-xs">
-                            <thead>
-                              <tr className="border-b">
-                                <th className="text-left py-2 px-2 font-semibold">Nombre</th>
-                                <th className="text-left py-2 px-2 font-semibold">C.I.</th>
-                                <th className="text-left py-2 px-2 font-semibold">Cargo</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {importPreview.map((emp: any, idx: number) => (
-                                <tr key={idx} className="border-b">
-                                  <td className="py-1 px-2">{emp.nombre}</td>
-                                  <td className="py-1 px-2">{emp.cedula}</td>
-                                  <td className="py-1 px-2">{emp.cargo}</td>
+                        <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
+                          <p className="text-xs text-blue-700 mb-3">
+                            <strong>Vista previa:</strong> Mostrando los primeros 5 registros de {importData.totalValidRecords}
+                          </p>
+                          <div className="overflow-x-auto">
+                            <table className="w-full text-xs">
+                              <thead>
+                                <tr className="border-b border-blue-200">
+                                  <th className="text-left py-2 px-2 font-semibold text-blue-900">#</th>
+                                  <th className="text-left py-2 px-2 font-semibold text-blue-900">Nombre</th>
+                                  <th className="text-left py-2 px-2 font-semibold text-blue-900">C.I.</th>
+                                  <th className="text-left py-2 px-2 font-semibold text-blue-900">Cargo</th>
                                 </tr>
-                              ))}
-                            </tbody>
-                          </table>
+                              </thead>
+                              <tbody>
+                                {importData.preview.map((emp: any, idx: number) => (
+                                  <tr key={idx} className="border-b border-blue-100 hover:bg-blue-100">
+                                    <td className="py-1 px-2 text-blue-600">{idx + 1}</td>
+                                    <td className="py-1 px-2">{emp.nombre}</td>
+                                    <td className="py-1 px-2">{emp.cedula}</td>
+                                    <td className="py-1 px-2">{emp.cargo}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       </div>
                     )}
 
                     <Button
                       onClick={handleImport}
-                      disabled={!importFile || !importPreview || importMutation.isPending || !!importError}
+                      disabled={!importFile || !importData || importMutation.isPending || !!importError || isProcessingFile}
                       className="w-full"
                     >
                       {importMutation.isPending ? (
                         <>
                           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          Importando...
+                          Importando {importData?.totalValidRecords || 0} registros...
                         </>
                       ) : (
-                        "Importar colaboradores"
+                        `Importar ${importData?.totalValidRecords || 0} colaboradores`
                       )}
                     </Button>
                   </div>

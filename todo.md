@@ -215,3 +215,8 @@
 - [x] Convertir todos los valores mapeados a strings
 - [x] Validar que otros campos también se convierten correctamente
 - [x] Probar con archivo que contiene cédulas numéricas
+
+## Observaciones de Usuario - Mejoras en Importación
+- [x] Mostrar cantidad REAL de registros validados (no solo primeros 5)
+- [x] Optimizar respuesta del botón Importar (eliminar demora)
+- [x] Mejorar UX del diálogo de importación
