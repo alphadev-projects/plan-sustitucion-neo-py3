@@ -41,6 +41,8 @@ import {
   deleteUsuarioLocal,
   type UsuarioLocal,
   importarEmpleados,
+  validatePlanIntegrity,
+  type PlanIntegrityIssue,
 } from "./db";
 
 export const appRouter = router({
@@ -310,6 +312,10 @@ export const appRouter = router({
 
     groupedByDepartamento: publicProcedure.query(async () => {
       return getPlanesGroupedByDepartamento();
+    }),
+
+    validateIntegrity: publicProcedure.query(async () => {
+      return validatePlanIntegrity();
     }),
   }),
 });

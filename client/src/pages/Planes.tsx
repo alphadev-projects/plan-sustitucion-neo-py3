@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Download, Edit2, Trash2, Search, AlertCircle, Loader2 } from "lucide-react";
+import { Plus, Download, Edit2, Trash2, Search, AlertCircle, Loader2, AlertTriangle } from "lucide-react";
 import { Link } from "wouter";
 import * as XLSX from "xlsx";
 import {
@@ -19,11 +19,13 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "sonner";
 
 export default function Planes() {
   const { isAdmin } = useRole();
   const { data: planes, isLoading } = trpc.planes.list.useQuery();
+  const { data: integrityIssues } = trpc.planes.validateIntegrity.useQuery();
   const { data: departamentos } = trpc.empleados.departamentos.useQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [filterDept, setFilterDept] = useState("");
@@ -46,6 +48,14 @@ export default function Planes() {
     const matchPuestoClave = !filterPuestoClave || plan.puestoClave === filterPuestoClave;
     return matchSearch && matchDept && matchPuestoClave;
   });
+
+  // Función para obtener problemas de un plan específico
+  const getPlanIssues = (planId: number) => {
+    return (integrityIssues || []).filter(issue => issue.planId === planId);
+  };
+
+  // Contar planes con problemas
+  const planesWithIssues = (planes || []).filter(plan => getPlanIssues(plan.id).length > 0);
 
   const handleExport = () => {
     const data = filteredPlanes.map((plan) => ({
@@ -90,6 +100,7 @@ export default function Planes() {
       });
       
       await utils.planes.list.invalidate();
+      await utils.planes.validateIntegrity.invalidate();
       setShowEditDialog(false);
       setEditingPlan(null);
       setEditFormData(null);
@@ -110,6 +121,7 @@ export default function Planes() {
     try {
       await deletePlan.mutateAsync({ id: planToDelete.id });
       await utils.planes.list.invalidate();
+      await utils.planes.validateIntegrity.invalidate();
       setShowDeleteDialog(false);
       setPlanToDelete(null);
       toast.success("Plan eliminado exitosamente");
@@ -141,6 +153,30 @@ export default function Planes() {
             <p className="mt-3 text-purple-700"><strong>Tip:</strong> Los puestos marcados como "Clave" son críticos para la organización y requieren atención especial.</p>
           </CardContent>
         </Card>
+
+        {/* Alerta de Integridad de Planes */}
+        {planesWithIssues.length > 0 && (
+          <Alert className="border-orange-200 bg-orange-50">
+            <AlertTriangle className="h-4 w-4 text-orange-600" />
+            <AlertDescription className="text-orange-800">
+              <strong className="block mb-2">⚠️ Se detectaron {planesWithIssues.length} plan(es) con inconsistencias</strong>
+              <p className="text-sm mb-2">Algunos colaboradores han desaparecido de la nómina o han cambiado de cargo/departamento. Estos planes deben ser revisados y actualizados.</p>
+              <div className="space-y-1 text-xs">
+                {integrityIssues?.slice(0, 3).map((issue) => (
+                  <div key={`${issue.planId}-${issue.issue}`} className="flex items-start gap-2">
+                    <span className="text-orange-600 font-bold">•</span>
+                    <span>{issue.message}</span>
+                  </div>
+                ))}
+                {(integrityIssues?.length || 0) > 3 && (
+                  <div className="text-orange-600 font-semibold">
+                    + {(integrityIssues?.length || 0) - 3} más...
+                  </div>
+                )}
+              </div>
+            </AlertDescription>
+          </Alert>
+        )}
 
         <div className="flex items-center justify-between">
           <div>
@@ -236,58 +272,74 @@ export default function Planes() {
                       <th className="text-left py-3 px-4 font-medium">Tipo Reemplazo</th>
                       <th className="text-left py-3 px-4 font-medium">Reemplazo</th>
                       <th className="text-left py-3 px-4 font-medium">Puesto Clave</th>
+                      <th className="text-left py-3 px-4 font-medium">Estado</th>
                       <th className="text-left py-3 px-4 font-medium">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredPlanes.map((plan) => (
-                      <tr key={plan.id} className="border-b hover:bg-accent/50 transition-colors">
-                        <td className="py-3 px-4 text-sm whitespace-nowrap">{new Date(plan.createdAt).toLocaleString()}</td>
-                        <td className="py-3 px-4 text-sm font-medium">{plan.usuario}</td>
-                        <td className="py-3 px-4">{plan.colaborador}</td>
-                        <td className="py-3 px-4">{plan.departamento}</td>
-                        <td className="py-3 px-4 text-sm text-muted-foreground">{plan.cargo}</td>
-                        <td className="py-3 px-4">
-                          {plan.tipoReemplazo === "pool" ? (
-                            <Badge className="bg-blue-500 hover:bg-blue-600">Pool - {plan.cargoPoolReemplazo}</Badge>
-                          ) : (
-                            <Badge variant="outline">Individual</Badge>
-                          )}
-                        </td>
-                        <td className="py-3 px-4">{plan.reemplazo}</td>
-                        <td className="py-3 px-4">
-                          {plan.puestoClave === "Si" ? (
-                            <Badge className="bg-amber-500 hover:bg-amber-600">Clave</Badge>
-                          ) : (
-                            <Badge variant="outline">Regular</Badge>
-                          )}
-                        </td>
-                        <td className="py-3 px-4">
-                          <div className="flex gap-2">
-                            {isAdmin && (
-                              <>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="gap-1"
-                                  onClick={() => handleEditClick(plan)}
-                                >
-                                  <Edit2 className="h-4 w-4" />
-                                </Button>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="gap-1 text-destructive hover:text-destructive"
-                                  onClick={() => handleDeleteClick(plan)}
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </>
+                    {filteredPlanes.map((plan) => {
+                      const issues = getPlanIssues(plan.id);
+                      const hasIssues = issues.length > 0;
+                      
+                      return (
+                        <tr key={plan.id} className={`border-b hover:bg-accent/50 transition-colors ${hasIssues ? 'bg-orange-50' : ''}`}>
+                          <td className="py-3 px-4 text-sm whitespace-nowrap">{new Date(plan.createdAt).toLocaleString()}</td>
+                          <td className="py-3 px-4 text-sm font-medium">{plan.usuario}</td>
+                          <td className="py-3 px-4">{plan.colaborador}</td>
+                          <td className="py-3 px-4">{plan.departamento}</td>
+                          <td className="py-3 px-4 text-sm text-muted-foreground">{plan.cargo}</td>
+                          <td className="py-3 px-4">
+                            {plan.tipoReemplazo === "pool" ? (
+                              <Badge className="bg-blue-500 hover:bg-blue-600">Pool - {plan.cargoPoolReemplazo}</Badge>
+                            ) : (
+                              <Badge variant="outline">Individual</Badge>
                             )}
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                          </td>
+                          <td className="py-3 px-4">{plan.reemplazo}</td>
+                          <td className="py-3 px-4">
+                            {plan.puestoClave === "Si" ? (
+                              <Badge className="bg-amber-500 hover:bg-amber-600">Clave</Badge>
+                            ) : (
+                              <Badge variant="outline">Regular</Badge>
+                            )}
+                          </td>
+                          <td className="py-3 px-4">
+                            {hasIssues ? (
+                              <div className="flex items-center gap-1">
+                                <AlertTriangle className="h-4 w-4 text-orange-600" />
+                                <span className="text-xs text-orange-600 font-semibold">Requiere actualización</span>
+                              </div>
+                            ) : (
+                              <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">Válido</Badge>
+                            )}
+                          </td>
+                          <td className="py-3 px-4">
+                            <div className="flex gap-2">
+                              {isAdmin && (
+                                <>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="gap-1"
+                                    onClick={() => handleEditClick(plan)}
+                                  >
+                                    <Edit2 className="h-4 w-4" />
+                                  </Button>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="gap-1 text-destructive hover:text-destructive"
+                                    onClick={() => handleDeleteClick(plan)}
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
