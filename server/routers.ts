@@ -83,8 +83,6 @@ export const appRouter = router({
         const cookieOptions = getSessionCookieOptions(ctx.req);
         const cookieValue = JSON.stringify({ userId: usuarioLocal.id, usuario: usuarioLocal.usuario, role: usuarioLocal.role });
         console.log("[Login] Setting local auth cookie:", LOCAL_AUTH_COOKIE_NAME, "=", cookieValue);
-        // Session-only cookie: expires when browser closes (no maxAge set)
-        // Server-side timeout validation is handled in context.ts
         ctx.res.cookie(LOCAL_AUTH_COOKIE_NAME, cookieValue, cookieOptions);
         // Retornar el usuario con todos los campos necesarios
         return {
