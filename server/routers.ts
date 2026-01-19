@@ -198,6 +198,11 @@ export const appRouter = router({
         const result = await importarEmpleados(input.empleados);
         return { success: true, ...result };
       }),
+    empleadosByCargoAndDepartamento: publicProcedure
+      .input(z.object({ cargo: z.string(), departamento: z.string() }))
+      .query(async ({ input }) => {
+        return getEmpleadosByCargoAndDepartamento(input.cargo, input.departamento);
+      }),
   }),
 
   // Procedures para planes de sustitución

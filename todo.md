@@ -175,8 +175,24 @@
 - [x] Crear procedimiento para obtener colaboradores por cargo y departamento - RESUELTO
 - [x] Actualizar UI NuevoPlan con selector de modalidad (Individual/Pool/No Aplica) - RESUELTO
 - [x] Actualizar vista Planes para mostrar tipo de reemplazo - RESUELTO
-- [ ] Implementar edición de planes para administradores
+- [x] Implementar edición de planes para administradores - RESUELTO
 - [ ] Agregar tests para modalidad pool
 
 ## Correcciones Ronda 5
 - [x] Excluir colaborador seleccionado del pool de reemplazos (no debe aparecer dos veces) - RESUELTO
+
+## Ronda de Pulido - Edición de Planes
+- [x] Implementar modal de edición de planes con campos editables
+- [x] Implementar modal de confirmación de eliminación
+- [x] Agregar validaciones en formulario de edición
+- [x] Restringir botones de edición/eliminación solo a administradores
+- [x] Agregar notificaciones de éxito/error con toast
+- [x] Invalidar cache de planes después de editar/eliminar
+
+## Ronda de Pulido - Tests y Optimización
+- [x] Agregar 6 tests para sustituciones por pool
+- [x] Crear procedimiento público empleadosByCargoAndDepartamento
+- [x] Mejorar validaciones en importación de nómina
+- [x] Agregar notificaciones de éxito al importar
+- [x] Corregir ortografía en módulo de Nómina
+- [x] Todos los tests pasando (16/16)

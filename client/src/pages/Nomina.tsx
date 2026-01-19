@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRole } from "@/hooks/useRole";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Info, Download, Search, Upload } from "lucide-react";
+import { Info, Download, Search, Upload, AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import * as XLSX from "xlsx";
+import { toast } from "sonner";
 
 export default function Nomina() {
   const { isAdmin } = useRole();
@@ -17,6 +18,7 @@ export default function Nomina() {
   const { data: sedes } = trpc.empleados.sedes.useQuery();
   const { data: areas } = trpc.empleados.areas.useQuery();
   const importMutation = trpc.empleados.importar.useMutation();
+  const utils = trpc.useUtils();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [filterDept, setFilterDept] = useState("");
@@ -53,7 +55,10 @@ export default function Nomina() {
   };
 
   const handleImport = async () => {
-    if (!importFile) return;
+    if (!importFile) {
+      toast.error("Por favor selecciona un archivo");
+      return;
+    }
     
     const reader = new FileReader();
     reader.onload = async (e) => {
@@ -63,13 +68,22 @@ export default function Nomina() {
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const jsonData = XLSX.utils.sheet_to_json(sheet);
         
+        if (!jsonData || jsonData.length === 0) {
+          toast.error("El archivo no contiene datos");
+          return;
+        }
+        
         await importMutation.mutateAsync({
           empleados: jsonData as any[],
         });
         
+        toast.success(`${jsonData.length} colaboradores importados exitosamente`);
         setImportOpen(false);
         setImportFile(null);
-      } catch (error) {
+        // Refrescar la lista de colaboradores
+        await utils.empleados.list.invalidate();
+      } catch (error: any) {
+        toast.error(error.message || "Error al importar el archivo");
         console.error("Error importing file:", error);
       }
     };
@@ -84,17 +98,17 @@ export default function Nomina() {
             <CardTitle className="text-green-900">📊 Modulo de Nomina</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-green-800">
-            <p>Este modulo te permite <strong>visualizar y gestionar el catalogo completo de colaboradores</strong> de la organizacion.</p>
+            <p>Este módulo te permite <strong>visualizar y gestionar el catálogo completo de colaboradores</strong> de la organización.</p>
             <div className="space-y-2 mt-3">
               <p className="font-semibold">Funcionalidades disponibles:</p>
               <ul className="list-disc list-inside text-green-700 space-y-1">
-                <li><strong>Buscar colaboradores:</strong> Por nombre, cedula de identidad o cargo</li>
-                <li><strong>Filtrar por:</strong> Departamento, area o sede</li>
+                <li><strong>Buscar colaboradores:</strong> Por nombre, cédula de identidad o cargo</li>
+                <li><strong>Filtrar por:</strong> Departamento, área o sede</li>
                 <li><strong>Exportar datos:</strong> Descarga la lista en formato Excel (solo administradores)</li>
                 <li><strong>Importar colaboradores:</strong> Carga nuevos colaboradores desde un archivo Excel (solo administradores)</li>
               </ul>
             </div>
-            <p className="mt-3 text-green-700"><strong>Tip:</strong> Usa esta informacion para crear planes de sustitucion en el modulo Planes de Sustitucion.</p>
+            <p className="mt-3 text-green-700"><strong>Tip:</strong> Usa esta información para crear planes de sustitución en el módulo Planes de Sustitución.</p>
           </CardContent>
         </Card>
 

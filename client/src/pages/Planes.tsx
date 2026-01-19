@@ -6,9 +6,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Download, Edit2, Trash2, Search } from "lucide-react";
+import { Plus, Download, Edit2, Trash2, Search, AlertCircle, Loader2 } from "lucide-react";
 import { Link } from "wouter";
 import * as XLSX from "xlsx";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { toast } from "sonner";
 
 export default function Planes() {
   const { isAdmin } = useRole();
@@ -17,6 +28,15 @@ export default function Planes() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterDept, setFilterDept] = useState("");
   const [filterPuestoClave, setFilterPuestoClave] = useState("");
+  const [editingPlan, setEditingPlan] = useState<any>(null);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [planToDelete, setPlanToDelete] = useState<any>(null);
+  const [editFormData, setEditFormData] = useState<any>(null);
+  
+  const updatePlan = trpc.planes.update.useMutation();
+  const deletePlan = trpc.planes.delete.useMutation();
+  const utils = trpc.useUtils();
 
   const filteredPlanes = (planes || []).filter((plan) => {
     const matchSearch =
@@ -44,6 +64,58 @@ export default function Planes() {
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Planes");
     XLSX.writeFile(wb, "planes_sustitucion.xlsx");
+  };
+
+  const handleEditClick = (plan: any) => {
+    setEditingPlan(plan);
+    setEditFormData({
+      reemplazo: plan.reemplazo,
+      departamentoReemplazo: plan.departamentoReemplazo,
+      cargoReemplazo: plan.cargoReemplazo,
+      puestoClave: plan.puestoClave === "Si",
+    });
+    setShowEditDialog(true);
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editingPlan || !editFormData) return;
+
+    try {
+      await updatePlan.mutateAsync({
+        id: editingPlan.id,
+        reemplazo: editFormData.reemplazo,
+        departamentoReemplazo: editFormData.departamentoReemplazo,
+        cargoReemplazo: editFormData.cargoReemplazo,
+        puestoClave: editFormData.puestoClave ? "Si" : "No",
+      });
+      
+      await utils.planes.list.invalidate();
+      setShowEditDialog(false);
+      setEditingPlan(null);
+      setEditFormData(null);
+      toast.success("Plan actualizado exitosamente");
+    } catch (error) {
+      toast.error("Error al actualizar el plan");
+    }
+  };
+
+  const handleDeleteClick = (plan: any) => {
+    setPlanToDelete(plan);
+    setShowDeleteDialog(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!planToDelete) return;
+
+    try {
+      await deletePlan.mutateAsync({ id: planToDelete.id });
+      await utils.planes.list.invalidate();
+      setShowDeleteDialog(false);
+      setPlanToDelete(null);
+      toast.success("Plan eliminado exitosamente");
+    } catch (error) {
+      toast.error("Error al eliminar el plan");
+    }
   };
 
   return (
@@ -192,12 +264,26 @@ export default function Planes() {
                         </td>
                         <td className="py-3 px-4">
                           <div className="flex gap-2">
-                            <Button variant="ghost" size="sm" className="gap-1">
-                              <Edit2 className="h-4 w-4" />
-                            </Button>
-                            <Button variant="ghost" size="sm" className="gap-1 text-destructive hover:text-destructive">
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
+                            {isAdmin && (
+                              <>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="gap-1"
+                                  onClick={() => handleEditClick(plan)}
+                                >
+                                  <Edit2 className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="gap-1 text-destructive hover:text-destructive"
+                                  onClick={() => handleDeleteClick(plan)}
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </>
+                            )}
                           </div>
                         </td>
                       </tr>
@@ -208,6 +294,121 @@ export default function Planes() {
             )}
           </CardContent>
         </Card>
+
+        {/* Dialog de Edición */}
+        <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Editar Plan de Sustitución</DialogTitle>
+              <DialogDescription>
+                Actualiza los datos del plan para {editingPlan?.colaborador}
+              </DialogDescription>
+            </DialogHeader>
+            {editFormData && (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Reemplazo</Label>
+                  <Input
+                    value={editFormData.reemplazo}
+                    onChange={(e) =>
+                      setEditFormData({ ...editFormData, reemplazo: e.target.value })
+                    }
+                    placeholder="Nombre del reemplazo"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Departamento Reemplazo</Label>
+                  <Input
+                    value={editFormData.departamentoReemplazo}
+                    onChange={(e) =>
+                      setEditFormData({
+                        ...editFormData,
+                        departamentoReemplazo: e.target.value,
+                      })
+                    }
+                    placeholder="Departamento"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Cargo Reemplazo</Label>
+                  <Input
+                    value={editFormData.cargoReemplazo}
+                    onChange={(e) =>
+                      setEditFormData({
+                        ...editFormData,
+                        cargoReemplazo: e.target.value,
+                      })
+                    }
+                    placeholder="Cargo"
+                  />
+                </div>
+                <div className="flex items-center gap-3">
+                  <Switch
+                    checked={editFormData.puestoClave}
+                    onCheckedChange={(checked) =>
+                      setEditFormData({ ...editFormData, puestoClave: checked })
+                    }
+                  />
+                  <Label>Marcar como puesto clave</Label>
+                </div>
+              </div>
+            )}
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => setShowEditDialog(false)}
+              >
+                Cancelar
+              </Button>
+              <Button
+                onClick={handleSaveEdit}
+                disabled={updatePlan.isPending}
+              >
+                {updatePlan.isPending && (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                )}
+                Guardar
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Dialog de Confirmación de Eliminación */}
+        <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2 text-destructive">
+                <AlertCircle className="h-5 w-5" />
+                Eliminar Plan
+              </DialogTitle>
+              <DialogDescription>
+                ¿Estás seguro de que deseas eliminar el plan de sustitución para{" "}
+                <strong>{planToDelete?.colaborador}</strong>?
+              </DialogDescription>
+            </DialogHeader>
+            <div className="bg-destructive/10 p-3 rounded-lg text-sm text-destructive">
+              Esta acción no se puede deshacer.
+            </div>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => setShowDeleteDialog(false)}
+              >
+                Cancelar
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={handleConfirmDelete}
+                disabled={deletePlan.isPending}
+              >
+                {deletePlan.isPending && (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                )}
+                Eliminar
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </DashboardLayout>
   );
