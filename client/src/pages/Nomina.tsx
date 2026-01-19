@@ -26,6 +26,8 @@ export default function Nomina() {
   const [filterArea, setFilterArea] = useState("");
   const [importOpen, setImportOpen] = useState(false);
   const [importFile, setImportFile] = useState<File | null>(null);
+  const [importPreview, setImportPreview] = useState<any[] | null>(null);
+  const [importError, setImportError] = useState<string | null>(null);
 
   const filteredColaboradors = (colaboradors || []).filter((emp: any) => {
     const matchSearch =
@@ -37,6 +39,78 @@ export default function Nomina() {
     const matchArea = !filterArea || emp.area === filterArea;
     return matchSearch && matchDept && matchSede && matchArea;
   });
+
+  const handleFileSelect = async (file: File | undefined) => {
+    if (!file) {
+      setImportFile(null);
+      setImportPreview(null);
+      setImportError(null);
+      return;
+    }
+
+    // Validar que sea un archivo Excel
+    if (!file.name.endsWith('.xlsx') && !file.name.endsWith('.xls')) {
+      setImportError("El archivo debe ser en formato Excel (.xlsx o .xls)");
+      setImportFile(null);
+      setImportPreview(null);
+      return;
+    }
+
+    setImportFile(file);
+    setImportError(null);
+
+    // Leer el archivo para mostrar preview
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = e.target?.result;
+        const workbook = XLSX.read(data, { type: "binary" });
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+        if (!jsonData || jsonData.length === 0) {
+          setImportError("El archivo no contiene datos");
+          setImportPreview(null);
+          return;
+        }
+
+        // Mapear columnas
+        const empleadosMapeados = jsonData.map((row: any) => {
+          const rowLower = Object.keys(row).reduce((acc: any, key: string) => {
+            acc[key.toLowerCase().trim()] = row[key];
+            return acc;
+          }, {});
+
+          return {
+            sede: rowLower.sede || rowLower["sede"] || "",
+            cedula: rowLower.cedula || rowLower["c.i."] || rowLower["ci"] || "",
+            nombre: rowLower.nombre || rowLower["nombre"] || "",
+            area: rowLower.area || rowLower["área"] || "",
+            departamento: rowLower.departamento || rowLower["departamento"] || "",
+            cargo: rowLower.cargo || rowLower["cargo"] || "",
+          };
+        });
+
+        // Validar que hay datos mapeados correctamente
+        const validEmpleados = empleadosMapeados.filter((emp: any) =>
+          emp.sede && emp.cedula && emp.nombre && emp.area && emp.departamento && emp.cargo
+        );
+
+        if (validEmpleados.length === 0) {
+          setImportError("No se encontraron datos válidos. Verifica que las columnas sean: Sede, C.I., Nombre, Área, Departamento, Cargo");
+          setImportPreview(null);
+          return;
+        }
+
+        setImportPreview(validEmpleados.slice(0, 5)); // Mostrar solo los primeros 5 registros
+        setImportError(null);
+      } catch (error) {
+        setImportError("Error al leer el archivo. Asegúrate de que sea un archivo Excel válido.");
+        setImportPreview(null);
+      }
+    };
+    reader.readAsBinaryString(file);
+  };
 
   const handleExport = () => {
     const data = filteredColaboradors.map((emp: any) => ({
@@ -73,13 +147,45 @@ export default function Nomina() {
           return;
         }
         
-        await importMutation.mutateAsync({
-          empleados: jsonData as any[],
+        // Mapear columnas del archivo Excel a los campos esperados
+        // Soporta múltiples variaciones de nombres de columnas
+        const empleadosMapeados = jsonData.map((row: any) => {
+          // Crear un mapa de claves en minúsculas para búsqueda flexible
+          const rowLower = Object.keys(row).reduce((acc: any, key: string) => {
+            acc[key.toLowerCase().trim()] = row[key];
+            return acc;
+          }, {});
+          
+          return {
+            sede: rowLower.sede || rowLower["sede"] || "",
+            cedula: rowLower.cedula || rowLower["c.i."] || rowLower["ci"] || "",
+            nombre: rowLower.nombre || rowLower["nombre"] || "",
+            area: rowLower.area || rowLower["área"] || "",
+            departamento: rowLower.departamento || rowLower["departamento"] || "",
+            cargo: rowLower.cargo || rowLower["cargo"] || "",
+          };
         });
         
-        toast.success(`${jsonData.length} colaboradores importados exitosamente`);
+        // Validar que hay datos mapeados correctamente
+        const validEmpleados = empleadosMapeados.filter((emp: any) => 
+          emp.sede && emp.cedula && emp.nombre && emp.area && emp.departamento && emp.cargo
+        );
+        
+        if (validEmpleados.length === 0) {
+          toast.error("El archivo no contiene datos válidos. Verifica que las columnas sean: Sede, C.I., Nombre, Área, Departamento, Cargo");
+          console.error("Sample row:", empleadosMapeados[0]);
+          return;
+        }
+        
+        await importMutation.mutateAsync({
+          empleados: validEmpleados,
+        });
+        
+        toast.success(`${validEmpleados.length} colaboradores importados exitosamente`);
         setImportOpen(false);
         setImportFile(null);
+        setImportPreview(null);
+        setImportError(null);
         // Refrescar la lista de colaboradores
         await utils.empleados.list.invalidate();
       } catch (error: any) {
@@ -134,26 +240,75 @@ export default function Nomina() {
                     Importar
                   </Button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="max-w-2xl">
                   <DialogHeader>
-                    <DialogTitle>Importar colaboradors</DialogTitle>
+                    <DialogTitle>Importar colaboradores</DialogTitle>
                     <DialogDescription>
-                      Carga un archivo Excel con la información de colaboradors
+                      Carga un archivo Excel con la información de colaboradores. El archivo debe contener las columnas: Sede, C.I., Nombre, Área, Departamento, Cargo
                     </DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4">
-                    <input
-                      type="file"
-                      accept=".xlsx,.xls"
-                      onChange={(e) => setImportFile(e.target.files?.[0] || null)}
-                      className="block w-full text-sm text-slate-500"
-                    />
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Seleccionar archivo Excel</label>
+                      <input
+                        type="file"
+                        accept=".xlsx,.xls"
+                        onChange={(e) => handleFileSelect(e.target.files?.[0])}
+                        className="block w-full text-sm text-slate-500"
+                      />
+                    </div>
+
+                    {importError && (
+                      <Alert variant="destructive">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription>{importError}</AlertDescription>
+                      </Alert>
+                    )}
+
+                    {importPreview && importPreview.length > 0 && (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2 className="h-4 w-4 text-green-600" />
+                          <p className="text-sm font-medium text-green-700">
+                            Vista previa: {importPreview.length} registros válidos encontrados
+                          </p>
+                        </div>
+                        <div className="overflow-x-auto bg-slate-50 rounded-md p-3">
+                          <table className="w-full text-xs">
+                            <thead>
+                              <tr className="border-b">
+                                <th className="text-left py-2 px-2 font-semibold">Nombre</th>
+                                <th className="text-left py-2 px-2 font-semibold">C.I.</th>
+                                <th className="text-left py-2 px-2 font-semibold">Cargo</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {importPreview.map((emp: any, idx: number) => (
+                                <tr key={idx} className="border-b">
+                                  <td className="py-1 px-2">{emp.nombre}</td>
+                                  <td className="py-1 px-2">{emp.cedula}</td>
+                                  <td className="py-1 px-2">{emp.cargo}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    )}
+
                     <Button
                       onClick={handleImport}
-                      disabled={!importFile || importMutation.isPending}
+                      disabled={!importFile || !importPreview || importMutation.isPending || !!importError}
                       className="w-full"
                     >
-                      {importMutation.isPending ? "Importando..." : "Importar"}
+                      {importMutation.isPending ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Importando...
+                        </>
+                      ) : (
+                        "Importar colaboradores"
+                      )}
                     </Button>
                   </div>
                 </DialogContent>

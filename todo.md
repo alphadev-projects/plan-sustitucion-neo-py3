@@ -196,3 +196,15 @@
 - [x] Agregar notificaciones de éxito al importar
 - [x] Corregir ortografía en módulo de Nómina
 - [x] Todos los tests pasando (16/16)
+
+
+## Corrección Crítica - Error de Importación de Empleados
+- [x] Diagnosticar error de validación: todos los campos llegaban como undefined
+- [x] Identificar causa raíz: mismatch entre nombres de columnas Excel y schema esperado
+- [x] Implementar mapeo flexible de columnas en cliente (handleFileSelect)
+- [x] Soportar múltiples variaciones de nombres de columnas (mayúsculas, minúsculas, acentos)
+- [x] Agregar vista previa de datos antes de importar
+- [x] Agregar validación de formato de archivo (solo .xlsx y .xls)
+- [x] Mejorar mensajes de error con instrucciones claras
+- [x] Crear 6 tests para validación de importación
+- [x] Todos los tests pasando (22/22)
