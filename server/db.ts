@@ -177,59 +177,6 @@ export async function getAllPlanes() {
   return db.select().from(planesSustitucion);
 }
 
-export interface PlanIntegrityIssue {
-  planId: number;
-  colaborador: string;
-  issue: 'missing_employee' | 'changed_cargo' | 'changed_departamento';
-  message: string;
-}
-
-export async function validatePlanIntegrity() {
-  const db = await getDb();
-  if (!db) return [];
-
-  const planes = await db.select().from(planesSustitucion);
-  const empleadosList = await db.select().from(empleados);
-  const issues: PlanIntegrityIssue[] = [];
-
-  for (const plan of planes) {
-    // Buscar el empleado original del plan
-    const empleado = empleadosList.find(e => e.id === plan.empleadoId);
-
-    if (!empleado) {
-      // El colaborador ya no existe en la nómina
-      issues.push({
-        planId: plan.id,
-        colaborador: plan.colaborador,
-        issue: 'missing_employee',
-        message: `El colaborador "${plan.colaborador}" ya no se encuentra en la nómina. El plan debe ser actualizado o eliminado.`,
-      });
-    } else {
-      // Verificar si el cargo cambió
-      if (empleado.cargo !== plan.cargo) {
-        issues.push({
-          planId: plan.id,
-          colaborador: plan.colaborador,
-          issue: 'changed_cargo',
-          message: `El cargo de "${plan.colaborador}" cambió de "${plan.cargo}" a "${empleado.cargo}". El plan debe ser actualizado.`,
-        });
-      }
-
-      // Verificar si el departamento cambió
-      if (empleado.departamento !== plan.departamento) {
-        issues.push({
-          planId: plan.id,
-          colaborador: plan.colaborador,
-          issue: 'changed_departamento',
-          message: `El departamento de "${plan.colaborador}" cambió de "${plan.departamento}" a "${empleado.departamento}". El plan debe ser actualizado.`,
-        });
-      }
-    }
-  }
-
-  return issues;
-}
-
 export async function createPlan(plan: InsertPlanSustitucion) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
