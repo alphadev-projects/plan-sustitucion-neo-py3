@@ -155,6 +155,14 @@ export async function getAreas() {
   return Array.from(areas).sort();
 }
 
+export async function getCargos() {
+  const db = await getDb();
+  if (!db) return [];
+  const results = await db.select().from(empleados);
+  const cargos = new Set(results.map((e) => e.cargo));
+  return Array.from(cargos).sort();
+}
+
 export async function getEmpleadoById(id: number) {
   const db = await getDb();
   if (!db) return null;

@@ -20,6 +20,7 @@ import {
   getDepartamentos,
   getSedes,
   getAreas,
+  getCargos,
   getEmpleadoById,
   getAllPlanes,
   createPlan,
@@ -172,6 +173,10 @@ export const appRouter = router({
 
     areas: publicProcedure.query(async () => {
       return getAreas();
+    }),
+
+    cargos: publicProcedure.query(async () => {
+      return getCargos();
     }),
 
     getById: publicProcedure

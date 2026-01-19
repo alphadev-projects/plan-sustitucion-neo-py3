@@ -161,6 +161,7 @@ export default function Planes() {
                       <th className="text-left py-3 px-4 font-medium">Colaborador</th>
                       <th className="text-left py-3 px-4 font-medium">Departamento</th>
                       <th className="text-left py-3 px-4 font-medium">Cargo</th>
+                      <th className="text-left py-3 px-4 font-medium">Tipo Reemplazo</th>
                       <th className="text-left py-3 px-4 font-medium">Reemplazo</th>
                       <th className="text-left py-3 px-4 font-medium">Puesto Clave</th>
                       <th className="text-left py-3 px-4 font-medium">Acciones</th>
@@ -174,6 +175,13 @@ export default function Planes() {
                         <td className="py-3 px-4">{plan.colaborador}</td>
                         <td className="py-3 px-4">{plan.departamento}</td>
                         <td className="py-3 px-4 text-sm text-muted-foreground">{plan.cargo}</td>
+                        <td className="py-3 px-4">
+                          {plan.tipoReemplazo === "pool" ? (
+                            <Badge className="bg-blue-500 hover:bg-blue-600">Pool - {plan.cargoPoolReemplazo}</Badge>
+                          ) : (
+                            <Badge variant="outline">Individual</Badge>
+                          )}
+                        </td>
                         <td className="py-3 px-4">{plan.reemplazo}</td>
                         <td className="py-3 px-4">
                           {plan.puestoClave === "Si" ? (

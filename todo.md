@@ -173,7 +173,7 @@
 - [x] Agregar campo `cargoPoolReemplazo` y `departamentoPoolReemplazo` para planes por pool - RESUELTO
 - [x] Actualizar procedimiento createPlan para soportar modalidad pool - RESUELTO
 - [x] Crear procedimiento para obtener colaboradores por cargo y departamento - RESUELTO
-- [ ] Actualizar UI NuevoPlan con selector de modalidad (Individual/Pool/No Aplica)
-- [ ] Actualizar vista Planes para mostrar tipo de reemplazo
+- [x] Actualizar UI NuevoPlan con selector de modalidad (Individual/Pool/No Aplica) - RESUELTO
+- [x] Actualizar vista Planes para mostrar tipo de reemplazo - RESUELTO
 - [ ] Implementar edición de planes para administradores
 - [ ] Agregar tests para modalidad pool
