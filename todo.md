@@ -229,3 +229,12 @@
 - [x] Agregar badges visuales para planes con inconsistencias
 - [x] Agregar tests para validación de inconsistencias
 - [x] Todos los tests pasando (26/26)
+
+
+## Issue: Gestión de Sesiones y Cookies
+- [x] Revisar configuración actual de cookies
+- [x] Implementar expiración de sesión por inactividad (30 minutos)
+- [x] Configurar cookies como session-only (sin persistencia entre navegadores)
+- [x] Agregar timeout de sesión (30 minutos de inactividad)
+- [x] Mejorar lógica de logout automático
+- [x] Agregar tests para validación de sesiones (5/5 pasando)
