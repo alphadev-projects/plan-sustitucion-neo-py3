@@ -42,7 +42,9 @@ export function registerOAuthRoutes(app: Express) {
       });
 
       const cookieOptions = getSessionCookieOptions(req);
-      res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
+      // Session-only cookie: expires when browser closes (no maxAge set)
+      // Server-side timeout validation is handled in context.ts
+      res.cookie(COOKIE_NAME, sessionToken, cookieOptions);
 
       res.redirect(302, "/");
     } catch (error) {
