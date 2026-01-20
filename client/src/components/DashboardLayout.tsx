@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users, FileText } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Users, FileText, Briefcase } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -31,6 +31,7 @@ import { Button } from "./ui/button";
 const allMenuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard", requiresAdmin: true },
   { icon: FileText, label: "Planes de Sustitución", path: "/planes", requiresAdmin: false },
+  { icon: Briefcase, label: "Plan de Sucesión", path: "/sucesion", requiresAdmin: true },
   { icon: Users, label: "Nómina", path: "/nomina", requiresAdmin: false },
   { icon: Users, label: "Gestión de Usuarios", path: "/usuarios", requiresAdmin: true },
 ];

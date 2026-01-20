@@ -11,6 +11,7 @@ import Planes from "./pages/Planes";
 import NuevoPlan from "./pages/NuevoPlan";
 import Nomina from "./pages/Nomina";
 import GestionUsuarios from "./pages/GestionUsuarios";
+import PlanSuccesion from "./pages/PlanSuccesion";
 import { useEffect } from "react";
 
 function Router() {
@@ -50,6 +51,13 @@ function Router() {
         {(props) => (
           <ProtectedRoute requiredRole="admin">
             <GestionUsuarios {...props} />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/sucesion">
+        {(props) => (
+          <ProtectedRoute requiredRole="admin">
+            <PlanSuccesion {...props} />
           </ProtectedRoute>
         )}
       </Route>
