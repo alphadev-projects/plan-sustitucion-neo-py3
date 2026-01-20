@@ -41,6 +41,17 @@ import {
   deleteUsuarioLocal,
   type UsuarioLocal,
   importarEmpleados,
+  getPlanesSuccesion,
+  getPlanesSuccesionCriticos,
+  createPlanSuccesion,
+  updatePlanSuccesion,
+  getPlanesAccionBySuccesion,
+  createPlanAccion,
+  updatePlanAccion,
+  deletePlanAccion,
+  getComentariosByPlanAccion,
+  createComentario,
+  deleteComentario,
 } from "./db";
 
 export const appRouter = router({
@@ -311,6 +322,108 @@ export const appRouter = router({
     groupedByDepartamento: publicProcedure.query(async () => {
       return getPlanesGroupedByDepartamento();
     }),
+  }),
+
+  sucesion: router({
+    // Planes de Sucesión
+    listar: protectedProcedure.query(async () => {
+      return getPlanesSuccesion();
+    }),
+
+    criticos: protectedProcedure.query(async () => {
+      return getPlanesSuccesionCriticos();
+    }),
+
+    crear: adminProcedure
+      .input(z.object({
+        planSustitucionId: z.number(),
+        departamento: z.string(),
+        cargo: z.string(),
+        colaborador: z.string(),
+        riesgoContinuidad: z.enum(["Alto", "Medio", "Bajo"]),
+        riesgoCritico: z.enum(["Si", "No"]),
+        prioridadSucesion: z.enum(["Alta", "Media", "Baja"]),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        return createPlanSuccesion({
+          ...input,
+          usuario: ctx.user?.name || "usuario",
+        });
+      }),
+
+    actualizar: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        estado: z.enum(["Pendiente", "En Progreso", "Completado"]).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        return updatePlanSuccesion(input.id, { estado: input.estado });
+      }),
+
+    // Planes de Acción
+    accionesListar: protectedProcedure
+      .input(z.object({ planSuccesionId: z.number() }))
+      .query(async ({ input }) => {
+        return getPlanesAccionBySuccesion(input.planSuccesionId);
+      }),
+
+    accionCrear: adminProcedure
+      .input(z.object({
+        planSuccesionId: z.number(),
+        titulo: z.string(),
+        descripcion: z.string(),
+        responsable: z.string(),
+        fechaInicio: z.date(),
+        fechaFin: z.date(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        return createPlanAccion({
+          ...input,
+          usuario: ctx.user?.name || "usuario",
+        });
+      }),
+
+    accionActualizar: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        estado: z.enum(["No Iniciado", "En Progreso", "Completado", "Retrasado"]).optional(),
+        progreso: z.number().min(0).max(100).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        return updatePlanAccion(input.id, { estado: input.estado, progreso: input.progreso });
+      }),
+
+    accionEliminar: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        return deletePlanAccion(input.id);
+      }),
+
+    // Comentarios
+    comentariosListar: protectedProcedure
+      .input(z.object({ planAccionId: z.number() }))
+      .query(async ({ input }) => {
+        return getComentariosByPlanAccion(input.planAccionId);
+      }),
+
+    comentarioCrear: protectedProcedure
+      .input(z.object({
+        planAccionId: z.number(),
+        contenido: z.string(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        return createComentario({
+          planAccionId: input.planAccionId,
+          autor: ctx.user?.name || "usuario",
+          contenido: input.contenido,
+        });
+      }),
+
+    comentarioEliminar: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        return deleteComentario(input.id);
+      }),
   }),
 });
 

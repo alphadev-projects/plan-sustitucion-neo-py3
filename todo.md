@@ -229,3 +229,35 @@
 - [x] Verificar que cierre de navegador elimina sesión (cookies session-only)
 - [x] Verificar que logout manual elimina sesión (logout limpia localStorage)
 - [x] Verificar que inactividad cierra sesión (cookies sin maxAge)
+
+
+## Issue: Autologueo Persistente - Investigación Profunda (CRÍTICO)
+- [ ] Investigar si es localStorage, caché HTTP, o cookies
+- [ ] Verificar si el navegador está sirviendo desde caché
+- [ ] Revisar headers HTTP de Cache-Control
+- [ ] Probar en navegador privado/incógnito
+- [ ] Revisar si hay service workers cacheando
+
+## Feature: Sistema de Análisis Automático de Riesgo
+- [x] Agregar campos técnicos a schema (Cargo_Unico, Cantidad_Personas, Riesgo_Continuidad, Pool_Potencial, Riesgo_Critico, Prioridad_Sucesion)
+- [x] Implementar Regla 1: Detección de cargos únicos
+- [x] Implementar Regla 2: Clasificación por dotación
+- [x] Implementar Regla 3: Identificación de pools potenciales
+- [x] Implementar Regla 4: Cruce con "sin reemplazo"
+- [x] Implementar Regla 5: Cruce con "puesto clave"
+- [x] Crear procedimiento backend para calcular riesgos
+- [x] Integrar cálculo de riesgos en createPlan
+- [x] Todos los tests pasando (22/22)
+
+## Feature: Módulo de Plan de Sucesión
+- [x] Crear tabla de planes de sucesión
+- [x] Crear tabla de planes de acción
+- [x] Crear tabla de comentarios en planes
+- [x] Implementar funciones backend para CRUD de planes de sucesión
+- [x] Implementar funciones backend para CRUD de planes de acción
+- [x] Implementar funciones backend para comentarios
+- [x] Crear procedimientos tRPC para sucesión
+- [x] Todos los tests pasando (22/22)
+- [ ] Crear dashboard por plan de sucesión
+- [ ] Crear reportes exportables (Excel/CSV)
+- [ ] Agregar tests para módulo de sucesión

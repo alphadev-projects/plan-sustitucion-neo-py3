@@ -72,7 +72,65 @@ export const planesSustitucion = mysqlTable("planes_sustitucion", {
   usuario: varchar("usuario", { length: 100 }).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  // Campos técnicos internos para análisis automático de riesgo (NO visibles al usuario)
+  cargoUnico: mysqlEnum("cargoUnico", ["Si", "No"]).default("No").notNull(),
+  cantidadPersonasMismoCargo: int("cantidadPersonasMismoCargo").default(0).notNull(),
+  riesgoContinuidad: mysqlEnum("riesgoContinuidad", ["Alto", "Medio", "Bajo"]).default("Bajo").notNull(),
+  poolPotencial: mysqlEnum("poolPotencial", ["Si", "No"]).default("No").notNull(),
+  riesgoCritico: mysqlEnum("riesgoCritico", ["Si", "No"]).default("No").notNull(),
+  prioridadSucesion: mysqlEnum("prioridadSucesion", ["Alta", "Media", "Baja"]).default("Baja").notNull(),
 });
 
 export type PlanSustitucion = typeof planesSustitucion.$inferSelect;
 export type InsertPlanSustitucion = typeof planesSustitucion.$inferInsert;
+
+// Tabla de Planes de Sucesión (para puestos críticos)
+export const planesSuccesion = mysqlTable("planes_sucesion", {
+  id: int("id").autoincrement().primaryKey(),
+  planSustitucionId: int("planSustitucionId").notNull(),
+  departamento: varchar("departamento", { length: 150 }).notNull(),
+  cargo: varchar("cargo", { length: 200 }).notNull(),
+  colaborador: varchar("colaborador", { length: 255 }).notNull(),
+  riesgoContinuidad: mysqlEnum("riesgoContinuidad", ["Alto", "Medio", "Bajo"]).notNull(),
+  riesgoCritico: mysqlEnum("riesgoCritico", ["Si", "No"]).default("No").notNull(),
+  prioridadSucesion: mysqlEnum("prioridadSucesion", ["Alta", "Media", "Baja"]).notNull(),
+  estado: mysqlEnum("estado", ["Pendiente", "En Progreso", "Completado"]).default("Pendiente").notNull(),
+  usuario: varchar("usuario", { length: 100 }).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PlanSuccesion = typeof planesSuccesion.$inferSelect;
+export type InsertPlanSuccesion = typeof planesSuccesion.$inferInsert;
+
+// Tabla de Planes de Acción
+export const planesAccion = mysqlTable("planes_accion", {
+  id: int("id").autoincrement().primaryKey(),
+  planSuccesionId: int("planSuccesionId").notNull(),
+  titulo: varchar("titulo", { length: 255 }).notNull(),
+  descripcion: text("descripcion").notNull(),
+  responsable: varchar("responsable", { length: 255 }).notNull(),
+  fechaInicio: timestamp("fechaInicio").notNull(),
+  fechaFin: timestamp("fechaFin").notNull(),
+  estado: mysqlEnum("estado", ["No Iniciado", "En Progreso", "Completado", "Retrasado"]).default("No Iniciado").notNull(),
+  progreso: int("progreso").default(0).notNull(), // Porcentaje 0-100
+  usuario: varchar("usuario", { length: 100 }).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PlanAccion = typeof planesAccion.$inferSelect;
+export type InsertPlanAccion = typeof planesAccion.$inferInsert;
+
+// Tabla de Comentarios en Planes
+export const comentariosPlanes = mysqlTable("comentarios_planes", {
+  id: int("id").autoincrement().primaryKey(),
+  planAccionId: int("planAccionId").notNull(),
+  autor: varchar("autor", { length: 255 }).notNull(),
+  contenido: text("contenido").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ComentarioPlan = typeof comentariosPlanes.$inferSelect;
+export type InsertComentarioPlan = typeof comentariosPlanes.$inferInsert;

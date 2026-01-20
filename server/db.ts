@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, empleados, planesSustitucion, InsertPlanSustitucion } from "../drizzle/schema";
+import { InsertUser, users, empleados, planesSustitucion, InsertPlanSustitucion, PlanSustitucion } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -182,7 +182,26 @@ export async function createPlan(plan: InsertPlanSustitucion) {
   if (!db) throw new Error("Database not available");
   const result = await db.insert(planesSustitucion).values(plan);
   const createdPlan = await db.select().from(planesSustitucion).where(eq(planesSustitucion.id, result[0].insertId)).limit(1);
-  return { success: true, plan: createdPlan[0] };
+  
+  if (!createdPlan[0]) throw new Error("Failed to create plan");
+  
+  // Calcular analisis de riesgo automatico
+  const planWithRisk = await calcularAnalisisRiesgo(createdPlan[0]);
+  
+  // Actualizar el plan con los valores de riesgo calculados
+  await db
+    .update(planesSustitucion)
+    .set({
+      cargoUnico: planWithRisk.cargoUnico,
+      cantidadPersonasMismoCargo: planWithRisk.cantidadPersonasMismoCargo,
+      riesgoContinuidad: planWithRisk.riesgoContinuidad,
+      poolPotencial: planWithRisk.poolPotencial,
+      riesgoCritico: planWithRisk.riesgoCritico,
+      prioridadSucesion: planWithRisk.prioridadSucesion,
+    })
+    .where(eq(planesSustitucion.id, createdPlan[0].id));
+  
+  return { success: true, plan: planWithRisk };
 }
 
 export async function updatePlan(id: number, plan: Partial<InsertPlanSustitucion>) {
@@ -382,3 +401,181 @@ export async function importarEmpleados(empleadosData: Array<{
 
   return { importedCount, duplicatedCount, errors };
 }
+
+
+// Función para calcular análisis automático de riesgo
+export async function calcularAnalisisRiesgo(plan: PlanSustitucion) {
+  const db = await getDb();
+  if (!db) return plan;
+
+  // Regla 1 & 2: Contar cantidad de personas con el mismo cargo + área + departamento
+  const empleadosMismoCargo = await db
+    .select()
+    .from(empleados)
+    .where(
+      eq(empleados.cargo, plan.cargo) &&
+      eq(empleados.departamento, plan.departamento)
+    );
+
+  const cantidad = empleadosMismoCargo.length;
+
+  // Regla 1: Detección de cargos únicos
+  const cargoUnico: "Si" | "No" = cantidad === 1 ? "Si" : "No";
+
+  // Regla 2: Clasificación por dotación
+  let riesgoContinuidad: "Alto" | "Medio" | "Bajo" = "Bajo";
+  if (cantidad === 1) riesgoContinuidad = "Alto";
+  else if (cantidad === 2) riesgoContinuidad = "Medio";
+
+  // Regla 3: Identificación de pools potenciales
+  const poolPotencial: "Si" | "No" = cantidad >= 3 ? "Si" : "No";
+
+  // Regla 4: Cruce con "sin reemplazo"
+  let riesgoCritico: "Si" | "No" = "No";
+  if (plan.reemplazo === "No aplica – no existe reemplazo disponible") {
+    if (cargoUnico === "Si" || riesgoContinuidad === "Alto") {
+      riesgoCritico = "Si";
+    }
+  }
+
+  // Regla 5: Cruce con "puesto clave"
+  let prioridadSucesion: "Alta" | "Media" | "Baja" = "Baja";
+  if (plan.puestoClave === "Si") {
+    if (riesgoContinuidad === "Alto" || riesgoContinuidad === "Medio") {
+      prioridadSucesion = "Alta";
+    }
+  }
+
+  return {
+    ...plan,
+    cargoUnico,
+    cantidadPersonasMismoCargo: cantidad,
+    riesgoContinuidad,
+    poolPotencial,
+    riesgoCritico,
+    prioridadSucesion,
+  };
+}
+
+// Función para crear plan con análisis automático de riesgo
+export async function createPlanWithRiskAnalysis(data: InsertPlanSustitucion): Promise<PlanSustitucion> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  // Crear el plan
+  const result = await db.insert(planesSustitucion).values(data);
+  const newPlan = await getPlanById(result[0].insertId);
+
+  if (!newPlan) throw new Error("Failed to create plan");
+
+  // Calcular análisis de riesgo
+  const planWithRisk = await calcularAnalisisRiesgo(newPlan);
+
+  // Actualizar el plan con los valores de riesgo calculados
+  await db
+    .update(planesSustitucion)
+    .set({
+      cargoUnico: planWithRisk.cargoUnico,
+      cantidadPersonasMismoCargo: planWithRisk.cantidadPersonasMismoCargo,
+      riesgoContinuidad: planWithRisk.riesgoContinuidad,
+      poolPotencial: planWithRisk.poolPotencial,
+      riesgoCritico: planWithRisk.riesgoCritico,
+      prioridadSucesion: planWithRisk.prioridadSucesion,
+    })
+    .where(eq(planesSustitucion.id, newPlan.id));
+
+  return planWithRisk;
+}
+
+
+// Importar tipos de planes de sucesión
+import { planesSuccesion, planesAccion, comentariosPlanes, type PlanSuccesion, type InsertPlanSuccesion, type PlanAccion, type InsertPlanAccion, type ComentarioPlan, type InsertComentarioPlan } from "../drizzle/schema";
+
+// Funciones para Planes de Sucesión
+export async function createPlanSuccesion(data: InsertPlanSuccesion): Promise<PlanSuccesion> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(planesSuccesion).values(data);
+  const plan = await db.select().from(planesSuccesion).where(eq(planesSuccesion.id, result[0].insertId)).limit(1);
+  return plan[0]!;
+}
+
+export async function getPlanesSuccesion() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(planesSuccesion);
+}
+
+export async function getPlanesSuccesionCriticos() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(planesSuccesion).where(eq(planesSuccesion.riesgoCritico, "Si"));
+}
+
+export async function updatePlanSuccesion(id: number, data: Partial<InsertPlanSuccesion>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(planesSuccesion).set(data).where(eq(planesSuccesion.id, id));
+  return db.select().from(planesSuccesion).where(eq(planesSuccesion.id, id)).limit(1);
+}
+
+// Funciones para Planes de Acción
+export async function createPlanAccion(data: InsertPlanAccion): Promise<PlanAccion> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(planesAccion).values(data);
+  const plan = await db.select().from(planesAccion).where(eq(planesAccion.id, result[0].insertId)).limit(1);
+  return plan[0]!;
+}
+
+export async function getPlanesAccionBySuccesion(planSuccesionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(planesAccion).where(eq(planesAccion.planSuccesionId, planSuccesionId));
+}
+
+export async function updatePlanAccion(id: number, data: Partial<InsertPlanAccion>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(planesAccion).set(data).where(eq(planesAccion.id, id));
+  return db.select().from(planesAccion).where(eq(planesAccion.id, id)).limit(1);
+}
+
+export async function deletePlanAccion(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.delete(planesAccion).where(eq(planesAccion.id, id));
+}
+
+// Funciones para Comentarios
+export async function createComentario(data: InsertComentarioPlan): Promise<ComentarioPlan> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(comentariosPlanes).values(data);
+  const comentario = await db.select().from(comentariosPlanes).where(eq(comentariosPlanes.id, result[0].insertId)).limit(1);
+  return comentario[0]!;
+}
+
+export async function getComentariosByPlanAccion(planAccionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(comentariosPlanes).where(eq(comentariosPlanes.planAccionId, planAccionId));
+}
+
+export async function deleteComentario(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.delete(comentariosPlanes).where(eq(comentariosPlanes.id, id));
+}
+
+// Función para obtener puestos críticos automáticamente
+export async function obtenerPuestosCriticos() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const planes = await db.select().from(planesSustitucion).where(eq(planesSustitucion.riesgoCritico, "Si"));
+  return planes;
+}
+
+// Re-export types
+export type { PlanSuccesion, InsertPlanSuccesion, PlanAccion, InsertPlanAccion, ComentarioPlan, InsertComentarioPlan } from "../drizzle/schema";
