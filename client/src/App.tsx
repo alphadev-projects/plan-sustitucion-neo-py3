@@ -11,6 +11,7 @@ import Planes from "./pages/Planes";
 import NuevoPlan from "./pages/NuevoPlan";
 import Nomina from "./pages/Nomina";
 import GestionUsuarios from "./pages/GestionUsuarios";
+import { useEffect } from "react";
 
 function Router() {
   return (
@@ -59,6 +60,12 @@ function Router() {
 }
 
 function App() {
+  // Clean up localStorage on app load to prevent autologin from stale data
+  useEffect(() => {
+    localStorage.removeItem("manus-runtime-user-info");
+    sessionStorage.clear();
+  }, []);
+
   return (
     <ErrorBoundary>
       <ThemeProvider
