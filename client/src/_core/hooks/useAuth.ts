@@ -36,16 +36,18 @@ export function useAuth(options?: UseAuthOptions) {
       }
       throw error;
     } finally {
+      // Clear all session data
       utils.auth.me.setData(undefined, null);
       await utils.auth.me.invalidate();
+      // Clear localStorage and sessionStorage
+      localStorage.removeItem("manus-runtime-user-info");
+      sessionStorage.clear();
     }
   }, [logoutMutation, utils]);
 
   const state = useMemo(() => {
-    localStorage.setItem(
-      "manus-runtime-user-info",
-      JSON.stringify(meQuery.data)
-    );
+    // Do NOT persist user info to localStorage
+    // Use only in-memory state to ensure logout works correctly
     return {
       user: meQuery.data ?? null,
       loading: meQuery.isLoading || logoutMutation.isPending,

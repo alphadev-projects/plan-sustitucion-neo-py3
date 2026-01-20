@@ -220,3 +220,12 @@
 - [x] Mostrar cantidad REAL de registros validados (no solo primeros 5)
 - [x] Optimizar respuesta del botón Importar (eliminar demora)
 - [x] Mejorar UX del diálogo de importación
+
+
+## Issue: Persistencia Automática de Sesión (CRÍTICO)
+- [x] Investigar dónde se persiste la sesión automáticamente (localStorage)
+- [x] Remover almacenamiento persistente de cookies (removido localStorage.setItem)
+- [x] Implementar logout completo que limpie todas las cookies (localStorage.removeItem + sessionStorage.clear)
+- [x] Verificar que cierre de navegador elimina sesión (cookies session-only)
+- [x] Verificar que logout manual elimina sesión (logout limpia localStorage)
+- [x] Verificar que inactividad cierra sesión (cookies sin maxAge)
