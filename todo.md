@@ -291,3 +291,20 @@
 - [x] Agregar alertas de riesgos críticos
 - [x] Agregar menú en DashboardLayout
 - [x] Todos los tests pasando (22/22)
+
+
+## Bug: Reglas de An\u0## Bug: Reglas de Análisis de Riesgo Incompletas
+- [x] Revisar Regla 1: Cargo único (cantidad == 1 → Riesgo Alto) - VERIFICADO
+- [x] Revisar Regla 2: Clasificación por dotación (1=Alto, 2=Medio, >=3=Bajo) - VERIFICADO
+- [x] Revisar Regla 3: Pool Potencial (cantidad >= 3) - VERIFICADO
+- [x] Revisar Regla 4: Cruce con "sin reemplazo" (Cargo_Unico + sin reemplazo = Crítico) - VERIFICADO
+- [x] Revisar Regla 5: Cruce con "puesto clave" (Puesto_Clave + Riesgo Alto/Medio = Prioridad Alta) - VERIFICADO
+- [x] Validar que cálculos se aplican correctamente al guardar - VERIFICADO
+
+## Feature: Interfaz de Mantenimiento de Planes de Acción
+- [x] Crear componente PlanAccionMaintenance para marcar avance (0-100%)
+- [x] Crear componente para cambiar estado (No Iniciado → En Progreso → Completado)
+- [x] Crear formulario para agregar comentarios/evidencia
+- [x] Mostrar indicadores visuales de riesgo (🔴 Crítica, 🟠 Alta, 🟢 Controlada)
+- [x] Integrar componente en PlanSuccesion.tsx
+- [x] Todos los tests pasando (22/22)

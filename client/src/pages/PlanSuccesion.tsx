@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { AlertCircle, Plus, MessageSquare, Clock } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import DashboardLayout from "@/components/DashboardLayout";
+import { PlanAccionMaintenance } from "@/components/PlanAccionMaintenance";
 
 function PlanSuccesionContent() {
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
