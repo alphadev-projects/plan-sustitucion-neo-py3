@@ -7,11 +7,11 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { AlertCircle, Plus, MessageSquare, CheckCircle2, Clock, AlertTriangle } from "lucide-react";
+import { AlertCircle, Plus, MessageSquare, Clock } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import DashboardLayout from "@/components/DashboardLayout";
 
-export default function PlanSuccesion() {
+function PlanSuccesionContent() {
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
   const [showNewActionDialog, setShowNewActionDialog] = useState(false);
   const [newActionData, setNewActionData] = useState({
@@ -24,8 +24,8 @@ export default function PlanSuccesion() {
   const [newComment, setNewComment] = useState("");
 
   // Queries
-  const { data: planesSuccesion, isLoading: loadingPlanes } = trpc.sucesion.listar.useQuery();
-  const { data: planesCriticos } = trpc.sucesion.criticos.useQuery();
+  const { data: planesSuccesion, isLoading: loadingPlanes, error: errorPlanes } = trpc.sucesion.listar.useQuery();
+  const { data: planesCriticos, error: errorCriticos } = trpc.sucesion.criticos.useQuery();
   const { data: planesAccion } = trpc.sucesion.accionesListar.useQuery(
     { planSuccesionId: selectedPlan || 0 },
     { enabled: !!selectedPlan }
@@ -103,6 +103,17 @@ export default function PlanSuccesion() {
     return <div className="p-6">Cargando planes de sucesión...</div>;
   }
 
+  if (errorPlanes) {
+    return (
+      <Alert className="border-red-200 bg-red-50 m-6">
+        <AlertCircle className="h-4 w-4 text-red-600" />
+        <AlertDescription className="text-red-800">
+          Error al cargar planes: {errorPlanes.message}
+        </AlertDescription>
+      </Alert>
+    );
+  }
+
   const planSeleccionado = planesSuccesion?.find((p) => p.id === selectedPlan);
 
   return (
@@ -115,211 +126,227 @@ export default function PlanSuccesion() {
       {/* Resumen de Puestos Críticos */}
       {planesCriticos && planesCriticos.length > 0 && (
         <Alert className="border-red-200 bg-red-50">
-          <AlertTriangle className="h-4 w-4 text-red-600" />
+          <AlertCircle className="h-4 w-4 text-red-600" />
           <AlertDescription className="text-red-800">
             Hay {planesCriticos.length} puestos críticos que requieren atención inmediata
           </AlertDescription>
         </Alert>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Lista de Planes */}
-        <div className="lg:col-span-1">
-          <Card>
-            <CardHeader>
-              <CardTitle>Puestos Críticos</CardTitle>
-              <CardDescription>{planesSuccesion?.length || 0} planes registrados</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              {planesSuccesion?.map((plan) => (
-                <button
-                  key={plan.id}
-                  onClick={() => setSelectedPlan(plan.id)}
-                  className={`w-full text-left p-3 rounded-lg border transition-colors ${
-                    selectedPlan === plan.id
-                      ? "bg-blue-50 border-blue-300"
-                      : "bg-white border-gray-200 hover:bg-gray-50"
-                  }`}
-                >
-                  <div className="font-medium text-sm">{plan.colaborador}</div>
-                  <div className="text-xs text-gray-600">{plan.cargo}</div>
-                  <div className="flex gap-1 mt-2">
-                    <Badge className={getRiskBadgeColor(plan.riesgoContinuidad)}>
-                      {plan.riesgoContinuidad}
-                    </Badge>
-                    <Badge className={getPriorityBadgeColor(plan.prioridadSucesion)}>
-                      {plan.prioridadSucesion}
-                    </Badge>
-                  </div>
-                </button>
-              ))}
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Detalle del Plan */}
-        <div className="lg:col-span-2 space-y-6">
-          {planSeleccionado ? (
-            <>
-              {/* Información del Plan */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>{planSeleccionado.colaborador}</CardTitle>
-                  <CardDescription>{planSeleccionado.cargo}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm font-medium text-gray-600">Departamento</label>
-                      <p className="text-sm">{planSeleccionado.departamento}</p>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-600">Estado</label>
-                      <Badge className="mt-1">{planSeleccionado.estado}</Badge>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-600">Riesgo de Continuidad</label>
-                      <Badge className={`mt-1 ${getRiskBadgeColor(planSeleccionado.riesgoContinuidad)}`}>
-                        {planSeleccionado.riesgoContinuidad}
-                      </Badge>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-600">Prioridad</label>
-                      <Badge className={`mt-1 ${getPriorityBadgeColor(planSeleccionado.prioridadSucesion)}`}>
-                        {planSeleccionado.prioridadSucesion}
-                      </Badge>
-                    </div>
-                  </div>
-                  {planSeleccionado.riesgoCritico === "Si" && (
-                    <Alert className="border-red-200 bg-red-50">
-                      <AlertCircle className="h-4 w-4 text-red-600" />
-                      <AlertDescription className="text-red-800">
-                        Este es un puesto crítico sin reemplazo disponible
-                      </AlertDescription>
-                    </Alert>
-                  )}
-                </CardContent>
-              </Card>
-
-              {/* Planes de Acción */}
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <div>
-                    <CardTitle>Planes de Acción</CardTitle>
-                    <CardDescription>Actividades para desarrollar reemplazos</CardDescription>
-                  </div>
-                  <Dialog open={showNewActionDialog} onOpenChange={setShowNewActionDialog}>
-                    <DialogTrigger asChild>
-                      <Button size="sm">
-                        <Plus className="h-4 w-4 mr-2" />
-                        Nuevo Plan
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Crear Plan de Acción</DialogTitle>
-                        <DialogDescription>
-                          Define una actividad para desarrollar al reemplazo
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className="space-y-4">
-                        <div>
-                          <Label>Título</Label>
-                          <Input
-                            value={newActionData.titulo}
-                            onChange={(e) =>
-                              setNewActionData({ ...newActionData, titulo: e.target.value })
-                            }
-                            placeholder="Ej: Capacitación en liderazgo"
-                          />
-                        </div>
-                        <div>
-                          <Label>Descripción</Label>
-                          <Textarea
-                            value={newActionData.descripcion}
-                            onChange={(e) =>
-                              setNewActionData({ ...newActionData, descripcion: e.target.value })
-                            }
-                            placeholder="Detalles de la actividad"
-                          />
-                        </div>
-                        <div>
-                          <Label>Responsable</Label>
-                          <Input
-                            value={newActionData.responsable}
-                            onChange={(e) =>
-                              setNewActionData({ ...newActionData, responsable: e.target.value })
-                            }
-                            placeholder="Nombre del responsable"
-                          />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <Label>Fecha Inicio</Label>
-                            <Input
-                              type="date"
-                              value={newActionData.fechaInicio}
-                              onChange={(e) =>
-                                setNewActionData({ ...newActionData, fechaInicio: e.target.value })
-                              }
-                            />
-                          </div>
-                          <div>
-                            <Label>Fecha Fin</Label>
-                            <Input
-                              type="date"
-                              value={newActionData.fechaFin}
-                              onChange={(e) =>
-                                setNewActionData({ ...newActionData, fechaFin: e.target.value })
-                              }
-                            />
-                          </div>
-                        </div>
-                        <Button onClick={handleCreateAction} className="w-full">
-                          Crear Plan
-                        </Button>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                </CardHeader>
-                <CardContent>
-                  {planesAccion && planesAccion.length > 0 ? (
-                    <div className="space-y-3">
-                      {planesAccion.map((accion) => (
-                        <div key={accion.id} className="border rounded-lg p-3">
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <h4 className="font-medium">{accion.titulo}</h4>
-                              <p className="text-sm text-gray-600 mt-1">{accion.descripcion}</p>
-                              <div className="flex gap-2 mt-2 text-xs text-gray-600">
-                                <span>👤 {accion.responsable}</span>
-                                <span>📅 {new Date(accion.fechaFin).toLocaleDateString()}</span>
-                              </div>
-                              <div className="flex gap-2 mt-2">
-                                <Badge variant="outline">{accion.estado}</Badge>
-                                <span className="text-xs">{accion.progreso}%</span>
-                              </div>
-                            </div>
-                            <MessageSquare className="h-4 w-4 text-gray-400 mt-1" />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-sm text-gray-600">No hay planes de acción aún</p>
-                  )}
-                </CardContent>
-              </Card>
-            </>
-          ) : (
+      {!planesSuccesion || planesSuccesion.length === 0 ? (
+        <Card>
+          <CardContent className="pt-6">
+            <p className="text-center text-gray-600">No hay planes de sucesión registrados</p>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Lista de Planes */}
+          <div className="lg:col-span-1">
             <Card>
-              <CardContent className="pt-6">
-                <p className="text-center text-gray-600">Selecciona un puesto crítico para ver detalles</p>
+              <CardHeader>
+                <CardTitle>Puestos Críticos</CardTitle>
+                <CardDescription>{planesSuccesion?.length || 0} planes registrados</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {planesSuccesion?.map((plan) => (
+                  <button
+                    key={plan.id}
+                    onClick={() => setSelectedPlan(plan.id)}
+                    className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                      selectedPlan === plan.id
+                        ? "bg-blue-50 border-blue-300"
+                        : "bg-white border-gray-200 hover:bg-gray-50"
+                    }`}
+                  >
+                    <div className="font-medium text-sm">{plan.colaborador}</div>
+                    <div className="text-xs text-gray-600">{plan.cargo}</div>
+                    <div className="flex gap-1 mt-2">
+                      <Badge className={getRiskBadgeColor(plan.riesgoContinuidad)}>
+                        {plan.riesgoContinuidad}
+                      </Badge>
+                      <Badge className={getPriorityBadgeColor(plan.prioridadSucesion)}>
+                        {plan.prioridadSucesion}
+                      </Badge>
+                    </div>
+                  </button>
+                ))}
               </CardContent>
             </Card>
-          )}
+          </div>
+
+          {/* Detalle del Plan */}
+          <div className="lg:col-span-2 space-y-6">
+            {planSeleccionado ? (
+              <>
+                {/* Información del Plan */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{planSeleccionado.colaborador}</CardTitle>
+                    <CardDescription>{planSeleccionado.cargo}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-sm font-medium text-gray-600">Departamento</label>
+                        <p className="text-sm">{planSeleccionado.departamento}</p>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-600">Estado</label>
+                        <Badge className="mt-1">{planSeleccionado.estado}</Badge>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-600">Riesgo de Continuidad</label>
+                        <Badge className={`mt-1 ${getRiskBadgeColor(planSeleccionado.riesgoContinuidad)}`}>
+                          {planSeleccionado.riesgoContinuidad}
+                        </Badge>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-600">Prioridad</label>
+                        <Badge className={`mt-1 ${getPriorityBadgeColor(planSeleccionado.prioridadSucesion)}`}>
+                          {planSeleccionado.prioridadSucesion}
+                        </Badge>
+                      </div>
+                    </div>
+                    {planSeleccionado.riesgoCritico === "Si" && (
+                      <Alert className="border-red-200 bg-red-50">
+                        <AlertCircle className="h-4 w-4 text-red-600" />
+                        <AlertDescription className="text-red-800">
+                          Este es un puesto crítico sin reemplazo disponible
+                        </AlertDescription>
+                      </Alert>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Planes de Acción */}
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between">
+                    <div>
+                      <CardTitle>Planes de Acción</CardTitle>
+                      <CardDescription>Actividades para desarrollar reemplazos</CardDescription>
+                    </div>
+                    <Dialog open={showNewActionDialog} onOpenChange={setShowNewActionDialog}>
+                      <DialogTrigger asChild>
+                        <Button size="sm">
+                          <Plus className="h-4 w-4 mr-2" />
+                          Nuevo Plan
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Crear Plan de Acción</DialogTitle>
+                          <DialogDescription>
+                            Define una actividad para desarrollar al reemplazo
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-4">
+                          <div>
+                            <Label>Título</Label>
+                            <Input
+                              value={newActionData.titulo}
+                              onChange={(e) =>
+                                setNewActionData({ ...newActionData, titulo: e.target.value })
+                              }
+                              placeholder="Ej: Capacitación en liderazgo"
+                            />
+                          </div>
+                          <div>
+                            <Label>Descripción</Label>
+                            <Textarea
+                              value={newActionData.descripcion}
+                              onChange={(e) =>
+                                setNewActionData({ ...newActionData, descripcion: e.target.value })
+                              }
+                              placeholder="Detalles de la actividad"
+                            />
+                          </div>
+                          <div>
+                            <Label>Responsable</Label>
+                            <Input
+                              value={newActionData.responsable}
+                              onChange={(e) =>
+                                setNewActionData({ ...newActionData, responsable: e.target.value })
+                              }
+                              placeholder="Nombre del responsable"
+                            />
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label>Fecha Inicio</Label>
+                              <Input
+                                type="date"
+                                value={newActionData.fechaInicio}
+                                onChange={(e) =>
+                                  setNewActionData({ ...newActionData, fechaInicio: e.target.value })
+                                }
+                              />
+                            </div>
+                            <div>
+                              <Label>Fecha Fin</Label>
+                              <Input
+                                type="date"
+                                value={newActionData.fechaFin}
+                                onChange={(e) =>
+                                  setNewActionData({ ...newActionData, fechaFin: e.target.value })
+                                }
+                              />
+                            </div>
+                          </div>
+                          <Button onClick={handleCreateAction} className="w-full">
+                            Crear Plan
+                          </Button>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </CardHeader>
+                  <CardContent>
+                    {planesAccion && planesAccion.length > 0 ? (
+                      <div className="space-y-3">
+                        {planesAccion.map((accion) => (
+                          <div key={accion.id} className="border rounded-lg p-3">
+                            <div className="flex items-start justify-between">
+                              <div className="flex-1">
+                                <h4 className="font-medium">{accion.titulo}</h4>
+                                <p className="text-sm text-gray-600 mt-1">{accion.descripcion}</p>
+                                <div className="flex gap-2 mt-2 text-xs text-gray-600">
+                                  <span>👤 {accion.responsable}</span>
+                                  <span>📅 {new Date(accion.fechaFin).toLocaleDateString()}</span>
+                                </div>
+                                <div className="flex gap-2 mt-2">
+                                  <Badge variant="outline">{accion.estado}</Badge>
+                                  <span className="text-xs">{accion.progreso}%</span>
+                                </div>
+                              </div>
+                              <MessageSquare className="h-4 w-4 text-gray-400 mt-1" />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-gray-600">No hay planes de acción aún</p>
+                    )}
+                  </CardContent>
+                </Card>
+              </>
+            ) : (
+              <Card>
+                <CardContent className="pt-6">
+                  <p className="text-center text-gray-600">Selecciona un puesto crítico para ver detalles</p>
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
+  );
+}
+
+export default function PlanSuccesion() {
+  return (
+    <DashboardLayout>
+      <PlanSuccesionContent />
+    </DashboardLayout>
   );
 }

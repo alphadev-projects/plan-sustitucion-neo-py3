@@ -503,12 +503,42 @@ export async function createPlanSuccesion(data: InsertPlanSuccesion): Promise<Pl
 export async function getPlanesSuccesion() {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(planesSuccesion);
+  
+  let planes = await db.select().from(planesSuccesion);
+  
+  if (planes.length === 0) {
+    const planesData = await db.select().from(planesSustitucion);
+    
+    for (const plan of planesData) {
+      try {
+        await db.insert(planesSuccesion).values({
+          planSustitucionId: plan.id,
+          departamento: plan.departamento,
+          cargo: plan.cargo,
+          colaborador: plan.colaborador,
+          riesgoContinuidad: plan.riesgoContinuidad || "Bajo",
+          riesgoCritico: plan.riesgoCritico || "No",
+          prioridadSucesion: plan.prioridadSucesion || "Baja",
+          estado: "Pendiente",
+          usuario: "sistema",
+        });
+      } catch (e) {
+        // Ignorar duplicados
+      }
+    }
+    
+    planes = await db.select().from(planesSuccesion);
+  }
+  
+  return planes;
 }
 
 export async function getPlanesSuccesionCriticos() {
   const db = await getDb();
   if (!db) return [];
+  
+  await getPlanesSuccesion();
+  
   return db.select().from(planesSuccesion).where(eq(planesSuccesion.riesgoCritico, "Si"));
 }
 

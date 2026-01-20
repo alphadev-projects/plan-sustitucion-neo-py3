@@ -268,3 +268,10 @@
 - [x] Agregar menú en DashboardLayout
 - [ ] Crear dashboard por plan de sucesión (avanzado)
 - [ ] Crear reportes exportables (Excel/CSV)
+
+
+## Bug: M\u00f3dulo Plan ## Bug: Módulo Plan de Sucesión
+- [x] Agregar DashboardLayout al módulo para mostrar navegación
+- [x] Verificar que procedimientos tRPC traen datos de puestos críticos
+- [x] Debuggear carga de datos en PlanSuccesion.tsx
+- [x] Auto-generar planes de sucesión desde planes de sustitución existentes
