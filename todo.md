@@ -275,3 +275,19 @@
 - [x] Verificar que procedimientos tRPC traen datos de puestos críticos
 - [x] Debuggear carga de datos en PlanSuccesion.tsx
 - [x] Auto-generar planes de sucesión desde planes de sustitución existentes
+
+
+## Feature: Mantenimien## Feature: Mantenimiento de Curso de Planes de Acción
+- [x] Agregar tabla de seguimiento con estado, evidencia, fechas reales
+- [x] Crear procedimientos tRPC para actualizar seguimiento
+- [x] Crear funciones backend para gestionar seguimiento
+- [x] Todos los tests pasando (22/22)
+
+## Feature: Dashboard del Módulo Plan de Sucesión
+- [x] Crear página de dashboard con métricas clave
+- [x] Mostrar resumen de planes por estado
+- [x] Mostrar planes de acción próximos a vencer
+- [x] Crear gráficos de progreso y cobertura
+- [x] Agregar alertas de riesgos críticos
+- [x] Agregar menú en DashboardLayout
+- [x] Todos los tests pasando (22/22)

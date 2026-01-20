@@ -52,6 +52,8 @@ import {
   getComentariosByPlanAccion,
   createComentario,
   deleteComentario,
+  getDashboardMetricas,
+  getResumenPorDepartamento,
 } from "./db";
 
 export const appRouter = router({
@@ -424,6 +426,14 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         return deleteComentario(input.id);
       }),
+
+    dashboardMetricas: protectedProcedure.query(async () => {
+      return getDashboardMetricas();
+    }),
+
+    dashboardResumenDepartamentos: protectedProcedure.query(async () => {
+      return getResumenPorDepartamento();
+    }),
   }),
 });
 

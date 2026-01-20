@@ -134,3 +134,23 @@ export const comentariosPlanes = mysqlTable("comentarios_planes", {
 
 export type ComentarioPlan = typeof comentariosPlanes.$inferSelect;
 export type InsertComentarioPlan = typeof comentariosPlanes.$inferInsert;
+
+// Tabla de Seguimiento de Planes de Acción (con evidencia)
+export const seguimientoPlanes = mysqlTable("seguimiento_planes", {
+  id: int("id").autoincrement().primaryKey(),
+  planAccionId: int("planAccionId").notNull(),
+  estado: mysqlEnum("estado", ["No Iniciado", "En Progreso", "Completado", "Retrasado"]).default("No Iniciado").notNull(),
+  progreso: int("progreso").default(0).notNull(), // Porcentaje 0-100
+  fechaInicio: timestamp("fechaInicio"),
+  fechaFin: timestamp("fechaFin"),
+  evidencia: text("evidencia"), // URL o descripción de evidencia
+  archivoEvidencia: varchar("archivoEvidencia", { length: 500 }), // Ruta del archivo en S3
+  comentario: text("comentario"),
+  validadoPor: varchar("validadoPor", { length: 255 }), // Usuario que validó
+  fechaValidacion: timestamp("fechaValidacion"),
+  usuario: varchar("usuario", { length: 100 }).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+export type SeguimientoPlan = typeof seguimientoPlanes.$inferSelect;
+export type InsertSeguimientoPlan = typeof seguimientoPlanes.$inferInsert;

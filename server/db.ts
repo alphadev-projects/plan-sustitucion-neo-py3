@@ -1,12 +1,12 @@
-import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, empleados, planesSustitucion, InsertPlanSustitucion, PlanSustitucion } from "../drizzle/schema";
+import { eq, and, gte, lte, ne, sql } from "drizzle-orm";
+import { InsertUser, users, empleados, planesSustitucion, InsertPlanSustitucion, PlanSustitucion, planesSuccesion, planesAccion, seguimientoPlanes, InsertSeguimientoPlan, SeguimientoPlan } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
 // Re-export types for convenience
-export type { Empleado, InsertEmpleado, PlanSustitucion, InsertPlanSustitucion } from "../drizzle/schema";
+export type { Empleado, InsertEmpleado, PlanSustitucion, InsertPlanSustitucion, SeguimientoPlan, InsertSeguimientoPlan } from "../drizzle/schema";
 
 // Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
@@ -489,7 +489,7 @@ export async function createPlanWithRiskAnalysis(data: InsertPlanSustitucion): P
 
 
 // Importar tipos de planes de sucesión
-import { planesSuccesion, planesAccion, comentariosPlanes, type PlanSuccesion, type InsertPlanSuccesion, type PlanAccion, type InsertPlanAccion, type ComentarioPlan, type InsertComentarioPlan } from "../drizzle/schema";
+import { comentariosPlanes, type ComentarioPlan, type InsertComentarioPlan, type PlanSuccesion, type InsertPlanSuccesion, type PlanAccion, type InsertPlanAccion } from "../drizzle/schema";
 
 // Funciones para Planes de Sucesión
 export async function createPlanSuccesion(data: InsertPlanSuccesion): Promise<PlanSuccesion> {
@@ -609,3 +609,71 @@ export async function obtenerPuestosCriticos() {
 
 // Re-export types
 export type { PlanSuccesion, InsertPlanSuccesion, PlanAccion, InsertPlanAccion, ComentarioPlan, InsertComentarioPlan } from "../drizzle/schema";
+
+
+// Funciones para Seguimiento de Planes de Acción
+export async function createSeguimientoPlan(data: InsertSeguimientoPlan): Promise<SeguimientoPlan> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(seguimientoPlanes).values(data);
+  const seguimiento = await db.select().from(seguimientoPlanes).where(eq(seguimientoPlanes.id, result[0].insertId)).limit(1);
+  return seguimiento[0]!;
+}
+
+export async function getSeguimientoPlan(planAccionId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const seguimiento = await db.select().from(seguimientoPlanes).where(eq(seguimientoPlanes.planAccionId, planAccionId)).limit(1);
+  return seguimiento[0] || null;
+}
+
+export async function updateSeguimientoPlan(id: number, data: Partial<InsertSeguimientoPlan>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(seguimientoPlanes).set(data).where(eq(seguimientoPlanes.id, id));
+  return db.select().from(seguimientoPlanes).where(eq(seguimientoPlanes.id, id)).limit(1);
+}
+
+export async function getDashboardMetricas() {
+  const db = await getDb();
+  if (!db) return { planesTotal: 0, planesEnProgreso: 0, planesCompletados: 0, planesRetrasados: 0, accionesProximas: [] };
+  
+  const planesTotal = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion);
+  const planesEnProgreso = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion).where(eq(planesSuccesion.estado, "En Progreso"));
+  const planesCompletados = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion).where(eq(planesSuccesion.estado, "Completado"));
+  const planesRetrasados = await db.select({ count: sql`COUNT(*)` }).from(planesAccion).where(eq(planesAccion.estado, "Retrasado"));
+  
+  // Planes de acción próximos a vencer (próximos 7 días)
+  const hoy = new Date();
+  const proximos7Dias = new Date(hoy.getTime() + 7 * 24 * 60 * 60 * 1000);
+  
+  const accionesProximas = await db.select().from(planesAccion).where(
+    and(
+      gte(planesAccion.fechaFin, hoy),
+      lte(planesAccion.fechaFin, proximos7Dias),
+      ne(planesAccion.estado, "Completado")
+    )
+  ).limit(10);
+  
+  return {
+    planesTotal: Number(planesTotal[0]?.count || 0),
+    planesEnProgreso: Number(planesEnProgreso[0]?.count || 0),
+    planesCompletados: Number(planesCompletados[0]?.count || 0),
+    planesRetrasados: Number(planesRetrasados[0]?.count || 0),
+    accionesProximas,
+  };
+}
+
+export async function getResumenPorDepartamento() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const resumen = await db.select({
+    departamento: planesSuccesion.departamento,
+    total: sql`COUNT(*)`,
+    criticos: sql`SUM(CASE WHEN riesgoCritico = 'Si' THEN 1 ELSE 0 END)`,
+    completados: sql`SUM(CASE WHEN estado = 'Completado' THEN 1 ELSE 0 END)`,
+  }).from(planesSuccesion).groupBy(planesSuccesion.departamento);
+  
+  return resumen;
+}
