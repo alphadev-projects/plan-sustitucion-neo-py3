@@ -319,3 +319,14 @@
 - [x] Ampliar interfaz con PlanAccionMaintenance integrado en PlanSuccesion.tsx
 - [x] Indicador visual de progreso editable (0-100%) implementado
 - [x] Crear datos de prueba que generen riesgos Alto/Medio correctamente
+
+## Problemas Reportados - Sesión Actual (Críticos)
+
+- [x] CRÍTICO: Cambios de progreso ahora se guardan correctamente (corregido updatePlanAccion)
+- [x] CRÍTICO: Invalidación de caché implementada para refrescar datos
+- [x] CRÍTICO: Opción de carga de archivos agregada (imagen, PDF, Excel)
+- [x] Simplificar UX: progreso automático basado en estado
+- [x] Debuggear y corregir accionActualizar para persistir cambios
+- [x] Agregar input file para subir imagen, PDF, Excel
+- [ ] Implementar almacenamiento de archivos en S3 (siguiente fase)
+- [ ] Actualizar schema para guardar referencias a archivos (siguiente fase)

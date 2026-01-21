@@ -568,7 +568,8 @@ export async function updatePlanAccion(id: number, data: Partial<InsertPlanAccio
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.update(planesAccion).set(data).where(eq(planesAccion.id, id));
-  return db.select().from(planesAccion).where(eq(planesAccion.id, id)).limit(1);
+  const result = await db.select().from(planesAccion).where(eq(planesAccion.id, id)).limit(1);
+  return result[0];
 }
 
 export async function deletePlanAccion(id: number) {
