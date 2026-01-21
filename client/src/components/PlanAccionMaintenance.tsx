@@ -70,6 +70,10 @@ export function PlanAccionMaintenance({
 
       // Invalidar caché para refrescar datos
       await utils.sucesion.accionesListar.invalidate();
+      await utils.sucesion.dashboardMetricas.invalidate();
+      await utils.sucesion.dashboardResumenDepartamentos.invalidate();
+      await utils.sucesion.obtenerAlertas.invalidate();
+      await utils.sucesion.obtenerHistorial.invalidate();
 
       setIsEditing(false);
       setComentario("");

@@ -381,3 +381,11 @@
 - [x] Crear página Auditoria.tsx con tabla centralizada
 - [x] Integrar Timeline en PlanAccionMaintenance
 - [x] Agregar ruta y navegación en App.tsx
+
+
+## Bug: Dashboards No Actualizan - Nueva Sesión
+
+- [x] BUG: Dashboards no se actualizan cuando se cambian planes de acción - CORREGIDO
+- [x] Agregar invalidación de caché en PlanAccionMaintenance
+- [x] Verificar que AlertasPlanes se actualiza automáticamente
+- [x] Verificar que PlanSuccesionDashboard se actualiza automáticamente
