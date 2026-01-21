@@ -397,3 +397,16 @@
 - [x] BUG: dashboardMetricas no trae planesEnProgreso correctamente - CORREGIDO
 - [x] Revisar lógica de cálculo en db.ts para getDashboardMetricas
 - [x] Verificar que los estados se están guardando correctamente en BD
+
+
+## Completar Implementación Plan de Sucesión - Nueva Sesión
+
+- [ ] Agregar campos faltantes al schema: cargoUnico, cantidadPersonas, poolPotencial, estadoPuesto
+- [ ] Ejecutar migración de BD con nuevos campos
+- [ ] Actualizar lógica de cálculo en db.ts según instrucciones (7 pasos)
+- [ ] Verificar Ejemplo 1: Jefe Administrativo Financiero (cargo único, riesgo ALTO, crítico)
+- [ ] Verificar Ejemplo 2: Agente RCC (25 personas, pool, riesgo BAJO)
+- [ ] Verificar Ejemplo 3: Líder de Turno RCC (2 personas, riesgo MEDIO, prioridad ALTA)
+- [ ] Mostrar todos los campos de salida en interfaz de Plan de Sucesión
+- [ ] Implementar acciones automáticas sugeridas (activar plan, sugerir sucesión)
+- [ ] Crear indicadores visuales para estado_puesto (CRÍTICO, PRIORITARIO, MODERADO, CONTROLADO)
