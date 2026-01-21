@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { AlertCircle, Plus, MessageSquare, Clock } from "lucide-react";
+import { AlertCircle, Plus, Clock, Edit2, Trash2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import DashboardLayout from "@/components/DashboardLayout";
 import { PlanAccionMaintenance } from "@/components/PlanAccionMaintenance";
@@ -22,23 +22,18 @@ function PlanSuccesionContent() {
     fechaInicio: "",
     fechaFin: "",
   });
-  const [newComment, setNewComment] = useState("");
 
   // Queries
   const { data: planesSuccesion, isLoading: loadingPlanes, error: errorPlanes } = trpc.sucesion.listar.useQuery();
   const { data: planesCriticos, error: errorCriticos } = trpc.sucesion.criticos.useQuery();
-  const { data: planesAccion } = trpc.sucesion.accionesListar.useQuery(
+  const { data: planesAccion, refetch: refetchAcciones } = trpc.sucesion.accionesListar.useQuery(
     { planSuccesionId: selectedPlan || 0 },
-    { enabled: !!selectedPlan }
-  );
-  const { data: comentarios } = trpc.sucesion.comentariosListar.useQuery(
-    { planAccionId: selectedPlan || 0 },
     { enabled: !!selectedPlan }
   );
 
   // Mutations
   const crearAccion = trpc.sucesion.accionCrear.useMutation();
-  const agregarComentario = trpc.sucesion.comentarioCrear.useMutation();
+  const utils = trpc.useUtils();
 
   const handleCreateAction = async () => {
     if (!selectedPlan || !newActionData.titulo) return;
@@ -55,22 +50,9 @@ function PlanSuccesionContent() {
 
       setNewActionData({ titulo: "", descripcion: "", responsable: "", fechaInicio: "", fechaFin: "" });
       setShowNewActionDialog(false);
+      refetchAcciones();
     } catch (error) {
       console.error("Error creating action:", error);
-    }
-  };
-
-  const handleAddComment = async (planAccionId: number) => {
-    if (!newComment.trim()) return;
-
-    try {
-      await agregarComentario.mutateAsync({
-        planAccionId,
-        contenido: newComment,
-      });
-      setNewComment("");
-    } catch (error) {
-      console.error("Error adding comment:", error);
     }
   };
 
@@ -303,25 +285,18 @@ function PlanSuccesionContent() {
                   </CardHeader>
                   <CardContent>
                     {planesAccion && planesAccion.length > 0 ? (
-                      <div className="space-y-3">
+                      <div className="space-y-4">
                         {planesAccion.map((accion) => (
-                          <div key={accion.id} className="border rounded-lg p-3">
-                            <div className="flex items-start justify-between">
-                              <div className="flex-1">
-                                <h4 className="font-medium">{accion.titulo}</h4>
-                                <p className="text-sm text-gray-600 mt-1">{accion.descripcion}</p>
-                                <div className="flex gap-2 mt-2 text-xs text-gray-600">
-                                  <span>👤 {accion.responsable}</span>
-                                  <span>📅 {new Date(accion.fechaFin).toLocaleDateString()}</span>
-                                </div>
-                                <div className="flex gap-2 mt-2">
-                                  <Badge variant="outline">{accion.estado}</Badge>
-                                  <span className="text-xs">{accion.progreso}%</span>
-                                </div>
-                              </div>
-                              <MessageSquare className="h-4 w-4 text-gray-400 mt-1" />
-                            </div>
-                          </div>
+                          <PlanAccionMaintenance
+                            key={accion.id}
+                            planAccionId={accion.id}
+                            titulo={accion.titulo}
+                            descripcion={accion.descripcion}
+                            responsable={accion.responsable}
+                            fechaFin={accion.fechaFin}
+                            estado={accion.estado}
+                            progreso={accion.progreso}
+                          />
                         ))}
                       </div>
                     ) : (

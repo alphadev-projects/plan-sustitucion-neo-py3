@@ -308,3 +308,14 @@
 - [x] Mostrar indicadores visuales de riesgo (🔴 Crítica, 🟠 Alta, 🟢 Controlada)
 - [x] Integrar componente en PlanSuccesion.tsx
 - [x] Todos los tests pasando (22/22)
+
+## Observaciones del Usuario - Sesión Actual (CRÍTICO)
+
+- [x] CRÍTICO: Interfaz de Plan de Sucesión ahora permite editar planes de acción existentes
+- [x] CRÍTICO: Opción visible para cambiar estado (No Iniciado → En Progreso → Finalizado)
+- [x] CRÍTICO: Planes de acción ahora son clickeables y editables con PlanAccionMaintenance
+- [x] CRÍTICO: Verificado que riesgos se calculan correctamente en backend
+- [x] Verificado por qué datos de prueba originales generaban "Bajo" (múltiples personas mismo cargo)
+- [x] Ampliar interfaz con PlanAccionMaintenance integrado en PlanSuccesion.tsx
+- [x] Indicador visual de progreso editable (0-100%) implementado
+- [x] Crear datos de prueba que generen riesgos Alto/Medio correctamente
