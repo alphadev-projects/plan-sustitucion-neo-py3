@@ -389,3 +389,11 @@
 - [x] Agregar invalidación de caché en PlanAccionMaintenance
 - [x] Verificar que AlertasPlanes se actualiza automáticamente
 - [x] Verificar que PlanSuccesionDashboard se actualiza automáticamente
+
+
+## Bug: Dashboard Sucesión No Trae Datos de Completados/En Progreso
+
+- [x] BUG: dashboardMetricas no trae planesCompletados correctamente - CORREGIDO
+- [x] BUG: dashboardMetricas no trae planesEnProgreso correctamente - CORREGIDO
+- [x] Revisar lógica de cálculo en db.ts para getDashboardMetricas
+- [x] Verificar que los estados se están guardando correctamente en BD

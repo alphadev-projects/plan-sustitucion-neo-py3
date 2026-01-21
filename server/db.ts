@@ -640,8 +640,8 @@ export async function getDashboardMetricas() {
   if (!db) return { planesTotal: 0, planesEnProgreso: 0, planesCompletados: 0, planesRetrasados: 0, accionesProximas: [] };
   
   const planesTotal = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion);
-  const planesEnProgreso = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion).where(eq(planesSuccesion.estado, "En Progreso"));
-  const planesCompletados = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion).where(eq(planesSuccesion.estado, "Completado"));
+  const planesEnProgreso = await db.select({ count: sql`COUNT(*)` }).from(planesAccion).where(eq(planesAccion.estado, "En Progreso"));
+  const planesCompletados = await db.select({ count: sql`COUNT(*)` }).from(planesAccion).where(eq(planesAccion.estado, "Completado"));
   const planesRetrasados = await db.select({ count: sql`COUNT(*)` }).from(planesAccion).where(eq(planesAccion.estado, "Retrasado"));
   
   // Planes de acción próximos a vencer (próximos 7 días)
