@@ -154,3 +154,20 @@ export const seguimientoPlanes = mysqlTable("seguimiento_planes", {
 });
 export type SeguimientoPlan = typeof seguimientoPlanes.$inferSelect;
 export type InsertSeguimientoPlan = typeof seguimientoPlanes.$inferInsert;
+
+// Tabla de Auditoría para Historial de Cambios en Planes de Acción
+export const auditoriaPlanesAccion = mysqlTable("auditoria_planes_accion", {
+  id: int("id").autoincrement().primaryKey(),
+  planAccionId: int("planAccionId").notNull(),
+  usuarioId: varchar("usuarioId", { length: 255 }).notNull(),
+  usuario: varchar("usuario", { length: 100 }).notNull(),
+  accion: mysqlEnum("accion", ["CREADO", "ACTUALIZADO", "ESTADO_CAMBIO", "PROGRESO_CAMBIO", "COMPLETADO"]).notNull(),
+  campoModificado: varchar("campoModificado", { length: 100 }),
+  valorAnterior: text("valorAnterior"),
+  valorNuevo: text("valorNuevo"),
+  descripcion: text("descripcion"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type AuditoriaPlanAccion = typeof auditoriaPlanesAccion.$inferSelect;
+export type InsertAuditoriaPlanAccion = typeof auditoriaPlanesAccion.$inferInsert;

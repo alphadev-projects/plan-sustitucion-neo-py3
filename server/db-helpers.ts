@@ -113,3 +113,68 @@ export async function getAlertasPlanes() {
     total: proximosAVencer.length + retrasados.length,
   };
 }
+
+
+/**
+ * Registrar cambio en auditoría de plan de acción
+ */
+export async function registrarCambioAuditoria(
+  planAccionId: number,
+  usuarioId: string,
+  usuario: string,
+  accion: string,
+  campoModificado?: string,
+  valorAnterior?: string,
+  valorNuevo?: string,
+  descripcion?: string
+) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const { auditoriaPlanesAccion } = await import("../drizzle/schema");
+  
+  return db.insert(auditoriaPlanesAccion).values({
+    planAccionId,
+    usuarioId,
+    usuario,
+    accion: accion as any,
+    campoModificado,
+    valorAnterior,
+    valorNuevo,
+    descripcion,
+  });
+}
+
+/**
+ * Obtener historial de cambios de un plan de acción
+ */
+export async function obtenerHistorialPlanAccion(planAccionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const { auditoriaPlanesAccion } = await import("../drizzle/schema");
+  const { eq, desc } = await import("drizzle-orm");
+  
+  return db.select()
+    .from(auditoriaPlanesAccion)
+    .where(eq(auditoriaPlanesAccion.planAccionId, planAccionId))
+    .orderBy(desc(auditoriaPlanesAccion.createdAt));
+}
+
+/**
+ * Obtener resumen de actividad por usuario
+ */
+export async function obtenerActividadPorUsuario(diasAtras: number = 7) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const { auditoriaPlanesAccion } = await import("../drizzle/schema");
+  const { gte } = await import("drizzle-orm");
+  
+  const fechaLimite = new Date();
+  fechaLimite.setDate(fechaLimite.getDate() - diasAtras);
+  
+  return db.select()
+    .from(auditoriaPlanesAccion)
+    .where(gte(auditoriaPlanesAccion.createdAt, fechaLimite));
+}

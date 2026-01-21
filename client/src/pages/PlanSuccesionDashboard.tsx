@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -5,8 +6,16 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, TrendingUp, CheckCircle, Clock } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { AlertasPlanes } from "@/components/AlertasPlanes";
+import { FiltrosAvanzados, type FiltrosState } from "@/components/FiltrosAvanzados";
 
 function DashboardContent() {
+  const [filtros, setFiltros] = useState<FiltrosState>({
+    departamento: "",
+    riesgo: "",
+    estado: "",
+    fechaInicio: "",
+    fechaFin: "",
+  });
   const { data: metricas, isLoading: loadingMetricas } = trpc.sucesion.dashboardMetricas.useQuery();
   const { data: resumenDepartamentos, isLoading: loadingResumen } = trpc.sucesion.dashboardResumenDepartamentos.useQuery();
 
@@ -16,12 +25,17 @@ function DashboardContent() {
 
   const porcentajeCompletados = metricas?.planesTotal ? Math.round((metricas.planesCompletados / metricas.planesTotal) * 100) : 0;
 
+  const departamentos = resumenDepartamentos?.map((d: any) => d.departamento) || [];
+
   return (
     <div className="space-y-6 p-6">
       <div>
         <h1 className="text-3xl font-bold">Dashboard - Plan de Sucesión</h1>
         <p className="text-gray-600 mt-2">Resumen de planes de sucesión y cobertura organizacional</p>
       </div>
+
+      {/* Filtros Avanzados */}
+      <FiltrosAvanzados departamentos={departamentos} onFiltrosChange={setFiltros} />
 
       {/* Alertas Críticas */}
       {metricas && metricas.planesRetrasados > 0 && (

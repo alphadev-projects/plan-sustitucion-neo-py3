@@ -55,7 +55,7 @@ import {
   getDashboardMetricas,
   getResumenPorDepartamento,
 } from "./db";
-import { getAlertasPlanes, generarReporteRiesgosCSV } from "./db-helpers";
+import { getAlertasPlanes, generarReporteRiesgosCSV, obtenerHistorialPlanAccion } from "./db-helpers";
 
 export const appRouter = router({
   system: systemRouter,
@@ -444,6 +444,12 @@ export const appRouter = router({
       const csv = await generarReporteRiesgosCSV();
       return { csv, filename: `reporte-riesgos-${new Date().toISOString().split("T")[0]}.csv` };
     }),
+
+    obtenerHistorial: protectedProcedure
+      .input(z.object({ planAccionId: z.number() }))
+      .query(async ({ input }) => {
+        return obtenerHistorialPlanAccion(input.planAccionId);
+      }),
   }),
 });
 

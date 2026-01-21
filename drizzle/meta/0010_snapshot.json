@@ -1,9 +1,97 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "48b721f4-6ea6-4956-a69c-a677af5b147d",
-  "prevId": "066b729b-8264-4d87-aa42-5245df26f9ae",
+  "id": "fb061702-51e1-42e4-b54d-11b304349a3a",
+  "prevId": "de708471-2b2a-4d42-a3c8-a4c7a3ce5ea3",
   "tables": {
+    "auditoria_planes_accion": {
+      "name": "auditoria_planes_accion",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "planAccionId": {
+          "name": "planAccionId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "usuarioId": {
+          "name": "usuarioId",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "usuario": {
+          "name": "usuario",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "accion": {
+          "name": "accion",
+          "type": "enum('CREADO','ACTUALIZADO','ESTADO_CAMBIO','PROGRESO_CAMBIO','COMPLETADO')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "campoModificado": {
+          "name": "campoModificado",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "valorAnterior": {
+          "name": "valorAnterior",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "valorNuevo": {
+          "name": "valorNuevo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "descripcion": {
+          "name": "descripcion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "auditoria_planes_accion_id": {
+          "name": "auditoria_planes_accion_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
     "comentarios_planes": {
       "name": "comentarios_planes",
       "columns": {
@@ -206,13 +294,6 @@
           "notNull": true,
           "autoincrement": false,
           "default": 0
-        },
-        "archivoEvidencia": {
-          "name": "archivoEvidencia",
-          "type": "varchar(500)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
         },
         "usuario": {
           "name": "usuario",
@@ -566,13 +647,6 @@
           "autoincrement": false,
           "default": 0
         },
-        "archivoEvidencia": {
-          "name": "archivoEvidencia",
-          "type": "varchar(500)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
         "fechaInicio": {
           "name": "fechaInicio",
           "type": "timestamp",
@@ -590,6 +664,13 @@
         "evidencia": {
           "name": "evidencia",
           "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "archivoEvidencia": {
+          "name": "archivoEvidencia",
+          "type": "varchar(500)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

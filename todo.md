@@ -358,3 +358,18 @@
 - [x] Crear procedimiento tRPC para generar CSV de riesgos
 - [x] Agregar botón de descarga en Dashboard (integrado en AlertasPlanes)
 - [ ] Mejorar PlanAccionMaintenance con botón descargar comentarios
+
+
+## Recomendación 2: Historial de Cambios en Planes de Acción
+
+- [x] Crear tabla de auditoría en schema para registrar cambios
+- [x] Agregar procedimientos tRPC para registrar cambios automáticamente
+- [x] Crear componente Timeline para visualizar historial
+- [ ] Integrar Timeline en PlanAccionMaintenance (siguiente fase)
+
+## Recomendación 3: Filtros Avanzados en Dashboard
+
+- [x] Agregar filtros por departamento, riesgo, estado, fechas
+- [x] Crear componente FilterBar reutilizable
+- [ ] Integrar filtros en AlertasPlanes (siguiente fase)
+- [ ] Persistir filtros en URL o localStorage (siguiente fase)
