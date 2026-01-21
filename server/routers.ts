@@ -55,6 +55,7 @@ import {
   getDashboardMetricas,
   getResumenPorDepartamento,
 } from "./db";
+import { getAlertasPlanes, generarReporteRiesgosCSV } from "./db-helpers";
 
 export const appRouter = router({
   system: systemRouter,
@@ -433,6 +434,15 @@ export const appRouter = router({
 
     dashboardResumenDepartamentos: protectedProcedure.query(async () => {
       return getResumenPorDepartamento();
+    }),
+
+    obtenerAlertas: protectedProcedure.query(async () => {
+      return getAlertasPlanes();
+    }),
+
+    descargarReporteRiesgos: protectedProcedure.query(async () => {
+      const csv = await generarReporteRiesgosCSV();
+      return { csv, filename: `reporte-riesgos-${new Date().toISOString().split("T")[0]}.csv` };
     }),
   }),
 });

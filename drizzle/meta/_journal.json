@@ -57,6 +57,20 @@
       "when": 1768916521106,
       "tag": "0007_glorious_vision",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1769000993395,
+      "tag": "0008_nasty_naoko",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1769002123784,
+      "tag": "0009_red_gorilla_man",
+      "breakpoints": true
     }
   ]
 }

@@ -1,0 +1,1 @@
+ALTER TABLE `planes_accion` DROP COLUMN `archivoEvidencia`;

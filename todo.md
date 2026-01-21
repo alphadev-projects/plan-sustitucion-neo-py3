@@ -330,3 +330,31 @@
 - [x] Agregar input file para subir imagen, PDF, Excel
 - [ ] Implementar almacenamiento de archivos en S3 (siguiente fase)
 - [ ] Actualizar schema para guardar referencias a archivos (siguiente fase)
+
+## Implementación de Pasos Recomendados
+
+### 1. Almacenamiento de Archivos en S3
+- [ ] Crear tabla de evidencia en schema
+- [ ] Agregar procedimiento tRPC para subir archivos a S3
+- [ ] Integrar carga de archivos en PlanAccionMaintenance
+- [ ] Guardar referencias de archivos en BD
+
+### 2. Notificaciones Automáticas por Vencimiento
+- [ ] Crear procedimiento para detectar planes próximos a vencer
+- [ ] Implementar sistema de notificaciones por email
+- [ ] Agregar configuración de días de anticipación
+- [ ] Crear dashboard de alertas
+
+### 3. Exportación de Reportes
+- [ ] Crear procedimiento para generar reporte Excel
+- [ ] Crear procedimiento para generar reporte PDF
+- [ ] Agregar botón de descarga en Dashboard
+- [ ] Incluir matriz de riesgos, planes por vencer, resumen ejecutivo
+
+### Implementación de Mejoras Prácticas - Sesón Actual
+
+- [x] Crear procedimiento tRPC para obtener planes próximos a vencer
+- [x] Agregar dashboard de alertas en DashboardSucesion
+- [x] Crear procedimiento tRPC para generar CSV de riesgos
+- [x] Agregar botón de descarga en Dashboard (integrado en AlertasPlanes)
+- [ ] Mejorar PlanAccionMaintenance con botón descargar comentarios

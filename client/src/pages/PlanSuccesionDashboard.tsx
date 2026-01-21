@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, TrendingUp, CheckCircle, Clock } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
+import { AlertasPlanes } from "@/components/AlertasPlanes";
 
 function DashboardContent() {
   const { data: metricas, isLoading: loadingMetricas } = trpc.sucesion.dashboardMetricas.useQuery();
@@ -74,6 +75,9 @@ function DashboardContent() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Alertas de Planes */}
+      <AlertasPlanes />
 
       {/* Planes de Acción Próximos a Vencer */}
       <Card>
