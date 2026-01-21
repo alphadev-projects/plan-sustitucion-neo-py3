@@ -450,6 +450,24 @@ export const appRouter = router({
       .query(async ({ input }) => {
         return obtenerHistorialPlanAccion(input.planAccionId);
       }),
+
+    obtenerAuditoria: protectedProcedure
+      .input(z.object({
+        usuario: z.string().optional(),
+        accion: z.string().optional(),
+        planAccionId: z.number().optional(),
+        fechaInicio: z.string().optional(),
+        fechaFin: z.string().optional(),
+      }))
+      .query(async ({ input }) => {
+        return obtenerAuditoriaConFiltros(
+          input.usuario,
+          input.accion,
+          input.planAccionId,
+          input.fechaInicio,
+          input.fechaFin
+        );
+      }),
   }),
 });
 

@@ -373,3 +373,11 @@
 - [x] Crear componente FilterBar reutilizable
 - [ ] Integrar filtros en AlertasPlanes (siguiente fase)
 - [ ] Persistir filtros en URL o localStorage (siguiente fase)
+
+
+## Módulo de Auditoría - Nueva Sesión
+
+- [x] Crear procedimiento tRPC para obtener auditoría con filtros
+- [x] Crear página Auditoria.tsx con tabla centralizada
+- [x] Integrar Timeline en PlanAccionMaintenance
+- [x] Agregar ruta y navegación en App.tsx

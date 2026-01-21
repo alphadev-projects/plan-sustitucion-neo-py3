@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { AlertCircle, CheckCircle, Clock, AlertTriangle, Upload } from "lucide-react";
+import { HistorialPlanAccion } from "./HistorialPlanAccion";
 
 interface PlanAccionMaintenanceProps {
   planAccionId: number;
@@ -264,6 +265,11 @@ export function PlanAccionMaintenance({
             </div>
           </div>
         )}
+
+        {/* Historial de Cambios */}
+        <div className="mt-6 pt-6 border-t">
+          <HistorialPlanAccion planAccionId={planAccionId} />
+        </div>
       </CardContent>
     </Card>
   );

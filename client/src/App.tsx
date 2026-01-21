@@ -13,6 +13,7 @@ import Nomina from "./pages/Nomina";
 import GestionUsuarios from "./pages/GestionUsuarios";
 import PlanSuccesion from "./pages/PlanSuccesion";
 import PlanSuccesionDashboard from "./pages/PlanSuccesionDashboard";
+import Auditoria from "./pages/Auditoria";
 import { useEffect } from "react";
 
 function Router() {
@@ -66,6 +67,13 @@ function Router() {
         {(props) => (
           <ProtectedRoute requiredRole="admin">
             <PlanSuccesionDashboard {...props} />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/auditoria">
+        {(props) => (
+          <ProtectedRoute requiredRole="admin">
+            <Auditoria {...props} />
           </ProtectedRoute>
         )}
       </Route>

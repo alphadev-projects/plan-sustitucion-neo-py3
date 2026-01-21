@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users, FileText, Briefcase, BarChart3 } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Users, FileText, Briefcase, BarChart3, History } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -33,6 +33,7 @@ const allMenuItems = [
   { icon: FileText, label: "Planes de Sustitución", path: "/planes", requiresAdmin: false },
   { icon: Briefcase, label: "Plan de Sucesión", path: "/sucesion", requiresAdmin: true },
   { icon: BarChart3, label: "Dashboard Sucesión", path: "/sucesion-dashboard", requiresAdmin: true },
+  { icon: History, label: "Auditoría", path: "/auditoria", requiresAdmin: true },
   { icon: Users, label: "Nómina", path: "/nomina", requiresAdmin: false },
   { icon: Users, label: "Gestión de Usuarios", path: "/usuarios", requiresAdmin: true },
 ];

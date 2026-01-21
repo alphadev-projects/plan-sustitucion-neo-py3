@@ -178,3 +178,54 @@ export async function obtenerActividadPorUsuario(diasAtras: number = 7) {
     .from(auditoriaPlanesAccion)
     .where(gte(auditoriaPlanesAccion.createdAt, fechaLimite));
 }
+
+
+/**
+ * Obtener auditoría con filtros
+ */
+export async function obtenerAuditoriaConFiltros(
+  usuarioFilter?: string,
+  accionFilter?: string,
+  planAccionIdFilter?: number,
+  fechaInicio?: string,
+  fechaFin?: string
+) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const { auditoriaPlanesAccion } = await import("../drizzle/schema");
+  const { and, eq, gte, lte, desc } = await import("drizzle-orm");
+  
+  const condiciones = [];
+  
+  if (usuarioFilter) {
+    condiciones.push(eq(auditoriaPlanesAccion.usuario, usuarioFilter));
+  }
+  
+  if (accionFilter) {
+    condiciones.push(eq(auditoriaPlanesAccion.accion, accionFilter as any));
+  }
+  
+  if (planAccionIdFilter) {
+    condiciones.push(eq(auditoriaPlanesAccion.planAccionId, planAccionIdFilter));
+  }
+  
+  if (fechaInicio) {
+    const fecha = new Date(fechaInicio);
+    condiciones.push(gte(auditoriaPlanesAccion.createdAt, fecha));
+  }
+  
+  if (fechaFin) {
+    const fecha = new Date(fechaFin);
+    fecha.setHours(23, 59, 59, 999);
+    condiciones.push(lte(auditoriaPlanesAccion.createdAt, fecha));
+  }
+  
+  const whereClause = condiciones.length > 0 ? and(...condiciones) : undefined;
+  
+  return db.select()
+    .from(auditoriaPlanesAccion)
+    .where(whereClause)
+    .orderBy(desc(auditoriaPlanesAccion.createdAt))
+    .limit(1000);
+}
