@@ -94,7 +94,7 @@ export function FiltrosAvanzados({ departamentos, onFiltrosChange }: FiltrosAvan
                     <SelectValue placeholder="Todos" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todos</SelectItem>
+                    <SelectItem value="todos">Todos</SelectItem>
                     {departamentos.map((dept) => (
                       <SelectItem key={dept} value={dept}>
                         {dept}
@@ -112,7 +112,7 @@ export function FiltrosAvanzados({ departamentos, onFiltrosChange }: FiltrosAvan
                     <SelectValue placeholder="Todos" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todos</SelectItem>
+                    <SelectItem value="todos">Todos</SelectItem>
                     {RIESGOS.map((riesgo) => (
                       <SelectItem key={riesgo} value={riesgo}>
                         {riesgo}
@@ -130,7 +130,7 @@ export function FiltrosAvanzados({ departamentos, onFiltrosChange }: FiltrosAvan
                     <SelectValue placeholder="Todos" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todos</SelectItem>
+                    <SelectItem value="todos">Todos</SelectItem>
                     {ESTADOS.map((estado) => (
                       <SelectItem key={estado} value={estado}>
                         {estado}
