@@ -45,7 +45,7 @@ function AuditoriaContent() {
   const handleLimpiarFiltros = () => {
     setFiltros({
       usuario: "",
-      accion: "",
+      accion: "todas",
       fechaInicio: "",
       fechaFin: "",
     });
@@ -75,7 +75,7 @@ function AuditoriaContent() {
     a.click();
   };
 
-  const filtrosActivos = Object.values(filtros).filter((v) => v !== "").length;
+  const filtrosActivos = Object.values(filtros).filter((v) => v !== "" && v !== "todas").length;
 
   return (
     <div className="space-y-6 p-6">
@@ -112,7 +112,7 @@ function AuditoriaContent() {
                   <SelectValue placeholder="Todas" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Todas</SelectItem>
+                  <SelectItem value="todas">Todas</SelectItem>
                   {ACCIONES.map((accion) => (
                     <SelectItem key={accion} value={accion}>
                       {accion.replace(/_/g, " ")}

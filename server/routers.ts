@@ -55,7 +55,7 @@ import {
   getDashboardMetricas,
   getResumenPorDepartamento,
 } from "./db";
-import { getAlertasPlanes, generarReporteRiesgosCSV, obtenerHistorialPlanAccion } from "./db-helpers";
+import { getAlertasPlanes, generarReporteRiesgosCSV, obtenerHistorialPlanAccion, obtenerAuditoriaConFiltros } from "./db-helpers";
 
 export const appRouter = router({
   system: systemRouter,
