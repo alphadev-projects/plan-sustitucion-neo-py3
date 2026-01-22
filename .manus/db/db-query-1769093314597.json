@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE planes_sucesion \nSET riesgoContinuidad = IF(reemplazo IS NULL OR reemplazo = '', 'Alto', 'Bajo'),\n    riesgoCritico = IF(reemplazo IS NULL OR reemplazo = '', 'Si', 'No'),\n    prioridadSucesion = IF(reemplazo IS NULL OR reemplazo = '', 'Alta', 'Baja')\nWHERE reemplazo IS NULL OR reemplazo = '';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute UPDATE planes_sucesion \nSET riesgoContinuidad = IF(reemplazo IS NULL OR reemplazo = '', 'Alto', 'Bajo'),\n    riesgoCritico = IF(reemplazo IS NULL OR reemplazo = '', 'Si', 'No'),\n    prioridadSucesion = IF(reemplazo IS NULL OR reemplazo = '', 'Alta', 'Baja')\nWHERE reemplazo IS NULL OR reemplazo = '';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 371
+}

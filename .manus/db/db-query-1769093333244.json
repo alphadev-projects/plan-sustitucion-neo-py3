@@ -1,0 +1,34 @@
+{
+  "query": "SELECT reemplazo, COUNT(*) as cantidad FROM planes_sucesion GROUP BY reemplazo ORDER BY cantidad DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT reemplazo, COUNT(*) as cantidad FROM planes_sucesion GROUP BY reemplazo ORDER BY cantidad DESC;",
+  "rows": [
+    {
+      "reemplazo": "Test Reemplazo",
+      "cantidad": "49"
+    },
+    {
+      "reemplazo": "Updated Reemplazo",
+      "cantidad": "48"
+    },
+    {
+      "reemplazo": "WALTER DAVID GONZALEZ ARECO",
+      "cantidad": "2"
+    },
+    {
+      "reemplazo": "NO APLICA",
+      "cantidad": "2"
+    },
+    {
+      "reemplazo": "EDILBERTO MIRANDA ALCARAZ",
+      "cantidad": "1"
+    },
+    {
+      "reemplazo": "ALEXIS RICARDO ROBLEDO MOLINAS",
+      "cantidad": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "reemplazo\tcantidad\nTest Reemplazo\t49\nUpdated Reemplazo\t48\nWALTER DAVID GONZALEZ ARECO\t2\nNO APLICA\t2\nEDILBERTO MIRANDA ALCARAZ\t1\nALEXIS RICARDO ROBLEDO MOLINAS\t1\n",
+  "stderr": "",
+  "execution_time_ms": 375
+}

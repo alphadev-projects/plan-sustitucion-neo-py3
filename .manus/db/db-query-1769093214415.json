@@ -1,0 +1,45 @@
+{
+  "query": "SELECT ps.id, ps.planSustitucionId, ps.colaborador, pst.id as pst_id, pst.colaborador as pst_colaborador FROM planes_sucesion ps LEFT JOIN planes_sustitucion pst ON ps.planSustitucionId = pst.id LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT ps.id, ps.planSustitucionId, ps.colaborador, pst.id as pst_id, pst.colaborador as pst_colaborador FROM planes_sucesion ps LEFT JOIN planes_sustitucion pst ON ps.planSustitucionId = pst.id LIMIT 5;",
+  "rows": [
+    {
+      "id": "30001",
+      "planSustitucionId": "180004",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "pst_id": "180004",
+      "pst_colaborador": "ROQUE EVER YEGROS COLMAN"
+    },
+    {
+      "id": "30002",
+      "planSustitucionId": "180004",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "pst_id": "180004",
+      "pst_colaborador": "ROQUE EVER YEGROS COLMAN"
+    },
+    {
+      "id": "30003",
+      "planSustitucionId": "210003",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "pst_id": "210003",
+      "pst_colaborador": "ROQUE EVER YEGROS COLMAN"
+    },
+    {
+      "id": "30004",
+      "planSustitucionId": "210003",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "pst_id": "210003",
+      "pst_colaborador": "ROQUE EVER YEGROS COLMAN"
+    },
+    {
+      "id": "30005",
+      "planSustitucionId": "210005",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "pst_id": "210005",
+      "pst_colaborador": "ROQUE EVER YEGROS COLMAN"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tplanSustitucionId\tcolaborador\tpst_id\tpst_colaborador\n30001\t180004\tROQUE EVER YEGROS COLMAN\t180004\tROQUE EVER YEGROS COLMAN\n30002\t180004\tROQUE EVER YEGROS COLMAN\t180004\tROQUE EVER YEGROS COLMAN\n30003\t210003\tROQUE EVER YEGROS COLMAN\t210003\tROQUE EVER YEGROS COLMAN\n30004\t210003\tROQUE EVER YEGROS COLMAN\t210003\tROQUE EVER YEGROS COLMAN\n30005\t210005\tROQUE EVER YEGROS COLMAN\t210005\tROQUE EVER YEGROS COLMAN\n",
+  "stderr": "",
+  "execution_time_ms": 393
+}

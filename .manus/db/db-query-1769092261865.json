@@ -1,0 +1,40 @@
+{
+  "query": "SELECT id, titulo, estado, fechaFin FROM planes_accion LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, titulo, estado, fechaFin FROM planes_accion LIMIT 20;",
+  "rows": [
+    {
+      "id": "1",
+      "titulo": "Capacitacion en inteligencia emocional",
+      "estado": "Retrasado",
+      "fechaFin": "2026-01-30 00:00:00"
+    },
+    {
+      "id": "30001",
+      "titulo": "probando capacitacion",
+      "estado": "Completado",
+      "fechaFin": "2026-01-21 00:00:00"
+    },
+    {
+      "id": "30002",
+      "titulo": "asdas",
+      "estado": "Retrasado",
+      "fechaFin": "2026-01-21 00:00:00"
+    },
+    {
+      "id": "60001",
+      "titulo": "fadas",
+      "estado": "Completado",
+      "fechaFin": "2026-01-21 00:00:00"
+    },
+    {
+      "id": "60002",
+      "titulo": "adsasd",
+      "estado": "En Progreso",
+      "fechaFin": "2026-01-23 00:00:00"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitulo\testado\tfechaFin\n1\tCapacitacion en inteligencia emocional\tRetrasado\t2026-01-30 00:00:00\n30001\tprobando capacitacion\tCompletado\t2026-01-21 00:00:00\n30002\tasdas\tRetrasado\t2026-01-21 00:00:00\n60001\tfadas\tCompletado\t2026-01-21 00:00:00\n60002\tadsasd\tEn Progreso\t2026-01-23 00:00:00\n",
+  "stderr": "",
+  "execution_time_ms": 357
+}

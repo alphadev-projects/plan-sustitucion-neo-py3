@@ -1,0 +1,14 @@
+{
+  "query": "SELECT COUNT(*) as sin_reemplazo, COUNT(CASE WHEN reemplazo IS NOT NULL AND reemplazo != '' THEN 1 END) as con_reemplazo FROM planes_sucesion;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT COUNT(*) as sin_reemplazo, COUNT(CASE WHEN reemplazo IS NOT NULL AND reemplazo != '' THEN 1 END) as con_reemplazo FROM planes_sucesion;",
+  "rows": [
+    {
+      "sin_reemplazo": "103",
+      "con_reemplazo": "103"
+    }
+  ],
+  "messages": [],
+  "stdout": "sin_reemplazo\tcon_reemplazo\n103\t103\n",
+  "stderr": "",
+  "execution_time_ms": 372
+}

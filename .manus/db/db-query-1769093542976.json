@@ -1,0 +1,22 @@
+{
+  "query": "SELECT id, colaborador, reemplazo, LENGTH(TRIM(reemplazo)) as len FROM planes_sucesion WHERE reemplazo IS NULL OR TRIM(reemplazo) = '' OR UPPER(TRIM(reemplazo)) IN ('NO APLICA', 'N/A');",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, colaborador, reemplazo, LENGTH(TRIM(reemplazo)) as len FROM planes_sucesion WHERE reemplazo IS NULL OR TRIM(reemplazo) = '' OR UPPER(TRIM(reemplazo)) IN ('NO APLICA', 'N/A');",
+  "rows": [
+    {
+      "id": "60002",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "reemplazo": "NO APLICA",
+      "len": "9"
+    },
+    {
+      "id": "60089",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "reemplazo": "NO APLICA",
+      "len": "9"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tcolaborador\treemplazo\tlen\n60002\tROQUE EVER YEGROS COLMAN\tNO APLICA\t9\n60089\tROQUE EVER YEGROS COLMAN\tNO APLICA\t9\n",
+  "stderr": "",
+  "execution_time_ms": 379
+}

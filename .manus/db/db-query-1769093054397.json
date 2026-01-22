@@ -1,0 +1,40 @@
+{
+  "query": "SHOW TABLES;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SHOW TABLES;",
+  "rows": [
+    {
+      "Tables_in_TfZrNnU8ACksUNuSJSy8Lr": "__drizzle_migrations"
+    },
+    {
+      "Tables_in_TfZrNnU8ACksUNuSJSy8Lr": "auditoria_planes_accion"
+    },
+    {
+      "Tables_in_TfZrNnU8ACksUNuSJSy8Lr": "comentarios_planes"
+    },
+    {
+      "Tables_in_TfZrNnU8ACksUNuSJSy8Lr": "empleados"
+    },
+    {
+      "Tables_in_TfZrNnU8ACksUNuSJSy8Lr": "planes_accion"
+    },
+    {
+      "Tables_in_TfZrNnU8ACksUNuSJSy8Lr": "planes_sucesion"
+    },
+    {
+      "Tables_in_TfZrNnU8ACksUNuSJSy8Lr": "planes_sustitucion"
+    },
+    {
+      "Tables_in_TfZrNnU8ACksUNuSJSy8Lr": "seguimiento_planes"
+    },
+    {
+      "Tables_in_TfZrNnU8ACksUNuSJSy8Lr": "users"
+    },
+    {
+      "Tables_in_TfZrNnU8ACksUNuSJSy8Lr": "usuarios_locales"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_TfZrNnU8ACksUNuSJSy8Lr\n__drizzle_migrations\nauditoria_planes_accion\ncomentarios_planes\nempleados\nplanes_accion\nplanes_sucesion\nplanes_sustitucion\nseguimiento_planes\nusers\nusuarios_locales\n",
+  "stderr": "",
+  "execution_time_ms": 353
+}

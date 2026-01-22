@@ -1,0 +1,28 @@
+{
+  "query": "SELECT DISTINCT reemplazo FROM planes_sucesion LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT DISTINCT reemplazo FROM planes_sucesion LIMIT 10;",
+  "rows": [
+    {
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "reemplazo": "ALEXIS RICARDO ROBLEDO MOLINAS"
+    },
+    {
+      "reemplazo": "NO APLICA"
+    },
+    {
+      "reemplazo": "WALTER DAVID GONZALEZ ARECO"
+    },
+    {
+      "reemplazo": "EDILBERTO MIRANDA ALCARAZ"
+    },
+    {
+      "reemplazo": "Test Reemplazo"
+    }
+  ],
+  "messages": [],
+  "stdout": "reemplazo\nUpdated Reemplazo\nALEXIS RICARDO ROBLEDO MOLINAS\nNO APLICA\nWALTER DAVID GONZALEZ ARECO\nEDILBERTO MIRANDA ALCARAZ\nTest Reemplazo\n",
+  "stderr": "",
+  "execution_time_ms": 365
+}

@@ -1,0 +1,90 @@
+{
+  "query": "SELECT \n  id,\n  colaborador,\n  cargo,\n  departamento,\n  reemplazo,\n  CASE \n    WHEN reemplazo IS NULL OR reemplazo = '' THEN 'Alto'\n    ELSE 'Bajo'\n  END as riesgoContinuidad\nFROM planes_sustitucion \nWHERE puestoClave = 'Si'\nLIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT \n  id,\n  colaborador,\n  cargo,\n  departamento,\n  reemplazo,\n  CASE \n    WHEN reemplazo IS NULL OR reemplazo = '' THEN 'Alto'\n    ELSE 'Bajo'\n  END as riesgoContinuidad\nFROM planes_sustitucion \nWHERE puestoClave = 'Si'\nLIMIT 10;",
+  "rows": [
+    {
+      "id": "180004",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "departamento": "Administración y Finanzas",
+      "reemplazo": "WALTER DAVID GONZALEZ ARECO",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "210003",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "departamento": "Administración y Finanzas",
+      "reemplazo": "NO APLICA",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "210005",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "departamento": "Administración y Finanzas",
+      "reemplazo": "WALTER DAVID GONZALEZ ARECO",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "300036",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "reemplazo": "Test Reemplazo",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "300042",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "reemplazo": "Test Reemplazo",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "300043",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "reemplazo": "Updated Reemplazo",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "300046",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "reemplazo": "Test Reemplazo",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "300047",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "reemplazo": "Updated Reemplazo",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "300052",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "reemplazo": "Test Reemplazo",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "300053",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "reemplazo": "Updated Reemplazo",
+      "riesgoContinuidad": "Bajo"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tcolaborador\tcargo\tdepartamento\treemplazo\triesgoContinuidad\n180004\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\tAdministración y Finanzas\tWALTER DAVID GONZALEZ ARECO\tBajo\n210003\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\tAdministración y Finanzas\tNO APLICA\tBajo\n210005\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\tAdministración y Finanzas\tWALTER DAVID GONZALEZ ARECO\tBajo\n300036\tTest Colaborador\tTest Cargo\tTest Dept\tTest Reemplazo\tBajo\n300042\tTest Colaborador\tTest Cargo\tTest Dept\tTest Reemplazo\tBajo\n300043\tTest Colaborador\tTest Cargo\tTest Dept\tUpdated Reemplazo\tBajo\n300046\tTest Colaborador\tTest Cargo\tTest Dept\tTest Reemplazo\tBajo\n300047\tTest Colaborador\tTest Cargo\tTest Dept\tUpdated Reemplazo\tBajo\n300052\tTest Colaborador\tTest Cargo\tTest Dept\tTest Reemplazo\tBajo\n300053\tTest Colaborador\tTest Cargo\tTest Dept\tUpdated Reemplazo\tBajo\n",
+  "stderr": "",
+  "execution_time_ms": 354
+}

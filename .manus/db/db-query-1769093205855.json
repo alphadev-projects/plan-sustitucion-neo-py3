@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE planes_sucesion ps \nJOIN planes_sustitucion pst ON ps.planSustitucionId = pst.id \nSET ps.reemplazo = pst.reemplazo,\n    ps.riesgoContinuidad = IF(pst.reemplazo IS NULL OR pst.reemplazo = '', 'Alto', 'Bajo'),\n    ps.riesgoCritico = IF(pst.reemplazo IS NULL OR pst.reemplazo = '', 'Si', 'No'),\n    ps.prioridadSucesion = IF(pst.reemplazo IS NULL OR pst.reemplazo = '', 'Alta', 'Baja');",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute UPDATE planes_sucesion ps \nJOIN planes_sustitucion pst ON ps.planSustitucionId = pst.id \nSET ps.reemplazo = pst.reemplazo,\n    ps.riesgoContinuidad = IF(pst.reemplazo IS NULL OR pst.reemplazo = '', 'Alto', 'Bajo'),\n    ps.riesgoCritico = IF(pst.reemplazo IS NULL OR pst.reemplazo = '', 'Si', 'No'),\n    ps.prioridadSucesion = IF(pst.reemplazo IS NULL OR pst.reemplazo = '', 'Alta', 'Baja');",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 387
+}

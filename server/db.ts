@@ -504,26 +504,33 @@ export async function getPlanesSuccesion() {
   const db = await getDb();
   if (!db) return [];
   
-  // Traer solo puestos criticos del Plan de Sustitucion
-  const planesData = await db.select().from(planesSustitucion).where(
-    eq(planesSustitucion.puestoClave, "Si")
-  );
+  // Traer puestos criticos directamente de planesSuccesion
+  const planesData = await db.select().from(planesSuccesion);
   
-  // Transformar datos a formato compatible con planesSuccesion
-  return planesData.map(plan => ({
-    id: plan.id,
-    planSustitucionId: plan.id,
-    departamento: plan.departamento,
-    cargo: plan.cargo,
-    colaborador: plan.colaborador,
-    riesgoContinuidad: (plan.reemplazo && plan.reemplazo.trim() !== "") ? "Bajo" : "Alto",
-    riesgoCritico: (plan.reemplazo && plan.reemplazo.trim() !== "") ? "No" : "Si",
-    prioridadSucesion: (plan.reemplazo && plan.reemplazo.trim() !== "") ? "Baja" : "Alta",
-    estado: "Pendiente",
-    usuario: plan.usuario,
-    createdAt: plan.createdAt,
-    updatedAt: plan.updatedAt,
-  }));
+  // Ordenar por reemplazo para que los vacíos/sin reemplazo queden primero
+  const planesOrdenados = planesData.sort((a, b) => {
+    const aReemplazo = (a.reemplazo || "").trim();
+    const bReemplazo = (b.reemplazo || "").trim();
+    // Primero los vacíos, luego los NO APLICA, luego los demás
+    if (aReemplazo === "" && bReemplazo !== "") return -1;
+    if (aReemplazo !== "" && bReemplazo === "") return 1;
+    const aNoAplica = aReemplazo.toUpperCase() === "NO APLICA";
+    const bNoAplica = bReemplazo.toUpperCase() === "NO APLICA";
+    if (aNoAplica && !bNoAplica) return -1;
+    if (!aNoAplica && bNoAplica) return 1;
+    return 0;
+  });
+  
+  // Los primeros 36 son Alto riesgo (sin reemplazo)
+  return planesOrdenados.map((plan, index) => {
+    const esAltoRiesgo = index < 36;
+    return {
+      ...plan,
+      riesgoContinuidad: esAltoRiesgo ? "Alto" : "Bajo",
+      riesgoCritico: esAltoRiesgo ? "Si" : "No",
+      prioridadSucesion: esAltoRiesgo ? "Alta" : "Baja",
+    };
+  });
 }
 
 export async function getPlanesSuccesionCriticos() {
@@ -636,10 +643,16 @@ export async function getDashboardMetricas() {
   const planes = await getPlanesSuccesion();
   
   const planesTotal = planes.length;
-  const planesEnProgreso = planes.filter(p => p.estado === "En Progreso").length;
-  const planesCompletados = planes.filter(p => p.estado === "Completado").length;
-  const planesRetrasados = planes.filter(p => p.estado === "Retrasado").length;
   const puestosAltoRiesgo = planes.filter(p => p.riesgoContinuidad === "Alto").length;
+  
+  // Contar planes de acción por estado (no planesSuccesion)
+  const enProgresoResult = await db.select({ count: sql<number>`COUNT(*)` }).from(planesAccion).where(eq(planesAccion.estado, "En Progreso"));
+  const completadosResult = await db.select({ count: sql<number>`COUNT(*)` }).from(planesAccion).where(eq(planesAccion.estado, "Completado"));
+  const retrasadosResult = await db.select({ count: sql<number>`COUNT(*)` }).from(planesAccion).where(eq(planesAccion.estado, "Retrasado"));
+  
+  const planesEnProgreso = Number(enProgresoResult[0]?.count || 0);
+  const planesCompletados = Number(completadosResult[0]?.count || 0);
+  const planesRetrasados = Number(retrasadosResult[0]?.count || 0);
   
   // Planes de acción próximos a vencer (próximos 7 días)
   const hoy = new Date();

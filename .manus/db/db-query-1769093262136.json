@@ -1,0 +1,22 @@
+{
+  "query": "SELECT 'planes_sustitucion' as tabla, COUNT(*) as cantidad FROM planes_sustitucion WHERE colaborador LIKE '%ROQUE%'\nUNION ALL\nSELECT 'planes_sucesion' as tabla, COUNT(*) as cantidad FROM planes_sucesion WHERE colaborador LIKE '%ROQUE%'\nUNION ALL\nSELECT 'empleados' as tabla, COUNT(*) as cantidad FROM empleados WHERE nombre LIKE '%ROQUE%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT 'planes_sustitucion' as tabla, COUNT(*) as cantidad FROM planes_sustitucion WHERE colaborador LIKE '%ROQUE%'\nUNION ALL\nSELECT 'planes_sucesion' as tabla, COUNT(*) as cantidad FROM planes_sucesion WHERE colaborador LIKE '%ROQUE%'\nUNION ALL\nSELECT 'empleados' as tabla, COUNT(*) as cantidad FROM empleados WHERE nombre LIKE '%ROQUE%';",
+  "rows": [
+    {
+      "tabla": "empleados",
+      "cantidad": "1"
+    },
+    {
+      "tabla": "planes_sucesion",
+      "cantidad": "4"
+    },
+    {
+      "tabla": "planes_sustitucion",
+      "cantidad": "4"
+    }
+  ],
+  "messages": [],
+  "stdout": "tabla\tcantidad\nempleados\t1\nplanes_sucesion\t4\nplanes_sustitucion\t4\n",
+  "stderr": "",
+  "execution_time_ms": 366
+}

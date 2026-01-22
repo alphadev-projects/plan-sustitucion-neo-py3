@@ -1,0 +1,210 @@
+{
+  "query": "SELECT id, colaborador, reemplazo FROM planes_sucesion ORDER BY id LIMIT 40;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, colaborador, reemplazo FROM planes_sucesion ORDER BY id LIMIT 40;",
+  "rows": [
+    {
+      "id": "60001",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "reemplazo": "WALTER DAVID GONZALEZ ARECO"
+    },
+    {
+      "id": "60002",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "reemplazo": "NO APLICA"
+    },
+    {
+      "id": "60003",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "reemplazo": "WALTER DAVID GONZALEZ ARECO"
+    },
+    {
+      "id": "60004",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60005",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60006",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60007",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60008",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60009",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60010",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60011",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60012",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60013",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60014",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60015",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60016",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60017",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60018",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60019",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60020",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60021",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60022",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60023",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60024",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60025",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60026",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60027",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60028",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60029",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60030",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60031",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60032",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60033",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60034",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60035",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60036",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60037",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60038",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "60039",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "60040",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Updated Reemplazo"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tcolaborador\treemplazo\n60001\tROQUE EVER YEGROS COLMAN\tWALTER DAVID GONZALEZ ARECO\n60002\tROQUE EVER YEGROS COLMAN\tNO APLICA\n60003\tROQUE EVER YEGROS COLMAN\tWALTER DAVID GONZALEZ ARECO\n60004\tTest Colaborador\tTest Reemplazo\n60005\tTest Colaborador\tTest Reemplazo\n60006\tTest Colaborador\tUpdated Reemplazo\n60007\tTest Colaborador\tTest Reemplazo\n60008\tTest Colaborador\tUpdated Reemplazo\n60009\tTest Colaborador\tTest Reemplazo\n60010\tTest Colaborador\tUpdated Reemplazo\n60011\tTest Colaborador\tTest Reemplazo\n60012\tTest Colaborador\tUpdated Reemplazo\n60013\tTest Colaborador\tTest Reemplazo\n60014\tTest Colaborador\tUpdated Reemplazo\n60015\tTest Colaborador\tTest Reemplazo\n60016\tTest Colaborador\tUpdated Reemplazo\n60017\tTest Colaborador\tTest Reemplazo\n60018\tTest Colaborador\tUpdated Reemplazo\n60019\tTest Colaborador\tTest Reemplazo\n60020\tTest Colaborador\tUpdated Reemplazo\n60021\tTest Colaborador\tTest Reemplazo\n60022\tTest Colaborador\tUpdated Reemplazo\n60023\tTest Colaborador\tTest Reemplazo\n60024\tTest Colaborador\tUpdated Reemplazo\n60025\tTest Colaborador\tTest Reemplazo\n60026\tTest Colaborador\tUpdated Reemplazo\n60027\tTest Colaborador\tTest Reemplazo\n60028\tTest Colaborador\tUpdated Reemplazo\n60029\tTest Colaborador\tTest Reemplazo\n60030\tTest Colaborador\tUpdated Reemplazo\n60031\tTest Colaborador\tTest Reemplazo\n60032\tTest Colaborador\tUpdated Reemplazo\n60033\tTest Colaborador\tTest Reemplazo\n60034\tTest Colaborador\tUpdated Reemplazo\n60035\tTest Colaborador\tTest Reemplazo\n60036\tTest Colaborador\tUpdated Reemplazo\n60037\tTest Colaborador\tTest Reemplazo\n60038\tTest Colaborador\tUpdated Reemplazo\n60039\tTest Colaborador\tTest Reemplazo\n60040\tTest Colaborador\tUpdated Reemplazo\n",
+  "stderr": "",
+  "execution_time_ms": 356
+}

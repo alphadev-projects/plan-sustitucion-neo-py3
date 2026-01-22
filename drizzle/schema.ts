@@ -91,6 +91,7 @@ export const planesSuccesion = mysqlTable("planes_sucesion", {
   departamento: varchar("departamento", { length: 150 }).notNull(),
   cargo: varchar("cargo", { length: 200 }).notNull(),
   colaborador: varchar("colaborador", { length: 255 }).notNull(),
+  reemplazo: varchar("reemplazo", { length: 255 }).default("").notNull(),
   riesgoContinuidad: mysqlEnum("riesgoContinuidad", ["Alto", "Medio", "Bajo"]).notNull(),
   riesgoCritico: mysqlEnum("riesgoCritico", ["Si", "No"]).default("No").notNull(),
   prioridadSucesion: mysqlEnum("prioridadSucesion", ["Alta", "Media", "Baja"]).notNull(),

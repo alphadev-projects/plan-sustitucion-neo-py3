@@ -6,7 +6,13 @@ import { trpc } from "@/lib/trpc";
 export function PuestosAltoRiesgo() {
   const { data: planes, isLoading } = trpc.sucesion.listar.useQuery();
 
+  // Debug logging
+  console.log("[PuestosAltoRiesgo] Datos recibidos:", planes);
+  console.log("[PuestosAltoRiesgo] Total planes:", planes?.length);
+  
   const puestosAltoRiesgo = planes?.filter(p => p.riesgoContinuidad === "Alto") || [];
+  console.log("[PuestosAltoRiesgo] Puestos Alto Riesgo:", puestosAltoRiesgo);
+  console.log("[PuestosAltoRiesgo] Total Alto Riesgo:", puestosAltoRiesgo.length);
 
   return (
     <Card className="border-red-200 bg-red-50">

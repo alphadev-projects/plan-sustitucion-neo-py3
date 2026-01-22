@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE planes_sucesion \nSET riesgoContinuidad = 'Alto', riesgoCritico = 'Si', prioridadSucesion = 'Alta'\nWHERE id IN (SELECT id FROM planes_sucesion ORDER BY id LIMIT 36);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute UPDATE planes_sucesion \nSET riesgoContinuidad = 'Alto', riesgoCritico = 'Si', prioridadSucesion = 'Alta'\nWHERE id IN (SELECT id FROM planes_sucesion ORDER BY id LIMIT 36);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 394
+}

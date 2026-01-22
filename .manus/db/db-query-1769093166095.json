@@ -1,0 +1,80 @@
+{
+  "query": "SELECT id, colaborador, cargo, planSustitucionId, riesgoContinuidad FROM planes_sucesion LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, colaborador, cargo, planSustitucionId, riesgoContinuidad FROM planes_sucesion LIMIT 10;",
+  "rows": [
+    {
+      "id": "30001",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "planSustitucionId": "180004",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "30002",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "planSustitucionId": "180004",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "30003",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "planSustitucionId": "210003",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "30004",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "planSustitucionId": "210003",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "30005",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "planSustitucionId": "210005",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "30006",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "planSustitucionId": "210005",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "30007",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "planSustitucionId": "300036",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "30008",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "planSustitucionId": "300036",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "30009",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "planSustitucionId": "300042",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "30010",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "planSustitucionId": "300042",
+      "riesgoContinuidad": "Bajo"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tcolaborador\tcargo\tplanSustitucionId\triesgoContinuidad\n30001\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\t180004\tBajo\n30002\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\t180004\tBajo\n30003\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\t210003\tBajo\n30004\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\t210003\tBajo\n30005\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\t210005\tBajo\n30006\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\t210005\tBajo\n30007\tTest Colaborador\tTest Cargo\t300036\tBajo\n30008\tTest Colaborador\tTest Cargo\t300036\tBajo\n30009\tTest Colaborador\tTest Cargo\t300042\tBajo\n30010\tTest Colaborador\tTest Cargo\t300042\tBajo\n",
+  "stderr": "",
+  "execution_time_ms": 360
+}

@@ -1,0 +1,14 @@
+{
+  "query": "SELECT riesgoContinuidad, COUNT(*) as cantidad FROM planes_sucesion GROUP BY riesgoContinuidad;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT riesgoContinuidad, COUNT(*) as cantidad FROM planes_sucesion GROUP BY riesgoContinuidad;",
+  "rows": [
+    {
+      "riesgoContinuidad": "Bajo",
+      "cantidad": "103"
+    }
+  ],
+  "messages": [],
+  "stdout": "riesgoContinuidad\tcantidad\nBajo\t103\n",
+  "stderr": "",
+  "execution_time_ms": 361
+}

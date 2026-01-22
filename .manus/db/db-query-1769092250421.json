@@ -1,0 +1,22 @@
+{
+  "query": "SELECT \n  estado,\n  COUNT(*) as cantidad\nFROM planes_accion\nGROUP BY estado\nORDER BY cantidad DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT \n  estado,\n  COUNT(*) as cantidad\nFROM planes_accion\nGROUP BY estado\nORDER BY cantidad DESC;",
+  "rows": [
+    {
+      "estado": "Completado",
+      "cantidad": "2"
+    },
+    {
+      "estado": "Retrasado",
+      "cantidad": "2"
+    },
+    {
+      "estado": "En Progreso",
+      "cantidad": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "estado\tcantidad\nCompletado\t2\nRetrasado\t2\nEn Progreso\t1\n",
+  "stderr": "",
+  "execution_time_ms": 360
+}

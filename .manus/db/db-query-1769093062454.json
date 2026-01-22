@@ -1,0 +1,45 @@
+{
+  "query": "SELECT id, colaborador, cargo, riesgoContinuidad, riesgoCritico FROM planes_sucesion LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, colaborador, cargo, riesgoContinuidad, riesgoCritico FROM planes_sucesion LIMIT 5;",
+  "rows": [
+    {
+      "id": "30001",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "riesgoContinuidad": "Bajo",
+      "riesgoCritico": "No"
+    },
+    {
+      "id": "30002",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "riesgoContinuidad": "Bajo",
+      "riesgoCritico": "No"
+    },
+    {
+      "id": "30003",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "riesgoContinuidad": "Bajo",
+      "riesgoCritico": "No"
+    },
+    {
+      "id": "30004",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "riesgoContinuidad": "Bajo",
+      "riesgoCritico": "No"
+    },
+    {
+      "id": "30005",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "riesgoContinuidad": "Bajo",
+      "riesgoCritico": "No"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tcolaborador\tcargo\triesgoContinuidad\triesgoCritico\n30001\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\tBajo\tNo\n30002\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\tBajo\tNo\n30003\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\tBajo\tNo\n30004\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\tBajo\tNo\n30005\tROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\tBajo\tNo\n",
+  "stderr": "",
+  "execution_time_ms": 369
+}

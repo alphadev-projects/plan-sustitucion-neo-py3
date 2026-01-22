@@ -1,0 +1,40 @@
+{
+  "query": "SELECT id, colaborador, reemplazo, LENGTH(reemplazo) as len FROM planes_sucesion LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, colaborador, reemplazo, LENGTH(reemplazo) as len FROM planes_sucesion LIMIT 5;",
+  "rows": [
+    {
+      "id": "60001",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "reemplazo": "WALTER DAVID GONZALEZ ARECO",
+      "len": "27"
+    },
+    {
+      "id": "60002",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "reemplazo": "NO APLICA",
+      "len": "9"
+    },
+    {
+      "id": "60003",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "reemplazo": "WALTER DAVID GONZALEZ ARECO",
+      "len": "27"
+    },
+    {
+      "id": "60004",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo",
+      "len": "14"
+    },
+    {
+      "id": "60005",
+      "colaborador": "Test Colaborador",
+      "reemplazo": "Test Reemplazo",
+      "len": "14"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tcolaborador\treemplazo\tlen\n60001\tROQUE EVER YEGROS COLMAN\tWALTER DAVID GONZALEZ ARECO\t27\n60002\tROQUE EVER YEGROS COLMAN\tNO APLICA\t9\n60003\tROQUE EVER YEGROS COLMAN\tWALTER DAVID GONZALEZ ARECO\t27\n60004\tTest Colaborador\tTest Reemplazo\t14\n60005\tTest Colaborador\tTest Reemplazo\t14\n",
+  "stderr": "",
+  "execution_time_ms": 371
+}

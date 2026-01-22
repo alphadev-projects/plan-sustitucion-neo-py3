@@ -1,0 +1,1 @@
+ALTER TABLE `planes_sucesion` ADD `reemplazo` varchar(255) DEFAULT '' NOT NULL;
