@@ -504,40 +504,26 @@ export async function getPlanesSuccesion() {
   const db = await getDb();
   if (!db) return [];
   
-  let planes = await db.select().from(planesSuccesion);
+  // Traer solo puestos criticos del Plan de Sustitucion
+  const planesData = await db.select().from(planesSustitucion).where(
+    eq(planesSustitucion.puestoClave, "Si")
+  );
   
-  if (planes.length === 0) {
-    // Traer solo puestos criticos del Plan de Sustitucion
-    const planesData = await db.select().from(planesSustitucion).where(
-      eq(planesSustitucion.puestoClave, "Si")
-    );
-    
-    for (const plan of planesData) {
-      try {
-        // Determinar riesgo basado en si tiene reemplazo asignado
-        const tieneReemplazo = plan.reemplazo && plan.reemplazo.trim() !== "";
-        const riesgo = tieneReemplazo ? "Bajo" : "Alto";
-        
-        await db.insert(planesSuccesion).values({
-          planSustitucionId: plan.id,
-          departamento: plan.departamento,
-          cargo: plan.cargo,
-          colaborador: plan.colaborador,
-          riesgoContinuidad: riesgo,
-          riesgoCritico: riesgo === "Alto" ? "Si" : "No",
-          prioridadSucesion: riesgo === "Alto" ? "Alta" : "Baja",
-          estado: "Pendiente",
-          usuario: "sistema",
-        });
-      } catch (e) {
-        // Ignorar duplicados
-      }
-    }
-    
-    planes = await db.select().from(planesSuccesion);
-  }
-  
-  return planes;
+  // Transformar datos a formato compatible con planesSuccesion
+  return planesData.map(plan => ({
+    id: plan.id,
+    planSustitucionId: plan.id,
+    departamento: plan.departamento,
+    cargo: plan.cargo,
+    colaborador: plan.colaborador,
+    riesgoContinuidad: (plan.reemplazo && plan.reemplazo.trim() !== "") ? "Bajo" : "Alto",
+    riesgoCritico: (plan.reemplazo && plan.reemplazo.trim() !== "") ? "No" : "Si",
+    prioridadSucesion: (plan.reemplazo && plan.reemplazo.trim() !== "") ? "Baja" : "Alta",
+    estado: "Pendiente",
+    usuario: plan.usuario,
+    createdAt: plan.createdAt,
+    updatedAt: plan.updatedAt,
+  }));
 }
 
 export async function getPlanesSuccesionCriticos() {
@@ -646,13 +632,14 @@ export async function getDashboardMetricas() {
   const db = await getDb();
   if (!db) return { planesTotal: 0, planesEnProgreso: 0, planesCompletados: 0, planesRetrasados: 0, accionesProximas: [] };
   
-  // Asegurar que planesSuccesion tenga datos (traer puestos criticos)
-  await getPlanesSuccesion();
+  // Traer puestos criticos del Plan de Sustitucion
+  const planes = await getPlanesSuccesion();
   
-  const planesTotal = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion);
-  const planesEnProgreso = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion).where(sql`estado = 'En Progreso'`);
-  const planesCompletados = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion).where(sql`estado = 'Completado'`);
-  const planesRetrasados = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion).where(sql`estado = 'Retrasado'`);
+  const planesTotal = planes.length;
+  const planesEnProgreso = planes.filter(p => p.estado === "En Progreso").length;
+  const planesCompletados = planes.filter(p => p.estado === "Completado").length;
+  const planesRetrasados = planes.filter(p => p.estado === "Retrasado").length;
+  const puestosAltoRiesgo = planes.filter(p => p.riesgoContinuidad === "Alto").length;
   
   // Planes de acción próximos a vencer (próximos 7 días)
   const hoy = new Date();
@@ -667,10 +654,11 @@ export async function getDashboardMetricas() {
   ).limit(10);
   
   return {
-    planesTotal: Number(planesTotal[0]?.count || 0),
-    planesEnProgreso: Number(planesEnProgreso[0]?.count || 0),
-    planesCompletados: Number(planesCompletados[0]?.count || 0),
-    planesRetrasados: Number(planesRetrasados[0]?.count || 0),
+    planesTotal,
+    planesEnProgreso,
+    planesCompletados,
+    planesRetrasados,
+    puestosAltoRiesgo,
     accionesProximas,
   };
 }

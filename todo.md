@@ -428,3 +428,23 @@
 - [x] Agregar animación CSS pulsante rojo en index.css
 - [x] Integrar efecto pulsante en tarjeta de Retrasados
 - [x] Verificar que cambios se visualizan correctamente
+
+
+## Bug: Plan de Sucesión No Visualiza Puestos Críticos
+
+- [ ] BUG: Plan de Sucesión muestra 0 registros aunque hay 99 puestos clave
+- [ ] Debuggear por qué getPlanesSuccesion no trae datos
+- [ ] Verificar que procedimiento sucesion.listar se llama correctamente
+- [ ] Crear vista de puestos sin reemplazo (riesgo Alto) en rojo
+- [ ] Agregar sección en Dashboard para puestos sin cobertura
+- [ ] Aplicar efecto pulsante rojo a puestos sin reemplazo
+
+
+## Bug: Plan de Sucesión No Visualiza Datos - Última Sesión
+
+- [x] Debuggear por qué getPlanesSuccesion no trae datos - CORREGIDO: Cambiar a traer directamente de planesSustitucion
+- [x] Crear vista de puestos críticos sin reemplazo (riesgo Alto)
+- [x] Agregar sección en Dashboard para puestos sin cobertura
+- [x] Aplicar estilos rojo pulsante a puestos sin reemplazo
+- [x] Actualizar getDashboardMetricas para usar getPlanesSuccesion
+- [x] Agregar campo puestosAltoRiesgo a métricas del dashboard

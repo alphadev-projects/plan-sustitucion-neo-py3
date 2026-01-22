@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO planes_sucesion (planSustitucionId, departamento, cargo, colaborador, riesgoContinuidad, riesgoCritico, prioridadSucesion, estado, usuario)\nSELECT id, departamento, cargo, colaborador, \n  CASE WHEN reemplazo IS NULL OR reemplazo = '' THEN 'Alto' ELSE 'Bajo' END as riesgoContinuidad,\n  'Si' as riesgoCritico,\n  'Alta' as prioridadSucesion,\n  'Pendiente' as estado,\n  usuario\nFROM planes_sustitucion \nWHERE puestoClave = 'Si' AND id NOT IN (SELECT DISTINCT planSustitucionId FROM planes_sucesion);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute INSERT INTO planes_sucesion (planSustitucionId, departamento, cargo, colaborador, riesgoContinuidad, riesgoCritico, prioridadSucesion, estado, usuario)\nSELECT id, departamento, cargo, colaborador, \n  CASE WHEN reemplazo IS NULL OR reemplazo = '' THEN 'Alto' ELSE 'Bajo' END as riesgoContinuidad,\n  'Si' as riesgoCritico,\n  'Alta' as prioridadSucesion,\n  'Pendiente' as estado,\n  usuario\nFROM planes_sustitucion \nWHERE puestoClave = 'Si' AND id NOT IN (SELECT DISTINCT planSustitucionId FROM planes_sucesion);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 362
+}

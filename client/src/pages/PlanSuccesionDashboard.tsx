@@ -7,6 +7,7 @@ import { AlertCircle, TrendingUp, CheckCircle, Clock } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { AlertasPlanes } from "@/components/AlertasPlanes";
 import { FiltrosAvanzados, type FiltrosState } from "@/components/FiltrosAvanzados";
+import { PuestosAltoRiesgo } from "@/components/PuestosAltoRiesgo";
 
 function DashboardContent() {
   const [filtros, setFiltros] = useState<FiltrosState>({
@@ -168,6 +169,9 @@ function DashboardContent() {
           )}
         </CardContent>
       </Card>
+
+      {/* Puestos Críticos Sin Reemplazo */}
+      <PuestosAltoRiesgo />
 
       {/* Indicadores de Riesgo */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

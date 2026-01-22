@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO planes_sucesion (planSustitucionId, departamento, cargo, colaborador, riesgoContinuidad, riesgoCritico, prioridadSucesion, estado, usuario)\nVALUES (1, 'Test Dept', 'Test Cargo', 'Test Colaborador', 'Alto', 'Si', 'Alta', 'Pendiente', 'test');",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute INSERT INTO planes_sucesion (planSustitucionId, departamento, cargo, colaborador, riesgoContinuidad, riesgoCritico, prioridadSucesion, estado, usuario)\nVALUES (1, 'Test Dept', 'Test Cargo', 'Test Colaborador', 'Alto', 'Si', 'Alta', 'Pendiente', 'test');",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 362
+}

@@ -1,0 +1,13 @@
+{
+  "query": "SELECT COUNT(*) as total FROM planes_sucesion;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT COUNT(*) as total FROM planes_sucesion;",
+  "rows": [
+    {
+      "total": "198"
+    }
+  ],
+  "messages": [],
+  "stdout": "total\n198\n",
+  "stderr": "",
+  "execution_time_ms": 452
+}
