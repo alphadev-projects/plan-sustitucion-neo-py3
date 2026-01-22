@@ -79,7 +79,7 @@ function DashboardContent() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className={(metricas && metricas.planesRetrasados > 0) ? "pulse-red-bg" : ""}>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-gray-600">Retrasados</CardTitle>
           </CardHeader>

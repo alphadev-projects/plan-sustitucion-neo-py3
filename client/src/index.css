@@ -175,3 +175,27 @@
     }
   }
 }
+
+/* Animación pulsante para riesgos alto */
+@keyframes pulse-red {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+}
+
+.pulse-red {
+  animation: pulse-red 2s infinite;
+  border-color: rgb(239, 68, 68);
+  background-color: rgba(239, 68, 68, 0.05);
+}
+
+.pulse-red-bg {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 2px solid rgb(239, 68, 68);
+  animation: pulse-red 2s infinite;
+}

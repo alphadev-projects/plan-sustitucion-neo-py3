@@ -420,3 +420,11 @@
 - [x] Remover lógica de 7 pasos del análisis de riesgos
 - [x] Mantener Planes de Acción funcionando correctamente
 - [x] Verificar que dashboards se actualicen correctamente
+
+## Dashboard Sucesión - Actualización con Efecto Pulsante
+
+- [x] Limpiar tabla planesSuccesion para traer datos nuevos
+- [x] Actualizar getDashboardMetricas para usar solo planesSuccesion
+- [x] Agregar animación CSS pulsante rojo en index.css
+- [x] Integrar efecto pulsante en tarjeta de Retrasados
+- [x] Verificar que cambios se visualizan correctamente

@@ -646,10 +646,13 @@ export async function getDashboardMetricas() {
   const db = await getDb();
   if (!db) return { planesTotal: 0, planesEnProgreso: 0, planesCompletados: 0, planesRetrasados: 0, accionesProximas: [] };
   
+  // Asegurar que planesSuccesion tenga datos (traer puestos criticos)
+  await getPlanesSuccesion();
+  
   const planesTotal = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion);
-  const planesEnProgreso = await db.select({ count: sql`COUNT(*)` }).from(planesAccion).where(eq(planesAccion.estado, "En Progreso"));
-  const planesCompletados = await db.select({ count: sql`COUNT(*)` }).from(planesAccion).where(eq(planesAccion.estado, "Completado"));
-  const planesRetrasados = await db.select({ count: sql`COUNT(*)` }).from(planesAccion).where(eq(planesAccion.estado, "Retrasado"));
+  const planesEnProgreso = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion).where(sql`estado = 'En Progreso'`);
+  const planesCompletados = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion).where(sql`estado = 'Completado'`);
+  const planesRetrasados = await db.select({ count: sql`COUNT(*)` }).from(planesSuccesion).where(sql`estado = 'Retrasado'`);
   
   // Planes de acción próximos a vencer (próximos 7 días)
   const hoy = new Date();
