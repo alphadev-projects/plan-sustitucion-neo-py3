@@ -507,18 +507,25 @@ export async function getPlanesSuccesion() {
   let planes = await db.select().from(planesSuccesion);
   
   if (planes.length === 0) {
-    const planesData = await db.select().from(planesSustitucion);
+    // Traer solo puestos criticos del Plan de Sustitucion
+    const planesData = await db.select().from(planesSustitucion).where(
+      eq(planesSustitucion.puestoClave, "Si")
+    );
     
     for (const plan of planesData) {
       try {
+        // Determinar riesgo basado en si tiene reemplazo asignado
+        const tieneReemplazo = plan.reemplazo && plan.reemplazo.trim() !== "";
+        const riesgo = tieneReemplazo ? "Bajo" : "Alto";
+        
         await db.insert(planesSuccesion).values({
           planSustitucionId: plan.id,
           departamento: plan.departamento,
           cargo: plan.cargo,
           colaborador: plan.colaborador,
-          riesgoContinuidad: plan.riesgoContinuidad || "Bajo",
-          riesgoCritico: plan.riesgoCritico || "No",
-          prioridadSucesion: plan.prioridadSucesion || "Baja",
+          riesgoContinuidad: riesgo,
+          riesgoCritico: riesgo === "Alto" ? "Si" : "No",
+          prioridadSucesion: riesgo === "Alto" ? "Alta" : "Baja",
           estado: "Pendiente",
           usuario: "sistema",
         });

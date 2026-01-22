@@ -410,3 +410,13 @@
 - [ ] Mostrar todos los campos de salida en interfaz de Plan de Sucesión
 - [ ] Implementar acciones automáticas sugeridas (activar plan, sugerir sucesión)
 - [ ] Crear indicadores visuales para estado_puesto (CRÍTICO, PRIORITARIO, MODERADO, CONTROLADO)
+
+
+## Ajuste de Lógica de Riesgos - Nueva Solicitud
+
+- [x] Traer puestos críticos del Plan de Sustitución a Plan de Sucesión
+- [x] Marcar como riesgo Alto si no tiene reemplazo asignado
+- [x] Marcar como riesgo Bajo si tiene reemplazo asignado
+- [x] Remover lógica de 7 pasos del análisis de riesgos
+- [x] Mantener Planes de Acción funcionando correctamente
+- [x] Verificar que dashboards se actualicen correctamente
