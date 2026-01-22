@@ -201,6 +201,25 @@ export async function createPlan(plan: InsertPlanSustitucion) {
     })
     .where(eq(planesSustitucion.id, createdPlan[0].id));
   
+  // Si es puesto clave, crear automáticamente un registro en planesSuccesion
+  if (plan.puestoClave === "Si") {
+    const riesgoContinuidad = !plan.reemplazo || plan.reemplazo.trim() === "" || plan.reemplazo.toUpperCase() === "NO APLICA" ? "Alto" : "Bajo";
+    const prioridadSucesion = riesgoContinuidad === "Alto" ? "Alta" : "Baja";
+    
+    await db.insert(planesSuccesion).values({
+      planSustitucionId: createdPlan[0].id,
+      departamento: plan.departamento,
+      cargo: plan.cargo,
+      colaborador: plan.colaborador,
+      reemplazo: plan.reemplazo || "",
+      riesgoContinuidad: riesgoContinuidad as "Alto" | "Medio" | "Bajo",
+      riesgoCritico: plan.riesgoCritico || "No",
+      prioridadSucesion: prioridadSucesion as "Alta" | "Media" | "Baja",
+      estado: "Pendiente",
+      usuario: plan.usuario,
+    });
+  }
+  
   return { success: true, plan: planWithRisk };
 }
 
@@ -564,11 +583,63 @@ export async function getPlanesAccionBySuccesion(planSuccesionId: number) {
   return db.select().from(planesAccion).where(eq(planesAccion.planSuccesionId, planSuccesionId));
 }
 
-export async function updatePlanAccion(id: number, data: Partial<InsertPlanAccion>) {
+export async function updatePlanAccion(id: number, data: Partial<InsertPlanAccion>, usuario?: string, usuarioId?: string) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
+  
+  // Obtener plan anterior para comparar cambios
+  const planAnterior = await db.select().from(planesAccion).where(eq(planesAccion.id, id)).limit(1);
+  
   await db.update(planesAccion).set(data).where(eq(planesAccion.id, id));
   const result = await db.select().from(planesAccion).where(eq(planesAccion.id, id)).limit(1);
+  
+  // Registrar cambios en auditoria
+  if (usuario && usuarioId && planAnterior[0]) {
+    const { registrarCambioAuditoria } = await import("./db-helpers");
+    
+    // Registrar cambios de estado
+    if (planAnterior[0].estado !== data.estado) {
+      await registrarCambioAuditoria(
+        id,
+        usuarioId,
+        usuario,
+        "ESTADO_CAMBIO",
+        "estado",
+        planAnterior[0].estado,
+        data.estado || "",
+        `Estado cambio de ${planAnterior[0].estado} a ${data.estado}`
+      );
+    }
+    
+    // Registrar cambios de progreso
+    if (planAnterior[0].progreso !== data.progreso) {
+      await registrarCambioAuditoria(
+        id,
+        usuarioId,
+        usuario,
+        "PROGRESO_CAMBIO",
+        "progreso",
+        planAnterior[0].progreso?.toString(),
+        data.progreso?.toString(),
+        `Progreso cambio de ${planAnterior[0].progreso}% a ${data.progreso}%`
+      );
+    }
+    
+    // Registrar otros cambios
+    if (Object.keys(data).length > 0) {
+      await registrarCambioAuditoria(
+        id,
+        usuarioId,
+        usuario,
+        "ACTUALIZADO",
+        undefined,
+        undefined,
+        undefined,
+        "Plan de accion actualizado"
+      );
+    }
+  }
+  
   return result[0];
 }
 

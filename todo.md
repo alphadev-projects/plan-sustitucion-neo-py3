@@ -456,3 +456,41 @@
 - [x] Debuggear getPlanesSuccesion para verificar cálculo de riesgoContinuidad - CORREGIDO
 - [x] Verificar que puestos sin reemplazo están siendo marcados como "Alto" - CORREGIDO
 - [x] Corregir lógica de filtrado en PuestosAltoRiesgo - CORREGIDO
+
+
+## Problemas Críticos - Sesión Actual (URGENTE)
+
+### Problema 1: Vinculación de Planes (Plan de Sustitución → Plan de Sucesión)
+- [x] Investigar por qué nuevos registros en Plan de Sustitución no aparecen en Plan de Sucesión - CORREGIDO
+- [x] Revisar si createPlan() está insertando en planesSuccesion - CORREGIDO
+- [x] Verificar que puestoClave="Si" sin reemplazo se vincula automáticamente - CORREGIDO
+- [x] Crear trigger o procedimiento para auto-vincular nuevos puestos críticos - CORREGIDO
+- [x] Probar con nuevo registro de prueba - CORREGIDO
+
+### Problema 2: Módulo de Auditoría No Registra Cambios
+- [x] Investigar por qué Auditoría muestra "0 cambios registrados" - CORREGIDO
+- [x] Revisar si los cambios se están guardando en tabla de auditoría - CORREGIDO
+- [x] Verificar que updatePlanAccion() registra cambios en auditoría - CORREGIDO
+- [x] Revisar procedimiento getAuditoriaConFiltros - CORREGIDO
+- [x] Probar con cambio manual en Plan de Acción - CORREGIDO
+
+### Feature: Exportación de Reporte de Riesgos (Excel/CSV)
+- [ ] Crear procedimiento tRPC para generar reporte de riesgos
+- [ ] Incluir: puesto, colaborador, departamento, riesgo, estado, fecha vencimiento
+- [ ] Agregar botón de descarga en Dashboard Sucesión
+- [ ] Permitir filtros: por departamento, riesgo, estado
+- [ ] Generar archivo Excel/CSV descargable
+
+### Feature: Notificaciones Automáticas por Email
+- [ ] Crear procedimiento para detectar cambios de estado en puestos críticos
+- [ ] Implementar notificación cuando puesto crítico pierde reemplazo
+- [ ] Implementar notificación cuando plan de acción vence
+- [ ] Configurar email de notificación al propietario
+- [ ] Probar con cambio de estado
+
+### Feature: Matriz de Sucesión Visual (Gantt)
+- [ ] Crear componente Gantt para mostrar planes de acción por puesto
+- [ ] Mostrar: puesto crítico, plan de acción, fechas (inicio-fin), estado
+- [ ] Implementar colores por estado (No iniciado, En progreso, Completado)
+- [ ] Agregar vista en Dashboard Sucesión
+- [ ] Permitir filtros por departamento y riesgo

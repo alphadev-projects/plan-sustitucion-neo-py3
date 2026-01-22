@@ -392,8 +392,8 @@ export const appRouter = router({
         estado: z.enum(["No Iniciado", "En Progreso", "Completado", "Retrasado"]).optional(),
         progreso: z.number().min(0).max(100).optional(),
       }))
-      .mutation(async ({ input }) => {
-        return updatePlanAccion(input.id, { estado: input.estado, progreso: input.progreso });
+      .mutation(async ({ input, ctx }) => {
+        return updatePlanAccion(input.id, { estado: input.estado, progreso: input.progreso }, ctx.user.name || "Unknown", ctx.user.openId);
       }),
 
     accionEliminar: adminProcedure
