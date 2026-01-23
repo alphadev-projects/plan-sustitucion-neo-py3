@@ -218,7 +218,20 @@ export default function NuevoPlan() {
               {/* Sección de reemplazo individual */}
               {tipoReemplazo === "individual" && (
                 <div className="border-t pt-6">
-                  <h3 className="font-semibold mb-4">Información del Reemplazo Individual</h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold">Información del Reemplazo Individual</h3>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        setDepartamentoReemplazo("");
+                        setReemplazoId("NO_APLICA");
+                      }}
+                      className="gap-2"
+                    >
+                      ❌ NO APLICA - SIN REEMPLAZO
+                    </Button>
+                  </div>
 
                   <div className="grid gap-6 md:grid-cols-2">
                     <div className="space-y-2">

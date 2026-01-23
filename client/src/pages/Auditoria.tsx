@@ -107,7 +107,7 @@ function AuditoriaContent() {
             {/* Acción */}
             <div className="space-y-2">
               <label className="text-sm font-medium">Acción</label>
-              <Select value={filtros.accion} onValueChange={(v) => handleFiltroChange("accion", v)}>
+              <Select value={filtros.accion} onValueChange={(v) => handleFiltroChange("accion", v === "todas" ? "" : v)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Todas" />
                 </SelectTrigger>

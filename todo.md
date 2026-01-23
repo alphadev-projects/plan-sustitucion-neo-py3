@@ -645,3 +645,19 @@
 ## Bugs Reportados - Sesión Actual (Ronda 2)
 - [x] Bug 1: Filtro de auditoría sigue presentando inconsistencia - RESUELTO: Cambiar "todas" por string vacío en handleLimpiarFiltros
 - [x] Bug 2: Botón descargar evidencias no se visualiza en UI - RESUELTO: Agregar importación de useState en DescargaEvidencias
+
+
+## Bugs Reportados - Sesión Actual (Ronda 3)
+- [ ] Bug 1: Filtro auditoría requiere clic en "Limpiar" para que "Todas" funcione nuevamente
+- [ ] Bug 2: Agregar botón "NO APLICA - SIN REEMPLAZO" en plan de sustitución, junto a "Información del Reemplazo Individual"
+- [ ] Bug 3: Administrador no puede editar usuarios creados - verificar por qué
+- [ ] Bug 4: Plan de acción no actualiza cuando se sube archivo de evidencia - sigue mostrando "Sin evidencias"
+- [ ] Bug 5: Botón descargar evidencia no se visualiza en ninguna interfaz
+
+
+## Bugs Corregidos - Sesión Final
+- [x] Bug 1: Filtro auditoría - convertir "todas" a string vacío en Select
+- [x] Bug 2: Botón "NO APLICA - SIN REEMPLAZO" agregado al lado del título en NuevoPlan
+- [x] Bug 3: Edición de usuarios - implementado diálogo con actualizarUsuario
+- [x] Bug 4: Actualización de evidencias - creado procedimiento accionActualizarConEvidencia
+- [x] Bug 5: Botón descargar evidencias - componente integrado en PlanAccionMaintenance

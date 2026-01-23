@@ -406,6 +406,26 @@ export const appRouter = router({
         return updatePlanAccion(input.id, { estado: input.estado, progreso: input.progreso }, ctx.user.name || "Unknown", ctx.user.openId);
       }),
 
+    accionActualizarConEvidencia: protectedProcedure
+      .input(z.object({
+        planAccionId: z.number(),
+        estado: z.enum(["No Iniciado", "En Progreso", "Completado", "Retrasado"]).optional(),
+        progreso: z.number().min(0).max(100).optional(),
+        archivoEvidenciaUrl: z.string().optional(),
+        comentario: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { updateSeguimientoConEvidencia } = await import("./db");
+        return updateSeguimientoConEvidencia(
+          input.planAccionId,
+          input.estado || "No Iniciado",
+          input.progreso || 0,
+          input.archivoEvidenciaUrl,
+          input.comentario,
+          ctx.user.name || "Unknown"
+        );
+      }),
+
     accionEliminar: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {

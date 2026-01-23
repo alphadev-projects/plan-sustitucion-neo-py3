@@ -12,11 +12,14 @@ import { Plus, Trash2, Edit2, Loader2 } from "lucide-react";
 
 export default function GestionUsuarios() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState<any>(null);
   const [newUser, setNewUser] = useState({ usuario: "", contraseña: "", nombre: "", email: "", role: "standard" });
 
   const { data: usuarios, isLoading, refetch } = trpc.auth.listarUsuarios.useQuery();
   const crearMutation = trpc.auth.crearUsuario.useMutation();
   const eliminarMutation = trpc.auth.eliminarUsuario.useMutation();
+  const editarMutation = trpc.auth.actualizarUsuario.useMutation();
 
   const handleCrearUsuario = async () => {
     if (!newUser.usuario || !newUser.contraseña || !newUser.nombre) {
@@ -50,6 +53,33 @@ export default function GestionUsuarios() {
       refetch();
     } catch (error: any) {
       toast.error(error.message || "Error al eliminar usuario");
+    }
+  };
+
+  const handleEditarUsuario = (usuario: any) => {
+    setEditingUser({ ...usuario });
+    setIsEditOpen(true);
+  };
+
+  const handleGuardarEdicion = async () => {
+    if (!editingUser.nombre) {
+      toast.error("Por favor completa los campos requeridos");
+      return;
+    }
+
+    try {
+      await editarMutation.mutateAsync({
+        id: editingUser.id,
+        nombre: editingUser.nombre,
+        email: editingUser.email || undefined,
+        role: editingUser.role as "standard" | "admin",
+      });
+      toast.success("Usuario actualizado correctamente");
+      setIsEditOpen(false);
+      setEditingUser(null);
+      refetch();
+    } catch (error: any) {
+      toast.error(error.message || "Error al actualizar usuario");
     }
   };
 
@@ -180,7 +210,11 @@ export default function GestionUsuarios() {
                         </span>
                       </TableCell>
                       <TableCell className="space-x-2">
-                        <Button variant="outline" size="sm">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleEditarUsuario(usuario)}
+                        >
                           <Edit2 className="h-4 w-4" />
                         </Button>
                         <Button
@@ -199,6 +233,71 @@ export default function GestionUsuarios() {
             )}
           </CardContent>
         </Card>
+
+        {/* Diálogo de Edición */}
+        <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Editar Usuario</DialogTitle>
+              <DialogDescription>
+                Actualiza los datos del usuario
+              </DialogDescription>
+            </DialogHeader>
+            {editingUser && (
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium">Usuario</label>
+                  <Input
+                    value={editingUser.usuario}
+                    disabled
+                    className="opacity-50"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Nombre Completo</label>
+                  <Input
+                    value={editingUser.nombre}
+                    onChange={(e) => setEditingUser({ ...editingUser, nombre: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Email (Opcional)</label>
+                  <Input
+                    type="email"
+                    value={editingUser.email || ""}
+                    onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Rol</label>
+                  <Select value={editingUser.role} onValueChange={(value) => setEditingUser({ ...editingUser, role: value })}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="standard">Estándar</SelectItem>
+                      <SelectItem value="admin">Administrador</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button
+                  onClick={handleGuardarEdicion}
+                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  disabled={editarMutation.isPending}
+                >
+                  {editarMutation.isPending ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Guardando...
+                    </>
+                  ) : (
+                    "Guardar Cambios"
+                  )}
+                </Button>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </DashboardLayout>
   );

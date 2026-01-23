@@ -839,3 +839,47 @@ export async function syncMissingPlanes() {
   
   return { synced: insertedCount, message: `${insertedCount} planes sincronizados` };
 }
+
+
+// Función para actualizar seguimiento con archivo de evidencia
+export async function updateSeguimientoConEvidencia(
+  planAccionId: number,
+  estado: string,
+  progreso: number,
+  archivoEvidencia?: string,
+  comentario?: string,
+  usuario?: string
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Buscar o crear seguimiento
+  let seguimiento = await db.select().from(seguimientoPlanes).where(eq(seguimientoPlanes.planAccionId, planAccionId)).limit(1);
+  
+  if (!seguimiento || seguimiento.length === 0) {
+    // Crear nuevo seguimiento
+    const result = await db.insert(seguimientoPlanes).values({
+      planAccionId,
+      estado: estado as any,
+      progreso,
+      archivoEvidencia,
+      comentario,
+      usuario: usuario || "sistema",
+    });
+    return db.select().from(seguimientoPlanes).where(eq(seguimientoPlanes.id, result[0].insertId)).limit(1);
+  } else {
+    // Actualizar existente
+    const updateData: any = {
+      estado,
+      progreso,
+      comentario,
+    };
+    
+    if (archivoEvidencia) {
+      updateData.archivoEvidencia = archivoEvidencia;
+    }
+    
+    await db.update(seguimientoPlanes).set(updateData).where(eq(seguimientoPlanes.planAccionId, planAccionId));
+    return db.select().from(seguimientoPlanes).where(eq(seguimientoPlanes.planAccionId, planAccionId)).limit(1);
+  }
+}
