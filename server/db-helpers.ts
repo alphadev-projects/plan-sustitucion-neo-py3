@@ -221,11 +221,18 @@ export async function obtenerAuditoriaConFiltros(
     condiciones.push(lte(auditoriaPlanesAccion.createdAt, fecha));
   }
   
-  const whereClause = condiciones.length > 0 ? and(...condiciones) : undefined;
-  
-  return db.select()
-    .from(auditoriaPlanesAccion)
-    .where(whereClause)
-    .orderBy(desc(auditoriaPlanesAccion.createdAt))
-    .limit(1000);
+  // Si no hay condiciones, retornar todos los registros
+  // Si hay condiciones, aplicarlas con AND
+  if (condiciones.length > 0) {
+    return db.select()
+      .from(auditoriaPlanesAccion)
+      .where(and(...condiciones))
+      .orderBy(desc(auditoriaPlanesAccion.createdAt))
+      .limit(1000);
+  } else {
+    return db.select()
+      .from(auditoriaPlanesAccion)
+      .orderBy(desc(auditoriaPlanesAccion.createdAt))
+      .limit(1000);
+  }
 }

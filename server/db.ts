@@ -574,6 +574,22 @@ export async function createPlanAccion(data: InsertPlanAccion): Promise<PlanAcci
   if (!db) throw new Error("Database not available");
   const result = await db.insert(planesAccion).values(data);
   const plan = await db.select().from(planesAccion).where(eq(planesAccion.id, result[0].insertId)).limit(1);
+  
+  // Registrar creación en auditoría
+  if (plan[0]) {
+    const { registrarCambioAuditoria } = await import("./db-helpers");
+    await registrarCambioAuditoria(
+      plan[0].id,
+      "",
+      data.usuario || "Sistema",
+      "CREADO",
+      undefined,
+      undefined,
+      undefined,
+      `Plan de acción creado: ${data.titulo}`
+    );
+  }
+  
   return plan[0]!;
 }
 

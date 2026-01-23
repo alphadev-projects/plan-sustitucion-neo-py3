@@ -634,3 +634,9 @@
 - Interfaz amigable con iconos y estados visuales
 - Notificaciones con toast de éxito/error
 - Indicador de carga durante descarga
+
+
+## Bugs Reportados - Sesión Actual
+- [x] Bug 1: Filtro de auditorías no muestra todos los registros al seleccionar "todas" - RESUELTO: Corregida función obtenerAuditoriaConFiltros
+- [x] Bug 2: No se registran en auditoría los planes de acción "creados" - RESUELTO: Agregado registro en createPlanAccion
+- [x] Bug 3: Botón descargar evidencias no se visualiza en UI - RESUELTO: Integrado componente en PlanAccionMaintenance
