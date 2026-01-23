@@ -517,3 +517,15 @@
 - [x] Investigar por qué Plan de Sucesión muestra 154 planes pero Plan de Sustitución muestra 153 puestos clave - CORREGIDO
 - [x] Corregir cálculo de riesgoContinuidad para asegurar consistencia - CORREGIDO
 - [x] Validar que los números sean coherentes en todos los módulos - CORREGIDO
+
+
+### Problema 6: Incoherencia Final 162 vs 163
+- [x] Investigar por qué Plan de Sucesión muestra 162 pero Plan de Sustitución muestra 163 - CORREGIDO
+- [x] Encontrar el registro de más en planesSustitucion - CORREGIDO
+- [x] Corregir la discrepancia para que ambos muestren el mismo número - CORREGIDO
+
+### Problema 7: Número Corrupto en Dashboard Sucesión
+- [x] Debuggear por qué Dashboard muestra "003330010" en lugar del conteo - CORREGIDO
+- [x] Revisar componente PlanSuccesionDashboard - CORREGIDO
+- [x] Verificar si es un problema de formateo o un valor corrupto en BD - CORREGIDO
+- [x] Corregir para mostrar el número correcto de puestos sin reemplazo - CORREGIDO

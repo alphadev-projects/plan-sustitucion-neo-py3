@@ -753,12 +753,17 @@ export async function getResumenPorDepartamento() {
   
   const resumen = await db.select({
     departamento: planesSuccesion.departamento,
-    total: sql`COUNT(*)`,
-    criticos: sql`SUM(CASE WHEN riesgoCritico = 'Si' THEN 1 ELSE 0 END)`,
-    completados: sql`SUM(CASE WHEN estado = 'Completado' THEN 1 ELSE 0 END)`,
+    total: sql<number>`CAST(COUNT(*) AS UNSIGNED)`,
+    criticos: sql<number>`CAST(SUM(CASE WHEN riesgoCritico = 'Si' THEN 1 ELSE 0 END) AS UNSIGNED)`,
+    completados: sql<number>`CAST(SUM(CASE WHEN estado = 'Completado' THEN 1 ELSE 0 END) AS UNSIGNED)`,
   }).from(planesSuccesion).groupBy(planesSuccesion.departamento);
   
-  return resumen;
+  return resumen.map(r => ({
+    ...r,
+    total: Number(r.total) || 0,
+    criticos: Number(r.criticos) || 0,
+    completados: Number(r.completados) || 0,
+  }));
 }
 
 

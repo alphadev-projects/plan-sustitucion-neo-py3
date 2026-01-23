@@ -1,0 +1,15 @@
+{
+  "query": "SELECT \n  (SELECT COUNT(*) FROM planes_sucesion) as planes_sucesion_total,\n  (SELECT COUNT(*) FROM planes_sustitucion) as planes_sustitucion_total,\n  (SELECT COUNT(*) FROM planes_sustitucion WHERE puestoClave = 'Si') as planes_sustitucion_criticos;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT \n  (SELECT COUNT(*) FROM planes_sucesion) as planes_sucesion_total,\n  (SELECT COUNT(*) FROM planes_sustitucion) as planes_sustitucion_total,\n  (SELECT COUNT(*) FROM planes_sustitucion WHERE puestoClave = 'Si') as planes_sustitucion_criticos;",
+  "rows": [
+    {
+      "planes_sucesion_total": "162",
+      "planes_sustitucion_total": "407",
+      "planes_sustitucion_criticos": "163"
+    }
+  ],
+  "messages": [],
+  "stdout": "planes_sucesion_total\tplanes_sustitucion_total\tplanes_sustitucion_criticos\n162\t407\t163\n",
+  "stderr": "",
+  "execution_time_ms": 347
+}
