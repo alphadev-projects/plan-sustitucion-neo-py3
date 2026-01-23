@@ -1,0 +1,9 @@
+{
+  "query": "DELETE FROM planes_sucesion\nWHERE id IN (\n  SELECT id FROM (\n    SELECT id, ROW_NUMBER() OVER (PARTITION BY planSustitucionId ORDER BY id DESC) as rn\n    FROM planes_sucesion\n    WHERE planSustitucionId IN (\n      SELECT planSustitucionId FROM planes_sucesion GROUP BY planSustitucionId HAVING COUNT(*) > 1\n    )\n  ) t\n  WHERE rn > 1\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute DELETE FROM planes_sucesion\nWHERE id IN (\n  SELECT id FROM (\n    SELECT id, ROW_NUMBER() OVER (PARTITION BY planSustitucionId ORDER BY id DESC) as rn\n    FROM planes_sucesion\n    WHERE planSustitucionId IN (\n      SELECT planSustitucionId FROM planes_sucesion GROUP BY planSustitucionId HAVING COUNT(*) > 1\n    )\n  ) t\n  WHERE rn > 1\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 353
+}

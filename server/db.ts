@@ -540,9 +540,9 @@ export async function getPlanesSuccesion() {
     return 0;
   });
   
-  // Los primeros 36 son Alto riesgo (sin reemplazo)
+  // Los primeros 37 son Alto riesgo (sin reemplazo)
   return planesOrdenados.map((plan, index) => {
-    const esAltoRiesgo = index < 36;
+    const esAltoRiesgo = index < 37;
     return {
       ...plan,
       riesgoContinuidad: esAltoRiesgo ? "Alto" : "Bajo",

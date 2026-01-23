@@ -510,3 +510,10 @@
 - [x] Consolidar en una sola lógica de "No Aplica" - CORREGIDO
 - [x] Eliminar botón duplicado o arreglar la interferencia - CORREGIDO
 - [x] Probar que funciona correctamente sin errores - CORREGIDO
+
+
+### Problema 5: Incoherencias Numéricas en Plan de Sucesión
+- [x] Investigar por qué alerta muestra 37 puestos críticos pero dashboard muestra 36 - CORREGIDO
+- [x] Investigar por qué Plan de Sucesión muestra 154 planes pero Plan de Sustitución muestra 153 puestos clave - CORREGIDO
+- [x] Corregir cálculo de riesgoContinuidad para asegurar consistencia - CORREGIDO
+- [x] Validar que los números sean coherentes en todos los módulos - CORREGIDO

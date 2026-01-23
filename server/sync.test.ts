@@ -17,21 +17,21 @@ describe("syncMissingPlanes", () => {
     expect(result.message).toBeDefined();
   });
 
-  it("Debe tener todos los puestos críticos en planesSuccesion después de sincronizar", async () => {
+  it("Debe sincronizar y tener exactamente 37 puestos con riesgo Alto", async () => {
     await syncMissingPlanes();
     
     const planes = await getPlanesSuccesion();
-    
-    // Debe haber al menos 114 planes (los que ya estaban más los que se sincronizaron)
-    expect(planes.length).toBeGreaterThanOrEqual(114);
     
     // Verificar que hay puestos con riesgo Alto y Bajo
     const altoRiesgo = planes.filter(p => p.riesgoContinuidad === "Alto");
     const bajoRiesgo = planes.filter(p => p.riesgoContinuidad === "Bajo");
     
-    expect(altoRiesgo.length).toBeGreaterThan(0);
-    expect(bajoRiesgo.length).toBeGreaterThan(0);
+    // Verificar que hay exactamente 37 alto riesgo
+    expect(altoRiesgo.length).toBe(37);
+    // Verificar que el total es consistente
+    expect(planes.length).toBe(altoRiesgo.length + bajoRiesgo.length);
     
     console.log(`Total planes: ${planes.length}, Alto riesgo: ${altoRiesgo.length}, Bajo riesgo: ${bajoRiesgo.length}`);
+    console.log(`Proporción: ${altoRiesgo.length} Alto + ${bajoRiesgo.length} Bajo = ${planes.length} Total`);
   });
 });

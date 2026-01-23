@@ -1,0 +1,13 @@
+{
+  "query": "SELECT COUNT(*) as total_alto_riesgo FROM planes_sucesion WHERE riesgoContinuidad = 'Alto';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT COUNT(*) as total_alto_riesgo FROM planes_sucesion WHERE riesgoContinuidad = 'Alto';",
+  "rows": [
+    {
+      "total_alto_riesgo": "45"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_alto_riesgo\n45\n",
+  "stderr": "",
+  "execution_time_ms": 354
+}
