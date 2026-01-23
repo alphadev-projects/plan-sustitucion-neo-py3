@@ -671,3 +671,14 @@
 - [x] Creado auditoriaRouter para registrar descargas
 - [x] Agregado componente BotonDescargarReporte
 - [x] Creados tests para validar carga y descarga de evidencias
+
+
+## Limpieza y Análisis Profundo - Sesión Actual
+- [x] Eliminar todos los registros de planesSuccesion
+- [x] Limpiar planesAccion vinculados
+- [x] Limpiar seguimientoPlanes vinculados
+- [x] Limpiar auditoría vinculada
+- [x] Analizar Dashboard Sucesión en profundidad
+- [x] Verificar cálculos de métricas - PROBLEMA ENCONTRADO: getDashboardMetricas contaba planesAccion sin filtrar por planesSuccesion
+- [x] Verificar cálculos de riesgo - OK
+- [x] Corregir inconsistencias encontradas - Agregado innerJoin en getDashboardMetricas

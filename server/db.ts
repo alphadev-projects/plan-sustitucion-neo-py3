@@ -732,10 +732,16 @@ export async function getDashboardMetricas() {
   const planesTotal = planes.length;
   const puestosAltoRiesgo = planes.filter(p => p.riesgoContinuidad === "Alto").length;
   
-  // Contar planes de acción por estado (no planesSuccesion)
-  const enProgresoResult = await db.select({ count: sql<number>`COUNT(*)` }).from(planesAccion).where(eq(planesAccion.estado, "En Progreso"));
-  const completadosResult = await db.select({ count: sql<number>`COUNT(*)` }).from(planesAccion).where(eq(planesAccion.estado, "Completado"));
-  const retrasadosResult = await db.select({ count: sql<number>`COUNT(*)` }).from(planesAccion).where(eq(planesAccion.estado, "Retrasado"));
+  // Contar planes de acción por estado (vinculados a planesSuccesion)
+  const enProgresoResult = await db.select({ count: sql<number>`COUNT(*)` }).from(planesAccion)
+    .innerJoin(planesSuccesion, eq(planesAccion.planSuccesionId, planesSuccesion.id))
+    .where(eq(planesAccion.estado, "En Progreso"));
+  const completadosResult = await db.select({ count: sql<number>`COUNT(*)` }).from(planesAccion)
+    .innerJoin(planesSuccesion, eq(planesAccion.planSuccesionId, planesSuccesion.id))
+    .where(eq(planesAccion.estado, "Completado"));
+  const retrasadosResult = await db.select({ count: sql<number>`COUNT(*)` }).from(planesAccion)
+    .innerJoin(planesSuccesion, eq(planesAccion.planSuccesionId, planesSuccesion.id))
+    .where(eq(planesAccion.estado, "Retrasado"));
   
   const planesEnProgreso = Number(enProgresoResult[0]?.count || 0);
   const planesCompletados = Number(completadosResult[0]?.count || 0);
@@ -745,13 +751,14 @@ export async function getDashboardMetricas() {
   const hoy = new Date();
   const proximos7Dias = new Date(hoy.getTime() + 7 * 24 * 60 * 60 * 1000);
   
-  const accionesProximas = await db.select().from(planesAccion).where(
-    and(
-      gte(planesAccion.fechaFin, hoy),
-      lte(planesAccion.fechaFin, proximos7Dias),
-      ne(planesAccion.estado, "Completado")
-    )
-  ).limit(10);
+  const accionesProximas = await db.select().from(planesAccion)
+    .where(
+      and(
+        gte(planesAccion.fechaFin, hoy),
+        lte(planesAccion.fechaFin, proximos7Dias),
+        ne(planesAccion.estado, "Completado")
+      )
+    ).limit(10);
   
   return {
     planesTotal,

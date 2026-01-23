@@ -1,0 +1,26 @@
+{
+  "query": "\n-- Eliminar auditoría vinculada a planes de acción\nDELETE FROM auditoria_planes_accion \nWHERE planAccionId IN (\n  SELECT id FROM planes_accion \n  WHERE planSuccesionId IN (SELECT id FROM planes_sucesion)\n);\n\n-- Eliminar seguimientos de planes de acción vinculados a planes_sucesion\nDELETE FROM seguimiento_planes \nWHERE planAccionId IN (\n  SELECT id FROM planes_accion \n  WHERE planSuccesionId IN (SELECT id FROM planes_sucesion)\n);\n\n-- Eliminar comentarios de planes de acción\nDELETE FROM comentarios_planes \nWHERE planAccionId IN (\n  SELECT id FROM planes_accion \n  WHERE planSuccesionId IN (SELECT id FROM planes_sucesion)\n);\n\n-- Eliminar planes de acción vinculados a planes_sucesion\nDELETE FROM planes_accion \nWHERE planSuccesionId IN (SELECT id FROM planes_sucesion);\n\n-- Eliminar planes_sucesion\nDELETE FROM planes_sucesion;\n\n-- Verificar que está limpio\nSELECT 'planes_sucesion' as tabla, COUNT(*) as registros FROM planes_sucesion\nUNION ALL\nSELECT 'planes_accion', COUNT(*) FROM planes_accion\nUNION ALL\nSELECT 'seguimiento_planes', COUNT(*) FROM seguimiento_planes\nUNION ALL\nSELECT 'auditoria_planes_accion', COUNT(*) FROM auditoria_planes_accion;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute \n-- Eliminar auditoría vinculada a planes de acción\nDELETE FROM auditoria_planes_accion \nWHERE planAccionId IN (\n  SELECT id FROM planes_accion \n  WHERE planSuccesionId IN (SELECT id FROM planes_sucesion)\n);\n\n-- Eliminar seguimientos de planes de acción vinculados a planes_sucesion\nDELETE FROM seguimiento_planes \nWHERE planAccionId IN (\n  SELECT id FROM planes_accion \n  WHERE planSuccesionId IN (SELECT id FROM planes_sucesion)\n);\n\n-- Eliminar comentarios de planes de acción\nDELETE FROM comentarios_planes \nWHERE planAccionId IN (\n  SELECT id FROM planes_accion \n  WHERE planSuccesionId IN (SELECT id FROM planes_sucesion)\n);\n\n-- Eliminar planes de acción vinculados a planes_sucesion\nDELETE FROM planes_accion \nWHERE planSuccesionId IN (SELECT id FROM planes_sucesion);\n\n-- Eliminar planes_sucesion\nDELETE FROM planes_sucesion;\n\n-- Verificar que está limpio\nSELECT 'planes_sucesion' as tabla, COUNT(*) as registros FROM planes_sucesion\nUNION ALL\nSELECT 'planes_accion', COUNT(*) FROM planes_accion\nUNION ALL\nSELECT 'seguimiento_planes', COUNT(*) FROM seguimiento_planes\nUNION ALL\nSELECT 'auditoria_planes_accion', COUNT(*) FROM auditoria_planes_accion;\n",
+  "rows": [
+    {
+      "tabla": "auditoria_planes_accion",
+      "registros": "0"
+    },
+    {
+      "tabla": "planes_accion",
+      "registros": "0"
+    },
+    {
+      "tabla": "planes_sucesion",
+      "registros": "0"
+    },
+    {
+      "tabla": "seguimiento_planes",
+      "registros": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "tabla\tregistros\nauditoria_planes_accion\t0\nplanes_accion\t0\nplanes_sucesion\t0\nseguimiento_planes\t0\n",
+  "stderr": "",
+  "execution_time_ms": 615
+}
