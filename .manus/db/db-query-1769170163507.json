@@ -1,0 +1,90 @@
+{
+  "query": "SELECT ps.id, ps.colaborador, ps.cargo, ps.departamento, ps.puestoClave, ps.reemplazo\nFROM planes_sustitucion ps\nWHERE ps.puestoClave = 'Si'\nORDER BY ps.id DESC\nLIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT ps.id, ps.colaborador, ps.cargo, ps.departamento, ps.puestoClave, ps.reemplazo\nFROM planes_sustitucion ps\nWHERE ps.puestoClave = 'Si'\nORDER BY ps.id DESC\nLIMIT 10;",
+  "rows": [
+    {
+      "id": "690028",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "690027",
+      "colaborador": "Test Colaborador 3",
+      "cargo": "Test Cargo 3",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "NO APLICA"
+    },
+    {
+      "id": "690026",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "690023",
+      "colaborador": "Test Colaborador 2",
+      "cargo": "Test Cargo 2",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Reemplazo Disponible"
+    },
+    {
+      "id": "690021",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": ""
+    },
+    {
+      "id": "690018",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "690017",
+      "colaborador": "Test Colaborador 3",
+      "cargo": "Test Cargo 3",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "NO APLICA"
+    },
+    {
+      "id": "690016",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "690013",
+      "colaborador": "Test Colaborador 2",
+      "cargo": "Test Cargo 2",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Reemplazo Disponible"
+    },
+    {
+      "id": "690011",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": ""
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tcolaborador\tcargo\tdepartamento\tpuestoClave\treemplazo\n690028\tTest Colaborador\tTest Cargo\tTest Dept\tSi\tUpdated Reemplazo\n690027\tTest Colaborador 3\tTest Cargo 3\tTest Dept\tSi\tNO APLICA\n690026\tTest Colaborador\tTest Cargo\tTest Dept\tSi\tTest Reemplazo\n690023\tTest Colaborador 2\tTest Cargo 2\tTest Dept\tSi\tReemplazo Disponible\n690021\tTest Colaborador\tTest Cargo\tTest Dept\tSi\t\n690018\tTest Colaborador\tTest Cargo\tTest Dept\tSi\tUpdated Reemplazo\n690017\tTest Colaborador 3\tTest Cargo 3\tTest Dept\tSi\tNO APLICA\n690016\tTest Colaborador\tTest Cargo\tTest Dept\tSi\tTest Reemplazo\n690013\tTest Colaborador 2\tTest Cargo 2\tTest Dept\tSi\tReemplazo Disponible\n690011\tTest Colaborador\tTest Cargo\tTest Dept\tSi\t\n",
+  "stderr": "",
+  "execution_time_ms": 350
+}

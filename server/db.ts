@@ -174,7 +174,7 @@ export async function getEmpleadoById(id: number) {
 export async function getAllPlanes() {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(planesSustitucion);
+  return db.select().from(planesSustitucion).where(eq(planesSustitucion.puestoClave, 'Si'));
 }
 
 export async function createPlan(plan: InsertPlanSustitucion) {

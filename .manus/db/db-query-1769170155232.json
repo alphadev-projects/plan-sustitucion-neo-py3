@@ -1,0 +1,9 @@
+{
+  "query": "SELECT ps.id, ps.colaborador, ps.cargo, ps.puestoClave\nFROM planes_sucesion psc\nLEFT JOIN planes_sustitucion ps ON psc.planSustitucionId = ps.id\nWHERE ps.id IS NULL;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT ps.id, ps.colaborador, ps.cargo, ps.puestoClave\nFROM planes_sucesion psc\nLEFT JOIN planes_sustitucion ps ON psc.planSustitucionId = ps.id\nWHERE ps.id IS NULL;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 364
+}

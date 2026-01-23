@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO planes_sucesion (planSustitucionId, colaborador, cargo, departamento, reemplazo, riesgoContinuidad, prioridadSucesion, riesgoCritico, estado, usuario, createdAt)\nSELECT ps.id, ps.colaborador, ps.cargo, ps.departamento, ps.reemplazo, 'Bajo', 'Baja', 'No', 'Pendiente', 'System', NOW()\nFROM planes_sustitucion ps\nWHERE ps.puestoClave = 'Si' AND ps.id NOT IN (SELECT planSustitucionId FROM planes_sucesion WHERE planSustitucionId IS NOT NULL);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute INSERT INTO planes_sucesion (planSustitucionId, colaborador, cargo, departamento, reemplazo, riesgoContinuidad, prioridadSucesion, riesgoCritico, estado, usuario, createdAt)\nSELECT ps.id, ps.colaborador, ps.cargo, ps.departamento, ps.reemplazo, 'Bajo', 'Baja', 'No', 'Pendiente', 'System', NOW()\nFROM planes_sustitucion ps\nWHERE ps.puestoClave = 'Si' AND ps.id NOT IN (SELECT planSustitucionId FROM planes_sucesion WHERE planSustitucionId IS NOT NULL);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 349
+}

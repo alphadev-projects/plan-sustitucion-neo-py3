@@ -519,10 +519,10 @@
 - [x] Validar que los números sean coherentes en todos los módulos - CORREGIDO
 
 
-### Problema 6: Incoherencia Final 162 vs 163
+### Problema 6: Incohe### Problema 6: Incoherencia Final 162 vs 163 - RESUELTO
 - [x] Investigar por qué Plan de Sucesión muestra 162 pero Plan de Sustitución muestra 163 - CORREGIDO
 - [x] Encontrar el registro de más en planesSustitucion - CORREGIDO
-- [x] Corregir la discrepancia para que ambos muestren el mismo número - CORREGIDO
+- [x] Corregir la discrepancia para que ambos muestren el mismo número - CORREGIDO (getAllPlanes ahora filtra solo puestoClave='Si')ro - CORREGIDO
 
 ### Problema 7: Número Corrupto en Dashboard Sucesión
 - [x] Debuggear por qué Dashboard muestra "003330010" en lugar del conteo - CORREGIDO

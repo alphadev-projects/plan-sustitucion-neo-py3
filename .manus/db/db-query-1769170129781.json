@@ -1,0 +1,17 @@
+{
+  "query": "SELECT ps.id, ps.colaborador, ps.cargo, ps.departamento, ps.puestoClave\nFROM planes_sustitucion ps\nWHERE ps.puestoClave = 'Si' AND ps.id NOT IN (SELECT planSustitucionId FROM planes_sucesion WHERE planSustitucionId IS NOT NULL)\nLIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT ps.id, ps.colaborador, ps.cargo, ps.departamento, ps.puestoClave\nFROM planes_sustitucion ps\nWHERE ps.puestoClave = 'Si' AND ps.id NOT IN (SELECT planSustitucionId FROM planes_sucesion WHERE planSustitucionId IS NOT NULL)\nLIMIT 5;",
+  "rows": [
+    {
+      "id": "690028",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tcolaborador\tcargo\tdepartamento\tpuestoClave\n690028\tTest Colaborador\tTest Cargo\tTest Dept\tSi\n",
+  "stderr": "",
+  "execution_time_ms": 357
+}
