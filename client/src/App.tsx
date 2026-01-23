@@ -12,8 +12,7 @@ import NuevoPlan from "./pages/NuevoPlan";
 import Nomina from "./pages/Nomina";
 import GestionUsuarios from "./pages/GestionUsuarios";
 import PlanSuccesion from "./pages/PlanSuccesion";
-
-
+import PlanSuccesionDashboard from "./pages/PlanSuccesionDashboard";
 import Auditoria from "./pages/Auditoria";
 import { useEffect } from "react";
 
