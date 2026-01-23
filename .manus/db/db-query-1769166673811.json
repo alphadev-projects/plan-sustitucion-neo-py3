@@ -1,0 +1,90 @@
+{
+  "query": "SELECT ps.id, ps.colaborador, ps.cargo, ps.departamento, ps.puestoClave, ps.reemplazo\nFROM planes_sustitucion ps\nWHERE ps.puestoClave = 'Si' \n  AND ps.id NOT IN (SELECT planSustitucionId FROM planes_sucesion WHERE planSustitucionId IS NOT NULL)\nLIMIT 10",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT ps.id, ps.colaborador, ps.cargo, ps.departamento, ps.puestoClave, ps.reemplazo\nFROM planes_sustitucion ps\nWHERE ps.puestoClave = 'Si' \n  AND ps.id NOT IN (SELECT planSustitucionId FROM planes_sucesion WHERE planSustitucionId IS NOT NULL)\nLIMIT 10",
+  "rows": [
+    {
+      "id": "570004",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "570005",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "570010",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "570011",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "570016",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "570017",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "570022",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Test Reemplazo"
+    },
+    {
+      "id": "570023",
+      "colaborador": "Test Colaborador",
+      "cargo": "Test Cargo",
+      "departamento": "Test Dept",
+      "puestoClave": "Si",
+      "reemplazo": "Updated Reemplazo"
+    },
+    {
+      "id": "600001",
+      "colaborador": "ANIBAL IVAN LOPEZ DUARTE",
+      "cargo": "Analista Tecnico N2",
+      "departamento": "Central de Servicios Tecnicos",
+      "puestoClave": "Si",
+      "reemplazo": "ANTONELA MAGALI MARTINEZ ESPINOLA"
+    },
+    {
+      "id": "600002",
+      "colaborador": "ANIBAL IVAN LOPEZ DUARTE",
+      "cargo": "Analista Tecnico N2",
+      "departamento": "Central de Servicios Tecnicos",
+      "puestoClave": "Si",
+      "reemplazo": "CINTHIA CAROLINA AGUERO RIOS"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tcolaborador\tcargo\tdepartamento\tpuestoClave\treemplazo\n570004\tTest Colaborador\tTest Cargo\tTest Dept\tSi\tTest Reemplazo\n570005\tTest Colaborador\tTest Cargo\tTest Dept\tSi\tUpdated Reemplazo\n570010\tTest Colaborador\tTest Cargo\tTest Dept\tSi\tTest Reemplazo\n570011\tTest Colaborador\tTest Cargo\tTest Dept\tSi\tUpdated Reemplazo\n570016\tTest Colaborador\tTest Cargo\tTest Dept\tSi\tTest Reemplazo\n570017\tTest Colaborador\tTest Cargo\tTest Dept\tSi\tUpdated Reemplazo\n570022\tTest Colaborador\tTest Cargo\tTest Dept\tSi\tTest Reemplazo\n570023\tTest Colaborador\tTest Cargo\tTest Dept\tSi\tUpdated Reemplazo\n600001\tANIBAL IVAN LOPEZ DUARTE\tAnalista Tecnico N2\tCentral de Servicios Tecnicos\tSi\tANTONELA MAGALI MARTINEZ ESPINOLA\n600002\tANIBAL IVAN LOPEZ DUARTE\tAnalista Tecnico N2\tCentral de Servicios Tecnicos\tSi\tCINTHIA CAROLINA AGUERO RIOS\n",
+  "stderr": "",
+  "execution_time_ms": 476
+}

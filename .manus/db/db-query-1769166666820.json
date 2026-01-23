@@ -1,0 +1,15 @@
+{
+  "query": "SELECT \n  (SELECT COUNT(*) FROM planes_sustitucion WHERE puestoClave = 'Si') as puestos_criticos_sustitucion,\n  (SELECT COUNT(*) FROM planes_sucesion) as puestos_sucesion,\n  (SELECT COUNT(*) FROM planes_sustitucion WHERE puestoClave = 'Si') - (SELECT COUNT(*) FROM planes_sucesion) as diferencia",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT \n  (SELECT COUNT(*) FROM planes_sustitucion WHERE puestoClave = 'Si') as puestos_criticos_sustitucion,\n  (SELECT COUNT(*) FROM planes_sucesion) as puestos_sucesion,\n  (SELECT COUNT(*) FROM planes_sustitucion WHERE puestoClave = 'Si') - (SELECT COUNT(*) FROM planes_sucesion) as diferencia",
+  "rows": [
+    {
+      "puestos_criticos_sustitucion": "148",
+      "puestos_sucesion": "114",
+      "diferencia": "34"
+    }
+  ],
+  "messages": [],
+  "stdout": "puestos_criticos_sustitucion\tpuestos_sucesion\tdiferencia\n148\t114\t34\n",
+  "stderr": "",
+  "execution_time_ms": 566
+}

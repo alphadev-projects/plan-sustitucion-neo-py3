@@ -1,0 +1,13 @@
+{
+  "query": "SELECT COUNT(*) as registros_faltantes\nFROM planes_sustitucion ps\nWHERE ps.puestoClave = 'Si' \n  AND ps.id NOT IN (SELECT COALESCE(planSustitucionId, 0) FROM planes_sucesion)",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT COUNT(*) as registros_faltantes\nFROM planes_sustitucion ps\nWHERE ps.puestoClave = 'Si' \n  AND ps.id NOT IN (SELECT COALESCE(planSustitucionId, 0) FROM planes_sucesion)",
+  "rows": [
+    {
+      "registros_faltantes": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "registros_faltantes\n0\n",
+  "stderr": "",
+  "execution_time_ms": 346
+}

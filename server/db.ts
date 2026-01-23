@@ -760,3 +760,61 @@ export async function getResumenPorDepartamento() {
   
   return resumen;
 }
+
+
+// Sincronizar planes faltantes (para registros antiguos que no fueron vinculados)
+export async function syncMissingPlanes() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Obtener todos los puestos críticos
+  const allCriticalPlanes = await db
+    .select()
+    .from(planesSustitucion)
+    .where(eq(planesSustitucion.puestoClave, "Si"));
+  
+  // Obtener los IDs que ya están en planesSuccesion
+  const existingPlanes = await db
+    .select({ planSustitucionId: planesSuccesion.planSustitucionId })
+    .from(planesSuccesion);
+  
+  const existingIdSet = new Set(existingPlanes.map(e => e.planSustitucionId));
+  
+  // Filtrar los planes que faltan
+  const missingPlanes = allCriticalPlanes.filter(p => !existingIdSet.has(p.id));
+  
+  if (missingPlanes.length === 0) {
+    return { synced: 0, message: "Todos los planes están sincronizados" };
+  }
+  
+  // Insertar los planes faltantes
+  let insertedCount = 0;
+  for (const plan of missingPlanes) {
+    try {
+      const hasReemplazo = plan.reemplazo && 
+                          plan.reemplazo.trim() !== "" && 
+                          plan.reemplazo.trim().toUpperCase() !== "NO APLICA";
+      
+      const riesgoContinuidad = hasReemplazo ? "Bajo" : "Alto";
+      const prioridadSucesion = hasReemplazo ? "Baja" : "Alta";
+      
+      await db.insert(planesSuccesion).values({
+        planSustitucionId: plan.id,
+        colaborador: plan.colaborador,
+        cargo: plan.cargo,
+        departamento: plan.departamento,
+        reemplazo: plan.reemplazo || "",
+        riesgoContinuidad: riesgoContinuidad as "Alto" | "Medio" | "Bajo",
+        prioridadSucesion: prioridadSucesion as "Alta" | "Media" | "Baja",
+        riesgoCritico: hasReemplazo ? "No" : "Si",
+        estado: "Pendiente",
+        usuario: plan.usuario,
+      });
+      insertedCount++;
+    } catch (error) {
+      console.error(`Error insertando plan ${plan.id}:`, error);
+    }
+  }
+  
+  return { synced: insertedCount, message: `${insertedCount} planes sincronizados` };
+}

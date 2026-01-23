@@ -494,3 +494,19 @@
 - [ ] Implementar colores por estado (No iniciado, En progreso, Completado)
 - [ ] Agregar vista en Dashboard Sucesión
 - [ ] Permitir filtros por departamento y riesgo
+
+
+### Problema 3: Incoherencia de Registros (Plan de Sustitución vs Plan de Sucesión)
+- [x] Investigar por qué Plan de Sustitución muestra 148 puestos críticos pero Plan de Sucesión solo 114 - CORREGIDO
+- [x] Revisar si hay registros con puestoClave="Si" que no se están vinculando a planesSuccesion - CORREGIDO
+- [x] Verificar si hay filtros o condiciones que están excluyendo registros - CORREGIDO
+- [x] Corregir la lógica de vinculación para que incluya TODOS los puestos críticos - CORREGIDO
+- [x] Validar que los 148 registros aparezcan en Plan de Sucesión - CORREGIDO
+
+### Problema 4: Botón "No Aplica" Duplicado y Con Error
+- [x] Revisar componente de creación de Plan de Sustitución - CORREGIDO
+- [x] Identificar dónde está el botón "No Aplica" en tipo de reemplazo - CORREGIDO
+- [x] Revisar si hay conflicto con la opción "No Aplica" en selección de colaborador - CORREGIDO
+- [x] Consolidar en una sola lógica de "No Aplica" - CORREGIDO
+- [x] Eliminar botón duplicado o arreglar la interferencia - CORREGIDO
+- [x] Probar que funciona correctamente sin errores - CORREGIDO

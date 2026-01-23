@@ -54,6 +54,7 @@ import {
   deleteComentario,
   getDashboardMetricas,
   getResumenPorDepartamento,
+  syncMissingPlanes,
 } from "./db";
 import { getAlertasPlanes, generarReporteRiesgosCSV, obtenerHistorialPlanAccion, obtenerAuditoriaConFiltros } from "./db-helpers";
 
@@ -362,6 +363,11 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         return updatePlanSuccesion(input.id, { estado: input.estado });
       }),
+
+    // Sincronización de planes faltantes
+    sincronizar: adminProcedure.mutation(async () => {
+      return syncMissingPlanes();
+    }),
 
     // Planes de Acción
     accionesListar: protectedProcedure

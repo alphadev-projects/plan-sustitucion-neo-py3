@@ -8,7 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { useLocation } from "wouter";
 import { ArrowLeft, Loader2 } from "lucide-react";
 
-type TipoReemplazo = "individual" | "pool" | "no_aplica";
+type TipoReemplazo = "individual" | "pool";
 
 export default function NuevoPlan() {
   const [, setLocation] = useLocation();
@@ -46,7 +46,7 @@ export default function NuevoPlan() {
     }
 
     if (tipoReemplazo === "individual" && !reemplazoId) {
-      alert("Por favor selecciona un reemplazo o marca como NO APLICA");
+      alert("Por favor selecciona un reemplazo o marca como NO APLICA en el dropdown");
       return;
     }
 
@@ -61,7 +61,7 @@ export default function NuevoPlan() {
         departamento: colaboradorSeleccionado.departamento,
         colaborador: colaboradorSeleccionado.nombre,
         cargo: colaboradorSeleccionado.cargo,
-        tipoReemplazo: tipoReemplazo === "no_aplica" ? "individual" : tipoReemplazo,
+        tipoReemplazo: tipoReemplazo,
         departamentoReemplazo: tipoReemplazo === "individual" 
           ? (reemplazoId === "NO_APLICA" ? "N/A" : reemplazoSeleccionado!.departamento)
           : departamentoPoolReemplazo,
@@ -157,17 +157,7 @@ export default function NuevoPlan() {
                     <p className="font-semibold">👥 Pool/Equipo</p>
                     <p className="text-sm text-muted-foreground">Asignar un grupo con funciones equivalentes</p>
                   </div>
-                  <div
-                    onClick={() => setTipoReemplazo("no_aplica")}
-                    className={`p-4 rounded-lg border-2 cursor-pointer transition ${
-                      tipoReemplazo === "no_aplica"
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-gray-200 hover:border-gray-300"
-                    }`}
-                  >
-                    <p className="font-semibold">❌ No Aplica</p>
-                    <p className="text-sm text-muted-foreground">Sin reemplazo asignado</p>
-                  </div>
+
                 </div>
               </div>
 
