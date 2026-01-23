@@ -173,36 +173,19 @@ function DashboardContent() {
       {/* Puestos Críticos Sin Reemplazo */}
       <PuestosAltoRiesgo />
 
-      {/* Indicadores de Riesgo */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-red-600">
-              <AlertCircle className="h-5 w-5" />
-              Riesgos Críticos
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold text-red-600">
-              {resumenDepartamentos?.reduce((sum: number, dept: any) => sum + (dept.criticos || 0), 0) || 0}
-            </p>
-            <p className="text-sm text-gray-600 mt-2">Puestos sin reemplazo disponible</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-green-600">
-              <CheckCircle className="h-5 w-5" />
-              Planes Completados
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold text-green-600">{porcentajeCompletados}%</p>
-            <p className="text-sm text-gray-600 mt-2">Cobertura de sucesión organizacional</p>
-          </CardContent>
-        </Card>
-      </div>
+      {/* Planes Completados */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-green-600">
+            <CheckCircle className="h-5 w-5" />
+            Planes Completados
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-3xl font-bold text-green-600">{porcentajeCompletados}%</p>
+          <p className="text-sm text-gray-600 mt-2">Cobertura de sucesión organizacional</p>
+        </CardContent>
+      </Card>
     </div>
   );
 }

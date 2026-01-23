@@ -682,3 +682,5 @@
 - [x] Verificar cálculos de métricas - PROBLEMA ENCONTRADO: getDashboardMetricas contaba planesAccion sin filtrar por planesSuccesion
 - [x] Verificar cálculos de riesgo - PROBLEMA ENCONTRADO: getResumenPorDepartamento contaba riesgoCritico en lugar de puestos sin reemplazo
 - [x] Corregir inconsistencias encontradas - Agregado innerJoin en getDashboardMetricas y corregido cálculo de criticos en getResumenPorDepartamento
+
+- [x] Remover tarjeta Riesgos Criticos de PlanSuccesionDashboard - Recreada sin la tarjeta problematica
