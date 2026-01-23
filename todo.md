@@ -684,3 +684,7 @@
 - [x] Corregir inconsistencias encontradas - Agregado innerJoin en getDashboardMetricas y corregido cálculo de criticos en getResumenPorDepartamento
 
 - [x] Remover tarjeta Riesgos Criticos de PlanSuccesionDashboard - Recreada sin la tarjeta problematica
+
+
+## Bug Corregido - Sesión Actual
+- [x] Bug: No se crea plan de sustitución cuando NO se marca "Puesto Clave" - RESUELTO: Remover condición if en createPlan para SIEMPRE crear registro en planesSuccesion
