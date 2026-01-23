@@ -680,5 +680,5 @@
 - [x] Limpiar auditoría vinculada
 - [x] Analizar Dashboard Sucesión en profundidad
 - [x] Verificar cálculos de métricas - PROBLEMA ENCONTRADO: getDashboardMetricas contaba planesAccion sin filtrar por planesSuccesion
-- [x] Verificar cálculos de riesgo - OK
-- [x] Corregir inconsistencias encontradas - Agregado innerJoin en getDashboardMetricas
+- [x] Verificar cálculos de riesgo - PROBLEMA ENCONTRADO: getResumenPorDepartamento contaba riesgoCritico en lugar de puestos sin reemplazo
+- [x] Corregir inconsistencias encontradas - Agregado innerJoin en getDashboardMetricas y corregido cálculo de criticos en getResumenPorDepartamento

@@ -777,7 +777,7 @@ export async function getResumenPorDepartamento() {
   const resumen = await db.select({
     departamento: planesSuccesion.departamento,
     total: sql<number>`CAST(COUNT(*) AS UNSIGNED)`,
-    criticos: sql<number>`CAST(SUM(CASE WHEN riesgoCritico = 'Si' THEN 1 ELSE 0 END) AS UNSIGNED)`,
+    criticos: sql<number>`CAST(SUM(CASE WHEN riesgoContinuidad = 'Alto' AND reemplazo = '' THEN 1 ELSE 0 END) AS UNSIGNED)`,
     completados: sql<number>`CAST(SUM(CASE WHEN estado = 'Completado' THEN 1 ELSE 0 END) AS UNSIGNED)`,
   }).from(planesSuccesion).groupBy(planesSuccesion.departamento);
   
