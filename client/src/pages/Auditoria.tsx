@@ -45,7 +45,7 @@ function AuditoriaContent() {
   const handleLimpiarFiltros = () => {
     setFiltros({
       usuario: "",
-      accion: "todas",
+      accion: "",
       fechaInicio: "",
       fechaFin: "",
     });
@@ -75,7 +75,7 @@ function AuditoriaContent() {
     a.click();
   };
 
-  const filtrosActivos = Object.values(filtros).filter((v) => v !== "" && v !== "todas").length;
+  const filtrosActivos = Object.values(filtros).filter((v) => v !== "").length;
 
   return (
     <div className="space-y-6 p-6">

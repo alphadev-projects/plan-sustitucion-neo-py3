@@ -640,3 +640,8 @@
 - [x] Bug 1: Filtro de auditorías no muestra todos los registros al seleccionar "todas" - RESUELTO: Corregida función obtenerAuditoriaConFiltros
 - [x] Bug 2: No se registran en auditoría los planes de acción "creados" - RESUELTO: Agregado registro en createPlanAccion
 - [x] Bug 3: Botón descargar evidencias no se visualiza en UI - RESUELTO: Integrado componente en PlanAccionMaintenance
+
+
+## Bugs Reportados - Sesión Actual (Ronda 2)
+- [x] Bug 1: Filtro de auditoría sigue presentando inconsistencia - RESUELTO: Cambiar "todas" por string vacío en handleLimpiarFiltros
+- [x] Bug 2: Botón descargar evidencias no se visualiza en UI - RESUELTO: Agregar importación de useState en DescargaEvidencias
