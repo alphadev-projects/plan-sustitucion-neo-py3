@@ -1,0 +1,46 @@
+{
+  "query": "\nSET FOREIGN_KEY_CHECKS = 0;\n\nTRUNCATE TABLE auditoria_planes_accion;\nTRUNCATE TABLE seguimiento_planes;\nTRUNCATE TABLE comentarios_planes;\nTRUNCATE TABLE planes_accion;\nTRUNCATE TABLE planes_sucesion;\nTRUNCATE TABLE planes_sustitucion;\nTRUNCATE TABLE empleados;\nTRUNCATE TABLE usuarios_locales;\nTRUNCATE TABLE users;\n\nSET FOREIGN_KEY_CHECKS = 1;\n\nSELECT \n  'empleados' as tabla, COUNT(*) as registros FROM empleados\nUNION ALL\nSELECT 'usuarios_locales', COUNT(*) FROM usuarios_locales\nUNION ALL\nSELECT 'users', COUNT(*) FROM users\nUNION ALL\nSELECT 'planes_sustitucion', COUNT(*) FROM planes_sustitucion\nUNION ALL\nSELECT 'planes_sucesion', COUNT(*) FROM planes_sucesion\nUNION ALL\nSELECT 'planes_accion', COUNT(*) FROM planes_accion\nUNION ALL\nSELECT 'comentarios_planes', COUNT(*) FROM comentarios_planes\nUNION ALL\nSELECT 'seguimiento_planes', COUNT(*) FROM seguimiento_planes\nUNION ALL\nSELECT 'auditoria_planes_accion', COUNT(*) FROM auditoria_planes_accion;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute \nSET FOREIGN_KEY_CHECKS = 0;\n\nTRUNCATE TABLE auditoria_planes_accion;\nTRUNCATE TABLE seguimiento_planes;\nTRUNCATE TABLE comentarios_planes;\nTRUNCATE TABLE planes_accion;\nTRUNCATE TABLE planes_sucesion;\nTRUNCATE TABLE planes_sustitucion;\nTRUNCATE TABLE empleados;\nTRUNCATE TABLE usuarios_locales;\nTRUNCATE TABLE users;\n\nSET FOREIGN_KEY_CHECKS = 1;\n\nSELECT \n  'empleados' as tabla, COUNT(*) as registros FROM empleados\nUNION ALL\nSELECT 'usuarios_locales', COUNT(*) FROM usuarios_locales\nUNION ALL\nSELECT 'users', COUNT(*) FROM users\nUNION ALL\nSELECT 'planes_sustitucion', COUNT(*) FROM planes_sustitucion\nUNION ALL\nSELECT 'planes_sucesion', COUNT(*) FROM planes_sucesion\nUNION ALL\nSELECT 'planes_accion', COUNT(*) FROM planes_accion\nUNION ALL\nSELECT 'comentarios_planes', COUNT(*) FROM comentarios_planes\nUNION ALL\nSELECT 'seguimiento_planes', COUNT(*) FROM seguimiento_planes\nUNION ALL\nSELECT 'auditoria_planes_accion', COUNT(*) FROM auditoria_planes_accion;\n",
+  "rows": [
+    {
+      "tabla": "planes_sucesion",
+      "registros": "0"
+    },
+    {
+      "tabla": "planes_sustitucion",
+      "registros": "0"
+    },
+    {
+      "tabla": "users",
+      "registros": "0"
+    },
+    {
+      "tabla": "empleados",
+      "registros": "0"
+    },
+    {
+      "tabla": "usuarios_locales",
+      "registros": "0"
+    },
+    {
+      "tabla": "seguimiento_planes",
+      "registros": "0"
+    },
+    {
+      "tabla": "planes_accion",
+      "registros": "0"
+    },
+    {
+      "tabla": "auditoria_planes_accion",
+      "registros": "0"
+    },
+    {
+      "tabla": "comentarios_planes",
+      "registros": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "tabla\tregistros\nplanes_sucesion\t0\nplanes_sustitucion\t0\nusers\t0\nempleados\t0\nusuarios_locales\t0\nseguimiento_planes\t0\nplanes_accion\t0\nauditoria_planes_accion\t0\ncomentarios_planes\t0\n",
+  "stderr": "",
+  "execution_time_ms": 2206
+}

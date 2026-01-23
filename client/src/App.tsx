@@ -13,6 +13,7 @@ import Nomina from "./pages/Nomina";
 import GestionUsuarios from "./pages/GestionUsuarios";
 import PlanSuccesion from "./pages/PlanSuccesion";
 import PlanSuccesionDashboard from "./pages/PlanSuccesionDashboard";
+import DashboardSuccesionMejorado from "./pages/DashboardSuccesionMejorado";
 import Auditoria from "./pages/Auditoria";
 import { useEffect } from "react";
 
@@ -67,6 +68,13 @@ function Router() {
         {(props) => (
           <ProtectedRoute requiredRole="admin">
             <PlanSuccesionDashboard {...props} />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/sucesion-gantt">
+        {(props) => (
+          <ProtectedRoute requiredRole="admin">
+            <DashboardSuccesionMejorado {...props} />
           </ProtectedRoute>
         )}
       </Route>

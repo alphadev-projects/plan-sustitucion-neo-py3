@@ -57,6 +57,9 @@ import {
   syncMissingPlanes,
 } from "./db";
 import { getAlertasPlanes, generarReporteRiesgosCSV, obtenerHistorialPlanAccion, obtenerAuditoriaConFiltros } from "./db-helpers";
+import { planesSuccesionToCSV, generarReporteRiesgos } from "./export";
+import { notifyPlanStatusChanged, notifyHighRiskPosition, notifyActionDeadlineApproaching, notifyActionOverdue, notifyActionCompleted } from "./email-notifications";
+import { notificationProcedures } from "./notification-procedures";
 
 export const appRouter = router({
   system: systemRouter,
@@ -447,9 +450,17 @@ export const appRouter = router({
     }),
 
     descargarReporteRiesgos: protectedProcedure.query(async () => {
-      const csv = await generarReporteRiesgosCSV();
+      const planes = await getPlanesSuccesion();
+      const csv = planesSuccesionToCSV(planes);
       return { csv, filename: `reporte-riesgos-${new Date().toISOString().split("T")[0]}.csv` };
     }),
+
+    obtenerReporteRiesgos: protectedProcedure.query(async () => {
+      const planes = await getPlanesSuccesion();
+      return generarReporteRiesgos(planes);
+    }),
+
+    ...notificationProcedures,
 
     obtenerHistorial: protectedProcedure
       .input(z.object({ planAccionId: z.number() }))
