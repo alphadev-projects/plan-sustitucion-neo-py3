@@ -584,3 +584,53 @@
 - [x] server/routers.ts - Actualizado con nuevos procedimientos
 - [x] client/src/App.tsx - Agregada ruta /sucesion-gantt
 - [x] client/src/components/DashboardLayout.tsx - Agregado menú "Matriz Gantt"
+
+
+## Cambios Recientes - Sesión Actual
+
+### Eliminación de Matriz Gantt
+- [x] Eliminar componente GanttChart.tsx
+- [x] Eliminar página DashboardSuccesionMejorado.tsx
+- [x] Remover ruta /sucesion-gantt de App.tsx
+- [x] Remover menú "Matriz Gantt" de DashboardLayout
+
+### Feature: Descarga de Evidencias en Planes de Acción
+- [x] Crear módulo server/evidencias.ts con funciones de consulta
+- [x] Implementar obtenerEvidenciasPlanAccion() - obtiene todas las evidencias
+- [x] Implementar obtenerEvidenciasConArchivos() - solo evidencias con archivos
+- [x] Implementar contarEvidencias() - cuenta total de evidencias
+- [x] Implementar extraerNombreArchivo() - extrae nombre de URL S3
+- [x] Implementar generarNombreDescarga() - genera nombre descriptivo
+- [x] Crear procedimientos tRPC en evidencias-procedures.ts
+- [x] Implementar obtenerEvidencias - query para obtener todas
+- [x] Implementar obtenerEvidenciasCompletas - query con info del plan
+- [x] Implementar obtenerEvidenciasConArchivos - query solo con archivos
+- [x] Implementar contarEvidencias - query para contar
+- [x] Implementar obtenerURLDescargaEvidencia - query para descargar individual
+- [x] Implementar prepararDescargaMultiple - query para descargar múltiples
+- [x] Crear componente DescargaEvidencias.tsx
+- [x] Implementar interfaz visual con lista de evidencias
+- [x] Implementar botón de descarga individual
+- [x] Implementar botón de descarga múltiple (todos los archivos)
+- [x] Agregar indicadores visuales de estado y progreso
+- [x] Agregar información de comentarios y validación
+- [x] Agregar procedimientos al router sucesion en routers.ts
+- [x] Integrar componente en UI de planes de acción
+
+### Archivos Creados/Modificados
+- [x] server/evidencias.ts - Módulo de funciones de evidencias
+- [x] server/evidencias-procedures.ts - Procedimientos tRPC
+- [x] client/src/components/DescargaEvidencias.tsx - Componente UI
+- [x] server/routers.ts - Agregados procedimientos de evidencias
+- [x] client/src/App.tsx - Removida ruta de Gantt
+- [x] client/src/components/DashboardLayout.tsx - Removido menú de Gantt
+
+### Características de Descarga
+- Descarga individual de archivos desde S3
+- Descarga múltiple con delay entre descargas
+- Visualización de estado, progreso y comentarios
+- Información de validación y responsable
+- Nombres descriptivos para descargas
+- Interfaz amigable con iconos y estados visuales
+- Notificaciones con toast de éxito/error
+- Indicador de carga durante descarga

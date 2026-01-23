@@ -60,6 +60,7 @@ import { getAlertasPlanes, generarReporteRiesgosCSV, obtenerHistorialPlanAccion,
 import { planesSuccesionToCSV, generarReporteRiesgos } from "./export";
 import { notifyPlanStatusChanged, notifyHighRiskPosition, notifyActionDeadlineApproaching, notifyActionOverdue, notifyActionCompleted } from "./email-notifications";
 import { notificationProcedures } from "./notification-procedures";
+import { evidenciasProcedures } from "./evidencias-procedures";
 
 export const appRouter = router({
   system: systemRouter,
@@ -461,6 +462,8 @@ export const appRouter = router({
     }),
 
     ...notificationProcedures,
+
+    ...evidenciasProcedures,
 
     obtenerHistorial: protectedProcedure
       .input(z.object({ planAccionId: z.number() }))
