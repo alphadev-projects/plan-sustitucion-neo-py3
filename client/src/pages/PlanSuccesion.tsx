@@ -11,6 +11,7 @@ import { AlertCircle, Plus, Clock, Edit2, Trash2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import DashboardLayout from "@/components/DashboardLayout";
 import { PlanAccionMaintenance } from "@/components/PlanAccionMaintenance";
+import { BotonDescargarReporte } from "@/components/BotonDescargarReporte";
 
 function PlanSuccesionContent() {
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
@@ -209,7 +210,13 @@ function PlanSuccesionContent() {
                       <CardTitle>Planes de Acción</CardTitle>
                       <CardDescription>Actividades para desarrollar reemplazos</CardDescription>
                     </div>
-                    <Dialog open={showNewActionDialog} onOpenChange={setShowNewActionDialog}>
+                    <div className="flex items-center gap-2">
+                      <BotonDescargarReporte 
+                        planAccionId={selectedPlan || 0} 
+                        titulo={`Reporte Plan ${selectedPlan}`}
+                        tipo="csv"
+                      />
+                      <Dialog open={showNewActionDialog} onOpenChange={setShowNewActionDialog}>
                       <DialogTrigger asChild>
                         <Button size="sm">
                           <Plus className="h-4 w-4 mr-2" />
@@ -282,6 +289,7 @@ function PlanSuccesionContent() {
                         </div>
                       </DialogContent>
                     </Dialog>
+                    </div>
                   </CardHeader>
                   <CardContent>
                     {planesAccion && planesAccion.length > 0 ? (

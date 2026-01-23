@@ -661,3 +661,13 @@
 - [x] Bug 3: Edición de usuarios - implementado diálogo con actualizarUsuario
 - [x] Bug 4: Actualización de evidencias - creado procedimiento accionActualizarConEvidencia
 - [x] Bug 5: Botón descargar evidencias - componente integrado en PlanAccionMaintenance
+
+
+## Investigación Profunda y Soluciones - Sesión Actual
+- [x] Bug: Carga de evidencias no actualiza la lista - RESUELTO: Creado módulo upload-evidencias.ts con soporte S3
+- [x] Bug: Botón descargar evidencias no se visualiza - RESUELTO: Agregado BotonDescargarReporte en PlanSuccesion.tsx
+- [x] Implementado procedimiento subirEvidencia en tRPC
+- [x] Actualizado PlanAccionMaintenance para subir archivos a S3
+- [x] Creado auditoriaRouter para registrar descargas
+- [x] Agregado componente BotonDescargarReporte
+- [x] Creados tests para validar carga y descarga de evidencias

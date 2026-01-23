@@ -61,6 +61,7 @@ import { planesSuccesionToCSV, generarReporteRiesgos } from "./export";
 import { notifyPlanStatusChanged, notifyHighRiskPosition, notifyActionDeadlineApproaching, notifyActionOverdue, notifyActionCompleted } from "./email-notifications";
 import { notificationProcedures } from "./notification-procedures";
 import { evidenciasProcedures } from "./evidencias-procedures";
+import { auditoriaRouter } from "./auditoria-router";
 
 export const appRouter = router({
   system: systemRouter,
@@ -426,6 +427,28 @@ export const appRouter = router({
         );
       }),
 
+    subirEvidencia: protectedProcedure
+      .input(z.object({
+        planAccionId: z.number(),
+        archivoBase64: z.string(),
+        nombreArchivo: z.string(),
+        estado: z.enum(["No Iniciado", "En Progreso", "Completado", "Retrasado"]),
+        progreso: z.number().min(0).max(100),
+        comentario: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { subirEvidencia } = await import("./upload-evidencias");
+        return subirEvidencia(
+          input.planAccionId,
+          input.archivoBase64,
+          input.nombreArchivo,
+          input.estado,
+          input.progreso,
+          input.comentario,
+          ctx.user.name || "Unknown"
+        );
+      }),
+
     accionEliminar: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
@@ -509,6 +532,7 @@ export const appRouter = router({
         );
       }),
   }),
+  auditoria: auditoriaRouter,
 });
 
 export type AppRouter = typeof appRouter;
