@@ -63,7 +63,13 @@ function Router() {
           </ProtectedRoute>
         )}
       </Route>
-
+      <Route path="/sucesion-dashboard">
+        {(props) => (
+          <ProtectedRoute requiredRole="admin">
+            <PlanSuccesionDashboard {...props} />
+          </ProtectedRoute>
+        )}
+      </Route>
       <Route path="/auditoria">
         {(props) => (
           <ProtectedRoute requiredRole="admin">
