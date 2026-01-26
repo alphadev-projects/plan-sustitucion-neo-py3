@@ -1,0 +1,52 @@
+{
+  "query": "SELECT colaborador, cargo, reemplazo, riesgoContinuidad, prioridadSucesion FROM planes_sucesion ORDER BY riesgoContinuidad, colaborador;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT colaborador, cargo, reemplazo, riesgoContinuidad, prioridadSucesion FROM planes_sucesion ORDER BY riesgoContinuidad, colaborador;",
+  "rows": [
+    {
+      "colaborador": "LIZ MABEL AVALOS VERA",
+      "cargo": "Encargado de Alianzas Estrategicas - CDE",
+      "reemplazo": "NO APLICA",
+      "riesgoContinuidad": "Alto",
+      "prioridadSucesion": "Alta"
+    },
+    {
+      "colaborador": "MAURICIO ALBERTO TOROSSI",
+      "cargo": "Jefe de Alianzas Estrategicas",
+      "reemplazo": "NO APLICA",
+      "riesgoContinuidad": "Alto",
+      "prioridadSucesion": "Alta"
+    },
+    {
+      "colaborador": "OMAR GABRIEL SALCEDO VERA",
+      "cargo": "Ejecutivo de Ventas Corporativas - ASU",
+      "reemplazo": "NO APLICA",
+      "riesgoContinuidad": "Alto",
+      "prioridadSucesion": "Alta"
+    },
+    {
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "cargo": "Jefe Administrativo Financiero",
+      "reemplazo": "NO APLICA",
+      "riesgoContinuidad": "Alto",
+      "prioridadSucesion": "Alta"
+    },
+    {
+      "colaborador": "ABRAHAN VIANCONI VILLALBA",
+      "cargo": "Ejecutivo de Ventas Corporativas",
+      "reemplazo": "OMAR GABRIEL SALCEDO VERA",
+      "riesgoContinuidad": "Bajo",
+      "prioridadSucesion": "Alta"
+    },
+    {
+      "colaborador": "FATIMA MARICEL GOLNNER GIMENEZ",
+      "cargo": "Jefe de Cumplimiento y Auditoria",
+      "reemplazo": "ULTIMO PARA PROBAR",
+      "riesgoContinuidad": "Bajo",
+      "prioridadSucesion": "Alta"
+    }
+  ],
+  "messages": [],
+  "stdout": "colaborador\tcargo\treemplazo\triesgoContinuidad\tprioridadSucesion\nLIZ MABEL AVALOS VERA\tEncargado de Alianzas Estrategicas - CDE\tNO APLICA\tAlto\tAlta\nMAURICIO ALBERTO TOROSSI\tJefe de Alianzas Estrategicas\tNO APLICA\tAlto\tAlta\nOMAR GABRIEL SALCEDO VERA\tEjecutivo de Ventas Corporativas - ASU\tNO APLICA\tAlto\tAlta\nROQUE EVER YEGROS COLMAN\tJefe Administrativo Financiero\tNO APLICA\tAlto\tAlta\nABRAHAN VIANCONI VILLALBA\tEjecutivo de Ventas Corporativas\tOMAR GABRIEL SALCEDO VERA\tBajo\tAlta\nFATIMA MARICEL GOLNNER GIMENEZ\tJefe de Cumplimiento y Auditoria\tULTIMO PARA PROBAR\tBajo\tAlta\n",
+  "stderr": "",
+  "execution_time_ms": 354
+}

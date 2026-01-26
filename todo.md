@@ -744,4 +744,24 @@
 - [x] Corregir sincronización: cambiar lógica de riesgoCritico a verificar reemplazo vacío
 - [x] Eliminar "NO APLICA - Sin reemplazo asignado" del dropdown de reemplazo
 - [x] Realizar pruebas en navegador
+- [x] Guardar checkpoint (versión a81a2e33)
+
+## Sesión Actual: Investigación Profunda - Sincronización de Riesgo de Continuidad
+- [ ] Verificar datos en planesSuccesion: ¿cuál es el riesgo actual para cada registro?
+- [ ] Comparar con planesSustitucion: ¿tienen reemplazo asignado?
+- [ ] Revisar lógica en createPlan: ¿se está calculando correctamente?
+- [ ] Revisar lógica en syncMissingPlanes: ¿se está sincronizando correctamente?
+- [ ] Revisar getPlanesSuccesion: ¿está retornando los riesgos correctos?
+- [ ] Identificar el punto exacto donde falla la lógica
+- [ ] Corregir el problema
+- [ ] Realizar pruebas exhaustivas
 - [ ] Guardar checkpoint
+
+## Sesión Actual: Investigación a Profundidad de Riesgo de Continuidad - RESUELTO
+- [x] Investigar a profundidad: verificar datos en base de datos
+- [x] Revisar lógica en createPlan y syncMissingPlanes - CORRECCIONES REALIZADAS
+- [x] Revisar función getPlanesSuccesion - ENCONTRADO PROBLEMA: sobrescribía riesgos con índice hardcodeado
+- [x] Corregir el problema: eliminar lógica hardcodeada de índice (línea 596-605)
+- [x] Realizar pruebas exhaustivas - CONFIRMADO: Riesgos correctos en UI
+- [x] Verificar: 4 puestos Alto (sin reemplazo), 2 puestos Bajo (con reemplazo)
+- [x] Guardar checkpoint

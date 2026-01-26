@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO planes_sucesion (planSustitucionId, colaborador, cargo, departamento, reemplazo, riesgoContinuidad, prioridadSucesion, riesgoCritico, estado, usuario) SELECT id, colaborador, cargo, departamento, reemplazo, CASE WHEN reemplazo IS NULL OR reemplazo = '' OR UPPER(reemplazo) = 'NO APLICA' THEN 'Alto' ELSE 'Bajo' END as riesgoContinuidad, 'Alta' as prioridadSucesion, CASE WHEN reemplazo IS NULL OR reemplazo = '' OR UPPER(reemplazo) = 'NO APLICA' THEN 'Si' ELSE 'No' END as riesgoCritico, 'Pendiente' as estado, usuario FROM planes_sustitucion WHERE puestoClave = 'Si';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute INSERT INTO planes_sucesion (planSustitucionId, colaborador, cargo, departamento, reemplazo, riesgoContinuidad, prioridadSucesion, riesgoCritico, estado, usuario) SELECT id, colaborador, cargo, departamento, reemplazo, CASE WHEN reemplazo IS NULL OR reemplazo = '' OR UPPER(reemplazo) = 'NO APLICA' THEN 'Alto' ELSE 'Bajo' END as riesgoContinuidad, 'Alta' as prioridadSucesion, CASE WHEN reemplazo IS NULL OR reemplazo = '' OR UPPER(reemplazo) = 'NO APLICA' THEN 'Si' ELSE 'No' END as riesgoCritico, 'Pendiente' as estado, usuario FROM planes_sustitucion WHERE puestoClave = 'Si';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 359
+}

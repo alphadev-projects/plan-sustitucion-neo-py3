@@ -1,0 +1,9 @@
+{
+  "query": "SELECT colaborador, cargo, reemplazo, riesgoContinuidad, prioridadSucesion FROM planes_sucesion ORDER BY colaborador;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT colaborador, cargo, reemplazo, riesgoContinuidad, prioridadSucesion FROM planes_sucesion ORDER BY colaborador;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 350
+}

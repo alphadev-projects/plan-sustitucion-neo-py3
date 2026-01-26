@@ -229,7 +229,52 @@ export async function createPlan(plan: InsertPlanSustitucion) {
 export async function updatePlan(id: number, plan: Partial<InsertPlanSustitucion>) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  return db.update(planesSustitucion).set(plan).where(eq(planesSustitucion.id, id));
+  
+  // Actualizar el plan de sustitución
+  await db.update(planesSustitucion).set(plan).where(eq(planesSustitucion.id, id));
+  
+  // Si es puesto clave, actualizar también en planesSuccesion
+  if (plan.puestoClave === "Si") {
+    // Calcular riesgo: sin reemplazo = Alto, con reemplazo = Bajo
+    const sinReemplazo = !plan.reemplazo || plan.reemplazo.trim() === "" || plan.reemplazo.toUpperCase() === "NO APLICA";
+    const riesgoContinuidad = sinReemplazo ? "Alto" : "Bajo";
+    const prioridadSucesion = "Alta"; // Siempre Alta para puestos clave
+    
+    // Actualizar o crear registro en planesSuccesion
+    const existingRecord = await db.select().from(planesSuccesion).where(eq(planesSuccesion.planSustitucionId, id));
+    
+    if (existingRecord.length > 0) {
+      // Actualizar registro existente
+      await db.update(planesSuccesion).set({
+        reemplazo: plan.reemplazo || "",
+        riesgoContinuidad: riesgoContinuidad as "Alto" | "Medio" | "Bajo",
+        prioridadSucesion: prioridadSucesion as "Alta" | "Media" | "Baja",
+      }).where(eq(planesSuccesion.planSustitucionId, id));
+    } else {
+      // Crear nuevo registro si no existe
+      const planRecord = await db.select().from(planesSustitucion).where(eq(planesSustitucion.id, id));
+      if (planRecord.length > 0) {
+        const p = planRecord[0];
+        await db.insert(planesSuccesion).values({
+          planSustitucionId: id,
+          departamento: p.departamento,
+          cargo: p.cargo,
+          colaborador: p.colaborador,
+          reemplazo: plan.reemplazo || "",
+          riesgoContinuidad: riesgoContinuidad as "Alto" | "Medio" | "Bajo",
+          riesgoCritico: p.riesgoCritico || "No",
+          prioridadSucesion: prioridadSucesion as "Alta" | "Media" | "Baja",
+          estado: "Pendiente",
+          usuario: p.usuario,
+        });
+      }
+    }
+  } else if (plan.puestoClave === "No") {
+    // Si se desmarca como puesto clave, eliminar de planesSuccesion
+    await db.delete(planesSuccesion).where(eq(planesSuccesion.planSustitucionId, id));
+  }
+  
+  return { success: true };
 }
 
 export async function deletePlan(id: number) {
@@ -548,16 +593,8 @@ export async function getPlanesSuccesion() {
     return 0;
   });
   
-  // Los primeros 37 son Alto riesgo (sin reemplazo)
-  return planesOrdenados.map((plan, index) => {
-    const esAltoRiesgo = index < 37;
-    return {
-      ...plan,
-      riesgoContinuidad: esAltoRiesgo ? "Alto" : "Bajo",
-      riesgoCritico: esAltoRiesgo ? "Si" : "No",
-      prioridadSucesion: esAltoRiesgo ? "Alta" : "Baja",
-    };
-  });
+  // Retornar los datos tal como están en la BD, sin sobrescribir
+  return planesOrdenados;
 }
 
 export async function getPlanesSuccesionCriticos() {
@@ -854,7 +891,33 @@ export async function syncMissingPlanes() {
     }
   }
   
-  return { synced: insertedCount, message: `${insertedCount} planes sincronizados` };
+  // Actualizar los registros existentes en planesSuccesion con datos correctos
+  let updatedCount = 0;
+  for (const existingId of Array.from(existingIdSet)) {
+    try {
+      const plan = allCriticalPlanes.find(p => p.id === existingId);
+      if (plan) {
+        const hasReemplazo = plan.reemplazo && 
+                            plan.reemplazo.trim() !== "" && 
+                            plan.reemplazo.trim().toUpperCase() !== "NO APLICA";
+        
+        const riesgoContinuidad = hasReemplazo ? "Bajo" : "Alto";
+        const prioridadSucesion = "Alta";
+        
+        await db.update(planesSuccesion).set({
+          reemplazo: plan.reemplazo || "",
+          riesgoContinuidad: riesgoContinuidad as "Alto" | "Medio" | "Bajo",
+          prioridadSucesion: prioridadSucesion as "Alta" | "Media" | "Baja",
+          riesgoCritico: hasReemplazo ? "No" : "Si",
+        }).where(eq(planesSuccesion.planSustitucionId, existingId));
+        updatedCount++;
+      }
+    } catch (error) {
+      console.error(`Error actualizando plan ${existingId}:`, error);
+    }
+  }
+  
+  return { synced: insertedCount, updated: updatedCount, message: `${insertedCount} planes sincronizados, ${updatedCount} planes actualizados` };
 }
 
 

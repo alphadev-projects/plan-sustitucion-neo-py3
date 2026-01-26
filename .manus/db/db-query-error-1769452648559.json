@@ -1,0 +1,8 @@
+{
+  "query": "INSERT INTO planes_sucesion (plan_sustitucion_id, colaborador, cargo, departamento, reemplazo, riesgo_continuidad, prioridad_sucesion, riesgo_critico, estado, usuario) SELECT id, colaborador, cargo, departamento, reemplazo, CASE WHEN reemplazo IS NULL OR reemplazo = '' OR UPPER(reemplazo) = 'NO APLICA' THEN 'Alto' ELSE 'Bajo' END as riesgo_continuidad, 'Alta' as prioridad_sucesion, CASE WHEN reemplazo IS NULL OR reemplazo = '' OR UPPER(reemplazo) = 'NO APLICA' THEN 'Si' ELSE 'No' END as riesgo_critico, 'Pendiente' as estado, usuario FROM planes_sustitucion WHERE puesto_clave = 'Si';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute INSERT INTO planes_sucesion (plan_sustitucion_id, colaborador, cargo, departamento, reemplazo, riesgo_continuidad, prioridad_sucesion, riesgo_critico, estado, usuario) SELECT id, colaborador, cargo, departamento, reemplazo, CASE WHEN reemplazo IS NULL OR reemplazo = '' OR UPPER(reemplazo) = 'NO APLICA' THEN 'Alto' ELSE 'Bajo' END as riesgo_continuidad, 'Alta' as prioridad_sucesion, CASE WHEN reemplazo IS NULL OR reemplazo = '' OR UPPER(reemplazo) = 'NO APLICA' THEN 'Si' ELSE 'No' END as riesgo_critico, 'Pendiente' as estado, usuario FROM planes_sustitucion WHERE puesto_clave = 'Si';",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'plan_sustitucion_id' in 'field list'"
+  ]
+}
