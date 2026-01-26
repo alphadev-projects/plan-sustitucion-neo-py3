@@ -273,16 +273,11 @@ export const appRouter = router({
             }
             try {
               const plan = await createPlan({
-                empleadoId: input.empleadoId,
                 departamento: input.departamento,
                 colaborador: input.colaborador,
                 cargo: input.cargo,
-                departamentoReemplazo: input.departamentoPoolReemplazo!,
                 reemplazo: colaborador.nombre,
-                cargoReemplazo: input.cargoPoolReemplazo!,
-                tipoReemplazo: "pool",
-                cargoPoolReemplazo: input.cargoPoolReemplazo!,
-                departamentoPoolReemplazo: input.departamentoPoolReemplazo!,
+                tipoReemplazo: "Pool",
                 puestoClave: input.puestoClave,
                 usuario: ctx.user?.name || "usuario",
               });
@@ -294,14 +289,11 @@ export const appRouter = router({
           return { success: true, planesCreados, totalCreados: planesCreados.length };
         } else {
           return createPlan({
-            empleadoId: input.empleadoId,
             departamento: input.departamento,
             colaborador: input.colaborador,
             cargo: input.cargo,
-            departamentoReemplazo: input.departamentoReemplazo!,
             reemplazo: input.reemplazo!,
-            cargoReemplazo: input.cargoReemplazo!,
-            tipoReemplazo: "individual",
+            tipoReemplazo: "Individual",
             puestoClave: input.puestoClave,
             usuario: ctx.user?.name || "usuario",
           });
@@ -389,15 +381,19 @@ export const appRouter = router({
     accionCrear: adminProcedure
       .input(z.object({
         planSuccesionId: z.number(),
-        titulo: z.string(),
-        descripcion: z.string(),
+        actividad: z.string(),
         responsable: z.string(),
         fechaInicio: z.date(),
         fechaFin: z.date(),
       }))
       .mutation(async ({ input, ctx }) => {
         return createPlanAccion({
-          ...input,
+          planSuccesionId: input.planSuccesionId,
+          actividad: input.actividad,
+          responsable: input.responsable,
+          fechaInicio: input.fechaInicio,
+          fechaFin: input.fechaFin,
+          estado: "Pendiente",
           usuario: ctx.user?.name || "usuario",
         });
       }),
@@ -409,7 +405,7 @@ export const appRouter = router({
         progreso: z.number().min(0).max(100).optional(),
       }))
       .mutation(async ({ input, ctx }) => {
-        return updatePlanAccion(input.id, { estado: input.estado, progreso: input.progreso }, ctx.user.name || "Unknown", ctx.user.openId);
+        return updatePlanAccion(input.id, { estado: input.estado, progreso: input.progreso });
       }),
 
     accionActualizarConEvidencia: protectedProcedure

@@ -1,0 +1,38 @@
+{
+  "query": "SELECT \n  ps.id,\n  ps.colaborador,\n  ps.reemplazo as reemplazo_sustitucion,\n  psc.reemplazo as reemplazo_sucesion,\n  psc.riesgoContinuidad\nFROM planes_sustitucion ps\nLEFT JOIN planes_sucesion psc ON ps.id = psc.planSustitucionId\nWHERE ps.puestoClave = 'Si'\nORDER BY ps.colaborador;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT \n  ps.id,\n  ps.colaborador,\n  ps.reemplazo as reemplazo_sustitucion,\n  psc.reemplazo as reemplazo_sucesion,\n  psc.riesgoContinuidad\nFROM planes_sustitucion ps\nLEFT JOIN planes_sucesion psc ON ps.id = psc.planSustitucionId\nWHERE ps.puestoClave = 'Si'\nORDER BY ps.colaborador;",
+  "rows": [
+    {
+      "id": "30003",
+      "colaborador": "ALEX MARTINEZ SANDOVAL",
+      "reemplazo_sustitucion": "ROQUE EVER YEGROS COLMAN",
+      "reemplazo_sucesion": "ROQUE EVER YEGROS COLMAN",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "90001",
+      "colaborador": "ALEX MARTINEZ SANDOVAL",
+      "reemplazo_sustitucion": "DALILA DAHIANA CORREA DURE",
+      "reemplazo_sucesion": "DALILA DAHIANA CORREA DURE",
+      "riesgoContinuidad": "Bajo"
+    },
+    {
+      "id": "30002",
+      "colaborador": "OMAR GABRIEL SALCEDO VERA",
+      "reemplazo_sustitucion": "NO APLICA",
+      "reemplazo_sucesion": "NO APLICA",
+      "riesgoContinuidad": "Alto"
+    },
+    {
+      "id": "30001",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "reemplazo_sustitucion": "NO APLICA",
+      "reemplazo_sucesion": "NO APLICA",
+      "riesgoContinuidad": "Alto"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tcolaborador\treemplazo_sustitucion\treemplazo_sucesion\triesgoContinuidad\n30003\tALEX MARTINEZ SANDOVAL\tROQUE EVER YEGROS COLMAN\tROQUE EVER YEGROS COLMAN\tBajo\n90001\tALEX MARTINEZ SANDOVAL\tDALILA DAHIANA CORREA DURE\tDALILA DAHIANA CORREA DURE\tBajo\n30002\tOMAR GABRIEL SALCEDO VERA\tNO APLICA\tNO APLICA\tAlto\n30001\tROQUE EVER YEGROS COLMAN\tNO APLICA\tNO APLICA\tAlto\n",
+  "stderr": "",
+  "execution_time_ms": 356
+}

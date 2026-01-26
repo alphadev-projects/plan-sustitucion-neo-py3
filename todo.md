@@ -719,4 +719,12 @@
 - [x] Cambiar "Medio" por "Bajo" en createPlan y syncMissingPlanes
 - [x] Limpiar y recrear registros en planesSuccesion
 - [x] Realizar pruebas en navegador
-- [ ] Guardar checkpoint
+- [x] Guardar checkpoint (versión e11b8d4c)
+
+## Investigación: Riesgo Alto en puestos con reemplazo
+- [x] Verificar datos en planesSuccesion: ¿Están vacíos los campos de reemplazo?
+- [x] Comparar reemplazo en planesSustitucion vs planesSuccesion
+- [x] Corregir lógica: Puestos CON reemplazo deben mostrar Riesgo Bajo
+- [x] Recrear registros en planesSuccesion con datos correctos
+- [x] Corregir getPlanesSuccesion para usar valores de BD
+- [x] Guardar checkpoint

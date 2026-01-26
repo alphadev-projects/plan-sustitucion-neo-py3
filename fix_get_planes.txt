@@ -1,0 +1,44 @@
+BUSCAR:
+  // Traer puestos criticos directamente de planesSuccesion
+  const planesData = await db.select().from(planesSuccesion);
+  
+  // Ordenar por reemplazo para que los vacíos/sin reemplazo queden primero
+  const planesOrdenados = planesData.sort((a, b) => {
+    const aReemplazo = (a.reemplazo || "").trim();
+    const bReemplazo = (b.reemplazo || "").trim();
+    // Primero los vacíos, luego los NO APLICA, luego los demás
+    if (aReemplazo === "" && bReemplazo !== "") return -1;
+    if (aReemplazo !== "" && bReemplazo === "") return 1;
+    const aNoAplica = aReemplazo.toUpperCase() === "NO APLICA";
+    const bNoAplica = bReemplazo.toUpperCase() === "NO APLICA";
+    if (aNoAplica && !bNoAplica) return -1;
+    if (!aNoAplica && bNoAplica) return 1;
+    return 0;
+  });
+  
+  // Los primeros 37 son Alto riesgo (sin reemplazo)
+  return planesOrdenados.map((plan, index) => {
+    const esAltoRiesgo = index < 37;
+    return {
+      ...plan,
+      riesgoContinuidad: esAltoRiesgo ? "Alto" : "Bajo",
+      riesgoCritico: esAltoRiesgo ? "Si" : "No",
+      prioridadSucesion: esAltoRiesgo ? "Alta" : "Baja",
+    };
+  });
+
+REEMPLAZAR CON:
+  // Traer puestos criticos directamente de planesSuccesion
+  const planesData = await db.select().from(planesSuccesion);
+  
+  // Ordenar por riesgo (Alto primero, luego Bajo) y luego por colaborador
+  const planesOrdenados = planesData.sort((a, b) => {
+    // Primero los de riesgo Alto
+    if (a.riesgoContinuidad === "Alto" && b.riesgoContinuidad !== "Alto") return -1;
+    if (a.riesgoContinuidad !== "Alto" && b.riesgoContinuidad === "Alto") return 1;
+    // Luego por nombre de colaborador
+    return (a.colaborador || "").localeCompare(b.colaborador || "");
+  });
+  
+  // Retornar los planes con sus valores de riesgo ya almacenados en BD
+  return planesOrdenados;
