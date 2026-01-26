@@ -264,7 +264,6 @@ export default function NuevoPlan() {
                         className="w-full px-3 py-2 border rounded-lg bg-background disabled:opacity-50"
                       >
                         <option value="">Selecciona un reemplazo</option>
-                        <option value="NO_APLICA">NO APLICA - Sin reemplazo asignado</option>
                         {(reemplazos || []).map((emp: any) => (
                           <option key={emp.id} value={emp.id}>
                             {emp.nombre}
@@ -274,7 +273,7 @@ export default function NuevoPlan() {
                     </div>
                   </div>
 
-                  {reemplazoSeleccionado && reemplazoId !== "NO_APLICA" && (
+                  {reemplazoSeleccionado && (
                     <div className="bg-accent/50 p-4 rounded-lg space-y-2 mt-4">
                       <div>
                         <p className="text-sm text-muted-foreground">Cargo</p>
@@ -284,14 +283,6 @@ export default function NuevoPlan() {
                         <p className="text-sm text-muted-foreground">Área</p>
                         <p className="font-medium">{reemplazoSeleccionado.area}</p>
                       </div>
-                    </div>
-                  )}
-
-                  {reemplazoId === "NO_APLICA" && (
-                    <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg mt-4">
-                      <p className="text-sm text-yellow-800">
-                        ⚠️ Este puesto actualmente no tiene reemplazo asignado
-                      </p>
                     </div>
                   )}
                 </div>

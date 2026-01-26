@@ -192,7 +192,7 @@ function PlanSuccesionContent() {
                         </Badge>
                       </div>
                     </div>
-                    {planSeleccionado.riesgoCritico === "Si" && (
+                    {!planSeleccionado.reemplazo && (
                       <Alert className="border-red-200 bg-red-50">
                         <AlertCircle className="h-4 w-4 text-red-600" />
                         <AlertDescription className="text-red-800">

@@ -1,0 +1,8 @@
+{
+  "query": "SELECT \n  'planes_sustitucion' as tabla,\n  ps.id, \n  ps.colaborador, \n  ps.cargo, \n  ps.reemplazo,\n  ps.puestoClave\nFROM planes_sustitucion ps\nWHERE ps.colaborador LIKE '%ABRAHAN%'\nUNION ALL\nSELECT \n  'planes_sucesion' as tabla,\n  psc.id,\n  psc.colaborador,\n  psc.cargo,\n  psc.reemplazo,\n  psc.puestoClave\nFROM planes_sucesion psc\nWHERE psc.colaborador LIKE '%ABRAHAN%'",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT \n  'planes_sustitucion' as tabla,\n  ps.id, \n  ps.colaborador, \n  ps.cargo, \n  ps.reemplazo,\n  ps.puestoClave\nFROM planes_sustitucion ps\nWHERE ps.colaborador LIKE '%ABRAHAN%'\nUNION ALL\nSELECT \n  'planes_sucesion' as tabla,\n  psc.id,\n  psc.colaborador,\n  psc.cargo,\n  psc.reemplazo,\n  psc.puestoClave\nFROM planes_sucesion psc\nWHERE psc.colaborador LIKE '%ABRAHAN%'",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'psc.puestoclave' in 'field list'"
+  ]
+}

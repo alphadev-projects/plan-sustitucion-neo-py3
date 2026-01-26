@@ -736,4 +736,12 @@
 - [x] Corregir la inserción SQL: agregar empleadoId y campos faltantes
 - [x] Corregir errores de TypeScript en routers.ts y PlanSuccesion.tsx
 - [x] Realizar pruebas en navegador
+- [x] Guardar checkpoint (versión fd5c02ae)
+
+## Sesión Actual: Corregir Sincronización de Reemplazo y UI
+- [x] Investigar: ABRAHAM tiene reemplazo en Plan de Sustitución pero muestra sin reemplazo en Plan de Sucesión
+- [x] Verificar datos en base de datos para ABRAHAM
+- [x] Corregir sincronización: cambiar lógica de riesgoCritico a verificar reemplazo vacío
+- [x] Eliminar "NO APLICA - Sin reemplazo asignado" del dropdown de reemplazo
+- [x] Realizar pruebas en navegador
 - [ ] Guardar checkpoint

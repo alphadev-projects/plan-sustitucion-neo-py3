@@ -1,0 +1,9 @@
+{
+  "query": "SELECT \n  ps.id, \n  ps.colaborador, \n  ps.cargo, \n  ps.reemplazo, \n  ps.puestoClave,\n  psc.id as psc_id,\n  psc.colaborador as psc_colaborador,\n  psc.reemplazo as psc_reemplazo,\n  psc.riesgoContinuidad\nFROM planes_sustitucion ps\nLEFT JOIN planes_sucesion psc ON ps.id = psc.planSustitucionId\nWHERE ps.colaborador LIKE '%ABRAHAM%'",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT \n  ps.id, \n  ps.colaborador, \n  ps.cargo, \n  ps.reemplazo, \n  ps.puestoClave,\n  psc.id as psc_id,\n  psc.colaborador as psc_colaborador,\n  psc.reemplazo as psc_reemplazo,\n  psc.riesgoContinuidad\nFROM planes_sustitucion ps\nLEFT JOIN planes_sucesion psc ON ps.id = psc.planSustitucionId\nWHERE ps.colaborador LIKE '%ABRAHAM%'",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 376
+}
