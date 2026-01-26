@@ -273,11 +273,14 @@ export const appRouter = router({
             }
             try {
               const plan = await createPlan({
+                empleadoId: input.empleadoId,
                 departamento: input.departamento,
                 colaborador: input.colaborador,
                 cargo: input.cargo,
+                departamentoReemplazo: input.departamentoPoolReemplazo!,
                 reemplazo: colaborador.nombre,
-                tipoReemplazo: "Pool",
+                cargoReemplazo: input.cargoPoolReemplazo!,
+                tipoReemplazo: "pool",
                 puestoClave: input.puestoClave,
                 usuario: ctx.user?.name || "usuario",
               });
@@ -289,11 +292,14 @@ export const appRouter = router({
           return { success: true, planesCreados, totalCreados: planesCreados.length };
         } else {
           return createPlan({
+            empleadoId: input.empleadoId,
             departamento: input.departamento,
             colaborador: input.colaborador,
             cargo: input.cargo,
+            departamentoReemplazo: input.departamentoReemplazo!,
             reemplazo: input.reemplazo!,
-            tipoReemplazo: "Individual",
+            cargoReemplazo: input.cargoReemplazo!,
+            tipoReemplazo: "individual",
             puestoClave: input.puestoClave,
             usuario: ctx.user?.name || "usuario",
           });
@@ -381,7 +387,8 @@ export const appRouter = router({
     accionCrear: adminProcedure
       .input(z.object({
         planSuccesionId: z.number(),
-        actividad: z.string(),
+        titulo: z.string(),
+        descripcion: z.string().optional(),
         responsable: z.string(),
         fechaInicio: z.date(),
         fechaFin: z.date(),
@@ -389,11 +396,12 @@ export const appRouter = router({
       .mutation(async ({ input, ctx }) => {
         return createPlanAccion({
           planSuccesionId: input.planSuccesionId,
-          actividad: input.actividad,
+          titulo: input.titulo,
+          descripcion: input.descripcion || "",
           responsable: input.responsable,
           fechaInicio: input.fechaInicio,
           fechaFin: input.fechaFin,
-          estado: "Pendiente",
+          estado: "No Iniciado",
           usuario: ctx.user?.name || "usuario",
         });
       }),

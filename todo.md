@@ -728,3 +728,12 @@
 - [x] Recrear registros en planesSuccesion con datos correctos
 - [x] Corregir getPlanesSuccesion para usar valores de BD
 - [x] Guardar checkpoint
+
+## Sesión Actual: Corregir Error de Inserción en Planes de Sustitución
+- [x] Revisar schema de planes_sustitucion
+- [x] Revisar función createPlan en db.ts
+- [x] Identificar discrepancia: empleadoId no se pasaba a createPlan
+- [x] Corregir la inserción SQL: agregar empleadoId y campos faltantes
+- [x] Corregir errores de TypeScript en routers.ts y PlanSuccesion.tsx
+- [x] Realizar pruebas en navegador
+- [ ] Guardar checkpoint
