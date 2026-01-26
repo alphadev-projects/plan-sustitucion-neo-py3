@@ -693,3 +693,7 @@
 ## Observaciones Reportadas - Sesión Actual
 - [x] Observación 1: Eliminar plan de sustitución no elimina registro en planesSuccesion - RESUELTO: Agregada eliminación en cascada en deletePlan
 - [x] Observación 2: Crear pool no registra en planesSustitucion - RESUELTO: Agregada validación de errores en loop de pool
+
+
+## Inconsistencia Reportada - Sesión Actual
+- [x] Inconsistencia: Registros en planesSuccesion que no existen en planesSustitucion - RESUELTO: Limpiados registros huérfanos y creado módulo integrity-check.ts

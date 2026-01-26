@@ -1,0 +1,17 @@
+{
+  "query": "SELECT ps.id, ps.planSustitucionId, ps.colaborador, ps.cargo, ps.reemplazo FROM planes_sucesion ps LEFT JOIN planes_sustitucion p ON ps.planSustitucionId = p.id WHERE p.id IS NULL LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT ps.id, ps.planSustitucionId, ps.colaborador, ps.cargo, ps.reemplazo FROM planes_sucesion ps LEFT JOIN planes_sustitucion p ON ps.planSustitucionId = p.id WHERE p.id IS NULL LIMIT 5;",
+  "rows": [
+    {
+      "id": "60001",
+      "planSustitucionId": "60001",
+      "colaborador": "PIERO RAUL CARDENA SALINAS",
+      "cargo": "Asistente de Remuneraciones",
+      "reemplazo": "MYRIAM CELESTE CENTURION AREVALO"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tplanSustitucionId\tcolaborador\tcargo\treemplazo\n60001\t60001\tPIERO RAUL CARDENA SALINAS\tAsistente de Remuneraciones\tMYRIAM CELESTE CENTURION AREVALO\n",
+  "stderr": "",
+  "execution_time_ms": 364
+}
