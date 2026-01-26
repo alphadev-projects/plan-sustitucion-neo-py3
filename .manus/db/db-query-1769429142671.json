@@ -1,0 +1,34 @@
+{
+  "query": "SELECT COUNT(*) as planes_sucesion_count FROM planes_sucesion;\nSELECT COUNT(*) as puestos_clave_count FROM planes_sustitucion WHERE puestoClave = 'Si';\nSELECT id, colaborador, puestoClave, reemplazo FROM planes_sustitucion WHERE puestoClave = 'Si' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT COUNT(*) as planes_sucesion_count FROM planes_sucesion;\nSELECT COUNT(*) as puestos_clave_count FROM planes_sustitucion WHERE puestoClave = 'Si';\nSELECT id, colaborador, puestoClave, reemplazo FROM planes_sustitucion WHERE puestoClave = 'Si' LIMIT 5;",
+  "rows": [
+    {
+      "planes_sucesion_count": "0"
+    },
+    {
+      "planes_sucesion_count": "puestos_clave_count"
+    },
+    {
+      "planes_sucesion_count": "4"
+    },
+    {
+      "planes_sucesion_count": "id\tcolaborador\tpuestoClave\treemplazo"
+    },
+    {
+      "planes_sucesion_count": "30001\tROQUE EVER YEGROS COLMAN\tSi\tNO APLICA"
+    },
+    {
+      "planes_sucesion_count": "30002\tOMAR GABRIEL SALCEDO VERA\tSi\tNO APLICA"
+    },
+    {
+      "planes_sucesion_count": "30003\tALEX MARTINEZ SANDOVAL\tSi\tROQUE EVER YEGROS COLMAN"
+    },
+    {
+      "planes_sucesion_count": "90001\tALEX MARTINEZ SANDOVAL\tSi\tDALILA DAHIANA CORREA DURE"
+    }
+  ],
+  "messages": [],
+  "stdout": "planes_sucesion_count\n0\npuestos_clave_count\n4\nid\tcolaborador\tpuestoClave\treemplazo\n30001\tROQUE EVER YEGROS COLMAN\tSi\tNO APLICA\n30002\tOMAR GABRIEL SALCEDO VERA\tSi\tNO APLICA\n30003\tALEX MARTINEZ SANDOVAL\tSi\tROQUE EVER YEGROS COLMAN\n90001\tALEX MARTINEZ SANDOVAL\tSi\tDALILA DAHIANA CORREA DURE\n",
+  "stderr": "",
+  "execution_time_ms": 466
+}

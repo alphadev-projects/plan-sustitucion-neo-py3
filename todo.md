@@ -705,9 +705,18 @@
 - [x] Verificar: Visualización en Plan de Sucesión - CONFIRMADO: getPlanesSuccesion() retorna todos
 - [x] Ejecutar: Pasos sugeridos de integridad - COMPLETADO: Validación startup, alertas tRPC, integrityRouter
 
-## Sesión Actual: Filtrar Plan de Sucesión por Puestos Clave
+## Sesión Anterior: Filtrar Plan de Sucesión por Puestos Clave
 - [x] Revisar lógica actual de Plan de Sucesión (listar y contar)
 - [x] Ajustar filtro para mostrar SOLO planes con puestoClave='Si'
 - [x] Validar que Plan de Sucesión muestre 47 o menos planes (solo puestos clave)
+- [x] Realizar pruebas en navegador
+- [x] Guardar checkpoint
+
+## Sesión Actual: Lógica de Riesgo de Continuidad para Puestos Clave (CORREGIDA)
+- [x] Revisar lógica actual de cálculo de riesgo en createPlan
+- [x] Ajustar: Puesto Clave + Reemplazo = Riesgo Bajo (CORREGIDO de Medio), Prioridad Alta
+- [x] Ajustar: Puesto Clave + Sin Reemplazo = Riesgo Alto, Prioridad Alta
+- [x] Cambiar "Medio" por "Bajo" en createPlan y syncMissingPlanes
+- [x] Limpiar y recrear registros en planesSuccesion
 - [x] Realizar pruebas en navegador
 - [ ] Guardar checkpoint

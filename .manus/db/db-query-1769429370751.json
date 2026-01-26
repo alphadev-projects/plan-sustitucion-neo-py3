@@ -1,0 +1,28 @@
+{
+  "query": "DELETE FROM planes_sucesion;\n\nINSERT INTO planes_sucesion (planSustitucionId, departamento, cargo, colaborador, reemplazo, riesgoContinuidad, riesgoCritico, prioridadSucesion, estado, usuario)\nSELECT \n  id,\n  departamento,\n  cargo,\n  colaborador,\n  COALESCE(reemplazo, ''),\n  CASE \n    WHEN reemplazo IS NULL OR reemplazo = '' OR UPPER(reemplazo) = 'NO APLICA' THEN 'Alto'\n    ELSE 'Bajo'\n  END as riesgoContinuidad,\n  'No' as riesgoCritico,\n  'Alta' as prioridadSucesion,\n  'Pendiente' as estado,\n  usuario\nFROM planes_sustitucion\nWHERE puestoClave = 'Si';\n\nSELECT COUNT(*) as planes_sucesion_count FROM planes_sucesion;\nSELECT colaborador, reemplazo, riesgoContinuidad, prioridadSucesion FROM planes_sucesion;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute DELETE FROM planes_sucesion;\n\nINSERT INTO planes_sucesion (planSustitucionId, departamento, cargo, colaborador, reemplazo, riesgoContinuidad, riesgoCritico, prioridadSucesion, estado, usuario)\nSELECT \n  id,\n  departamento,\n  cargo,\n  colaborador,\n  COALESCE(reemplazo, ''),\n  CASE \n    WHEN reemplazo IS NULL OR reemplazo = '' OR UPPER(reemplazo) = 'NO APLICA' THEN 'Alto'\n    ELSE 'Bajo'\n  END as riesgoContinuidad,\n  'No' as riesgoCritico,\n  'Alta' as prioridadSucesion,\n  'Pendiente' as estado,\n  usuario\nFROM planes_sustitucion\nWHERE puestoClave = 'Si';\n\nSELECT COUNT(*) as planes_sucesion_count FROM planes_sucesion;\nSELECT colaborador, reemplazo, riesgoContinuidad, prioridadSucesion FROM planes_sucesion;",
+  "rows": [
+    {
+      "planes_sucesion_count": "4"
+    },
+    {
+      "planes_sucesion_count": "colaborador\treemplazo\triesgoContinuidad\tprioridadSucesion"
+    },
+    {
+      "planes_sucesion_count": "ROQUE EVER YEGROS COLMAN\tNO APLICA\tAlto\tAlta"
+    },
+    {
+      "planes_sucesion_count": "OMAR GABRIEL SALCEDO VERA\tNO APLICA\tAlto\tAlta"
+    },
+    {
+      "planes_sucesion_count": "ALEX MARTINEZ SANDOVAL\tROQUE EVER YEGROS COLMAN\tBajo\tAlta"
+    },
+    {
+      "planes_sucesion_count": "ALEX MARTINEZ SANDOVAL\tDALILA DAHIANA CORREA DURE\tBajo\tAlta"
+    }
+  ],
+  "messages": [],
+  "stdout": "planes_sucesion_count\n4\ncolaborador\treemplazo\triesgoContinuidad\tprioridadSucesion\nROQUE EVER YEGROS COLMAN\tNO APLICA\tAlto\tAlta\nOMAR GABRIEL SALCEDO VERA\tNO APLICA\tAlto\tAlta\nALEX MARTINEZ SANDOVAL\tROQUE EVER YEGROS COLMAN\tBajo\tAlta\nALEX MARTINEZ SANDOVAL\tDALILA DAHIANA CORREA DURE\tBajo\tAlta\n",
+  "stderr": "",
+  "execution_time_ms": 507
+}

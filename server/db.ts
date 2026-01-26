@@ -203,8 +203,11 @@ export async function createPlan(plan: InsertPlanSustitucion) {
   
   // Crear registro en planesSuccesion SOLO si es puesto clave
   if (plan.puestoClave === "Si") {
-    const riesgoContinuidad = !plan.reemplazo || plan.reemplazo.trim() === "" || plan.reemplazo.toUpperCase() === "NO APLICA" ? "Alto" : "Bajo";
-    const prioridadSucesion = riesgoContinuidad === "Alto" ? "Alta" : "Baja";
+    // Para puestos clave: sin reemplazo = Alto, con reemplazo = Bajo
+    // Prioridad siempre Alta para puestos clave
+    const sinReemplazo = !plan.reemplazo || plan.reemplazo.trim() === "" || plan.reemplazo.toUpperCase() === "NO APLICA";
+    const riesgoContinuidad = sinReemplazo ? "Alto" : "Bajo";
+    const prioridadSucesion = "Alta"; // Siempre Alta para puestos clave
     
     await db.insert(planesSuccesion).values({
       planSustitucionId: createdPlan[0].id,
@@ -828,8 +831,10 @@ export async function syncMissingPlanes() {
                           plan.reemplazo.trim() !== "" && 
                           plan.reemplazo.trim().toUpperCase() !== "NO APLICA";
       
+      // Para puestos clave: sin reemplazo = Alto, con reemplazo = Bajo
+      // Prioridad siempre Alta para puestos clave
       const riesgoContinuidad = hasReemplazo ? "Bajo" : "Alto";
-      const prioridadSucesion = hasReemplazo ? "Baja" : "Alta";
+      const prioridadSucesion = "Alta"; // Siempre Alta para puestos clave
       
       await db.insert(planesSuccesion).values({
         planSustitucionId: plan.id,
