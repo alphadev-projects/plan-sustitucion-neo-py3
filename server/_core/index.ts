@@ -7,6 +7,7 @@ import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { cleanOrphanedRecords, countOrphanedRecords } from "../integrity-check";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -57,8 +58,20 @@ async function startServer() {
     console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
   }
 
-  server.listen(port, () => {
+  server.listen(port, async () => {
     console.log(`Server running on http://localhost:${port}/`);
+    try {
+      const orphanedCount = await countOrphanedRecords();
+      if (orphanedCount > 0) {
+        console.warn(`[Integrity Check] Found ${orphanedCount} orphaned records`);
+        const cleaned = await cleanOrphanedRecords();
+        console.log(`[Integrity Check] Cleaned ${cleaned} orphaned records`);
+      } else {
+        console.log("[Integrity Check] Database integrity verified");
+      }
+    } catch (error) {
+      console.error("[Integrity Check] Error:", error);
+    }
   });
 }
 

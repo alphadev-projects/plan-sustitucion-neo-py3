@@ -697,3 +697,10 @@
 
 ## Inconsistencia Reportada - Sesión Actual
 - [x] Inconsistencia: Registros en planesSuccesion que no existen en planesSustitucion - RESUELTO: Limpiados registros huérfanos y creado módulo integrity-check.ts
+
+
+## Investigación Profunda - Pool vs Individual
+- [x] Investigar: Plan pool no se visualiza en Planes de Sustitución - RESUELTO: Removido filtro puestoClave='Si' en getAllPlanes()
+- [x] Comparar: Lógica entre plan individual y pool - CONFIRMADO: Ambos usan input.puestoClave
+- [x] Verificar: Visualización en Plan de Sucesión - CONFIRMADO: getPlanesSuccesion() retorna todos
+- [x] Ejecutar: Pasos sugeridos de integridad - COMPLETADO: Validación startup, alertas tRPC, integrityRouter

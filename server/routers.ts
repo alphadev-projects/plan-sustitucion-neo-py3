@@ -3,6 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { COOKIE_NAME, LOCAL_AUTH_COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
+import { integrityRouter } from "./integrity-router";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 
 // Procedure que requiere rol de administrador
@@ -537,6 +538,7 @@ export const appRouter = router({
       }),
   }),
   auditoria: auditoriaRouter,
+  integrity: integrityRouter,
 });
 
 export type AppRouter = typeof appRouter;
