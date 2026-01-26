@@ -688,3 +688,8 @@
 
 ## Bug Corregido - Sesión Actual
 - [x] Bug: No se crea plan de sustitución cuando NO se marca "Puesto Clave" - RESUELTO: Remover condición if en createPlan para SIEMPRE crear registro en planesSuccesion
+
+
+## Observaciones Reportadas - Sesión Actual
+- [x] Observación 1: Eliminar plan de sustitución no elimina registro en planesSuccesion - RESUELTO: Agregada eliminación en cascada en deletePlan
+- [x] Observación 2: Crear pool no registra en planesSustitucion - RESUELTO: Agregada validación de errores en loop de pool

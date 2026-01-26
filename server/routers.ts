@@ -270,21 +270,25 @@ export const appRouter = router({
             if (colaborador.nombre === input.colaborador) {
               continue;
             }
-            const plan = await createPlan({
-              empleadoId: input.empleadoId,
-              departamento: input.departamento,
-              colaborador: input.colaborador,
-              cargo: input.cargo,
-              departamentoReemplazo: input.departamentoPoolReemplazo!,
-              reemplazo: colaborador.nombre,
-              cargoReemplazo: input.cargoPoolReemplazo!,
-              tipoReemplazo: "pool",
-              cargoPoolReemplazo: input.cargoPoolReemplazo!,
-              departamentoPoolReemplazo: input.departamentoPoolReemplazo!,
-              puestoClave: input.puestoClave,
-              usuario: ctx.user?.name || "usuario",
-            });
-            planesCreados.push(plan);
+            try {
+              const plan = await createPlan({
+                empleadoId: input.empleadoId,
+                departamento: input.departamento,
+                colaborador: input.colaborador,
+                cargo: input.cargo,
+                departamentoReemplazo: input.departamentoPoolReemplazo!,
+                reemplazo: colaborador.nombre,
+                cargoReemplazo: input.cargoPoolReemplazo!,
+                tipoReemplazo: "pool",
+                cargoPoolReemplazo: input.cargoPoolReemplazo!,
+                departamentoPoolReemplazo: input.departamentoPoolReemplazo!,
+                puestoClave: input.puestoClave,
+                usuario: ctx.user?.name || "usuario",
+              });
+              planesCreados.push(plan);
+            } catch (error) {
+              console.error("Error creando plan para", colaborador.nombre, error);
+            }
           }
           return { success: true, planesCreados, totalCreados: planesCreados.length };
         } else {

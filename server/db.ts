@@ -230,7 +230,12 @@ export async function updatePlan(id: number, plan: Partial<InsertPlanSustitucion
 export async function deletePlan(id: number) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
-  return db.delete(planesSustitucion).where(eq(planesSustitucion.id, id));
+  
+  // Primero eliminar registros en planesSuccesion vinculados
+  await db.delete(planesSuccesion).where(eq(planesSuccesion.planSustitucionId, id));
+  
+  // Luego eliminar el plan de sustitución
+  return db.delete(planesSustitucion).where(eq(planesSustitucion.id, id))
 }
 
 export async function getPlanById(id: number) {
