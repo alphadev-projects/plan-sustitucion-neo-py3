@@ -1,0 +1,19 @@
+{
+  "query": "DELETE FROM planes_sucesion \nWHERE planSustitucionId IN (\n  SELECT id FROM planes_sustitucion \n  WHERE puestoClave != 'Si'\n);\n\nSELECT COUNT(*) as total_planes_sucesion FROM planes_sucesion;\nSELECT COUNT(*) as total_puestos_clave FROM planes_sustitucion WHERE puestoClave = 'Si';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute DELETE FROM planes_sucesion \nWHERE planSustitucionId IN (\n  SELECT id FROM planes_sustitucion \n  WHERE puestoClave != 'Si'\n);\n\nSELECT COUNT(*) as total_planes_sucesion FROM planes_sucesion;\nSELECT COUNT(*) as total_puestos_clave FROM planes_sustitucion WHERE puestoClave = 'Si';",
+  "rows": [
+    {
+      "total_planes_sucesion": "3"
+    },
+    {
+      "total_planes_sucesion": "total_puestos_clave"
+    },
+    {
+      "total_planes_sucesion": "3"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_planes_sucesion\n3\ntotal_puestos_clave\n3\n",
+  "stderr": "",
+  "execution_time_ms": 460
+}

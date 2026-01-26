@@ -704,3 +704,10 @@
 - [x] Comparar: Lógica entre plan individual y pool - CONFIRMADO: Ambos usan input.puestoClave
 - [x] Verificar: Visualización en Plan de Sucesión - CONFIRMADO: getPlanesSuccesion() retorna todos
 - [x] Ejecutar: Pasos sugeridos de integridad - COMPLETADO: Validación startup, alertas tRPC, integrityRouter
+
+## Sesión Actual: Filtrar Plan de Sucesión por Puestos Clave
+- [x] Revisar lógica actual de Plan de Sucesión (listar y contar)
+- [x] Ajustar filtro para mostrar SOLO planes con puestoClave='Si'
+- [x] Validar que Plan de Sucesión muestre 47 o menos planes (solo puestos clave)
+- [x] Realizar pruebas en navegador
+- [ ] Guardar checkpoint

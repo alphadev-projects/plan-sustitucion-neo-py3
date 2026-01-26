@@ -201,22 +201,24 @@ export async function createPlan(plan: InsertPlanSustitucion) {
     })
     .where(eq(planesSustitucion.id, createdPlan[0].id));
   
-  // SIEMPRE crear un registro en planesSuccesion (independientemente de si es puesto clave o no)
-  const riesgoContinuidad = !plan.reemplazo || plan.reemplazo.trim() === "" || plan.reemplazo.toUpperCase() === "NO APLICA" ? "Alto" : "Bajo";
-  const prioridadSucesion = riesgoContinuidad === "Alto" ? "Alta" : "Baja";
-  
-  await db.insert(planesSuccesion).values({
-    planSustitucionId: createdPlan[0].id,
-    departamento: plan.departamento,
-    cargo: plan.cargo,
-    colaborador: plan.colaborador,
-    reemplazo: plan.reemplazo || "",
-    riesgoContinuidad: riesgoContinuidad as "Alto" | "Medio" | "Bajo",
-    riesgoCritico: plan.riesgoCritico || "No",
-    prioridadSucesion: prioridadSucesion as "Alta" | "Media" | "Baja",
-    estado: "Pendiente",
-    usuario: plan.usuario,
-  })
+  // Crear registro en planesSuccesion SOLO si es puesto clave
+  if (plan.puestoClave === "Si") {
+    const riesgoContinuidad = !plan.reemplazo || plan.reemplazo.trim() === "" || plan.reemplazo.toUpperCase() === "NO APLICA" ? "Alto" : "Bajo";
+    const prioridadSucesion = riesgoContinuidad === "Alto" ? "Alta" : "Baja";
+    
+    await db.insert(planesSuccesion).values({
+      planSustitucionId: createdPlan[0].id,
+      departamento: plan.departamento,
+      cargo: plan.cargo,
+      colaborador: plan.colaborador,
+      reemplazo: plan.reemplazo || "",
+      riesgoContinuidad: riesgoContinuidad as "Alto" | "Medio" | "Bajo",
+      riesgoCritico: plan.riesgoCritico || "No",
+      prioridadSucesion: prioridadSucesion as "Alta" | "Media" | "Baja",
+      estado: "Pendiente",
+      usuario: plan.usuario,
+    });
+  }
   
   return { success: true, plan: planWithRisk };
 }
