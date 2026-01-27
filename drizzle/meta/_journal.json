@@ -85,6 +85,13 @@
       "when": 1769093195299,
       "tag": "0012_long_wilson_fisk",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "5",
+      "when": 1769531726093,
+      "tag": "0013_petite_exodus",
+      "breakpoints": true
     }
   ]
 }

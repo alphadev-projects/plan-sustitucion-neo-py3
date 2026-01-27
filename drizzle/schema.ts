@@ -172,3 +172,36 @@ export const auditoriaPlanesAccion = mysqlTable("auditoria_planes_accion", {
 
 export type AuditoriaPlanAccion = typeof auditoriaPlanesAccion.$inferSelect;
 export type InsertAuditoriaPlanAccion = typeof auditoriaPlanesAccion.$inferInsert;
+
+// Tabla de Sucesión de Puestos (para registrar sucesor de puestos clave)
+export const sucesionPuestos = mysqlTable("sucesion_puestos", {
+  id: int("id").autoincrement().primaryKey(),
+  planSustitucionId: int("planSustitucionId").notNull(),
+  puestoClave: varchar("puestoClave", { length: 255 }).notNull(), // Nombre del puesto crítico
+  departamentoPuestoClave: varchar("departamentoPuestoClave", { length: 150 }).notNull(),
+  cargoPuestoClave: varchar("cargoPuestoClave", { length: 200 }).notNull(),
+  sucesor: varchar("sucesor", { length: 255 }).default("").notNull(), // Nombre del sucesor (vacío si no aplica)
+  departamentoSucesor: varchar("departamentoSucesor", { length: 150 }).default("").notNull(),
+  cargoSucesor: varchar("cargoSucesor", { length: 200 }).default("").notNull(),
+  aplicaSucesion: mysqlEnum("aplicaSucesion", ["Si", "No"]).default("No").notNull(),
+  usuario: varchar("usuario", { length: 100 }).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type SucesionPuesto = typeof sucesionPuestos.$inferSelect;
+export type InsertSucesionPuesto = typeof sucesionPuestos.$inferInsert;
+
+// Tabla de Historial de Sucesores (para auditoría)
+export const historialSucesores = mysqlTable("historial_sucesores", {
+  id: int("id").autoincrement().primaryKey(),
+  sucesionPuestoId: int("sucesionPuestoId").notNull(),
+  sucesorAnterior: varchar("sucesorAnterior", { length: 255 }).default("").notNull(),
+  sucesorNuevo: varchar("sucesorNuevo", { length: 255 }).default("").notNull(),
+  motivo: text("motivo"),
+  usuario: varchar("usuario", { length: 100 }).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type HistorialSucesor = typeof historialSucesores.$inferSelect;
+export type InsertHistorialSucesor = typeof historialSucesores.$inferInsert;

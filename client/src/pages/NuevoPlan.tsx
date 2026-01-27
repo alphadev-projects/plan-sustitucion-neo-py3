@@ -20,6 +20,11 @@ export default function NuevoPlan() {
   const [departamentoPoolReemplazo, setDepartamentoPoolReemplazo] = useState("");
   const [cargoPoolReemplazo, setCargoPoolReemplazo] = useState("");
   const [puestoClave, setPuestoClave] = useState(false);
+  
+  // Estados para Sucesión
+  const [departamentoSucesor, setDepartamentoSucesor] = useState("");
+  const [sucesorId, setSucesorId] = useState("");
+  const [aplicaSucesion, setAplicaSucesion] = useState(false);
 
   const { data: departamentos } = trpc.empleados.departamentos.useQuery();
   const { data: colaboradors } = trpc.empleados.listByDepartamento.useQuery(
@@ -30,12 +35,17 @@ export default function NuevoPlan() {
     { departamento: departamentoReemplazo },
     { enabled: !!departamentoReemplazo && tipoReemplazo === "individual" }
   );
+  const { data: sucesores } = trpc.empleados.listByDepartamento.useQuery(
+    { departamento: departamentoSucesor },
+    { enabled: !!departamentoSucesor && puestoClave }
+  );
   const { data: cargos } = trpc.empleados.cargos.useQuery();
 
   const createPlan = trpc.planes.create.useMutation();
 
   const colaboradorSeleccionado = colaboradors?.find((e) => e.id === parseInt(colaboradorId));
   const reemplazoSeleccionado = reemplazos?.find((e) => e.id === parseInt(reemplazoId));
+  const sucesorSeleccionado = sucesores?.find((e) => e.id === parseInt(sucesorId));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,6 +62,12 @@ export default function NuevoPlan() {
 
     if (tipoReemplazo === "pool" && (!departamentoPoolReemplazo || !cargoPoolReemplazo)) {
       alert("Por favor selecciona departamento y cargo para el pool");
+      return;
+    }
+
+    // Validar sucesión si es puesto clave
+    if (puestoClave && aplicaSucesion && !sucesorId) {
+      alert("Por favor selecciona un sucesor para este puesto clave");
       return;
     }
 
@@ -74,6 +90,13 @@ export default function NuevoPlan() {
         cargoPoolReemplazo: tipoReemplazo === "pool" ? cargoPoolReemplazo : undefined,
         departamentoPoolReemplazo: tipoReemplazo === "pool" ? departamentoPoolReemplazo : undefined,
         puestoClave: puestoClave ? "Si" : "No",
+        // Datos de sucesión
+        sucesion: puestoClave ? {
+          aplicaSucesion: aplicaSucesion ? "Si" : "No",
+          sucesor: aplicaSucesion && sucesorSeleccionado ? sucesorSeleccionado.nombre : "",
+          departamentoSucesor: aplicaSucesion && sucesorSeleccionado ? sucesorSeleccionado.departamento : "",
+          cargoSucesor: aplicaSucesion && sucesorSeleccionado ? sucesorSeleccionado.cargo : "",
+        } : undefined,
       });
       setLocation("/planes");
     } catch (error) {
@@ -119,7 +142,11 @@ export default function NuevoPlan() {
             </div>
             <div>
               <p className="font-semibold">4. Marca como Puesto Clave (Opcional)</p>
-              <p className="text-blue-700">Si este puesto es crítico para la organización, activa el toggle "Marcar como puesto clave".</p>
+              <p className="text-blue-700">Si este puesto es crítico para la organización, activa el toggle "Marcar como puesto clave". Esto habilitará la sección de Sucesión.</p>
+            </div>
+            <div>
+              <p className="font-semibold">5. Configura Sucesión (Si aplica)</p>
+              <p className="text-blue-700">Si marcaste como puesto clave, podrás seleccionar un sucesor para este puesto.</p>
             </div>
           </CardContent>
         </Card>
@@ -157,7 +184,6 @@ export default function NuevoPlan() {
                     <p className="font-semibold">👥 Pool/Equipo</p>
                     <p className="text-sm text-muted-foreground">Asignar un grupo con funciones equivalentes</p>
                   </div>
-
                 </div>
               </div>
 
@@ -356,6 +382,88 @@ export default function NuevoPlan() {
                   </div>
                 </div>
               </div>
+
+              {/* Sección de Sucesión (solo si es puesto clave) */}
+              {puestoClave && (
+                <div className="border-t pt-6 bg-green-50 p-4 rounded-lg space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-green-900 mb-4">👥 Configurar Sucesión</h3>
+                    <p className="text-sm text-green-800 mb-4">Selecciona si deseas registrar un sucesor para este puesto clave.</p>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <Switch
+                      id="aplicaSucesion"
+                      checked={aplicaSucesion}
+                      onCheckedChange={setAplicaSucesion}
+                    />
+                    <Label htmlFor="aplicaSucesion" className="cursor-pointer">¿Aplica sucesión?</Label>
+                  </div>
+
+                  {aplicaSucesion && (
+                    <div className="grid gap-6 md:grid-cols-2 mt-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="deptSucesor">Departamento del Sucesor</Label>
+                        <select
+                          id="deptSucesor"
+                          value={departamentoSucesor}
+                          onChange={(e) => {
+                            setDepartamentoSucesor(e.target.value);
+                            setSucesorId("");
+                          }}
+                          className="w-full px-3 py-2 border rounded-lg bg-background"
+                        >
+                          <option value="">Selecciona un departamento</option>
+                          {(departamentos || []).map((dept: string) => (
+                            <option key={dept} value={dept}>
+                              {dept}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="sucesor">Sucesor</Label>
+                        <select
+                          id="sucesor"
+                          value={sucesorId}
+                          onChange={(e) => setSucesorId(e.target.value)}
+                          disabled={!departamentoSucesor}
+                          className="w-full px-3 py-2 border rounded-lg bg-background disabled:opacity-50"
+                        >
+                          <option value="">Selecciona un sucesor</option>
+                          {(sucesores || []).map((emp: any) => (
+                            <option key={emp.id} value={emp.id}>
+                              {emp.nombre}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  )}
+
+                  {sucesorSeleccionado && (
+                    <div className="bg-white p-4 rounded-lg space-y-2 mt-4 border border-green-200">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Cargo</p>
+                        <p className="font-medium">{sucesorSeleccionado.cargo}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">Área</p>
+                        <p className="font-medium">{sucesorSeleccionado.area}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {!aplicaSucesion && (
+                    <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg">
+                      <p className="text-sm text-yellow-800">
+                        ⚠️ No se registrará sucesor para este puesto clave. Podrás agregarlo posteriormente.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div className="flex gap-4 pt-6">
                 <Button

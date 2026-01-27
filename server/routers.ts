@@ -259,6 +259,12 @@ export const appRouter = router({
         cargoPoolReemplazo: z.string().optional(),
         departamentoPoolReemplazo: z.string().optional(),
         puestoClave: z.enum(["Si", "No"]),
+        sucesion: z.object({
+          aplicaSucesion: z.enum(["Si", "No"]),
+          sucesor: z.string(),
+          departamentoSucesor: z.string(),
+          cargoSucesor: z.string(),
+        }).optional(),
       }))
       .mutation(async ({ input, ctx }) => {
         if (input.tipoReemplazo === "pool") {
