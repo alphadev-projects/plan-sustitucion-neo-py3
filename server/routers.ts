@@ -46,6 +46,7 @@ import {
   getPlanesSuccesionCriticos,
   createPlanSuccesion,
   updatePlanSuccesion,
+  updatePlanSuccesionRiesgo,
   getPlanesAccionBySuccesion,
   createPlanAccion,
   updatePlanAccion,
@@ -370,6 +371,16 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         return updatePlanSuccesion(input.id, { estado: input.estado });
+      }),
+
+    actualizarRiesgo: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        nuevoRiesgo: z.enum(["Alto", "Medio", "Bajo"]),
+        motivo: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        return updatePlanSuccesionRiesgo(input.id, input.nuevoRiesgo, input.motivo);
       }),
 
     // Sincronización de planes faltantes

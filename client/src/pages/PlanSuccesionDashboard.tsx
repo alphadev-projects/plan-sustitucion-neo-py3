@@ -1,13 +1,39 @@
-import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, CheckCircle, AlertTriangle } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function PlanSuccesionDashboard() {
-  const { data: planes, isLoading } = trpc.sucesion.listar.useQuery();
+  const { data: planes, isLoading, refetch } = trpc.sucesion.listar.useQuery();
+  const actualizarRiesgo = trpc.sucesion.actualizarRiesgo.useMutation({
+    onSuccess: () => {
+      refetch();
+    },
+  });
+  const [selectedPlan, setSelectedPlan] = useState<any>(null);
+  const [nuevoRiesgo, setNuevoRiesgo] = useState<string>("");
+  const [motivo, setMotivo] = useState<string>("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -113,7 +139,7 @@ export default function PlanSuccesionDashboard() {
               {/* Cuadrante 1: CRÍTICO (Rojo) */}
               <div className="border-2 border-red-300 bg-red-50 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <AlertTriangle className="h-5 w-5 text-red-600" />
+                  <AlertCircle className="h-5 w-5 text-red-600" />
                   <h3 className="font-bold text-red-900">CRÍTICO</h3>
                 </div>
                 <p className="text-2xl font-bold text-red-700">{criticidad.critico}</p>
@@ -135,7 +161,7 @@ export default function PlanSuccesionDashboard() {
               {/* Cuadrante 3: VIGILANCIA (Amarillo) */}
               <div className="border-2 border-yellow-300 bg-yellow-50 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <AlertCircle className="h-5 w-5 text-yellow-600" />
+                  <AlertTriangle className="h-5 w-5 text-yellow-600" />
                   <h3 className="font-bold text-yellow-900">VIGILANCIA</h3>
                 </div>
                 <p className="text-2xl font-bold text-yellow-700">{criticidad.vigilancia}</p>
@@ -173,9 +199,77 @@ export default function PlanSuccesionDashboard() {
                       <p className="text-sm text-gray-600">{plan.cargo}</p>
                       <p className="text-xs text-gray-500">{plan.departamento}</p>
                     </div>
-                    <div className="text-right">
-                      <Badge className="bg-green-600">Reemplazo: {plan.reemplazo}</Badge>
-                      <p className="text-xs text-gray-500 mt-1">Riesgo: {plan.riesgoContinuidad}</p>
+                    <div className="text-right flex items-center gap-2">
+                      <div>
+                        <Badge className="bg-green-600">Reemplazo: {plan.reemplazo}</Badge>
+                        <p className="text-xs text-gray-500 mt-1">Riesgo: {plan.riesgoContinuidad}</p>
+                      </div>
+                      <Dialog open={isDialogOpen && selectedPlan?.id === plan.id} onOpenChange={(open) => {
+                        setIsDialogOpen(open);
+                        if (open) {
+                          setSelectedPlan(plan);
+                          setNuevoRiesgo(plan.riesgoContinuidad);
+                          setMotivo("");
+                        }
+                      }}>
+                        <DialogTrigger asChild>
+                          <Button variant="outline" size="sm" onClick={() => {
+                            setSelectedPlan(plan);
+                            setNuevoRiesgo(plan.riesgoContinuidad);
+                            setMotivo("");
+                            setIsDialogOpen(true);
+                          }}>Editar</Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>Actualizar Riesgo de Continuidad</DialogTitle>
+                            <DialogDescription>
+                              Puesto: {selectedPlan?.colaborador} - {selectedPlan?.cargo}
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="space-y-4">
+                            <div>
+                              <label className="text-sm font-medium">Nuevo Riesgo</label>
+                              <Select value={nuevoRiesgo} onValueChange={setNuevoRiesgo}>
+                                <SelectTrigger>
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="Alto">Alto</SelectItem>
+                                  <SelectItem value="Medio">Medio</SelectItem>
+                                  <SelectItem value="Bajo">Bajo</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            <div>
+                              <label className="text-sm font-medium">Motivo (opcional)</label>
+                              <Textarea
+                                placeholder="Ej: Plan de acción concluido, reemplazo identificado..."
+                                value={motivo}
+                                onChange={(e) => setMotivo(e.target.value)}
+                              />
+                            </div>
+                            <div className="flex gap-2 justify-end">
+                              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>Cancelar</Button>
+                              <Button
+                                onClick={() => {
+                                  if (selectedPlan && nuevoRiesgo) {
+                                    actualizarRiesgo.mutate({
+                                      id: selectedPlan.id,
+                                      nuevoRiesgo: nuevoRiesgo as "Alto" | "Medio" | "Bajo",
+                                      motivo: motivo || undefined,
+                                    });
+                                    setIsDialogOpen(false);
+                                  }
+                                }}
+                                disabled={actualizarRiesgo.isPending}
+                              >
+                                {actualizarRiesgo.isPending ? "Actualizando..." : "Actualizar"}
+                              </Button>
+                            </div>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
                     </div>
                   </div>
                 ))}
@@ -202,9 +296,77 @@ export default function PlanSuccesionDashboard() {
                       <p className="text-sm text-gray-600">{plan.cargo}</p>
                       <p className="text-xs text-gray-500">{plan.departamento}</p>
                     </div>
-                    <div className="text-right">
-                      <Badge className="bg-red-600">Sin Reemplazo</Badge>
-                      <p className="text-xs text-gray-500 mt-1">Riesgo: {plan.riesgoContinuidad}</p>
+                    <div className="text-right flex items-center gap-2">
+                      <div>
+                        <Badge className="bg-red-600">Sin Reemplazo</Badge>
+                        <p className="text-xs text-gray-500 mt-1">Riesgo: {plan.riesgoContinuidad}</p>
+                      </div>
+                      <Dialog open={isDialogOpen && selectedPlan?.id === plan.id} onOpenChange={(open) => {
+                        setIsDialogOpen(open);
+                        if (open) {
+                          setSelectedPlan(plan);
+                          setNuevoRiesgo(plan.riesgoContinuidad);
+                          setMotivo("");
+                        }
+                      }}>
+                        <DialogTrigger asChild>
+                          <Button variant="outline" size="sm" onClick={() => {
+                            setSelectedPlan(plan);
+                            setNuevoRiesgo(plan.riesgoContinuidad);
+                            setMotivo("");
+                            setIsDialogOpen(true);
+                          }}>Editar</Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>Actualizar Riesgo de Continuidad</DialogTitle>
+                            <DialogDescription>
+                              Puesto: {selectedPlan?.colaborador} - {selectedPlan?.cargo}
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="space-y-4">
+                            <div>
+                              <label className="text-sm font-medium">Nuevo Riesgo</label>
+                              <Select value={nuevoRiesgo} onValueChange={setNuevoRiesgo}>
+                                <SelectTrigger>
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="Alto">Alto</SelectItem>
+                                  <SelectItem value="Medio">Medio</SelectItem>
+                                  <SelectItem value="Bajo">Bajo</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            <div>
+                              <label className="text-sm font-medium">Motivo (opcional)</label>
+                              <Textarea
+                                placeholder="Ej: Plan de acción concluido, reemplazo identificado..."
+                                value={motivo}
+                                onChange={(e) => setMotivo(e.target.value)}
+                              />
+                            </div>
+                            <div className="flex gap-2 justify-end">
+                              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>Cancelar</Button>
+                              <Button
+                                onClick={() => {
+                                  if (selectedPlan && nuevoRiesgo) {
+                                    actualizarRiesgo.mutate({
+                                      id: selectedPlan.id,
+                                      nuevoRiesgo: nuevoRiesgo as "Alto" | "Medio" | "Bajo",
+                                      motivo: motivo || undefined,
+                                    });
+                                    setIsDialogOpen(false);
+                                  }
+                                }}
+                                disabled={actualizarRiesgo.isPending}
+                              >
+                                {actualizarRiesgo.isPending ? "Actualizando..." : "Actualizar"}
+                              </Button>
+                            </div>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
                     </div>
                   </div>
                 ))}

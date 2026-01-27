@@ -613,6 +613,26 @@ export async function updatePlanSuccesion(id: number, data: Partial<InsertPlanSu
   return db.select().from(planesSuccesion).where(eq(planesSuccesion.id, id)).limit(1);
 }
 
+// Función para actualizar manualmente el riesgoContinuidad de un plan de sucesión
+export async function updatePlanSuccesionRiesgo(id: number, nuevoRiesgo: "Alto" | "Medio" | "Bajo", motivo?: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Obtener plan anterior para validación
+  const planAnterior = await db.select().from(planesSuccesion).where(eq(planesSuccesion.id, id)).limit(1);
+  
+  if (planAnterior.length === 0) {
+    throw new Error("Plan de sucesión no encontrado");
+  }
+  
+  // Actualizar riesgo
+  await db.update(planesSuccesion).set({
+    riesgoContinuidad: nuevoRiesgo,
+  }).where(eq(planesSuccesion.id, id));
+  
+  return db.select().from(planesSuccesion).where(eq(planesSuccesion.id, id)).limit(1);
+}
+
 // Funciones para Planes de Acción
 export async function createPlanAccion(data: InsertPlanAccion): Promise<PlanAccion> {
   const db = await getDb();
