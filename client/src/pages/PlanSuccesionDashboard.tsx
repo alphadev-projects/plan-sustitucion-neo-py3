@@ -29,13 +29,25 @@ export default function PlanSuccesionDashboard() {
   const planesRiesgoBajo = planes.filter((p: any) => p.riesgoContinuidad === "Bajo");
   const planesRiesgoAlto = planes.filter((p: any) => p.riesgoContinuidad === "Alto");
 
-  // Matriz de Criticidad (2x2)
-  const criticidad = {
-    critico: planesRiesgoAlto.length, // Alto riesgo + sin cobertura
-    controlado: planesRiesgoBajo.length, // Alto riesgo + con cobertura
-    vigilancia: 0, // Bajo riesgo + sin cobertura
-    optimo: 0, // Bajo riesgo + con cobertura
+  // Helper: Verificar si un reemplazo es válido (no vacío y no NO APLICA)
+  const esReemplazoValido = (reemplazo: string | null | undefined): boolean => {
+    if (!reemplazo) return false;
+    const trimmed = reemplazo.trim().toUpperCase();
+    return trimmed !== "" && trimmed !== "NO APLICA";
   };
+
+  // Matriz de Criticidad (2x2) - LÓGICA CORRECTA
+  // Verificar AMBOS campos: riesgoContinuidad + reemplazo (vacío, NO APLICA, o asignado)
+  const criticidad = {
+    critico: planes.filter((p: any) => p.riesgoContinuidad === "Alto" && !esReemplazoValido(p.reemplazo)).length,
+    controlado: planes.filter((p: any) => p.riesgoContinuidad === "Alto" && esReemplazoValido(p.reemplazo)).length,
+    vigilancia: planes.filter((p: any) => p.riesgoContinuidad === "Bajo" && !esReemplazoValido(p.reemplazo)).length,
+    optimo: planes.filter((p: any) => p.riesgoContinuidad === "Bajo" && esReemplazoValido(p.reemplazo)).length,
+  };
+
+  // Separar por cobertura para las secciones de listado
+  const planesConCobertura = planes.filter((p: any) => esReemplazoValido(p.reemplazo));
+  const planesSinCobertura = planes.filter((p: any) => !esReemplazoValido(p.reemplazo));
 
   return (
     <DashboardLayout>
@@ -145,16 +157,16 @@ export default function PlanSuccesionDashboard() {
           </CardContent>
         </Card>
 
-        {/* Sección: Puestos con Riesgo Bajo (Con Cobertura) */}
+        {/* Sección: Puestos CON Cobertura */}
         <Card className="border-green-200">
           <CardHeader className="bg-green-50">
-            <CardTitle className="text-green-900">✓ Puestos Críticos CON Reemplazo (Riesgo Bajo)</CardTitle>
+            <CardTitle className="text-green-900">✓ Puestos Críticos CON Reemplazo</CardTitle>
             <CardDescription>Posiciones con cobertura identificada</CardDescription>
           </CardHeader>
           <CardContent className="pt-4">
-            {planesRiesgoBajo.length > 0 ? (
+            {planesConCobertura.length > 0 ? (
               <div className="space-y-2">
-                {planesRiesgoBajo.map((plan: any) => (
+                {planesConCobertura.map((plan: any) => (
                   <div key={plan.id} className="flex items-center justify-between p-3 bg-green-50 rounded border border-green-200">
                     <div>
                       <p className="font-medium">{plan.colaborador}</p>
@@ -163,7 +175,7 @@ export default function PlanSuccesionDashboard() {
                     </div>
                     <div className="text-right">
                       <Badge className="bg-green-600">Reemplazo: {plan.reemplazo}</Badge>
-                      <p className="text-xs text-gray-500 mt-1">Riesgo: Bajo</p>
+                      <p className="text-xs text-gray-500 mt-1">Riesgo: {plan.riesgoContinuidad}</p>
                     </div>
                   </div>
                 ))}
@@ -174,16 +186,16 @@ export default function PlanSuccesionDashboard() {
           </CardContent>
         </Card>
 
-        {/* Sección: Puestos con Riesgo Alto (Sin Cobertura) */}
+        {/* Sección: Puestos SIN Cobertura */}
         <Card className="border-red-200">
           <CardHeader className="bg-red-50">
-            <CardTitle className="text-red-900">⚠️ Puestos Críticos SIN Reemplazo (Riesgo Alto)</CardTitle>
+            <CardTitle className="text-red-900">⚠️ Puestos Críticos SIN Reemplazo</CardTitle>
             <CardDescription>Posiciones que requieren atención inmediata</CardDescription>
           </CardHeader>
           <CardContent className="pt-4">
-            {planesRiesgoAlto.length > 0 ? (
+            {planesSinCobertura.length > 0 ? (
               <div className="space-y-2">
-                {planesRiesgoAlto.map((plan: any) => (
+                {planesSinCobertura.map((plan: any) => (
                   <div key={plan.id} className="flex items-center justify-between p-3 bg-red-50 rounded border border-red-200">
                     <div>
                       <p className="font-medium">{plan.colaborador}</p>
@@ -192,7 +204,7 @@ export default function PlanSuccesionDashboard() {
                     </div>
                     <div className="text-right">
                       <Badge className="bg-red-600">Sin Reemplazo</Badge>
-                      <p className="text-xs text-gray-500 mt-1">Riesgo: Alto</p>
+                      <p className="text-xs text-gray-500 mt-1">Riesgo: {plan.riesgoContinuidad}</p>
                     </div>
                   </div>
                 ))}
