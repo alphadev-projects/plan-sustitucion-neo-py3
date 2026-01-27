@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/mysql2";
 import { eq, and, gte, lte, ne, sql } from "drizzle-orm";
-import { InsertUser, users, empleados, planesSustitucion, InsertPlanSustitucion, PlanSustitucion, planesSuccesion, planesAccion, seguimientoPlanes, InsertSeguimientoPlan, SeguimientoPlan } from "../drizzle/schema";
+import { InsertUser, users, empleados, planesSustitucion, InsertPlanSustitucion, PlanSustitucion, planesSuccesion, planesAccion, seguimientoPlanes, InsertSeguimientoPlan, SeguimientoPlan, sucesionPuestos, InsertSucesionPuesto, SucesionPuesto, historialSucesores } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -203,24 +203,55 @@ export async function createPlan(plan: InsertPlanSustitucion) {
   
   // Crear registro en planesSuccesion SOLO si es puesto clave
   if (plan.puestoClave === "Si") {
-    // Para puestos clave: sin reemplazo = Alto, con reemplazo = Bajo
-    // Prioridad siempre Alta para puestos clave
-    const sinReemplazo = !plan.reemplazo || plan.reemplazo.trim() === "" || plan.reemplazo.toUpperCase() === "NO APLICA";
-    const riesgoContinuidad = sinReemplazo ? "Alto" : "Bajo";
+    // Verificar si hay datos de sucesión (nuevo flujo)
+    const tieneSucesion = (plan as any).sucesion && (plan as any).sucesion.aplicaSucesion === "Si";
+    
+    // Determinar el reemplazo a usar: sucesor (si aplica) o reemplazo operativo
+    const reemplazoParaSuccesion = tieneSucesion ? (plan as any).sucesion.sucesor : (plan.reemplazo || "");
+    
+    // Calcular riesgo: sin sucesor/reemplazo = Alto, con sucesor/reemplazo = Bajo
+    const sinCobertura = !reemplazoParaSuccesion || reemplazoParaSuccesion.trim() === "" || reemplazoParaSuccesion.toUpperCase() === "NO APLICA";
+    const riesgoContinuidad = sinCobertura ? "Alto" : "Bajo";
     const prioridadSucesion = "Alta"; // Siempre Alta para puestos clave
     
-    await db.insert(planesSuccesion).values({
+    // Crear registro en planesSuccesion
+    const planSuccesionResult = await db.insert(planesSuccesion).values({
       planSustitucionId: createdPlan[0].id,
       departamento: plan.departamento,
       cargo: plan.cargo,
       colaborador: plan.colaborador,
-      reemplazo: plan.reemplazo || "",
+      reemplazo: reemplazoParaSuccesion,
       riesgoContinuidad: riesgoContinuidad as "Alto" | "Medio" | "Bajo",
       riesgoCritico: plan.riesgoCritico || "No",
       prioridadSucesion: prioridadSucesion as "Alta" | "Media" | "Baja",
       estado: "Pendiente",
       usuario: plan.usuario,
     });
+    
+    // Si hay datos de sucesión, crear registro en sucesion_puestos
+    if (tieneSucesion) {
+      const sucesionData = (plan as any).sucesion;
+      await db.insert(sucesionPuestos).values({
+        planSustitucionId: createdPlan[0].id,
+        puestoClave: plan.colaborador,
+        departamentoPuestoClave: plan.departamento,
+        cargoPuestoClave: plan.cargo,
+        sucesor: sucesionData.sucesor,
+        departamentoSucesor: sucesionData.departamentoSucesor,
+        cargoSucesor: sucesionData.cargoSucesor,
+        aplicaSucesion: "Si",
+        usuario: plan.usuario,
+      });
+      
+      // Registrar en historial de sucesores (auditoría)
+      await db.insert(historialSucesores).values({
+        sucesionPuestoId: planSuccesionResult[0].insertId,
+        sucesorAnterior: "",
+        sucesorNuevo: sucesionData.sucesor,
+        motivo: "Creación inicial de sucesión",
+        usuario: plan.usuario,
+      });
+    }
   }
   
   return { success: true, plan: planWithRisk };
@@ -1008,4 +1039,50 @@ export async function updateSeguimientoConEvidencia(
     await db.update(seguimientoPlanes).set(updateData).where(eq(seguimientoPlanes.planAccionId, planAccionId));
     return db.select().from(seguimientoPlanes).where(eq(seguimientoPlanes.planAccionId, planAccionId)).limit(1);
   }
+}
+
+// Función para obtener Planes de Sucesión con datos de sucesor
+export async function getPlanesSuccesionConSucesor() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  // Traer todos los registros de sucesion_puestos
+  const sucesiones = await db.select().from(sucesionPuestos);
+  
+  // Ordenar por sucesor: primero los sin sucesor, luego los con sucesor
+  const sucesionesOrdenadas = sucesiones.sort((a, b) => {
+    const aSucesor = (a.sucesor || "").trim();
+    const bSucesor = (b.sucesor || "").trim();
+    // Primero los vacíos, luego los NO APLICA, luego los demás
+    if (aSucesor === "" && bSucesor !== "") return -1;
+    if (aSucesor !== "" && bSucesor === "") return 1;
+    const aNoAplica = aSucesor.toUpperCase() === "NO APLICA";
+    const bNoAplica = bSucesor.toUpperCase() === "NO APLICA";
+    if (aNoAplica && !bNoAplica) return -1;
+    if (!aNoAplica && bNoAplica) return 1;
+    return 0;
+  });
+  
+  return sucesionesOrdenadas;
+}
+
+// Función para obtener Planes de Sucesión con sucesor filtrados por departamento
+export async function getPlanesSuccesionConSucesorByDepartamento(departamento: string) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  if (departamento === "Todos") {
+    return getPlanesSuccesionConSucesor();
+  }
+  
+  const sucesiones = await db.select().from(sucesionPuestos).where(eq(sucesionPuestos.departamentoPuestoClave, departamento));
+  
+  // Ordenar por sucesor
+  return sucesiones.sort((a, b) => {
+    const aSucesor = (a.sucesor || "").trim();
+    const bSucesor = (b.sucesor || "").trim();
+    if (aSucesor === "" && bSucesor !== "") return -1;
+    if (aSucesor !== "" && bSucesor === "") return 1;
+    return 0;
+  });
 }

@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO sucesion_puestos (planSustitucionId, puestoClave, departamentoPuestoClave, cargoPuestoClave, sucesor, departamentoSucesor, cargoSucesor, aplicaSucesion, usuario, createdAt, updatedAt) VALUES\n(1, 'ROQUE EVER YEGROS COLMAN', 'Administración y Finanzas', 'Jefe Administrativo Financiero', 'OMAR GABRIEL SALCEDO VERA', 'Administración y Finanzas', 'Contador', 'Si', 'test', NOW(), NOW()),\n(2, 'OMAR GABRIEL SALCEDO VERA', 'Administración y Finanzas', 'Contador', '', '', '', 'No', 'test', NOW(), NOW()),\n(3, 'LIZ MABEL AVALOS VERA', 'Alianzas Estrategicas', 'Especialista en Alianzas', 'ULTIMO PARA PROBAR', 'Alianzas Estrategicas', 'Coordinador', 'Si', 'test', NOW(), NOW()),\n(4, 'MAURICIO ALBERTO TOROSSI', 'Cumplimiento y Auditoria', 'Auditor Senior', '', '', '', 'No', 'test', NOW(), NOW());",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute INSERT INTO sucesion_puestos (planSustitucionId, puestoClave, departamentoPuestoClave, cargoPuestoClave, sucesor, departamentoSucesor, cargoSucesor, aplicaSucesion, usuario, createdAt, updatedAt) VALUES\n(1, 'ROQUE EVER YEGROS COLMAN', 'Administración y Finanzas', 'Jefe Administrativo Financiero', 'OMAR GABRIEL SALCEDO VERA', 'Administración y Finanzas', 'Contador', 'Si', 'test', NOW(), NOW()),\n(2, 'OMAR GABRIEL SALCEDO VERA', 'Administración y Finanzas', 'Contador', '', '', '', 'No', 'test', NOW(), NOW()),\n(3, 'LIZ MABEL AVALOS VERA', 'Alianzas Estrategicas', 'Especialista en Alianzas', 'ULTIMO PARA PROBAR', 'Alianzas Estrategicas', 'Coordinador', 'Si', 'test', NOW(), NOW()),\n(4, 'MAURICIO ALBERTO TOROSSI', 'Cumplimiento y Auditoria', 'Auditor Senior', '', '', '', 'No', 'test', NOW(), NOW());",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 121
+}

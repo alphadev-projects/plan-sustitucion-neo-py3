@@ -49,6 +49,8 @@ import {
   updatePlanSuccesionRiesgo,
   getPlanesAccionBySuccesion,
   getPlanesAccionPorPuestoCritico,
+  getPlanesSuccesionConSucesor,
+  getPlanesSuccesionConSucesorByDepartamento,
   createPlanAccion,
   updatePlanAccion,
   deletePlanAccion,
@@ -349,6 +351,16 @@ export const appRouter = router({
     listar: protectedProcedure.query(async () => {
       return getPlanesSuccesion();
     }),
+
+    listarConSucesor: protectedProcedure.query(async () => {
+      return getPlanesSuccesionConSucesor();
+    }),
+
+    listarConSucesorByDepartamento: protectedProcedure
+      .input(z.object({ departamento: z.string() }))
+      .query(async ({ input }) => {
+        return getPlanesSuccesionConSucesorByDepartamento(input.departamento);
+      }),
 
     criticos: protectedProcedure.query(async () => {
       return getPlanesSuccesionCriticos();
