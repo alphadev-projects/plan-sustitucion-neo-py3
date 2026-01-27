@@ -1,0 +1,8 @@
+{
+  "query": "DELETE FROM planesAccion WHERE planId IN (SELECT id FROM planesSubstitucion WHERE colaborador LIKE 'Test%' OR cargo LIKE 'Test%' OR departamento LIKE 'Test%'); DELETE FROM planesSuccesion WHERE planSubstitucionId IN (SELECT id FROM planesSubstitucion WHERE colaborador LIKE 'Test%' OR cargo LIKE 'Test%' OR departamento LIKE 'Test%'); DELETE FROM planesSubstitucion WHERE colaborador LIKE 'Test%' OR cargo LIKE 'Test%' OR departamento LIKE 'Test%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute DELETE FROM planesAccion WHERE planId IN (SELECT id FROM planesSubstitucion WHERE colaborador LIKE 'Test%' OR cargo LIKE 'Test%' OR departamento LIKE 'Test%'); DELETE FROM planesSuccesion WHERE planSubstitucionId IN (SELECT id FROM planesSubstitucion WHERE colaborador LIKE 'Test%' OR cargo LIKE 'Test%' OR departamento LIKE 'Test%'); DELETE FROM planesSubstitucion WHERE colaborador LIKE 'Test%' OR cargo LIKE 'Test%' OR departamento LIKE 'Test%';",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1146 (42S02) at line 1: Table 'tfzrnnu8acksunusjsy8lr.planesAccion' doesn't exist"
+  ]
+}

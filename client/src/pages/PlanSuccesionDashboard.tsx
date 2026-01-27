@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, CheckCircle } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,6 +23,13 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
+// Helper: Verificar si un reemplazo es válido (no vacío y no NO APLICA)
+const esReemplazoValido = (reemplazo: string | null | undefined): boolean => {
+  if (!reemplazo) return false;
+  const trimmed = reemplazo.trim().toUpperCase();
+  return trimmed !== "" && trimmed !== "NO APLICA";
+};
+
 export default function PlanSuccesionDashboard() {
   const { data: planes, isLoading, refetch } = trpc.sucesion.listar.useQuery();
   const actualizarRiesgo = trpc.sucesion.actualizarRiesgo.useMutation({
@@ -34,6 +41,40 @@ export default function PlanSuccesionDashboard() {
   const [nuevoRiesgo, setNuevoRiesgo] = useState<string>("");
   const [motivo, setMotivo] = useState<string>("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [departamentoFiltro, setDepartamentoFiltro] = useState<string>("todos");
+
+  // Obtener lista de departamentos únicos
+  const departamentos = useMemo(() => {
+    if (!planes) return [];
+    const depts = new Set(planes.map((p: any) => p.departamento));
+    return Array.from(depts).sort();
+  }, [planes]);
+
+  // Filtrar planes por departamento
+  const planesFiltrados = useMemo(() => {
+    if (!planes) return [];
+    if (departamentoFiltro === "todos") {
+      return planes;
+    }
+    return planes.filter((p: any) => p.departamento === departamentoFiltro);
+  }, [planes, departamentoFiltro]);
+
+  // Matriz de Criticidad SIMPLIFICADA (2x2)
+  const criticidad = useMemo(() => {
+    return {
+      critico: planesFiltrados.filter((p: any) => p.riesgoContinuidad === "Alto" && !esReemplazoValido(p.reemplazo)).length,
+      controlado: planesFiltrados.filter((p: any) => p.riesgoContinuidad === "Bajo" && esReemplazoValido(p.reemplazo)).length,
+    };
+  }, [planesFiltrados]);
+
+  // Separar por cobertura para las secciones de listado
+  const planesConCobertura = useMemo(() => {
+    return planesFiltrados.filter((p: any) => esReemplazoValido(p.reemplazo));
+  }, [planesFiltrados]);
+
+  const planesSinCobertura = useMemo(() => {
+    return planesFiltrados.filter((p: any) => !esReemplazoValido(p.reemplazo));
+  }, [planesFiltrados]);
 
   if (isLoading) {
     return (
@@ -51,24 +92,6 @@ export default function PlanSuccesionDashboard() {
     );
   }
 
-  // Helper: Verificar si un reemplazo es válido (no vacío y no NO APLICA)
-  const esReemplazoValido = (reemplazo: string | null | undefined): boolean => {
-    if (!reemplazo) return false;
-    const trimmed = reemplazo.trim().toUpperCase();
-    return trimmed !== "" && trimmed !== "NO APLICA";
-  };
-
-  // Matriz de Criticidad SIMPLIFICADA (2x2)
-  // Solo dos estados: CRÍTICO (Alto Riesgo + Sin Cobertura) y CONTROLADO (Bajo Riesgo + Con Cobertura)
-  const criticidad = {
-    critico: planes.filter((p: any) => p.riesgoContinuidad === "Alto" && !esReemplazoValido(p.reemplazo)).length,
-    controlado: planes.filter((p: any) => p.riesgoContinuidad === "Bajo" && esReemplazoValido(p.reemplazo)).length,
-  };
-
-  // Separar por cobertura para las secciones de listado
-  const planesConCobertura = planes.filter((p: any) => esReemplazoValido(p.reemplazo));
-  const planesSinCobertura = planes.filter((p: any) => !esReemplazoValido(p.reemplazo));
-
   return (
     <DashboardLayout>
       <div className="space-y-6 p-6">
@@ -77,6 +100,28 @@ export default function PlanSuccesionDashboard() {
           <p className="text-gray-600 mt-2">Análisis de cobertura de puestos críticos</p>
         </div>
 
+        {/* Filtro por Departamento */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm">Filtrar por Departamento</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Select value={departamentoFiltro} onValueChange={setDepartamentoFiltro}>
+              <SelectTrigger className="w-full md:w-64">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="todos">Todos los Departamentos</SelectItem>
+                {departamentos.map((dept) => (
+                  <SelectItem key={dept} value={dept}>
+                    {dept}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </CardContent>
+        </Card>
+
         {/* Tarjetas de Resumen */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card>
@@ -84,7 +129,7 @@ export default function PlanSuccesionDashboard() {
               <CardTitle className="text-sm font-medium">Total Puestos Críticos</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{planes.length}</div>
+              <div className="text-2xl font-bold">{planesFiltrados.length}</div>
               <p className="text-xs text-gray-500 mt-1">Posiciones críticas</p>
             </CardContent>
           </Card>
@@ -115,7 +160,7 @@ export default function PlanSuccesionDashboard() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {planes.length > 0 ? Math.round((planesConCobertura.length / planes.length) * 100) : 0}%
+                {planesFiltrados.length > 0 ? Math.round((planesConCobertura.length / planesFiltrados.length) * 100) : 0}%
               </div>
               <p className="text-xs text-gray-500 mt-1">Puestos cubiertos</p>
             </CardContent>

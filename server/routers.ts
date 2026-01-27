@@ -48,6 +48,7 @@ import {
   updatePlanSuccesion,
   updatePlanSuccesionRiesgo,
   getPlanesAccionBySuccesion,
+  getPlanesAccionPorPuestoCritico,
   createPlanAccion,
   updatePlanAccion,
   deletePlanAccion,
@@ -394,6 +395,11 @@ export const appRouter = router({
       .query(async ({ input }) => {
         return getPlanesAccionBySuccesion(input.planSuccesionId);
       }),
+
+    // Obtener Planes de Acción agrupados por Puesto Crítico
+    accionesPorPuesto: protectedProcedure.query(async () => {
+      return getPlanesAccionPorPuestoCritico();
+    }),
 
     accionCrear: adminProcedure
       .input(z.object({

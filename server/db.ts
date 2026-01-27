@@ -664,6 +664,32 @@ export async function getPlanesAccionBySuccesion(planSuccesionId: number) {
   return db.select().from(planesAccion).where(eq(planesAccion.planSuccesionId, planSuccesionId));
 }
 
+// Función para obtener Planes de Acción agrupados por Puesto Crítico
+export async function getPlanesAccionPorPuestoCritico() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  // Obtener todos los planes de sucesión con sus acciones
+  const planes = await db.select().from(planesSuccesion);
+  
+  const resultado = await Promise.all(
+    planes.map(async (plan) => {
+      const acciones = await db.select().from(planesAccion).where(eq(planesAccion.planSuccesionId, plan.id));
+      return {
+        ...plan,
+        acciones: acciones || [],
+        totalAcciones: acciones?.length || 0,
+        accionesCompletadas: acciones?.filter(a => a.estado === 'Completado').length || 0,
+        accionesEnProgreso: acciones?.filter(a => a.estado === 'En Progreso').length || 0,
+        accionesNoIniciadas: acciones?.filter(a => a.estado === 'No Iniciado').length || 0,
+        accionesRetrasadas: acciones?.filter(a => a.estado === 'Retrasado').length || 0,
+      };
+    })
+  );
+  
+  return resultado;
+}
+
 export async function updatePlanAccion(id: number, data: Partial<InsertPlanAccion>, usuario?: string, usuarioId?: string) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
