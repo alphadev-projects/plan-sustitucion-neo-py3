@@ -2,7 +2,7 @@ import { trpc } from "@/lib/trpc";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, CheckCircle, AlertTriangle } from "lucide-react";
+import { AlertCircle, CheckCircle } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -51,10 +51,6 @@ export default function PlanSuccesionDashboard() {
     );
   }
 
-  // Separar por riesgo
-  const planesRiesgoBajo = planes.filter((p: any) => p.riesgoContinuidad === "Bajo");
-  const planesRiesgoAlto = planes.filter((p: any) => p.riesgoContinuidad === "Alto");
-
   // Helper: Verificar si un reemplazo es válido (no vacío y no NO APLICA)
   const esReemplazoValido = (reemplazo: string | null | undefined): boolean => {
     if (!reemplazo) return false;
@@ -62,13 +58,11 @@ export default function PlanSuccesionDashboard() {
     return trimmed !== "" && trimmed !== "NO APLICA";
   };
 
-  // Matriz de Criticidad (2x2) - LÓGICA CORRECTA
-  // Verificar AMBOS campos: riesgoContinuidad + reemplazo (vacío, NO APLICA, o asignado)
+  // Matriz de Criticidad SIMPLIFICADA (2x2)
+  // Solo dos estados: CRÍTICO (Alto Riesgo + Sin Cobertura) y CONTROLADO (Bajo Riesgo + Con Cobertura)
   const criticidad = {
     critico: planes.filter((p: any) => p.riesgoContinuidad === "Alto" && !esReemplazoValido(p.reemplazo)).length,
-    controlado: planes.filter((p: any) => p.riesgoContinuidad === "Alto" && esReemplazoValido(p.reemplazo)).length,
-    vigilancia: planes.filter((p: any) => p.riesgoContinuidad === "Bajo" && !esReemplazoValido(p.reemplazo)).length,
-    optimo: planes.filter((p: any) => p.riesgoContinuidad === "Bajo" && esReemplazoValido(p.reemplazo)).length,
+    controlado: planes.filter((p: any) => p.riesgoContinuidad === "Bajo" && esReemplazoValido(p.reemplazo)).length,
   };
 
   // Separar por cobertura para las secciones de listado
@@ -100,7 +94,7 @@ export default function PlanSuccesionDashboard() {
               <CardTitle className="text-sm font-medium text-green-900">Con Cobertura</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-700">{planesRiesgoBajo.length}</div>
+              <div className="text-2xl font-bold text-green-700">{planesConCobertura.length}</div>
               <p className="text-xs text-green-600 mt-1">Riesgo Bajo</p>
             </CardContent>
           </Card>
@@ -110,7 +104,7 @@ export default function PlanSuccesionDashboard() {
               <CardTitle className="text-sm font-medium text-red-900">Sin Cobertura</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-red-700">{planesRiesgoAlto.length}</div>
+              <div className="text-2xl font-bold text-red-700">{planesSinCobertura.length}</div>
               <p className="text-xs text-red-600 mt-1">Riesgo Alto</p>
             </CardContent>
           </Card>
@@ -121,14 +115,14 @@ export default function PlanSuccesionDashboard() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {planes.length > 0 ? Math.round((planesRiesgoBajo.length / planes.length) * 100) : 0}%
+                {planes.length > 0 ? Math.round((planesConCobertura.length / planes.length) * 100) : 0}%
               </div>
               <p className="text-xs text-gray-500 mt-1">Puestos cubiertos</p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Matriz de Criticidad 2x2 */}
+        {/* Matriz de Criticidad SIMPLIFICADA (2x2) */}
         <Card>
           <CardHeader>
             <CardTitle>Matriz de Criticidad</CardTitle>
@@ -136,58 +130,36 @@ export default function PlanSuccesionDashboard() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
-              {/* Cuadrante 1: CRÍTICO (Rojo) */}
-              <div className="border-2 border-red-300 bg-red-50 p-4 rounded-lg">
+              {/* CRÍTICO (Rojo) */}
+              <div className="border-2 border-red-300 bg-red-50 p-6 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <AlertCircle className="h-5 w-5 text-red-600" />
-                  <h3 className="font-bold text-red-900">CRÍTICO</h3>
+                  <AlertCircle className="h-6 w-6 text-red-600" />
+                  <h3 className="font-bold text-red-900 text-lg">CRÍTICO</h3>
                 </div>
-                <p className="text-2xl font-bold text-red-700">{criticidad.critico}</p>
-                <p className="text-xs text-red-600 mt-2">Alto Riesgo + Sin Cobertura</p>
-                <p className="text-xs text-red-600">⚠️ Acción Inmediata Requerida</p>
+                <p className="text-4xl font-bold text-red-700 mb-3">{criticidad.critico}</p>
+                <p className="text-sm text-red-600 mb-1">Alto Riesgo + Sin Cobertura</p>
+                <p className="text-sm text-red-600 font-semibold">⚠️ Acción Inmediata Requerida</p>
               </div>
 
-              {/* Cuadrante 2: CONTROLADO (Verde) */}
-              <div className="border-2 border-green-300 bg-green-50 p-4 rounded-lg">
+              {/* CONTROLADO (Verde) */}
+              <div className="border-2 border-green-300 bg-green-50 p-6 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
-                  <h3 className="font-bold text-green-900">CONTROLADO</h3>
+                  <CheckCircle className="h-6 w-6 text-green-600" />
+                  <h3 className="font-bold text-green-900 text-lg">CONTROLADO</h3>
                 </div>
-                <p className="text-2xl font-bold text-green-700">{criticidad.controlado}</p>
-                <p className="text-xs text-green-600 mt-2">Alto Riesgo + Con Cobertura</p>
-                <p className="text-xs text-green-600">✓ Bajo Riesgo</p>
-              </div>
-
-              {/* Cuadrante 3: VIGILANCIA (Amarillo) */}
-              <div className="border-2 border-yellow-300 bg-yellow-50 p-4 rounded-lg">
-                <div className="flex items-center gap-2 mb-2">
-                  <AlertTriangle className="h-5 w-5 text-yellow-600" />
-                  <h3 className="font-bold text-yellow-900">VIGILANCIA</h3>
-                </div>
-                <p className="text-2xl font-bold text-yellow-700">{criticidad.vigilancia}</p>
-                <p className="text-xs text-yellow-600 mt-2">Bajo Riesgo + Sin Cobertura</p>
-                <p className="text-xs text-yellow-600">📊 Monitorear</p>
-              </div>
-
-              {/* Cuadrante 4: ÓPTIMO (Azul) */}
-              <div className="border-2 border-blue-300 bg-blue-50 p-4 rounded-lg">
-                <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle className="h-5 w-5 text-blue-600" />
-                  <h3 className="font-bold text-blue-900">ÓPTIMO</h3>
-                </div>
-                <p className="text-2xl font-bold text-blue-700">{criticidad.optimo}</p>
-                <p className="text-xs text-blue-600 mt-2">Bajo Riesgo + Con Cobertura</p>
-                <p className="text-xs text-blue-600">✓ Excelente</p>
+                <p className="text-4xl font-bold text-green-700 mb-3">{criticidad.controlado}</p>
+                <p className="text-sm text-green-600 mb-1">Bajo Riesgo + Con Cobertura</p>
+                <p className="text-sm text-green-600 font-semibold">✓ Excelente</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Sección: Puestos CON Cobertura */}
+        {/* Sección: Puestos CON Cobertura (CONTROLADO) */}
         <Card className="border-green-200">
           <CardHeader className="bg-green-50">
-            <CardTitle className="text-green-900">✓ Puestos Críticos CON Reemplazo</CardTitle>
-            <CardDescription>Posiciones con cobertura identificada</CardDescription>
+            <CardTitle className="text-green-900">✓ Puestos Críticos CON Reemplazo (CONTROLADO)</CardTitle>
+            <CardDescription>Posiciones con cobertura identificada - Riesgo Bajo</CardDescription>
           </CardHeader>
           <CardContent className="pt-4">
             {planesConCobertura.length > 0 ? (
@@ -236,7 +208,6 @@ export default function PlanSuccesionDashboard() {
                                 </SelectTrigger>
                                 <SelectContent>
                                   <SelectItem value="Alto">Alto</SelectItem>
-                                  <SelectItem value="Medio">Medio</SelectItem>
                                   <SelectItem value="Bajo">Bajo</SelectItem>
                                 </SelectContent>
                               </Select>
@@ -256,7 +227,7 @@ export default function PlanSuccesionDashboard() {
                                   if (selectedPlan && nuevoRiesgo) {
                                     actualizarRiesgo.mutate({
                                       id: selectedPlan.id,
-                                      nuevoRiesgo: nuevoRiesgo as "Alto" | "Medio" | "Bajo",
+                                      nuevoRiesgo: nuevoRiesgo as "Alto" | "Bajo",
                                       motivo: motivo || undefined,
                                     });
                                     setIsDialogOpen(false);
@@ -280,11 +251,11 @@ export default function PlanSuccesionDashboard() {
           </CardContent>
         </Card>
 
-        {/* Sección: Puestos SIN Cobertura */}
+        {/* Sección: Puestos SIN Cobertura (CRÍTICO) */}
         <Card className="border-red-200">
           <CardHeader className="bg-red-50">
-            <CardTitle className="text-red-900">⚠️ Puestos Críticos SIN Reemplazo</CardTitle>
-            <CardDescription>Posiciones que requieren atención inmediata</CardDescription>
+            <CardTitle className="text-red-900">⚠️ Puestos Críticos SIN Reemplazo (CRÍTICO)</CardTitle>
+            <CardDescription>Posiciones que requieren atención inmediata - Riesgo Alto</CardDescription>
           </CardHeader>
           <CardContent className="pt-4">
             {planesSinCobertura.length > 0 ? (
@@ -333,7 +304,6 @@ export default function PlanSuccesionDashboard() {
                                 </SelectTrigger>
                                 <SelectContent>
                                   <SelectItem value="Alto">Alto</SelectItem>
-                                  <SelectItem value="Medio">Medio</SelectItem>
                                   <SelectItem value="Bajo">Bajo</SelectItem>
                                 </SelectContent>
                               </Select>
@@ -353,7 +323,7 @@ export default function PlanSuccesionDashboard() {
                                   if (selectedPlan && nuevoRiesgo) {
                                     actualizarRiesgo.mutate({
                                       id: selectedPlan.id,
-                                      nuevoRiesgo: nuevoRiesgo as "Alto" | "Medio" | "Bajo",
+                                      nuevoRiesgo: nuevoRiesgo as "Alto" | "Bajo",
                                       motivo: motivo || undefined,
                                     });
                                     setIsDialogOpen(false);
