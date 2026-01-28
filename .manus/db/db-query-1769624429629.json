@@ -1,0 +1,22 @@
+{
+  "query": "SELECT id, puestoClave, departamentoPuestoClave, sucesor FROM sucesion_puestos WHERE (puestoClave, departamentoPuestoClave) IN (SELECT puestoClave, departamentoPuestoClave FROM sucesion_puestos GROUP BY puestoClave, departamentoPuestoClave HAVING COUNT(*) > 1) ORDER BY puestoClave, departamentoPuestoClave;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, puestoClave, departamentoPuestoClave, sucesor FROM sucesion_puestos WHERE (puestoClave, departamentoPuestoClave) IN (SELECT puestoClave, departamentoPuestoClave FROM sucesion_puestos GROUP BY puestoClave, departamentoPuestoClave HAVING COUNT(*) > 1) ORDER BY puestoClave, departamentoPuestoClave;",
+  "rows": [
+    {
+      "id": "1",
+      "puestoClave": "ROQUE EVER YEGROS COLMAN",
+      "departamentoPuestoClave": "Administración y Finanzas",
+      "sucesor": "OMAR GABRIEL SALCEDO VERA"
+    },
+    {
+      "id": "30006",
+      "puestoClave": "ROQUE EVER YEGROS COLMAN",
+      "departamentoPuestoClave": "Administración y Finanzas",
+      "sucesor": "ALEX MARTINEZ SANDOVAL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tpuestoClave\tdepartamentoPuestoClave\tsucesor\n1\tROQUE EVER YEGROS COLMAN\tAdministración y Finanzas\tOMAR GABRIEL SALCEDO VERA\n30006\tROQUE EVER YEGROS COLMAN\tAdministración y Finanzas\tALEX MARTINEZ SANDOVAL\n",
+  "stderr": "",
+  "execution_time_ms": 57
+}

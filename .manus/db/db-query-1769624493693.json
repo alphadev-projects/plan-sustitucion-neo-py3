@@ -1,0 +1,15 @@
+{
+  "query": "SELECT sp.id, sp.planSustitucionId, sp.puestoClave FROM sucesion_puestos sp LEFT JOIN planes_sustitucion ps ON sp.planSustitucionId = ps.id WHERE ps.id IS NULL;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT sp.id, sp.planSustitucionId, sp.puestoClave FROM sucesion_puestos sp LEFT JOIN planes_sustitucion ps ON sp.planSustitucionId = ps.id WHERE ps.id IS NULL;",
+  "rows": [
+    {
+      "id": "1",
+      "planSustitucionId": "1",
+      "puestoClave": "ROQUE EVER YEGROS COLMAN"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tplanSustitucionId\tpuestoClave\n1\t1\tROQUE EVER YEGROS COLMAN\n",
+  "stderr": "",
+  "execution_time_ms": 59
+}

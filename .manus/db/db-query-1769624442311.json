@@ -1,0 +1,14 @@
+{
+  "query": "SELECT COUNT(*) as total_registros, COUNT(DISTINCT puestoClave, departamentoPuestoClave) as unicos FROM sucesion_puestos;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT COUNT(*) as total_registros, COUNT(DISTINCT puestoClave, departamentoPuestoClave) as unicos FROM sucesion_puestos;",
+  "rows": [
+    {
+      "total_registros": "8",
+      "unicos": "7"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_registros\tunicos\n8\t7\n",
+  "stderr": "",
+  "execution_time_ms": 57
+}

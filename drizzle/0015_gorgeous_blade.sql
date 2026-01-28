@@ -1,0 +1,1 @@
+ALTER TABLE `sucesion_puestos` DROP INDEX `unique_puesto_departamento`;

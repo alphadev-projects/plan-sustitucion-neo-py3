@@ -1,0 +1,45 @@
+{
+  "query": "SELECT puestoClave, departamentoPuestoClave, COUNT(*) FROM sucesion_puestos GROUP BY puestoClave, departamentoPuestoClave;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT puestoClave, departamentoPuestoClave, COUNT(*) FROM sucesion_puestos GROUP BY puestoClave, departamentoPuestoClave;",
+  "rows": [
+    {
+      "puestoClave": "OMAR GABRIEL SALCEDO VERA",
+      "departamentoPuestoClave": "Desarrollo De Negocios",
+      "COUNT(*)": "1"
+    },
+    {
+      "puestoClave": "FATIMA MARICEL GOLNNER GIMENEZ",
+      "departamentoPuestoClave": "Cumplimiento y Auditoria",
+      "COUNT(*)": "1"
+    },
+    {
+      "puestoClave": "MAURICIO ALBERTO TOROSSI",
+      "departamentoPuestoClave": "Alianzas Estrategicas",
+      "COUNT(*)": "1"
+    },
+    {
+      "puestoClave": "GERMAN ARMANDO LEIVA BOZZO",
+      "departamentoPuestoClave": "Comercial",
+      "COUNT(*)": "1"
+    },
+    {
+      "puestoClave": "ROQUE EVER YEGROS COLMAN",
+      "departamentoPuestoClave": "Administración y Finanzas",
+      "COUNT(*)": "2"
+    },
+    {
+      "puestoClave": "LIZ MABEL AVALOS VERA",
+      "departamentoPuestoClave": "Alianzas Estrategicas",
+      "COUNT(*)": "1"
+    },
+    {
+      "puestoClave": "ABRAHAN VIANCONI VILLALBA",
+      "departamentoPuestoClave": "Desarrollo de Negocios",
+      "COUNT(*)": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "puestoClave\tdepartamentoPuestoClave\tCOUNT(*)\nOMAR GABRIEL SALCEDO VERA\tDesarrollo De Negocios\t1\nFATIMA MARICEL GOLNNER GIMENEZ\tCumplimiento y Auditoria\t1\nMAURICIO ALBERTO TOROSSI\tAlianzas Estrategicas\t1\nGERMAN ARMANDO LEIVA BOZZO\tComercial\t1\nROQUE EVER YEGROS COLMAN\tAdministración y Finanzas\t2\nLIZ MABEL AVALOS VERA\tAlianzas Estrategicas\t1\nABRAHAN VIANCONI VILLALBA\tDesarrollo de Negocios\t1\n",
+  "stderr": "",
+  "execution_time_ms": 59
+}

@@ -1,0 +1,50 @@
+{
+  "query": "SELECT id, puestoClave, departamentoPuestoClave FROM sucesion_puestos ORDER BY puestoClave, departamentoPuestoClave;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, puestoClave, departamentoPuestoClave FROM sucesion_puestos ORDER BY puestoClave, departamentoPuestoClave;",
+  "rows": [
+    {
+      "id": "30004",
+      "puestoClave": "ABRAHAN VIANCONI VILLALBA",
+      "departamentoPuestoClave": "Desarrollo de Negocios"
+    },
+    {
+      "id": "30005",
+      "puestoClave": "FATIMA MARICEL GOLNNER GIMENEZ",
+      "departamentoPuestoClave": "Cumplimiento y Auditoria"
+    },
+    {
+      "id": "30007",
+      "puestoClave": "GERMAN ARMANDO LEIVA BOZZO",
+      "departamentoPuestoClave": "Comercial"
+    },
+    {
+      "id": "30002",
+      "puestoClave": "LIZ MABEL AVALOS VERA",
+      "departamentoPuestoClave": "Alianzas Estrategicas"
+    },
+    {
+      "id": "30003",
+      "puestoClave": "MAURICIO ALBERTO TOROSSI",
+      "departamentoPuestoClave": "Alianzas Estrategicas"
+    },
+    {
+      "id": "30001",
+      "puestoClave": "OMAR GABRIEL SALCEDO VERA",
+      "departamentoPuestoClave": "Desarrollo De Negocios"
+    },
+    {
+      "id": "1",
+      "puestoClave": "ROQUE EVER YEGROS COLMAN",
+      "departamentoPuestoClave": "Administración y Finanzas"
+    },
+    {
+      "id": "30006",
+      "puestoClave": "ROQUE EVER YEGROS COLMAN",
+      "departamentoPuestoClave": "Administración y Finanzas"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tpuestoClave\tdepartamentoPuestoClave\n30004\tABRAHAN VIANCONI VILLALBA\tDesarrollo de Negocios\n30005\tFATIMA MARICEL GOLNNER GIMENEZ\tCumplimiento y Auditoria\n30007\tGERMAN ARMANDO LEIVA BOZZO\tComercial\n30002\tLIZ MABEL AVALOS VERA\tAlianzas Estrategicas\n30003\tMAURICIO ALBERTO TOROSSI\tAlianzas Estrategicas\n30001\tOMAR GABRIEL SALCEDO VERA\tDesarrollo De Negocios\n1\tROQUE EVER YEGROS COLMAN\tAdministración y Finanzas\n30006\tROQUE EVER YEGROS COLMAN\tAdministración y Finanzas\n",
+  "stderr": "",
+  "execution_time_ms": 56
+}
