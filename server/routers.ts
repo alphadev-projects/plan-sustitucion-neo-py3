@@ -48,6 +48,7 @@ import {
   updatePlanSuccesion,
   updatePlanSuccesionRiesgo,
   getPlanesAccionBySuccesion,
+  obtenerHistorialSucesores,
   getPlanesAccionPorPuestoCritico,
   getPlanesSuccesionConSucesor,
   getPlanesSuccesionConSucesorByDepartamento,
@@ -433,6 +434,11 @@ export const appRouter = router({
     // Obtener Planes de Acción agrupados por Puesto Crítico
     accionesPorPuesto: protectedProcedure.query(async () => {
       return getPlanesAccionPorPuestoCritico();
+    }),
+
+    obtenerHistorialSucesores: protectedProcedure.query(async () => {
+      const { obtenerHistorialSucesores } = await import("./db");
+      return obtenerHistorialSucesores();
     }),
 
     accionCrear: adminProcedure

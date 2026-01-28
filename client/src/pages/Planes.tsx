@@ -144,8 +144,10 @@ export default function Planes() {
         puestoClave: editFormData.puestoClave ? "Si" : "No",
       });
       
+      // Invalidar caches para refrescar datos
       await utils.planes.list.invalidate();
       await utils.sucesion.listarConSucesor.invalidate();
+      await utils.sucesion.obtenerHistorialSucesores.invalidate();
       setShowEditDialog(false);
       setEditingPlan(null);
       setEditFormData(null);

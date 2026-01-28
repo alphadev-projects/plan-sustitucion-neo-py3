@@ -14,6 +14,7 @@ import GestionUsuarios from "./pages/GestionUsuarios";
 import PlanSuccesion from "./pages/PlanSuccesion";
 import PlanSuccesionDashboard from "./pages/PlanSuccesionDashboard";
 import Auditoria from "./pages/Auditoria";
+import HistorialSucesores from "./pages/HistorialSucesores";
 import { useEffect } from "react";
 
 function Router() {
@@ -74,6 +75,13 @@ function Router() {
         {(props) => (
           <ProtectedRoute requiredRole="admin">
             <Auditoria {...props} />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/historial-sucesores">
+        {(props) => (
+          <ProtectedRoute requiredRole="admin">
+            <HistorialSucesores {...props} />
           </ProtectedRoute>
         )}
       </Route>

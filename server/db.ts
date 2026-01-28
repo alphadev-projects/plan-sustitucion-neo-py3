@@ -1142,3 +1142,24 @@ export async function obtenerSucesoresAsignados(): Promise<Array<{ sucesor: stri
     return [];
   }
 }
+
+
+// Obtener historial de cambios de sucesores
+export async function obtenerHistorialSucesores() {
+  try {
+    const db = await getDb();
+    if (!db) throw new Error("Database not initialized");
+    
+    const { desc } = await import("drizzle-orm");
+    const historial = await db
+      .select()
+      .from(historialSucesores)
+      .orderBy(desc(historialSucesores.createdAt))
+      .limit(1000);
+    
+    return historial;
+  } catch (error) {
+    console.error("Error al obtener historial de sucesores:", error);
+    throw new Error("No se pudo obtener el historial de sucesores");
+  }
+}
