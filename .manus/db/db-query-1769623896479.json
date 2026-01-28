@@ -1,0 +1,73 @@
+{
+  "query": "SELECT id, planSustitucionId, departamento, cargo, colaborador, reemplazo, estado FROM planes_sucesion ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, planSustitucionId, departamento, cargo, colaborador, reemplazo, estado FROM planes_sucesion ORDER BY id;",
+  "rows": [
+    {
+      "id": "180003",
+      "planSustitucionId": "30002",
+      "departamento": "Desarrollo De Negocios",
+      "cargo": "Ejecutivo de Ventas Corporativas - ASU",
+      "colaborador": "OMAR GABRIEL SALCEDO VERA",
+      "reemplazo": "NO APLICA",
+      "estado": "Pendiente"
+    },
+    {
+      "id": "180004",
+      "planSustitucionId": "120001",
+      "departamento": "Alianzas Estrategicas",
+      "cargo": "Encargado de Alianzas Estrategicas - CDE",
+      "colaborador": "LIZ MABEL AVALOS VERA",
+      "reemplazo": "NO APLICA",
+      "estado": "Pendiente"
+    },
+    {
+      "id": "180005",
+      "planSustitucionId": "120002",
+      "departamento": "Alianzas Estrategicas",
+      "cargo": "Jefe de Alianzas Estrategicas",
+      "colaborador": "MAURICIO ALBERTO TOROSSI",
+      "reemplazo": "NO APLICA",
+      "estado": "Pendiente"
+    },
+    {
+      "id": "180006",
+      "planSustitucionId": "120003",
+      "departamento": "Desarrollo de Negocios",
+      "cargo": "Ejecutivo de Ventas Corporativas",
+      "colaborador": "ABRAHAN VIANCONI VILLALBA",
+      "reemplazo": "OMAR GABRIEL SALCEDO VERA",
+      "estado": "Pendiente"
+    },
+    {
+      "id": "180007",
+      "planSustitucionId": "150001",
+      "departamento": "Cumplimiento y Auditoria",
+      "cargo": "Jefe de Cumplimiento y Auditoria",
+      "colaborador": "FATIMA MARICEL GOLNNER GIMENEZ",
+      "reemplazo": "ULTIMO PARA PROBAR",
+      "estado": "Pendiente"
+    },
+    {
+      "id": "240001",
+      "planSustitucionId": "240001",
+      "departamento": "Administración y Finanzas",
+      "cargo": "Jefe Administrativo Financiero",
+      "colaborador": "ROQUE EVER YEGROS COLMAN",
+      "reemplazo": "ALEX MARTINEZ SANDOVAL",
+      "estado": "Pendiente"
+    },
+    {
+      "id": "240002",
+      "planSustitucionId": "240002",
+      "departamento": "Comercial",
+      "cargo": "Gerente Comercial - ASU",
+      "colaborador": "GERMAN ARMANDO LEIVA BOZZO",
+      "reemplazo": "NO APLICA",
+      "estado": "Pendiente"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tplanSustitucionId\tdepartamento\tcargo\tcolaborador\treemplazo\testado\n180003\t30002\tDesarrollo De Negocios\tEjecutivo de Ventas Corporativas - ASU\tOMAR GABRIEL SALCEDO VERA\tNO APLICA\tPendiente\n180004\t120001\tAlianzas Estrategicas\tEncargado de Alianzas Estrategicas - CDE\tLIZ MABEL AVALOS VERA\tNO APLICA\tPendiente\n180005\t120002\tAlianzas Estrategicas\tJefe de Alianzas Estrategicas\tMAURICIO ALBERTO TOROSSI\tNO APLICA\tPendiente\n180006\t120003\tDesarrollo de Negocios\tEjecutivo de Ventas Corporativas\tABRAHAN VIANCONI VILLALBA\tOMAR GABRIEL SALCEDO VERA\tPendiente\n180007\t150001\tCumplimiento y Auditoria\tJefe de Cumplimiento y Auditoria\tFATIMA MARICEL GOLNNER GIMENEZ\tULTIMO PARA PROBAR\tPendiente\n240001\t240001\tAdministración y Finanzas\tJefe Administrativo Financiero\tROQUE EVER YEGROS COLMAN\tALEX MARTINEZ SANDOVAL\tPendiente\n240002\t240002\tComercial\tGerente Comercial - ASU\tGERMAN ARMANDO LEIVA BOZZO\tNO APLICA\tPendiente\n",
+  "stderr": "",
+  "execution_time_ms": 142
+}

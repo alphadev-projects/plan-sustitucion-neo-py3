@@ -1,0 +1,8 @@
+{
+  "query": "SELECT id, puestoClave, departamentoPuestoClave, cargoPuestoClave, sucesor, aplicaSucesion FROM planes_sucesion ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, puestoClave, departamentoPuestoClave, cargoPuestoClave, sucesor, aplicaSucesion FROM planes_sucesion ORDER BY id;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'puestoclave' in 'field list'"
+  ]
+}

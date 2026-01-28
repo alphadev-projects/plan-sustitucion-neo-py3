@@ -1,0 +1,80 @@
+{
+  "query": "SELECT id, puestoClave, departamentoPuestoClave, cargoPuestoClave, sucesor FROM sucesion_puestos ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, puestoClave, departamentoPuestoClave, cargoPuestoClave, sucesor FROM sucesion_puestos ORDER BY id;",
+  "rows": [
+    {
+      "id": "1",
+      "puestoClave": "ROQUE EVER YEGROS COLMAN",
+      "departamentoPuestoClave": "Administración y Finanzas",
+      "cargoPuestoClave": "Jefe Administrativo Financiero",
+      "sucesor": "OMAR GABRIEL SALCEDO VERA"
+    },
+    {
+      "id": "3",
+      "puestoClave": "LIZ MABEL AVALOS VERA",
+      "departamentoPuestoClave": "Alianzas Estrategicas",
+      "cargoPuestoClave": "Especialista en Alianzas",
+      "sucesor": "ULTIMO PARA PROBAR"
+    },
+    {
+      "id": "4",
+      "puestoClave": "MAURICIO ALBERTO TOROSSI",
+      "departamentoPuestoClave": "Cumplimiento y Auditoria",
+      "cargoPuestoClave": "Auditor Senior",
+      "sucesor": ""
+    },
+    {
+      "id": "30001",
+      "puestoClave": "OMAR GABRIEL SALCEDO VERA",
+      "departamentoPuestoClave": "Desarrollo De Negocios",
+      "cargoPuestoClave": "Ejecutivo de Ventas Corporativas - ASU",
+      "sucesor": ""
+    },
+    {
+      "id": "30002",
+      "puestoClave": "LIZ MABEL AVALOS VERA",
+      "departamentoPuestoClave": "Alianzas Estrategicas",
+      "cargoPuestoClave": "Encargado de Alianzas Estrategicas - CDE",
+      "sucesor": ""
+    },
+    {
+      "id": "30003",
+      "puestoClave": "MAURICIO ALBERTO TOROSSI",
+      "departamentoPuestoClave": "Alianzas Estrategicas",
+      "cargoPuestoClave": "Jefe de Alianzas Estrategicas",
+      "sucesor": ""
+    },
+    {
+      "id": "30004",
+      "puestoClave": "ABRAHAN VIANCONI VILLALBA",
+      "departamentoPuestoClave": "Desarrollo de Negocios",
+      "cargoPuestoClave": "Ejecutivo de Ventas Corporativas",
+      "sucesor": "OMAR GABRIEL SALCEDO VERA"
+    },
+    {
+      "id": "30005",
+      "puestoClave": "FATIMA MARICEL GOLNNER GIMENEZ",
+      "departamentoPuestoClave": "Cumplimiento y Auditoria",
+      "cargoPuestoClave": "Jefe de Cumplimiento y Auditoria",
+      "sucesor": "ULTIMO PARA PROBAR"
+    },
+    {
+      "id": "30006",
+      "puestoClave": "ROQUE EVER YEGROS COLMAN",
+      "departamentoPuestoClave": "Administración y Finanzas",
+      "cargoPuestoClave": "Jefe Administrativo Financiero",
+      "sucesor": "ALEX MARTINEZ SANDOVAL"
+    },
+    {
+      "id": "30007",
+      "puestoClave": "GERMAN ARMANDO LEIVA BOZZO",
+      "departamentoPuestoClave": "Comercial",
+      "cargoPuestoClave": "Gerente Comercial - ASU",
+      "sucesor": ""
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tpuestoClave\tdepartamentoPuestoClave\tcargoPuestoClave\tsucesor\n1\tROQUE EVER YEGROS COLMAN\tAdministración y Finanzas\tJefe Administrativo Financiero\tOMAR GABRIEL SALCEDO VERA\n3\tLIZ MABEL AVALOS VERA\tAlianzas Estrategicas\tEspecialista en Alianzas\tULTIMO PARA PROBAR\n4\tMAURICIO ALBERTO TOROSSI\tCumplimiento y Auditoria\tAuditor Senior\t\n30001\tOMAR GABRIEL SALCEDO VERA\tDesarrollo De Negocios\tEjecutivo de Ventas Corporativas - ASU\t\n30002\tLIZ MABEL AVALOS VERA\tAlianzas Estrategicas\tEncargado de Alianzas Estrategicas - CDE\t\n30003\tMAURICIO ALBERTO TOROSSI\tAlianzas Estrategicas\tJefe de Alianzas Estrategicas\t\n30004\tABRAHAN VIANCONI VILLALBA\tDesarrollo de Negocios\tEjecutivo de Ventas Corporativas\tOMAR GABRIEL SALCEDO VERA\n30005\tFATIMA MARICEL GOLNNER GIMENEZ\tCumplimiento y Auditoria\tJefe de Cumplimiento y Auditoria\tULTIMO PARA PROBAR\n30006\tROQUE EVER YEGROS COLMAN\tAdministración y Finanzas\tJefe Administrativo Financiero\tALEX MARTINEZ SANDOVAL\n30007\tGERMAN ARMANDO LEIVA BOZZO\tComercial\tGerente Comercial - ASU\t\n",
+  "stderr": "",
+  "execution_time_ms": 59
+}

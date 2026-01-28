@@ -1,0 +1,114 @@
+{
+  "query": "DESCRIBE planes_sucesion;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute DESCRIBE planes_sucesion;",
+  "rows": [
+    {
+      "Field": "id",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "PRI",
+      "Default": "NULL",
+      "Extra": "auto_increment"
+    },
+    {
+      "Field": "planSustitucionId",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "departamento",
+      "Type": "varchar(150)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "cargo",
+      "Type": "varchar(200)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "colaborador",
+      "Type": "varchar(255)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "riesgoContinuidad",
+      "Type": "enum('Alto','Medio','Bajo')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "riesgoCritico",
+      "Type": "enum('Si','No')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "No",
+      "Extra": ""
+    },
+    {
+      "Field": "prioridadSucesion",
+      "Type": "enum('Alta','Media','Baja')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "estado",
+      "Type": "enum('Pendiente','En Progreso','Completado')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "Pendiente",
+      "Extra": ""
+    },
+    {
+      "Field": "usuario",
+      "Type": "varchar(100)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "createdAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": ""
+    },
+    {
+      "Field": "updatedAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP"
+    },
+    {
+      "Field": "reemplazo",
+      "Type": "varchar(255)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "",
+      "Extra": ""
+    }
+  ],
+  "messages": [],
+  "stdout": "Field\tType\tNull\tKey\tDefault\tExtra\nid\tint(11)\tNO\tPRI\tNULL\tauto_increment\nplanSustitucionId\tint(11)\tNO\t\tNULL\t\ndepartamento\tvarchar(150)\tNO\t\tNULL\t\ncargo\tvarchar(200)\tNO\t\tNULL\t\ncolaborador\tvarchar(255)\tNO\t\tNULL\t\nriesgoContinuidad\tenum('Alto','Medio','Bajo')\tNO\t\tNULL\t\nriesgoCritico\tenum('Si','No')\tNO\t\tNo\t\nprioridadSucesion\tenum('Alta','Media','Baja')\tNO\t\tNULL\t\nestado\tenum('Pendiente','En Progreso','Completado')\tNO\t\tPendiente\t\nusuario\tvarchar(100)\tNO\t\tNULL\t\ncreatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\t\nupdatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\tDEFAULT_GENERATED on update CURRENT_TIMESTAMP\nreemplazo\tvarchar(255)\tNO\t\t\t\n",
+  "stderr": "",
+  "execution_time_ms": 53
+}

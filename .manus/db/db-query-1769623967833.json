@@ -1,0 +1,31 @@
+{
+  "query": "SELECT id, puestoClave, departamentoPuestoClave, sucesor, createdAt FROM sucesion_puestos WHERE (puestoClave = 'OMAR GABRIEL SALCEDO VERA' AND departamentoPuestoClave = 'Administración y Finanzas') OR (puestoClave = 'LIZ MABEL AVALOS VERA' AND departamentoPuestoClave = 'Alianzas Estrategicas') ORDER BY puestoClave, createdAt;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, puestoClave, departamentoPuestoClave, sucesor, createdAt FROM sucesion_puestos WHERE (puestoClave = 'OMAR GABRIEL SALCEDO VERA' AND departamentoPuestoClave = 'Administración y Finanzas') OR (puestoClave = 'LIZ MABEL AVALOS VERA' AND departamentoPuestoClave = 'Alianzas Estrategicas') ORDER BY puestoClave, createdAt;",
+  "rows": [
+    {
+      "id": "3",
+      "puestoClave": "LIZ MABEL AVALOS VERA",
+      "departamentoPuestoClave": "Alianzas Estrategicas",
+      "sucesor": "ULTIMO PARA PROBAR",
+      "createdAt": "2026-01-27 16:53:24"
+    },
+    {
+      "id": "30002",
+      "puestoClave": "LIZ MABEL AVALOS VERA",
+      "departamentoPuestoClave": "Alianzas Estrategicas",
+      "sucesor": "",
+      "createdAt": "2026-01-28 12:50:06"
+    },
+    {
+      "id": "2",
+      "puestoClave": "OMAR GABRIEL SALCEDO VERA",
+      "departamentoPuestoClave": "Administración y Finanzas",
+      "sucesor": "",
+      "createdAt": "2026-01-27 16:53:24"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tpuestoClave\tdepartamentoPuestoClave\tsucesor\tcreatedAt\n3\tLIZ MABEL AVALOS VERA\tAlianzas Estrategicas\tULTIMO PARA PROBAR\t2026-01-27 16:53:24\n30002\tLIZ MABEL AVALOS VERA\tAlianzas Estrategicas\t\t2026-01-28 12:50:06\n2\tOMAR GABRIEL SALCEDO VERA\tAdministración y Finanzas\t\t2026-01-27 16:53:24\n",
+  "stderr": "",
+  "execution_time_ms": 64
+}

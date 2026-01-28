@@ -1,0 +1,20 @@
+{
+  "query": "SELECT puestoClave, departamentoPuestoClave, COUNT(*) as cantidad FROM sucesion_puestos GROUP BY puestoClave, departamentoPuestoClave HAVING COUNT(*) > 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT puestoClave, departamentoPuestoClave, COUNT(*) as cantidad FROM sucesion_puestos GROUP BY puestoClave, departamentoPuestoClave HAVING COUNT(*) > 1;",
+  "rows": [
+    {
+      "puestoClave": "ROQUE EVER YEGROS COLMAN",
+      "departamentoPuestoClave": "Administración y Finanzas",
+      "cantidad": "2"
+    },
+    {
+      "puestoClave": "LIZ MABEL AVALOS VERA",
+      "departamentoPuestoClave": "Alianzas Estrategicas",
+      "cantidad": "2"
+    }
+  ],
+  "messages": [],
+  "stdout": "puestoClave\tdepartamentoPuestoClave\tcantidad\nROQUE EVER YEGROS COLMAN\tAdministración y Finanzas\t2\nLIZ MABEL AVALOS VERA\tAlianzas Estrategicas\t2\n",
+  "stderr": "",
+  "execution_time_ms": 68
+}
