@@ -320,6 +320,13 @@
 - [x] Indicador visual de progreso editable (0-100%) implementado
 - [x] Crear datos de prueba que generen riesgos Alto/Medio correctamente
 
+## Mejoras en Plan de Acción - Prioridad Alta
+
+- [x] Eliminar campos Riesgo de Continuidad y Prioridad (no se utilizan)
+- [x] Corregir campo Departamento que no trae datos
+- [x] Reorganizar interfaz de Plan de Acción para mejor visualización
+- [x] Validar que todos los campos muestren datos correctamente
+
 ## Autenticación y Seguridad - CRÍTICO
 
 - [x] Eliminar login automático - solicitar confirmación manual del usuario
