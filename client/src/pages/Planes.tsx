@@ -25,6 +25,8 @@ export default function Planes() {
   const { isAdmin } = useRole();
   const { data: planes, isLoading } = trpc.planes.list.useQuery();
   const { data: departamentos } = trpc.empleados.departamentos.useQuery();
+  const { data: empleados } = trpc.empleados.list.useQuery();
+  const { data: sucesores } = trpc.sucesion.listarConSucesor.useQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [filterDept, setFilterDept] = useState("");
   const [filterPuestoClave, setFilterPuestoClave] = useState("");
@@ -33,10 +35,17 @@ export default function Planes() {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [planToDelete, setPlanToDelete] = useState<any>(null);
   const [editFormData, setEditFormData] = useState<any>(null);
+    const [selectedReemplazoId, setSelectedReemplazoId] = useState<string>("");
+  const [selectedSucesorId, setSelectedSucesorId] = useState<string>("");
   
   const updatePlan = trpc.planes.update.useMutation();
   const deletePlan = trpc.planes.delete.useMutation();
   const utils = trpc.useUtils();
+  
+  // Obtener sucesor asignado para el plan actual
+  const getSucesorForPlan = (planId: number) => {
+    return sucesores?.find((s: any) => s.planSustitucionId === planId)?.sucesor || "";
+  };
 
   const filteredPlanes = (planes || []).filter((plan) => {
     const matchSearch =
@@ -68,13 +77,40 @@ export default function Planes() {
 
   const handleEditClick = (plan: any) => {
     setEditingPlan(plan);
+    const reemplazoEmpleado = empleados?.find((e: any) => e.nombre === plan.reemplazo);
+    setSelectedReemplazoId(reemplazoEmpleado?.id ? String(reemplazoEmpleado.id) : "");
     setEditFormData({
       reemplazo: plan.reemplazo,
       departamentoReemplazo: plan.departamentoReemplazo,
       cargoReemplazo: plan.cargoReemplazo,
       puestoClave: plan.puestoClave === "Si",
+      sucesor: getSucesorForPlan(plan.id),
     });
     setShowEditDialog(true);
+  };
+  
+  const handleReemplazoChange = (empleadoId: string) => {
+    const empleado = empleados?.find((e: any) => e.id === parseInt(empleadoId));
+    if (empleado) {
+      setSelectedReemplazoId(String(empleado.id));
+      setEditFormData({
+        ...editFormData,
+        reemplazo: empleado.nombre,
+        departamentoReemplazo: empleado.departamento,
+        cargoReemplazo: empleado.cargo,
+      });
+    }
+  };
+  
+  const handleSucesorChange = (empleadoId: string) => {
+    const empleado = empleados?.find((e: any) => e.id === parseInt(empleadoId));
+    if (empleado) {
+      setSelectedSucesorId(String(empleado.id));
+      setEditFormData({
+        ...editFormData,
+        sucesor: empleado.nombre,
+      });
+    }
   };
 
   const handleSaveEdit = async () => {
@@ -90,9 +126,12 @@ export default function Planes() {
       });
       
       await utils.planes.list.invalidate();
+      await utils.sucesion.listarConSucesor.invalidate();
       setShowEditDialog(false);
       setEditingPlan(null);
       setEditFormData(null);
+      setSelectedReemplazoId("");
+      setSelectedSucesorId("");
       toast.success("Plan actualizado exitosamente");
     } catch (error) {
       toast.error("Error al actualizar el plan");
@@ -235,6 +274,7 @@ export default function Planes() {
                       <th className="text-left py-3 px-4 font-medium">Cargo</th>
                       <th className="text-left py-3 px-4 font-medium">Tipo Reemplazo</th>
                       <th className="text-left py-3 px-4 font-medium">Reemplazo</th>
+                      <th className="text-left py-3 px-4 font-medium">Sucesor</th>
                       <th className="text-left py-3 px-4 font-medium">Puesto Clave</th>
                       <th className="text-left py-3 px-4 font-medium">Acciones</th>
                     </tr>
@@ -255,6 +295,7 @@ export default function Planes() {
                           )}
                         </td>
                         <td className="py-3 px-4">{plan.reemplazo}</td>
+                        <td className="py-3 px-4 text-sm text-muted-foreground">{getSucesorForPlan(plan.id) || "Sin asignar"}</td>
                         <td className="py-3 px-4">
                           {plan.puestoClave === "Si" ? (
                             <Badge className="bg-amber-500 hover:bg-amber-600">Clave</Badge>
@@ -305,43 +346,60 @@ export default function Planes() {
               </DialogDescription>
             </DialogHeader>
             {editFormData && (
-              <div className="space-y-4">
+                <div className="space-y-4">
                 <div className="space-y-2">
                   <Label>Reemplazo</Label>
-                  <Input
-                    value={editFormData.reemplazo}
-                    onChange={(e) =>
-                      setEditFormData({ ...editFormData, reemplazo: e.target.value })
-                    }
-                    placeholder="Nombre del reemplazo"
-                  />
+                  <select
+                    value={selectedReemplazoId}
+                    onChange={(e) => handleReemplazoChange(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-lg bg-background"
+                  >
+                    <option value="">Seleccionar colaborador...</option>
+                    {(empleados || []).map((emp: any) => (
+                      <option key={emp.id} value={String(emp.id)}>
+                        {emp.nombre} - {emp.cargo}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="space-y-2">
                   <Label>Departamento Reemplazo</Label>
                   <Input
-                    value={editFormData.departamentoReemplazo}
-                    onChange={(e) =>
-                      setEditFormData({
-                        ...editFormData,
-                        departamentoReemplazo: e.target.value,
-                      })
-                    }
-                    placeholder="Departamento"
+                    value={editFormData?.departamentoReemplazo || ""}
+                    disabled
+                    className="bg-muted"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>Cargo Reemplazo</Label>
                   <Input
-                    value={editFormData.cargoReemplazo}
-                    onChange={(e) =>
-                      setEditFormData({
-                        ...editFormData,
-                        cargoReemplazo: e.target.value,
-                      })
-                    }
-                    placeholder="Cargo"
+                    value={editFormData?.cargoReemplazo || ""}
+                    disabled
+                    className="bg-muted"
                   />
                 </div>
+                {editFormData?.puestoClave && (
+                  <>
+                    <div className="border-t pt-4 mt-4">
+                      <h4 className="font-semibold text-sm mb-3">Sucesión</h4>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Sucesor</Label>
+                      <select
+                        value={selectedSucesorId}
+                        onChange={(e) => handleSucesorChange(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg bg-background"
+                      >
+                        <option value="">Sin sucesor</option>
+                        {(empleados || []).map((emp: any) => (
+                          <option key={emp.id} value={String(emp.id)}>
+                            {emp.nombre} - {emp.cargo}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </>
+                )}
                 <div className="flex items-center gap-3">
                   <Switch
                     checked={editFormData.puestoClave}
