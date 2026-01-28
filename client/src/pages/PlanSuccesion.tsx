@@ -143,11 +143,14 @@ function PlanSuccesionContent() {
                         : "bg-white border-gray-200 hover:bg-gray-50"
                     }`}
                   >
-                    <div className="font-medium text-sm">{plan.puestoClave}</div>
-                    <div className="text-xs text-gray-600">{plan.cargoPuestoClave}</div>
+                    <div className="font-medium text-sm">{plan.colaborador}</div>
+                    <div className="text-xs text-gray-600">{plan.cargo}</div>
                     <div className="flex gap-1 mt-2">
-                      <Badge className={plan.sucesor ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}>
-                        {plan.sucesor ? 'Cubierto' : 'Crítico'}
+                      <Badge className={getRiskBadgeColor(plan.riesgoContinuidad)}>
+                        {plan.riesgoContinuidad}
+                      </Badge>
+                      <Badge className={getPriorityBadgeColor(plan.prioridadSucesion)}>
+                        {plan.prioridadSucesion}
                       </Badge>
                     </div>
                   </button>
@@ -163,23 +166,33 @@ function PlanSuccesionContent() {
                 {/* Información del Plan */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>{planSeleccionado.puestoClave}</CardTitle>
-                    <CardDescription>{planSeleccionado.cargoPuestoClave}</CardDescription>
+                    <CardTitle>{planSeleccionado.colaborador}</CardTitle>
+                    <CardDescription>{planSeleccionado.cargo}</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="text-sm font-medium text-gray-600">Departamento</label>
-                        <p className="text-sm">{planSeleccionado.departamentoPuestoClave}</p>
+                        <p className="text-sm">{planSeleccionado.departamento}</p>
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-600">Cobertura</label>
-                        <Badge className={`mt-1 ${planSeleccionado.sucesor ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                          {planSeleccionado.sucesor ? 'Con Sucesor' : 'Sin Sucesor'}
+                        <label className="text-sm font-medium text-gray-600">Estado</label>
+                        <Badge className="mt-1">{planSeleccionado.estado}</Badge>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-600">Riesgo de Continuidad</label>
+                        <Badge className={`mt-1 ${getRiskBadgeColor(planSeleccionado.riesgoContinuidad)}`}>
+                          {planSeleccionado.riesgoContinuidad}
+                        </Badge>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-600">Prioridad</label>
+                        <Badge className={`mt-1 ${getPriorityBadgeColor(planSeleccionado.prioridadSucesion)}`}>
+                          {planSeleccionado.prioridadSucesion}
                         </Badge>
                       </div>
                     </div>
-                    {!planSeleccionado.sucesor && (
+                    {!planSeleccionado.reemplazo && (
                       <Alert className="border-red-200 bg-red-50">
                         <AlertCircle className="h-4 w-4 text-red-600" />
                         <AlertDescription className="text-red-800">

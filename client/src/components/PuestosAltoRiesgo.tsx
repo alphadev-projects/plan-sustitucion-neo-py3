@@ -10,7 +10,7 @@ export function PuestosAltoRiesgo() {
   console.log("[PuestosAltoRiesgo] Datos recibidos:", planes);
   console.log("[PuestosAltoRiesgo] Total planes:", planes?.length);
   
-  const puestosAltoRiesgo = planes?.filter(p => !p.sucesor) || [];
+  const puestosAltoRiesgo = planes?.filter(p => p.riesgoContinuidad === "Alto") || [];
   console.log("[PuestosAltoRiesgo] Puestos Alto Riesgo:", puestosAltoRiesgo);
   console.log("[PuestosAltoRiesgo] Total Alto Riesgo:", puestosAltoRiesgo.length);
 
@@ -46,9 +46,9 @@ export function PuestosAltoRiesgo() {
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <p className="font-semibold text-gray-900">{puesto.puestoClave}</p>
-                    <p className="text-sm text-gray-600">{puesto.cargoPuestoClave}</p>
-                    <p className="text-xs text-gray-500 mt-1">{puesto.departamentoPuestoClave}</p>
+                    <p className="font-semibold text-gray-900">{puesto.colaborador}</p>
+                    <p className="text-sm text-gray-600">{puesto.cargo}</p>
+                    <p className="text-xs text-gray-500 mt-1">{puesto.departamento}</p>
                   </div>
                   <Badge variant="destructive" className="animate-pulse">
                     ALTO RIESGO

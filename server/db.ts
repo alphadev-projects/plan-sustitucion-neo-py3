@@ -852,7 +852,7 @@ export async function getDashboardMetricas() {
   const planes = await getPlanesSuccesion();
   
   const planesTotal = planes.length;
-  const puestosAltoRiesgo = planes.filter(p => !p.sucesor).length;
+  const puestosAltoRiesgo = planes.filter(p => p.riesgoContinuidad === "Alto").length;
   
   // Contar planes de acción por estado (vinculados a planesSuccesion)
   const enProgresoResult = await db.select({ count: sql<number>`COUNT(*)` }).from(planesAccion)
