@@ -320,6 +320,14 @@
 - [x] Indicador visual de progreso editable (0-100%) implementado
 - [x] Crear datos de prueba que generen riesgos Alto/Medio correctamente
 
+## Autenticación y Seguridad - CRÍTICO
+
+- [x] Eliminar login automático - solicitar confirmación manual del usuario
+- [x] Implementar timeout de sesión por inactividad (5-10 minutos)
+- [x] Agregar botón "Iniciar Sesión" visible en login page
+- [x] Permitir recordar credenciales pero NO loguear automáticamente
+- [x] Validar que sesión expire correctamente después de inactividad
+
 ## Problemas Reportados - Sesión Actual (Críticos)
 
 - [x] CRÍTICO: Cambios de progreso ahora se guardan correctamente (corregido updatePlanAccion)

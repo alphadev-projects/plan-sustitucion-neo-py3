@@ -17,6 +17,23 @@ import Auditoria from "./pages/Auditoria";
 import HistorialSucesores from "./pages/HistorialSucesores";
 import ReportesCobertura from "./pages/ReportesCobertura";
 import { useEffect } from "react";
+import { useSessionTimeout } from "@/_core/hooks/useSessionTimeout";
+import { useAuth } from "@/_core/hooks/useAuth";
+import { toast } from "sonner";
+
+function AppContent() {
+  const { logout } = useAuth();
+  
+  // Manejar timeout de sesión a nivel de aplicación
+  useSessionTimeout(() => {
+    logout();
+    toast.error("Sesión expirada por inactividad");
+  });
+
+  return (
+    <Router />
+  );
+}
 
 function Router() {
   return (
@@ -113,7 +130,7 @@ function App() {
       >
         <TooltipProvider>
           <Toaster />
-          <Router />
+          <AppContent />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

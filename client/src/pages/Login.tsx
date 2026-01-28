@@ -7,24 +7,33 @@ import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useSessionTimeout } from "@/_core/hooks/useSessionTimeout";
 
 export default function Login() {
   const [usuario, setUsuario] = useState("");
   const [contraseña, setContraseña] = useState("");
   const [, setLocation] = useLocation();
   const loginMutation = trpc.auth.login.useMutation();
-  const { user, refresh } = useAuth();
+  const { user, refresh, logout } = useAuth();
 
-  // Redirigir si ya está autenticado
+  // Manejar timeout de sesión (10 minutos de inactividad)
+  useSessionTimeout(() => {
+    logout();
+    toast.error("Sesión expirada por inactividad");
+  });
+
+  // NO redirigir automáticamente si ya está autenticado
+  // El usuario debe clickear "Iniciar Sesión" manualmente
+  // Solo redirigir después de un login exitoso
   useEffect(() => {
-    if (user) {
+    if (user && loginMutation.isSuccess) {
       if (user.role === "admin") {
         setLocation("/dashboard");
       } else {
         setLocation("/nomina");
       }
     }
-  }, [user, setLocation]);
+  }, [user, setLocation, loginMutation.isSuccess]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,11 +54,6 @@ export default function Login() {
       toast.error(error.message || "Error al iniciar sesión");
     }
   };
-
-  // Si ya está autenticado, no mostrar nada (el useEffect se encargará de redirigir)
-  if (user) {
-    return null;
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
@@ -73,6 +77,7 @@ export default function Login() {
                 value={usuario}
                 onChange={(e) => setUsuario(e.target.value)}
                 disabled={loginMutation.isPending}
+                autoComplete="username"
               />
             </div>
 
@@ -84,6 +89,7 @@ export default function Login() {
                 value={contraseña}
                 onChange={(e) => setContraseña(e.target.value)}
                 disabled={loginMutation.isPending}
+                autoComplete="current-password"
               />
             </div>
 
@@ -102,6 +108,14 @@ export default function Login() {
               )}
             </Button>
           </form>
+          
+          {user && (
+            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <p className="text-sm text-yellow-800">
+                Sesión detectada. Ingresa tus credenciales nuevamente para continuar.
+              </p>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

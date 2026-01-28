@@ -143,14 +143,11 @@ function PlanSuccesionContent() {
                         : "bg-white border-gray-200 hover:bg-gray-50"
                     }`}
                   >
-                    <div className="font-medium text-sm">{plan.colaborador}</div>
-                    <div className="text-xs text-gray-600">{plan.cargo}</div>
+                    <div className="font-medium text-sm">{plan.puestoClave}</div>
+                    <div className="text-xs text-gray-600">{plan.cargoPuestoClave}</div>
                     <div className="flex gap-1 mt-2">
-                      <Badge className={getRiskBadgeColor(plan.riesgoContinuidad)}>
-                        {plan.riesgoContinuidad}
-                      </Badge>
-                      <Badge className={getPriorityBadgeColor(plan.prioridadSucesion)}>
-                        {plan.prioridadSucesion}
+                      <Badge className={plan.sucesor ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}>
+                        {plan.sucesor ? 'Con Sucesor' : 'Sin Sucesor'}
                       </Badge>
                     </div>
                   </button>
