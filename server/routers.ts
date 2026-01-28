@@ -51,6 +51,8 @@ import {
   getPlanesAccionPorPuestoCritico,
   getPlanesSuccesionConSucesor,
   getPlanesSuccesionConSucesorByDepartamento,
+  validarSucesorUnico,
+  obtenerSucesoresAsignados,
   createPlanAccion,
   updatePlanAccion,
   deletePlanAccion,
@@ -401,6 +403,20 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         return updatePlanSuccesionRiesgo(input.id, input.nuevoRiesgo, input.motivo);
       }),
+
+    // Validación de sucesor único
+    validarSucesor: protectedProcedure
+      .input(z.object({
+        sucesor: z.string(),
+        sucesionPuestoIdActual: z.number().optional(),
+      }))
+      .query(async ({ input }) => {
+        return validarSucesorUnico(input.sucesor, input.sucesionPuestoIdActual);
+      }),
+
+    obtenerSucesoresAsignados: protectedProcedure.query(async () => {
+      return obtenerSucesoresAsignados();
+    }),
 
     // Sincronización de planes faltantes
     sincronizar: adminProcedure.mutation(async () => {

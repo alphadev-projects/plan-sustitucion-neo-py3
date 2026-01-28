@@ -1086,3 +1086,59 @@ export async function getPlanesSuccesionConSucesorByDepartamento(departamento: s
     return 0;
   });
 }
+
+
+// Validar si un sucesor ya está asignado a otro puesto
+export async function validarSucesorUnico(sucesor: string, sucesionPuestoIdActual?: number): Promise<{ valido: boolean; puestoExistente?: string; departamentoExistente?: string }> {
+  if (!sucesor || sucesor.trim() === "") {
+    return { valido: true }; // Sucesor vacío es válido
+  }
+
+  const db = await getDb();
+  if (!db) return { valido: true };
+
+  try {
+    const sucesoresExistentes = await db
+      .select()
+      .from(sucesionPuestos)
+      .where(eq(sucesionPuestos.sucesor, sucesor.trim()));
+
+    // Filtrar el registro actual si se proporciona el ID
+    const otrosSucesores = sucesoresExistentes.filter(s => s.id !== sucesionPuestoIdActual);
+
+    if (otrosSucesores.length > 0) {
+      return {
+        valido: false,
+        puestoExistente: otrosSucesores[0].puestoClave,
+        departamentoExistente: otrosSucesores[0].departamentoPuestoClave
+      };
+    }
+
+    return { valido: true };
+  } catch (error) {
+    console.error("[Database] Error validating successor uniqueness:", error);
+    return { valido: true }; // En caso de error, permitir
+  }
+}
+
+// Obtener todos los sucesores asignados
+export async function obtenerSucesoresAsignados(): Promise<Array<{ sucesor: string; puestoClave: string; departamento: string }>> {
+  const db = await getDb();
+  if (!db) return [];
+
+  try {
+    const sucesores = await db
+      .select({
+        sucesor: sucesionPuestos.sucesor,
+        puestoClave: sucesionPuestos.puestoClave,
+        departamento: sucesionPuestos.departamentoPuestoClave
+      })
+      .from(sucesionPuestos)
+      .where(ne(sucesionPuestos.sucesor, ""));
+
+    return sucesores;
+  } catch (error) {
+    console.error("[Database] Error getting assigned successors:", error);
+    return [];
+  }
+}

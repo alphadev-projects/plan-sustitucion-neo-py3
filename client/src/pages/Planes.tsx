@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRole } from "@/hooks/useRole";
 import { trpc } from "@/lib/trpc";
 import DashboardLayout from "@/components/DashboardLayout";
@@ -37,6 +37,12 @@ export default function Planes() {
   const [editFormData, setEditFormData] = useState<any>(null);
     const [selectedReemplazoId, setSelectedReemplazoId] = useState<string>("");
   const [selectedSucesorId, setSelectedSucesorId] = useState<string>("");
+  const [sucesorDuplicado, setSucesorDuplicado] = useState<{ valido: boolean; puestoExistente?: string; departamentoExistente?: string } | null>(null);
+  
+  const validarSucesor = trpc.sucesion.validarSucesor.useQuery(
+    { sucesor: editFormData?.sucesor || "", sucesionPuestoIdActual: editingPlan?.id },
+    { enabled: !!editFormData?.sucesor && editFormData.puestoClave }
+  );
   
   const updatePlan = trpc.planes.update.useMutation();
   const deletePlan = trpc.planes.delete.useMutation();
@@ -113,8 +119,21 @@ export default function Planes() {
     }
   };
 
+  // Actualizar estado de sucesor duplicado cuando la validación cambie
+  useEffect(() => {
+    if (validarSucesor.data) {
+      setSucesorDuplicado(validarSucesor.data);
+    }
+  }, [validarSucesor.data]);
+
   const handleSaveEdit = async () => {
     if (!editingPlan || !editFormData) return;
+
+    // Validar que el sucesor no esté duplicado
+    if (editFormData.puestoClave && editFormData.sucesor && sucesorDuplicado && !sucesorDuplicado.valido) {
+      toast.error(`El sucesor "${editFormData.sucesor}" ya está asignado a "${sucesorDuplicado.puestoExistente}" en ${sucesorDuplicado.departamentoExistente}`);
+      return;
+    }
 
     try {
       await updatePlan.mutateAsync({
@@ -397,6 +416,15 @@ export default function Planes() {
                           </option>
                         ))}
                       </select>
+                      {sucesorDuplicado && !sucesorDuplicado.valido && (
+                        <div className="flex items-start gap-2 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                          <AlertCircle className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+                          <div className="text-sm text-yellow-800">
+                            <p className="font-semibold">Advertencia: Sucesor duplicado</p>
+                            <p>Este colaborador ya está asignado como sucesor de "{sucesorDuplicado.puestoExistente}" en {sucesorDuplicado.departamentoExistente}</p>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </>
                 )}
