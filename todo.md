@@ -765,3 +765,39 @@
 - [x] Realizar pruebas exhaustivas - CONFIRMADO: Riesgos correctos en UI
 - [x] Verificar: 4 puestos Alto (sin reemplazo), 2 puestos Bajo (con reemplazo)
 - [x] Guardar checkpoint
+
+
+## Fase Actual: Consolidar Edición de Reemplazo y Sucesor (Sesión Actual)
+
+### Funcionalidades Pendientes
+
+- [ ] Mejorar formulario de edición con dropdowns inteligentes para reemplazo
+  - [ ] Reemplazar campo de texto por dropdown de colaboradores
+  - [ ] Traer departamento y cargo automáticamente al seleccionar colaborador
+  - [ ] Validar que no se repitan colaboradores en múltiples puestos
+
+- [ ] Agregar sección Sucesión condicional en formulario de edición
+  - [ ] Mostrar sección Sucesión solo si "Puesto Clave" = Sí
+  - [ ] Dropdown para seleccionar sucesor
+  - [ ] Traer departamento y cargo del sucesor automáticamente
+  - [ ] Opción "Sin Sucesor"
+
+- [ ] Actualizar lógica de sincronización con sucesion_puestos
+  - [ ] Crear/actualizar registro en sucesion_puestos al guardar
+  - [ ] Eliminar registro de sucesion_puestos si se desmarca "Puesto Clave"
+  - [ ] Registrar cambios en historial_sucesores
+
+- [ ] Agregar columna Sucesor en tabla de Plan de Sustitución
+  - [ ] Mostrar sucesor asignado al lado del reemplazo
+  - [ ] Actualizar vista de listado de planes
+
+- [ ] Permitir asignar/editar sucesor en Dashboard de Sucesión
+  - [ ] Agregar botón "Asignar Sucesor" en puestos sin sucesor
+  - [ ] Abrir diálogo para seleccionar departamento y colaborador
+  - [ ] Registrar en sucesion_puestos e historial_sucesores
+
+- [ ] Probar flujo completo
+  - [ ] Crear plan con puesto clave y sucesor
+  - [ ] Editar plan y cambiar sucesor
+  - [ ] Desmarcar puesto clave y verificar sincronización
+  - [ ] Verificar que Dashboard se actualiza automáticamente
