@@ -607,18 +607,18 @@ export async function getPlanesSuccesion() {
   const db = await getDb();
   if (!db) return [];
   
-  // Traer puestos criticos directamente de planesSuccesion
-  const planesData = await db.select().from(planesSuccesion);
+  // Traer puestos críticos de sucesion_puestos (tabla consolidada)
+  const planesData = await db.select().from(sucesionPuestos);
   
-  // Ordenar por reemplazo para que los vacíos/sin reemplazo queden primero
+  // Ordenar por sucesor para que los vacíos/sin sucesor queden primero
   const planesOrdenados = planesData.sort((a, b) => {
-    const aReemplazo = (a.reemplazo || "").trim();
-    const bReemplazo = (b.reemplazo || "").trim();
+    const aSucesor = (a.sucesor || "").trim();
+    const bSucesor = (b.sucesor || "").trim();
     // Primero los vacíos, luego los NO APLICA, luego los demás
-    if (aReemplazo === "" && bReemplazo !== "") return -1;
-    if (aReemplazo !== "" && bReemplazo === "") return 1;
-    const aNoAplica = aReemplazo.toUpperCase() === "NO APLICA";
-    const bNoAplica = bReemplazo.toUpperCase() === "NO APLICA";
+    if (aSucesor === "" && bSucesor !== "") return -1;
+    if (aSucesor !== "" && bSucesor === "") return 1;
+    const aNoAplica = aSucesor.toUpperCase() === "NO APLICA";
+    const bNoAplica = bSucesor.toUpperCase() === "NO APLICA";
     if (aNoAplica && !bNoAplica) return -1;
     if (!aNoAplica && bNoAplica) return 1;
     return 0;

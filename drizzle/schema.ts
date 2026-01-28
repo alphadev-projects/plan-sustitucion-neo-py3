@@ -187,7 +187,9 @@ export const sucesionPuestos = mysqlTable("sucesion_puestos", {
   usuario: varchar("usuario", { length: 100 }).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  uniquePuestoDepartamento: unique("unique_puesto_departamento").on(table.puestoClave, table.departamentoPuestoClave),
+}));
 
 export type SucesionPuesto = typeof sucesionPuestos.$inferSelect;
 export type InsertSucesionPuesto = typeof sucesionPuestos.$inferInsert;

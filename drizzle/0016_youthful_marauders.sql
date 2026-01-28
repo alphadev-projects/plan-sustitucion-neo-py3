@@ -1,0 +1,1 @@
+ALTER TABLE `sucesion_puestos` ADD CONSTRAINT `unique_puesto_departamento` UNIQUE(`puestoClave`,`departamentoPuestoClave`);
