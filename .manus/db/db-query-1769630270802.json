@@ -1,0 +1,55 @@
+{
+  "query": "SELECT nombre, cargo, departamento FROM empleados WHERE nombre LIKE '%OMAR%' OR nombre LIKE '%ULTIMO%' OR nombre LIKE '%ALEX%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT nombre, cargo, departamento FROM empleados WHERE nombre LIKE '%OMAR%' OR nombre LIKE '%ULTIMO%' OR nombre LIKE '%ALEX%';",
+  "rows": [
+    {
+      "nombre": "ALEX MARTINEZ SANDOVAL",
+      "cargo": "Supervisor de Contabilidad",
+      "departamento": "Contabilidad"
+    },
+    {
+      "nombre": "ALEX JUNIOR CARDOZO PEREZ",
+      "cargo": "Diseñador Grafico Junior",
+      "departamento": "Marketing"
+    },
+    {
+      "nombre": "ALEXIS PRIETO ORTEGA",
+      "cargo": "Tecnico de Planta Externa II",
+      "departamento": "FTTX"
+    },
+    {
+      "nombre": "ALEXIS DAVID CABALLERO BENITEZ",
+      "cargo": "Tecnico de Soporte II",
+      "departamento": "FTTH"
+    },
+    {
+      "nombre": "ALEXIS RICARDO ROBLEDO MOLINAS",
+      "cargo": "Supervisor de Desarrollo Organizacional y SYSO",
+      "departamento": "Desarrollo Humano"
+    },
+    {
+      "nombre": "DEBORA ALEXANDRA GAMEZ ROMERO",
+      "cargo": "Supervisora de Central de Servicios Administrativo",
+      "departamento": "Relacionamiento con el Cliente"
+    },
+    {
+      "nombre": "JHONATAN ALEXANDER VILLALBA PAIVA",
+      "cargo": "Analista de NOC",
+      "departamento": "NOC"
+    },
+    {
+      "nombre": "OMAR GABRIEL SALCEDO VERA",
+      "cargo": "Ejecutivo de Ventas Corporativas - ASU",
+      "departamento": "Desarrollo De Negocios"
+    },
+    {
+      "nombre": "ULTIMO PARA PROBAR",
+      "cargo": "ULTIMO PARA PROBAR",
+      "departamento": "PROBAR"
+    }
+  ],
+  "messages": [],
+  "stdout": "nombre\tcargo\tdepartamento\nALEX MARTINEZ SANDOVAL\tSupervisor de Contabilidad\tContabilidad\nALEX JUNIOR CARDOZO PEREZ\tDiseñador Grafico Junior\tMarketing\nALEXIS PRIETO ORTEGA\tTecnico de Planta Externa II\tFTTX\nALEXIS DAVID CABALLERO BENITEZ\tTecnico de Soporte II\tFTTH\nALEXIS RICARDO ROBLEDO MOLINAS\tSupervisor de Desarrollo Organizacional y SYSO\tDesarrollo Humano\nDEBORA ALEXANDRA GAMEZ ROMERO\tSupervisora de Central de Servicios Administrativo\tRelacionamiento con el Cliente\nJHONATAN ALEXANDER VILLALBA PAIVA\tAnalista de NOC\tNOC\nOMAR GABRIEL SALCEDO VERA\tEjecutivo de Ventas Corporativas - ASU\tDesarrollo De Negocios\nULTIMO PARA PROBAR\tULTIMO PARA PROBAR\tPROBAR\n",
+  "stderr": "",
+  "execution_time_ms": 62
+}

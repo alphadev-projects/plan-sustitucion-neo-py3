@@ -1,0 +1,33 @@
+{
+  "query": "SELECT * FROM planes_sustitucion LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT * FROM planes_sustitucion LIMIT 1;",
+  "rows": [
+    {
+      "id": "30002",
+      "empleadoId": "200",
+      "departamento": "Desarrollo De Negocios",
+      "colaborador": "OMAR GABRIEL SALCEDO VERA",
+      "cargo": "Ejecutivo de Ventas Corporativas - ASU",
+      "departamentoReemplazo": "N/A",
+      "reemplazo": "NO APLICA",
+      "cargoReemplazo": "N/A",
+      "puestoClave": "Si",
+      "usuario": "Alexis Robledo",
+      "createdAt": "2026-01-23 20:17:46",
+      "updatedAt": "2026-01-23 20:17:47",
+      "tipoReemplazo": "individual",
+      "cargoPoolReemplazo": "NULL",
+      "departamentoPoolReemplazo": "NULL",
+      "cargoUnico": "Si",
+      "cantidadPersonasMismoCargo": "1",
+      "riesgoContinuidad": "Alto",
+      "poolPotencial": "No",
+      "riesgoCritico": "No",
+      "prioridadSucesion": "Alta"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\templeadoId\tdepartamento\tcolaborador\tcargo\tdepartamentoReemplazo\treemplazo\tcargoReemplazo\tpuestoClave\tusuario\tcreatedAt\tupdatedAt\ttipoReemplazo\tcargoPoolReemplazo\tdepartamentoPoolReemplazo\tcargoUnico\tcantidadPersonasMismoCargo\triesgoContinuidad\tpoolPotencial\triesgoCritico\tprioridadSucesion\n30002\t200\tDesarrollo De Negocios\tOMAR GABRIEL SALCEDO VERA\tEjecutivo de Ventas Corporativas - ASU\tN/A\tNO APLICA\tN/A\tSi\tAlexis Robledo\t2026-01-23 20:17:46\t2026-01-23 20:17:47\tindividual\tNULL\tNULL\tSi\t1\tAlto\tNo\tNo\tAlta\n",
+  "stderr": "",
+  "execution_time_ms": 172
+}

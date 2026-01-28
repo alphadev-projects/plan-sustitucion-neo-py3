@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE sucesion_puestos sp\nSET sp.cargoSucesor = (\n  SELECT e.cargo FROM empleados e WHERE e.nombre = sp.sucesor LIMIT 1\n),\nsp.departamentoSucesor = (\n  SELECT e.departamento FROM empleados e WHERE e.nombre = sp.sucesor LIMIT 1\n)\nWHERE sp.sucesor != '' AND sp.sucesor IS NOT NULL;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute UPDATE sucesion_puestos sp\nSET sp.cargoSucesor = (\n  SELECT e.cargo FROM empleados e WHERE e.nombre = sp.sucesor LIMIT 1\n),\nsp.departamentoSucesor = (\n  SELECT e.departamento FROM empleados e WHERE e.nombre = sp.sucesor LIMIT 1\n)\nWHERE sp.sucesor != '' AND sp.sucesor IS NOT NULL;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 69
+}

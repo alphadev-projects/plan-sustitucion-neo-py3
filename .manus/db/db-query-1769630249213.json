@@ -1,0 +1,28 @@
+{
+  "query": "SELECT DISTINCT sp.sucesor, e.nombre, e.cargo, e.departamento \nFROM sucesion_puestos sp\nLEFT JOIN empleados e ON LOWER(TRIM(e.nombre)) = LOWER(TRIM(sp.sucesor))\nWHERE sp.sucesor != '' LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT DISTINCT sp.sucesor, e.nombre, e.cargo, e.departamento \nFROM sucesion_puestos sp\nLEFT JOIN empleados e ON LOWER(TRIM(e.nombre)) = LOWER(TRIM(sp.sucesor))\nWHERE sp.sucesor != '' LIMIT 10;",
+  "rows": [
+    {
+      "sucesor": "ALEX MARTINEZ SANDOVAL",
+      "nombre": "ALEX MARTINEZ SANDOVAL",
+      "cargo": "Supervisor de Contabilidad",
+      "departamento": "Contabilidad"
+    },
+    {
+      "sucesor": "OMAR GABRIEL SALCEDO VERA",
+      "nombre": "OMAR GABRIEL SALCEDO VERA",
+      "cargo": "Ejecutivo de Ventas Corporativas - ASU",
+      "departamento": "Desarrollo De Negocios"
+    },
+    {
+      "sucesor": "ULTIMO PARA PROBAR",
+      "nombre": "ULTIMO PARA PROBAR",
+      "cargo": "ULTIMO PARA PROBAR",
+      "departamento": "PROBAR"
+    }
+  ],
+  "messages": [],
+  "stdout": "sucesor\tnombre\tcargo\tdepartamento\nALEX MARTINEZ SANDOVAL\tALEX MARTINEZ SANDOVAL\tSupervisor de Contabilidad\tContabilidad\nOMAR GABRIEL SALCEDO VERA\tOMAR GABRIEL SALCEDO VERA\tEjecutivo de Ventas Corporativas - ASU\tDesarrollo De Negocios\nULTIMO PARA PROBAR\tULTIMO PARA PROBAR\tULTIMO PARA PROBAR\tPROBAR\n",
+  "stderr": "",
+  "execution_time_ms": 56
+}

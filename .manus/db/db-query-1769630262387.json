@@ -1,0 +1,31 @@
+{
+  "query": "SELECT id, puestoClave, sucesor, cargoSucesor, departamentoSucesor FROM sucesion_puestos WHERE sucesor != '' AND sucesor IS NOT NULL;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT id, puestoClave, sucesor, cargoSucesor, departamentoSucesor FROM sucesion_puestos WHERE sucesor != '' AND sucesor IS NOT NULL;",
+  "rows": [
+    {
+      "id": "30004",
+      "puestoClave": "ABRAHAN VIANCONI VILLALBA",
+      "sucesor": "OMAR GABRIEL SALCEDO VERA",
+      "cargoSucesor": "Ejecutivo de Ventas Corporativas - ASU",
+      "departamentoSucesor": "Desarrollo De Negocios"
+    },
+    {
+      "id": "30005",
+      "puestoClave": "FATIMA MARICEL GOLNNER GIMENEZ",
+      "sucesor": "ULTIMO PARA PROBAR",
+      "cargoSucesor": "ULTIMO PARA PROBAR",
+      "departamentoSucesor": "PROBAR"
+    },
+    {
+      "id": "30006",
+      "puestoClave": "ROQUE EVER YEGROS COLMAN",
+      "sucesor": "ALEX MARTINEZ SANDOVAL",
+      "cargoSucesor": "Supervisor de Contabilidad",
+      "departamentoSucesor": "Contabilidad"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tpuestoClave\tsucesor\tcargoSucesor\tdepartamentoSucesor\n30004\tABRAHAN VIANCONI VILLALBA\tOMAR GABRIEL SALCEDO VERA\tEjecutivo de Ventas Corporativas - ASU\tDesarrollo De Negocios\n30005\tFATIMA MARICEL GOLNNER GIMENEZ\tULTIMO PARA PROBAR\tULTIMO PARA PROBAR\tPROBAR\n30006\tROQUE EVER YEGROS COLMAN\tALEX MARTINEZ SANDOVAL\tSupervisor de Contabilidad\tContabilidad\n",
+  "stderr": "",
+  "execution_time_ms": 57
+}

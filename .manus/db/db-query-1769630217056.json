@@ -1,0 +1,24 @@
+{
+  "query": "SELECT * FROM sucesion_puestos LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute SELECT * FROM sucesion_puestos LIMIT 1;",
+  "rows": [
+    {
+      "id": "30001",
+      "planSustitucionId": "30002",
+      "puestoClave": "OMAR GABRIEL SALCEDO VERA",
+      "departamentoPuestoClave": "Desarrollo De Negocios",
+      "cargoPuestoClave": "Ejecutivo de Ventas Corporativas - ASU",
+      "sucesor": "",
+      "departamentoSucesor": "",
+      "cargoSucesor": "",
+      "aplicaSucesion": "No",
+      "usuario": "Alexis Robledo",
+      "createdAt": "2026-01-28 12:50:06",
+      "updatedAt": "2026-01-28 12:50:06"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tplanSustitucionId\tpuestoClave\tdepartamentoPuestoClave\tcargoPuestoClave\tsucesor\tdepartamentoSucesor\tcargoSucesor\taplicaSucesion\tusuario\tcreatedAt\tupdatedAt\n30001\t30002\tOMAR GABRIEL SALCEDO VERA\tDesarrollo De Negocios\tEjecutivo de Ventas Corporativas - ASU\t\t\t\tNo\tAlexis Robledo\t2026-01-28 12:50:06\t2026-01-28 12:50:06\n",
+  "stderr": "",
+  "execution_time_ms": 56
+}
