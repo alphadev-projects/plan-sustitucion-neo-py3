@@ -16,6 +16,7 @@ import PlanSuccesionDashboard from "./pages/PlanSuccesionDashboard";
 import Auditoria from "./pages/Auditoria";
 import HistorialSucesores from "./pages/HistorialSucesores";
 import ReportesCobertura from "./pages/ReportesCobertura";
+import { DashboardAlertas } from "./pages/DashboardAlertas";
 import { useEffect } from "react";
 import { useSessionTimeout } from "@/_core/hooks/useSessionTimeout";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -107,6 +108,13 @@ function Router() {
         {(props) => (
           <ProtectedRoute requiredRole="admin">
             <ReportesCobertura {...props} />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/alertas-tempranas">
+        {(props) => (
+          <ProtectedRoute requiredRole="admin">
+            <DashboardAlertas {...props} />
           </ProtectedRoute>
         )}
       </Route>

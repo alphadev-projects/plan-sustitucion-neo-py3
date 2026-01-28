@@ -816,3 +816,9 @@
   - [ ] Editar plan y cambiar sucesor
   - [ ] Desmarcar puesto clave y verificar sincronización
   - [ ] Verificar que Dashboard se actualiza automáticamente
+
+
+## Próximas Mejoras - Pasos 1 y 3
+
+- [x] Paso 1: Agregar información del sucesor en ventana de Plan de Acción (nombre, cargo, departamento)
+- [x] Paso 3: Crear dashboard de alertas tempranas para puestos críticos sin sucesor

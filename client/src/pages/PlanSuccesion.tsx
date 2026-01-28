@@ -177,7 +177,25 @@ function PlanSuccesionContent() {
                         <Badge className="mt-1">{planSeleccionado.sucesor ? "Con Sucesor" : "Sin Sucesor"}</Badge>
                       </div>
                     </div>
-                    {!planSeleccionado.sucesor && (
+                    {planSeleccionado.sucesor ? (
+                      <div className="border-l-4 border-green-500 bg-green-50 p-4 rounded">
+                        <h4 className="font-semibold text-green-900 mb-3">Sucesor Identificado</h4>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="text-xs font-medium text-gray-600">Nombre</label>
+                            <p className="text-sm font-medium">{planSeleccionado.sucesor}</p>
+                          </div>
+                          <div>
+                            <label className="text-xs font-medium text-gray-600">Cargo</label>
+                            <p className="text-sm">{planSeleccionado.cargoSucesor || "No especificado"}</p>
+                          </div>
+                          <div className="col-span-2">
+                            <label className="text-xs font-medium text-gray-600">Departamento</label>
+                            <p className="text-sm">{planSeleccionado.departamentoSucesor || "No especificado"}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
                       <Alert className="border-red-200 bg-red-50">
                         <AlertCircle className="h-4 w-4 text-red-600" />
                         <AlertDescription className="text-red-800">
