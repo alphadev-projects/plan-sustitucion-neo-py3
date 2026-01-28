@@ -64,7 +64,7 @@ export default function Login() {
           </div>
           <CardTitle className="text-2xl font-bold text-center">Iniciar Sesión</CardTitle>
           <CardDescription className="text-center">
-            Sistema de Gestión de Planes de Sustitución
+            Sistema de Gestión de Planes de Sustitución y Sucesión
           </CardDescription>
         </CardHeader>
         <CardContent>
