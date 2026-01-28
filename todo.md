@@ -822,3 +822,10 @@
 
 - [x] Paso 1: Agregar información del sucesor en ventana de Plan de Acción (nombre, cargo, departamento)
 - [x] Paso 3: Crear dashboard de alertas tempranas para puestos críticos sin sucesor
+
+
+## Pasos Recomendados - Automatización e Integridad de Datos
+
+- [x] Paso 1: Crear trigger para automatizar llenado de cargoSucesor y departamentoSucesor (implementado en backend)
+- [x] Paso 2: Agregar validación de integridad de sucesores en formulario (procedimiento actualizarSucesor agregado)
+- [ ] Paso 3: Implementar exportación de matriz de sucesión a PDF (pendiente - requiere más tiempo)

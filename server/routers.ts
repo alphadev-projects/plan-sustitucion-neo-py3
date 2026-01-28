@@ -54,6 +54,8 @@ import {
   getPlanesSuccesionConSucesorByDepartamento,
   validarSucesorUnico,
   obtenerSucesoresAsignados,
+  actualizarSucesor,
+  buscarDatosSucesor,
   createPlanAccion,
   updatePlanAccion,
   deletePlanAccion,
@@ -418,6 +420,15 @@ export const appRouter = router({
     obtenerSucesoresAsignados: protectedProcedure.query(async () => {
       return obtenerSucesoresAsignados();
     }),
+
+    actualizarSucesor: adminProcedure
+      .input(z.object({
+        sucesionPuestoId: z.number(),
+        nuevoSucesor: z.string(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        return actualizarSucesor(input.sucesionPuestoId, input.nuevoSucesor, ctx.user?.name || "usuario");
+      }),
 
     // Sincronización de planes faltantes
     sincronizar: adminProcedure.mutation(async () => {

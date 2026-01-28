@@ -1163,3 +1163,77 @@ export async function obtenerHistorialSucesores() {
     throw new Error("No se pudo obtener el historial de sucesores");
   }
 }
+
+
+// Buscar datos del sucesor (cargo y departamento) desde tabla empleados
+export async function buscarDatosSucesor(nombreSucesor: string): Promise<{ cargo: string | null; departamento: string | null }> {
+  const db = await getDb();
+  if (!db) return { cargo: null, departamento: null };
+
+  try {
+    const sucesor = await db
+      .select({
+        cargo: empleados.cargo,
+        departamento: empleados.departamento
+      })
+      .from(empleados)
+      .where(sql`LOWER(TRIM(${empleados.nombre})) = LOWER(TRIM(${nombreSucesor}))`);
+
+    if (sucesor.length > 0) {
+      return {
+        cargo: sucesor[0].cargo || null,
+        departamento: sucesor[0].departamento || null
+      };
+    }
+
+    return { cargo: null, departamento: null };
+  } catch (error) {
+    console.error("[Database] Error searching successor data:", error);
+    return { cargo: null, departamento: null };
+  }
+}
+
+// Actualizar sucesor con validación e llenado automático de datos
+export async function actualizarSucesor(sucesionPuestoId: number, nuevoSucesor: string, usuario: string): Promise<SucesionPuesto | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    // Buscar datos del sucesor
+    const datosSucesor = await buscarDatosSucesor(nuevoSucesor);
+
+    // Actualizar registro con datos del sucesor
+    await db
+      .update(sucesionPuestos)
+      .set({
+        sucesor: nuevoSucesor,
+        cargoSucesor: datosSucesor.cargo || "",
+        departamentoSucesor: datosSucesor.departamento || "",
+        usuario: usuario,
+      })
+      .where(eq(sucesionPuestos.id, sucesionPuestoId));
+
+    // Obtener el registro actualizado
+    const registroActual = await db
+      .select()
+      .from(sucesionPuestos)
+      .where(eq(sucesionPuestos.id, sucesionPuestoId));
+
+    if (registroActual.length > 0) {
+      // Registrar en historial
+      await db.insert(historialSucesores).values({
+        sucesionPuestoId: sucesionPuestoId,
+        sucesorAnterior: registroActual[0].sucesor || "",
+        sucesorNuevo: nuevoSucesor,
+        usuario: usuario,
+      });
+
+      return registroActual[0];
+    }
+
+    return null;
+  } catch (error) {
+    console.error("[Database] Error updating successor:", error);
+    return null;
+  }
+}
