@@ -15,6 +15,7 @@ import PlanSuccesion from "./pages/PlanSuccesion";
 import PlanSuccesionDashboard from "./pages/PlanSuccesionDashboard";
 import Auditoria from "./pages/Auditoria";
 import HistorialSucesores from "./pages/HistorialSucesores";
+import ReportesCobertura from "./pages/ReportesCobertura";
 import { useEffect } from "react";
 
 function Router() {
@@ -82,6 +83,13 @@ function Router() {
         {(props) => (
           <ProtectedRoute requiredRole="admin">
             <HistorialSucesores {...props} />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/reportes-cobertura">
+        {(props) => (
+          <ProtectedRoute requiredRole="admin">
+            <ReportesCobertura {...props} />
           </ProtectedRoute>
         )}
       </Route>

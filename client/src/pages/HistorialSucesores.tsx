@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Calendar, User, FileText } from "lucide-react";
+import DashboardLayout from "@/components/DashboardLayout";
 
 export default function HistorialSucesores() {
   const { data: historial, isLoading } = trpc.sucesion.obtenerHistorialSucesores.useQuery();
@@ -27,7 +28,8 @@ export default function HistorialSucesores() {
   };
 
   return (
-    <div className="space-y-6">
+    <DashboardLayout>
+      <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Historial de Cambios de Sucesores</h1>
         <p className="text-muted-foreground mt-2">
@@ -159,6 +161,7 @@ export default function HistorialSucesores() {
           )}
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }
