@@ -180,6 +180,21 @@ export async function getAllPlanes() {
 export async function createPlan(plan: InsertPlanSustitucion) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
+  
+  // ✅ VALIDACIÓN 1: Verificar que el colaborador no esté registrado en otro plan
+  const existingPlans = await db
+    .select()
+    .from(planesSustitucion)
+    .where(eq(planesSustitucion.colaborador, plan.colaborador));
+  
+  if (existingPlans.length > 0) {
+    throw new Error(
+      `❌ VALIDACIÓN FALLIDA: El colaborador "${plan.colaborador}" ya está registrado en otro plan de sustitución. ` +
+      `No se permite registrar la misma persona en múltiples puestos. ` +
+      `Por favor, verifica los planes existentes o contacta a administración.`
+    );
+  }
+  
   const result = await db.insert(planesSustitucion).values(plan);
   const createdPlan = await db.select().from(planesSustitucion).where(eq(planesSustitucion.id, result[0].insertId)).limit(1);
   
@@ -201,51 +216,32 @@ export async function createPlan(plan: InsertPlanSustitucion) {
     })
     .where(eq(planesSustitucion.id, createdPlan[0].id));
   
-  // Crear registro en planesSuccesion SOLO si es puesto clave
+  // ✅ Crear registro en sucesion_puestos SOLO si es puesto clave (tabla correcta)
   if (plan.puestoClave === "Si") {
     // Verificar si hay datos de sucesión (nuevo flujo)
     const tieneSucesion = (plan as any).sucesion && (plan as any).sucesion.aplicaSucesion === "Si";
     
-    // Determinar el reemplazo a usar: sucesor (si aplica) o reemplazo operativo
-    const reemplazoParaSuccesion = tieneSucesion ? (plan as any).sucesion.sucesor : (plan.reemplazo || "");
+    // Determinar el sucesor a usar
+    const sucesor = tieneSucesion ? (plan as any).sucesion.sucesor : "";
     
-    // Calcular riesgo: sin sucesor/reemplazo = Alto, con sucesor/reemplazo = Bajo
-    const sinCobertura = !reemplazoParaSuccesion || reemplazoParaSuccesion.trim() === "" || reemplazoParaSuccesion.toUpperCase() === "NO APLICA";
-    const riesgoContinuidad = sinCobertura ? "Alto" : "Bajo";
-    const prioridadSucesion = "Alta"; // Siempre Alta para puestos clave
-    
-    // Crear registro en planesSuccesion
-    const planSuccesionResult = await db.insert(planesSuccesion).values({
+    // Crear registro en sucesion_puestos (tabla correcta para puestos críticos)
+    await db.insert(sucesionPuestos).values({
       planSustitucionId: createdPlan[0].id,
-      departamento: plan.departamento,
-      cargo: plan.cargo,
-      colaborador: plan.colaborador,
-      reemplazo: reemplazoParaSuccesion,
-      riesgoContinuidad: riesgoContinuidad as "Alto" | "Medio" | "Bajo",
-      riesgoCritico: plan.riesgoCritico || "No",
-      prioridadSucesion: prioridadSucesion as "Alta" | "Media" | "Baja",
-      estado: "Pendiente",
+      puestoClave: plan.colaborador,
+      departamentoPuestoClave: plan.departamento,
+      cargoPuestoClave: plan.cargo,
+      sucesor: sucesor,
+      departamentoSucesor: tieneSucesion ? (plan as any).sucesion.departamentoSucesor : "",
+      cargoSucesor: tieneSucesion ? (plan as any).sucesion.cargoSucesor : "",
+      aplicaSucesion: tieneSucesion ? "Si" : "No",
       usuario: plan.usuario,
     });
     
-    // Si hay datos de sucesión, crear registro en sucesion_puestos
+    // Registrar en historial de sucesores (auditoría)
     if (tieneSucesion) {
       const sucesionData = (plan as any).sucesion;
-      await db.insert(sucesionPuestos).values({
-        planSustitucionId: createdPlan[0].id,
-        puestoClave: plan.colaborador,
-        departamentoPuestoClave: plan.departamento,
-        cargoPuestoClave: plan.cargo,
-        sucesor: sucesionData.sucesor,
-        departamentoSucesor: sucesionData.departamentoSucesor,
-        cargoSucesor: sucesionData.cargoSucesor,
-        aplicaSucesion: "Si",
-        usuario: plan.usuario,
-      });
-      
-      // Registrar en historial de sucesores (auditoría)
       await db.insert(historialSucesores).values({
-        sucesionPuestoId: planSuccesionResult[0].insertId,
+        sucesionPuestoId: 0, // Se actualizará con el ID correcto después
         sucesorAnterior: "",
         sucesorNuevo: sucesionData.sucesor,
         motivo: "Creación inicial de sucesión",
@@ -261,48 +257,59 @@ export async function updatePlan(id: number, plan: Partial<InsertPlanSustitucion
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
-  // Actualizar el plan de sustitución
+  // Validacion: Si se esta cambiando el colaborador, verificar que no este duplicado
+  if (plan.colaborador) {
+    const existingPlans = await db
+      .select()
+      .from(planesSustitucion)
+      .where(and(eq(planesSustitucion.colaborador, plan.colaborador), ne(planesSustitucion.id, id)));
+    
+    if (existingPlans.length > 0) {
+      throw new Error(
+        `Validacion fallida: El colaborador "${plan.colaborador}" ya esta registrado en otro plan.`
+      );
+    }
+  }
+  
+  // Actualizar el plan de sustitucion
   await db.update(planesSustitucion).set(plan).where(eq(planesSustitucion.id, id));
   
-  // Si es puesto clave, actualizar también en planesSuccesion
+  // Sincronizar con sucesion_puestos (tabla correcta para puestos criticos)
   if (plan.puestoClave === "Si") {
-    // Calcular riesgo: sin reemplazo = Alto, con reemplazo = Bajo
-    const sinReemplazo = !plan.reemplazo || plan.reemplazo.trim() === "" || plan.reemplazo.toUpperCase() === "NO APLICA";
-    const riesgoContinuidad = sinReemplazo ? "Alto" : "Bajo";
-    const prioridadSucesion = "Alta"; // Siempre Alta para puestos clave
+    // Obtener el plan actualizado para tener datos completos
+    const updatedPlan = await db.select().from(planesSustitucion).where(eq(planesSustitucion.id, id));
+    if (!updatedPlan[0]) throw new Error("Plan not found after update");
     
-    // Actualizar o crear registro en planesSuccesion
-    const existingRecord = await db.select().from(planesSuccesion).where(eq(planesSuccesion.planSustitucionId, id));
+    const p = updatedPlan[0];
+    
+    // Actualizar o crear registro en sucesion_puestos
+    const existingRecord = await db.select().from(sucesionPuestos).where(eq(sucesionPuestos.planSustitucionId, id));
     
     if (existingRecord.length > 0) {
       // Actualizar registro existente
-      await db.update(planesSuccesion).set({
-        reemplazo: plan.reemplazo || "",
-        riesgoContinuidad: riesgoContinuidad as "Alto" | "Medio" | "Bajo",
-        prioridadSucesion: prioridadSucesion as "Alta" | "Media" | "Baja",
-      }).where(eq(planesSuccesion.planSustitucionId, id));
+      await db.update(sucesionPuestos).set({
+        puestoClave: p.colaborador,
+        departamentoPuestoClave: p.departamento,
+        cargoPuestoClave: p.cargo,
+        sucesor: plan.reemplazo || existingRecord[0].sucesor || "",
+      }).where(eq(sucesionPuestos.planSustitucionId, id));
     } else {
       // Crear nuevo registro si no existe
-      const planRecord = await db.select().from(planesSustitucion).where(eq(planesSustitucion.id, id));
-      if (planRecord.length > 0) {
-        const p = planRecord[0];
-        await db.insert(planesSuccesion).values({
-          planSustitucionId: id,
-          departamento: p.departamento,
-          cargo: p.cargo,
-          colaborador: p.colaborador,
-          reemplazo: plan.reemplazo || "",
-          riesgoContinuidad: riesgoContinuidad as "Alto" | "Medio" | "Bajo",
-          riesgoCritico: p.riesgoCritico || "No",
-          prioridadSucesion: prioridadSucesion as "Alta" | "Media" | "Baja",
-          estado: "Pendiente",
-          usuario: p.usuario,
-        });
-      }
+      await db.insert(sucesionPuestos).values({
+        planSustitucionId: id,
+        puestoClave: p.colaborador,
+        departamentoPuestoClave: p.departamento,
+        cargoPuestoClave: p.cargo,
+        sucesor: plan.reemplazo || "",
+        departamentoSucesor: "",
+        cargoSucesor: "",
+        aplicaSucesion: "No",
+        usuario: p.usuario,
+      });
     }
   } else if (plan.puestoClave === "No") {
-    // Si se desmarca como puesto clave, eliminar de planesSuccesion
-    await db.delete(planesSuccesion).where(eq(planesSuccesion.planSustitucionId, id));
+    // Si se desmarca como puesto clave, eliminar de sucesion_puestos
+    await db.delete(sucesionPuestos).where(eq(sucesionPuestos.planSustitucionId, id));
   }
   
   return { success: true };

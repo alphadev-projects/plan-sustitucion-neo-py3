@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reportes Disponibles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%); display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+        .content { flex: 1; padding: 50px 60px 30px 80px; display: flex; flex-direction: column; }
+        .title { font-size: 42px; font-weight: 800; color: #FF00FF; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+        .reports-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; flex: 1; }
+        .report-box { background: rgba(255, 0, 255, 0.05); border-left: 3px solid #FF00FF; padding: 20px 25px; display: flex; flex-direction: column; }
+        .report-name { font-size: 14px; font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+        .report-purpose { font-size: 13px; color: #FFFFFF; font-weight: 600; margin-bottom: 12px; line-height: 1.5; }
+        .report-metrics { font-size: 12px; color: #E6E6FA; line-height: 1.6; }
+        .metric-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+        .metric-icon { color: #FF00FF; flex-shrink: 0; font-weight: 700; font-size: 11px; }
+        .metric-text { color: #E6E6FA; font-size: 12px; }
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="content">
+            <h1 class="title">Reportes Disponibles</h1>
+            
+            <div class="reports-grid">
+                <!-- Reporte de Cobertura -->
+                <div class="report-box">
+                    <div class="report-name">Reporte de Cobertura</div>
+                    <div class="report-purpose">Análisis general de cobertura de sucesión en la organización</div>
+                    <div class="report-metrics">
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Porcentaje de cobertura por departamento</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Puestos críticos identificados vs. con sucesor</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Tendencia histórica de cobertura</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Comparativa con meta organizacional (≥80%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reporte de Sucesores -->
+                <div class="report-box">
+                    <div class="report-name">Reporte de Sucesores</div>
+                    <div class="report-purpose">Detalle de sucesores identificados y su estado de desarrollo</div>
+                    <div class="report-metrics">
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Listado de sucesores por puesto crítico</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Estado de desarrollo (En Progreso/Listo/En Riesgo)</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Competencias desarrolladas vs. pendientes</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Tiempo de preparación estimado</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reporte de Riesgos -->
+                <div class="report-box">
+                    <div class="report-name">Reporte de Riesgos</div>
+                    <div class="report-purpose">Identificación de puestos y sucesores en situación de riesgo</div>
+                    <div class="report-metrics">
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Puestos sin sucesor identificado</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Sucesores con bajo desempeño o cambios de situación</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Planes de acción vencidos o sin avance</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Recomendaciones de acciones correctivas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reporte de Progreso -->
+                <div class="report-box">
+                    <div class="report-name">Reporte de Progreso</div>
+                    <div class="report-purpose">Seguimiento del avance en planes de desarrollo de sucesores</div>
+                    <div class="report-metrics">
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Actividades completadas vs. programadas</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Evaluación de mejora en competencias clave</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Feedback de mentores y líderes directos</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-icon">•</span>
+                            <span class="metric-text">Proyección de fecha de disponibilidad</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

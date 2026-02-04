@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Seguridad y Confidencialidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%); display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+        /* Reduced bottom padding and side paddings to lower total height while preserving top spacing for the title */
+        .content { flex: 1; padding: 45px 40px 4px 80px; display: flex; flex-direction: column; overflow-y: auto; }
+        .title { font-size: 38px; font-weight: 800; color: #FF00FF; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .section { margin-bottom: 12px; }
+        .section-title { font-size: 13px; font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 2px solid #FF00FF; }
+        .section-content { font-size: 12px; color: #E6E6FA; line-height: 1.5; }
+        
+        .access-table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+        .access-table th { background: rgba(255, 0, 255, 0.2); color: #FF00FF; font-weight: 700; padding: 8px 6px; text-align: left; font-size: 11px; border-bottom: 2px solid #FF00FF; text-transform: uppercase; letter-spacing: 0.5px; }
+        .access-table td { padding: 7px 6px; font-size: 11px; color: #E6E6FA; border-bottom: 1px solid rgba(255, 0, 255, 0.2); }
+        .access-table tbody tr:nth-child(odd) { background: rgba(255, 0, 255, 0.03); }
+        .access-table tbody tr:nth-child(even) { background: rgba(0, 229, 255, 0.02); }
+        .access-level { color: #00E5FF; font-weight: 600; width: 20%; }
+        .access-desc { color: #FFFFFF; font-weight: 500; width: 40%; }
+        .access-data { color: #E6E6FA; width: 40%; }
+        
+        .protection-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+        .protection-icon { color: #00E5FF; flex-shrink: 0; font-weight: 700; font-size: 14px; margin-top: 1px; }
+        .protection-text { color: #E6E6FA; font-size: 12px; line-height: 1.4; }
+        .protection-text strong { color: #FFFFFF; font-weight: 600; }
+        
+        .security-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+        .security-icon { color: #FF00FF; flex-shrink: 0; font-weight: 700; font-size: 14px; margin-top: 1px; }
+        .security-text { color: #E6E6FA; font-size: 12px; line-height: 1.4; }
+        .security-text strong { color: #FFFFFF; font-weight: 600; }
+        
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="content">
+            <h1 class="title">Seguridad y Confidencialidad</h1>
+            
+            <div class="section">
+                <div class="section-title">Niveles de Acceso a Datos</div>
+                <div class="section-content">
+                    <table class="access-table">
+                        <thead>
+                            <tr>
+                                <th>Nivel</th>
+                                <th>Descripción</th>
+                                <th>Datos Accesibles</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="access-level">Público</td>
+                                <td class="access-desc">Información general del proceso</td>
+                                <td class="access-data">Descripción del sistema, políticas, objetivos</td>
+                            </tr>
+                            <tr>
+                                <td class="access-level">Confidencial</td>
+                                <td class="access-desc">Datos operacionales del sistema</td>
+                                <td class="access-data">Puestos críticos, sucesores, planes de acción</td>
+                            </tr>
+                            <tr>
+                                <td class="access-level">Muy Confidencial</td>
+                                <td class="access-desc">Información sensible y estratégica</td>
+                                <td class="access-data">Evaluaciones, salarios, planes de carrera, decisiones estratégicas</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Protecciones de Datos</div>
+                <div class="section-content">
+                    <div class="protection-item">
+                        <span class="protection-icon">✓</span>
+                        <span class="protection-text"><strong>Cifrado en tránsito:</strong> Todos los datos se transmiten mediante protocolo HTTPS/TLS</span>
+                    </div>
+                    <div class="protection-item">
+                        <span class="protection-icon">✓</span>
+                        <span class="protection-text"><strong>Cifrado en reposo:</strong> Base de datos cifrada con estándar AES-256</span>
+                    </div>
+                    <div class="protection-item">
+                        <span class="protection-icon">✓</span>
+                        <span class="protection-text"><strong>Enmascaramiento de datos:</strong> Datos sensibles enmascarados en reportes no autorizados</span>
+                    </div>
+                    <div class="protection-item">
+                        <span class="protection-icon">✓</span>
+                        <span class="protection-text"><strong>Auditoría de acceso:</strong> Registro de quién accede qué datos y cuándo</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Medidas de Seguridad Operacional</div>
+                <div class="section-content">
+                    <div class="security-item">
+                        <span class="security-icon">•</span>
+                        <span class="security-text"><strong>Autenticación multifactor:</strong> Requiere usuario, contraseña y código de verificación</span>
+                    </div>
+                    <div class="security-item">
+                        <span class="security-icon">•</span>
+                        <span class="security-text"><strong>Control de sesión:</strong> Timeout automático después de 10 minutos de inactividad</span>
+                    </div>
+                    <div class="security-item">
+                        <span class="security-icon">•</span>
+                        <span class="security-text"><strong>Respaldos automáticos:</strong> Copias de seguridad diarias con replicación geográfica</span>
+                    </div>
+                    <div class="security-item">
+                        <span class="security-icon">•</span>
+                        <span class="security-text"><strong>Monitoreo continuo:</strong> Detección de anomalías y patrones de acceso sospechosos</span>
+                    </div>
+                    <div class="security-item">
+                        <span class="security-icon">•</span>
+                        <span class="security-text"><strong>Cumplimiento normativo:</strong> Adherencia a GDPR, LGPD y regulaciones locales de protección de datos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

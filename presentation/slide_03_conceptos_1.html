@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Conceptos Clave I</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%); display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+        .content { flex: 1; padding: 50px 60px 30px 80px; display: flex; flex-direction: column; }
+        .title { font-size: 42px; font-weight: 800; color: #FF00FF; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+        .concepts { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; flex: 1; }
+        .concept-box { background: rgba(255, 0, 255, 0.05); border-left: 3px solid #FF00FF; padding: 20px 25px; }
+        .concept-title { font-size: 18px; font-weight: 700; color: #00E5FF; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .concept-content { font-size: 13px; color: #E6E6FA; line-height: 1.6; }
+        .concept-content p { margin-bottom: 12px; color: #FFFFFF; font-weight: 600; }
+        .bullet-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+        .bullet-icon { color: #FF00FF; flex-shrink: 0; font-weight: 700; }
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="content">
+            <h1 class="title">Conceptos Clave</h1>
+            <div class="concepts">
+                <div class="concept-box">
+                    <div class="concept-title">Puesto Crítico</div>
+                    <div class="concept-content">
+                        <p>Posición cuya vacancia podría causar:</p>
+                        <div class="bullet-item"><span class="bullet-icon">→</span><span>Interrupción de procesos operacionales</span></div>
+                        <div class="bullet-item"><span class="bullet-icon">→</span><span>Pérdida de relaciones comerciales</span></div>
+                        <div class="bullet-item"><span class="bullet-icon">→</span><span>Impacto en resultados financieros</span></div>
+                        <div class="bullet-item"><span class="bullet-icon">→</span><span>Riesgo de continuidad de servicios</span></div>
+                    </div>
+                </div>
+                <div class="concept-box">
+                    <div class="concept-title">Sucesor</div>
+                    <div class="concept-content">
+                        <p>Colaborador identificado como potencial:</p>
+                        <div class="bullet-item"><span class="bullet-icon">→</span><span>Competencias técnicas relevantes</span></div>
+                        <div class="bullet-item"><span class="bullet-icon">→</span><span>Potencial de desarrollo</span></div>
+                        <div class="bullet-item"><span class="bullet-icon">→</span><span>Disposición para mayores responsabilidades</span></div>
+                        <div class="bullet-item"><span class="bullet-icon">→</span><span>Alineación con valores organizacionales</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

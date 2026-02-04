@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Conceptos Clave II</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%); display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+        .content { flex: 1; padding: 50px 60px 30px 80px; display: flex; flex-direction: column; }
+        .title { font-size: 42px; font-weight: 800; color: #FF00FF; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+        .concepts { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; flex: 1; }
+        .concept-box { background: rgba(255, 0, 255, 0.05); border-left: 3px solid #FF00FF; padding: 20px 25px; display: flex; flex-direction: column; }
+        .concept-title { font-size: 18px; font-weight: 700; color: #00E5FF; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .concept-content { font-size: 13px; color: #E6E6FA; line-height: 1.6; flex: 1; }
+        .concept-content p { margin-bottom: 12px; color: #FFFFFF; font-weight: 600; }
+        .bullet-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+        .bullet-icon { color: #FF00FF; flex-shrink: 0; font-weight: 700; }
+        .formula-box { background: rgba(0, 229, 255, 0.1); border-left: 3px solid #00E5FF; padding: 15px; margin: 15px 0; }
+        .formula-label { font-size: 11px; font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        .formula-text { font-size: 14px; color: #FFFFFF; font-weight: 600; line-height: 1.5; }
+        .meta-box { background: rgba(255, 0, 255, 0.15); border-left: 3px solid #FF00FF; padding: 15px; margin-top: 12px; }
+        .meta-label { font-size: 11px; font-weight: 700; color: #FF00FF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        .meta-value { font-size: 28px; font-weight: 800; color: #00E5FF; }
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="content">
+            <h1 class="title">Conceptos Clave (continuación)</h1>
+            <div class="concepts">
+                <div class="concept-box">
+                    <div class="concept-title">Plan de Sustitución</div>
+                    <div class="concept-content">
+                        <p>Documento que especifica:</p>
+                        <div class="bullet-item"><span class="bullet-icon">•</span><span>Identificación del puesto crítico</span></div>
+                        <div class="bullet-item"><span class="bullet-icon">•</span><span>Sucesor(es) identificado(s)</span></div>
+                        <div class="bullet-item"><span class="bullet-icon">•</span><span>Brecha de competencias</span></div>
+                        <div class="bullet-item"><span class="bullet-icon">•</span><span>Plan de desarrollo</span></div>
+                        <div class="bullet-item"><span class="bullet-icon">•</span><span>Timeline de preparación</span></div>
+                    </div>
+                </div>
+                <div class="concept-box">
+                    <div class="concept-title">Cobertura de Sucesión</div>
+                    <div class="concept-content">
+                        <p><strong>Porcentaje de puestos críticos con sucesor</strong></p>
+                        <div class="formula-box">
+                            <div class="formula-label">Fórmula</div>
+                            <div class="formula-text">(Puestos con sucesor / Total puestos críticos) × 100</div>
+                        </div>
+                        <div class="meta-box">
+                            <div class="meta-label">Meta Organizacional</div>
+                            <div class="meta-value">≥ 80%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

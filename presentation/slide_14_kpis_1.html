@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indicadores Clave de Desempeño</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 50px 60px 30px 80px;
+            gap: 40px;
+        }
+
+        .left-section {
+            flex: 0 0 52%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .title {
+            font-size: 38px;
+            font-weight: 800;
+            color: #FF00FF;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .kpi-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        .kpi-table thead {
+            background: rgba(255, 0, 255, 0.2);
+        }
+
+        .kpi-table th {
+            color: #FF00FF;
+            font-weight: 700;
+            padding: 10px 8px;
+            text-align: left;
+            border-bottom: 2px solid #FF00FF;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .kpi-table td {
+            padding: 9px 8px;
+            color: #E6E6FA;
+            border-bottom: 1px solid rgba(255, 0, 255, 0.2);
+        }
+
+        .kpi-table tbody tr:nth-child(odd) {
+            background: rgba(255, 0, 255, 0.03);
+        }
+
+        .kpi-table tbody tr:nth-child(even) {
+            background: rgba(0, 229, 255, 0.02);
+        }
+
+        .kpi-name {
+            color: #00E5FF;
+            font-weight: 600;
+            min-width: 140px;
+        }
+
+        .kpi-formula {
+            color: #FFFFFF;
+            font-weight: 500;
+        }
+
+        .kpi-meta {
+            color: #FF00FF;
+            font-weight: 600;
+            text-align: center;
+            min-width: 70px;
+        }
+
+        .kpi-freq {
+            color: #E6E6FA;
+            text-align: center;
+            min-width: 70px;
+        }
+
+        /* Separator line */
+        .separator {
+            position: absolute;
+            left: 56%;
+            top: 10%;
+            width: 2px;
+            height: 80%;
+            background: linear-gradient(180deg, transparent, #FF00FF, transparent);
+            opacity: 0.6;
+        }
+
+        .right-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-wrapper {
+            width: 500px;
+            height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 0, 255, 0.05);
+            border: 2px solid #FF00FF;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 15px;
+        }
+
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="separator"></div>
+
+        <div class="main-content">
+            <div class="left-section">
+                <h1 class="title">Indicadores Clave de Desempeño</h1>
+                
+                <table class="kpi-table">
+                    <thead>
+                        <tr>
+                            <th>KPI</th>
+                            <th>Fórmula / Definición</th>
+                            <th>Meta</th>
+                            <th>Frecuencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="kpi-name">Cobertura de Sucesión</td>
+                            <td class="kpi-formula">(Con sucesor / Total críticos) × 100</td>
+                            <td class="kpi-meta">≥ 80%</td>
+                            <td class="kpi-freq">Mensual</td>
+                        </tr>
+                        <tr>
+                            <td class="kpi-name">Puestos sin Sucesor</td>
+                            <td class="kpi-formula">Total críticos - Con sucesor</td>
+                            <td class="kpi-meta">≤ 2</td>
+                            <td class="kpi-freq">Mensual</td>
+                        </tr>
+                        <tr>
+                            <td class="kpi-name">Tiempo Promedio Preparación</td>
+                            <td class="kpi-formula">Suma días / Sucesores</td>
+                            <td class="kpi-meta">≤ 180 días</td>
+                            <td class="kpi-freq">Trimestral</td>
+                        </tr>
+                        <tr>
+                            <td class="kpi-name">Tasa Promoción Interna</td>
+                            <td class="kpi-formula">Promovidos / Total × 100</td>
+                            <td class="kpi-meta">≥ 60%</td>
+                            <td class="kpi-freq">Anual</td>
+                        </tr>
+                        <tr>
+                            <td class="kpi-name">Retención Sucesores</td>
+                            <td class="kpi-formula">Permanecen / Total × 100</td>
+                            <td class="kpi-meta">≥ 90%</td>
+                            <td class="kpi-freq">Anual</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="right-section">
+                <div class="image-wrapper">
+                    <img src="/home/ubuntu/plan-sustitucion-pulido/images/metrics_dashboard.png" alt="Dashboard de Indicadores Clave">
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

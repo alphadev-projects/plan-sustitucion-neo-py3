@@ -1,0 +1,324 @@
+{
+  "project_info": {
+    "title": "Portada",
+    "created": 1769631967.7795515,
+    "last_updated": 1769632294.7274995,
+    "total_slides": 26
+  },
+  "slides": [
+    {
+      "id": "slide_01_portada",
+      "state": "edited",
+      "pageNum": 1
+    },
+    {
+      "id": "slide_02_proposito",
+      "state": "edited",
+      "pageNum": 2
+    },
+    {
+      "id": "slide_03_conceptos_1",
+      "state": "edited",
+      "pageNum": 3
+    },
+    {
+      "id": "slide_04_conceptos_2",
+      "state": "edited",
+      "pageNum": 4
+    },
+    {
+      "id": "slide_05_actores",
+      "state": "edited",
+      "pageNum": 5
+    },
+    {
+      "id": "slide_06_flujo",
+      "state": "edited",
+      "pageNum": 6
+    },
+    {
+      "id": "slide_07_etapa1",
+      "state": "edited",
+      "pageNum": 7
+    },
+    {
+      "id": "slide_08_etapa2",
+      "state": "edited",
+      "pageNum": 8
+    },
+    {
+      "id": "slide_09_etapa3",
+      "state": "edited",
+      "pageNum": 9
+    },
+    {
+      "id": "slide_10_etapa4",
+      "state": "edited",
+      "pageNum": 10
+    },
+    {
+      "id": "slide_11_etapa5",
+      "state": "edited",
+      "pageNum": 11
+    },
+    {
+      "id": "slide_12_etapa6",
+      "state": "edited",
+      "pageNum": 12
+    },
+    {
+      "id": "slide_13_etapa7",
+      "state": "edited",
+      "pageNum": 13
+    },
+    {
+      "id": "slide_14_kpis_1",
+      "state": "edited",
+      "pageNum": 14
+    },
+    {
+      "id": "slide_15_riesgos",
+      "state": "edited",
+      "pageNum": 15
+    },
+    {
+      "id": "slide_16_operacion",
+      "state": "edited",
+      "pageNum": 16
+    },
+    {
+      "id": "slide_17_procedimientos_1",
+      "state": "edited",
+      "pageNum": 17
+    },
+    {
+      "id": "slide_18_procedimientos_2",
+      "state": "edited",
+      "pageNum": 18
+    },
+    {
+      "id": "slide_19_procedimientos_3",
+      "state": "edited",
+      "pageNum": 19
+    },
+    {
+      "id": "slide_20_reportes",
+      "state": "edited",
+      "pageNum": 20
+    },
+    {
+      "id": "slide_21_controles",
+      "state": "edited",
+      "pageNum": 21
+    },
+    {
+      "id": "slide_22_seguridad",
+      "state": "edited",
+      "pageNum": 22
+    },
+    {
+      "id": "slide_23_calendario",
+      "state": "edited",
+      "pageNum": 23
+    },
+    {
+      "id": "slide_24_beneficios",
+      "state": "edited",
+      "pageNum": 24
+    },
+    {
+      "id": "slide_25_proximos_pasos",
+      "state": "edited",
+      "pageNum": 25
+    },
+    {
+      "id": "slide_26_cierre",
+      "state": "edited",
+      "pageNum": 26
+    }
+  ],
+  "outline": [
+    {
+      "id": "slide_01_portada",
+      "title": "Portada",
+      "summary": "Presentación del Sistema de Gestión de Planes de Sustitución y Sucesión - Portada principal con título, subtítulo y departamento responsable",
+      "image_plan": "/home/ubuntu/plan-sustitucion-pulido/images/portada_hero.png - The circuit board design visually represents a \"System\" (SISTEMA DE GESTIÓN) and technology, which aligns with the NEO platform mentioned on the cover slide.",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_02_proposito",
+      "title": "Propósito y Alcance",
+      "summary": "Definición del propósito del sistema, alcance, y objetivos clave de la gestión de sucesión",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_03_conceptos_1",
+      "title": "Conceptos Clave I",
+      "summary": "Definiciones de Puesto Crítico y Sucesor con características principales",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_04_conceptos_2",
+      "title": "Conceptos Clave II",
+      "summary": "Definiciones de Plan de Sustitución y Cobertura de Sucesión con fórmula y meta",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_05_actores",
+      "title": "Actores y Responsabilidades",
+      "summary": "Matriz de actores involucrados con sus responsabilidades y frecuencia de actividades",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_06_flujo",
+      "title": "Flujo del Proceso",
+      "summary": "Diagrama del flujo general del proceso de 7 etapas",
+      "image_plan": "/home/ubuntu/plan-sustitucion-pulido/images/process_flow.png - Image #3 shows a circular, numbered process flow (1-7), which perfectly illustrates the \"Flujo General del Proceso\" (General Process Flow) described in the slide content.",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_07_etapa1",
+      "title": "Etapa 1: Identificación de Puestos Críticos",
+      "summary": "Primera etapa del proceso - criterios de criticidad y responsables",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_08_etapa2",
+      "title": "Etapa 2: Evaluación de Riesgo de Continuidad",
+      "summary": "Segunda etapa - matriz de evaluación de riesgo con factores clave",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_09_etapa3",
+      "title": "Etapa 3: Identificación de Sucesores",
+      "summary": "Tercera etapa - criterios de selección de sucesores potenciales",
+      "image_plan": "/home/ubuntu/plan-sustitucion-pulido/images/team_collaboration.png - Image #5 shows team collaboration, mentoring, and professional development, which is highly relevant to the identification and development of successors.",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_10_etapa4",
+      "title": "Etapa 4: Evaluación de Competencias",
+      "summary": "Cuarta etapa - tipos de competencias evaluadas y responsables",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_11_etapa5",
+      "title": "Etapa 5: Desarrollo de Plan de Sustitución",
+      "summary": "Quinta etapa - componentes del plan de desarrollo individualizado",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_12_etapa6",
+      "title": "Etapa 6: Monitoreo y Seguimiento",
+      "summary": "Sexta etapa - actividades de seguimiento e indicadores de progreso",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_13_etapa7",
+      "title": "Etapa 7: Revisión Periódica",
+      "summary": "Séptima etapa - evaluación general de cobertura y ajustes estratégicos",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_14_kpis_1",
+      "title": "Indicadores Clave de Desempeño",
+      "summary": "KPIs principales con fórmulas, metas y frecuencia de medición",
+      "image_plan": "/home/ubuntu/plan-sustitucion-pulido/images/metrics_dashboard.png - Image #4 is a dashboard displaying KPI metrics, which is ideal for a slide discussing \"Indicadores Clave de Desempeño (KPI)\".",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_15_riesgos",
+      "title": "Análisis de Riesgo",
+      "summary": "Identificación de puestos en riesgo alto y acciones recomendadas",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_16_operacion",
+      "title": "Operación del Sistema",
+      "summary": "Acceso al sistema, roles y permisos, y medidas de seguridad",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_17_procedimientos_1",
+      "title": "Procedimientos Operativos I",
+      "summary": "Registro de puesto crítico y validaciones del sistema",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_18_procedimientos_2",
+      "title": "Procedimientos Operativos II",
+      "summary": "Asignación de sucesor y validaciones de integridad de datos",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_19_procedimientos_3",
+      "title": "Procedimientos Operativos III",
+      "summary": "Creación de plan de acción e información mostrada en el sistema",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_20_reportes",
+      "title": "Reportes Disponibles",
+      "summary": "Cuatro tipos de reportes principales del sistema con descripción",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_21_controles",
+      "title": "Controles y Validaciones",
+      "summary": "Validaciones de datos y auditoría de cambios en el sistema",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_22_seguridad",
+      "title": "Seguridad y Confidencialidad",
+      "summary": "Niveles de acceso, protecciones de datos y medidas de seguridad",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_23_calendario",
+      "title": "Calendario de Actividades",
+      "summary": "Actividades recurrentes con frecuencia y responsables",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_24_beneficios",
+      "title": "Beneficios del Sistema",
+      "summary": "Beneficios para la organización, colaboradores y departamento de RH",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_25_proximos_pasos",
+      "title": "Próximos Pasos",
+      "summary": "Fases de implementación: inicial, operación continua y mejora continua",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_26_cierre",
+      "title": "Preguntas y Contacto",
+      "summary": "Cierre de la presentación con información de contacto",
+      "image_plan": "/home/ubuntu/plan-sustitucion-pulido/images/succession_planning.png - Image #2 visually represents \"Succession Planning: Future Leaders\" using a pyramid structure, which is a strong visual for the closing slide of a presentation on succession planning.",
+      "slide_template_key": ""
+    }
+  ]
+}

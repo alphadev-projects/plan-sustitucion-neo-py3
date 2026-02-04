@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendario de Actividades</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%); display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+        .content { flex: 1; padding: 50px 60px 30px 80px; display: flex; flex-direction: column; }
+        .title { font-size: 42px; font-weight: 800; color: #FF00FF; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .calendar-table { width: 100%; border-collapse: collapse; }
+        
+        .calendar-table thead { background: rgba(255, 0, 255, 0.2); }
+        
+        .calendar-table th {
+            color: #FF00FF;
+            font-weight: 700;
+            padding: 14px 12px;
+            text-align: left;
+            font-size: 12px;
+            border-bottom: 2px solid #FF00FF;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .calendar-table td {
+            padding: 11px 12px;
+            font-size: 12px;
+            color: #E6E6FA;
+            border-bottom: 1px solid rgba(255, 0, 255, 0.2);
+            line-height: 1.4;
+        }
+        
+        .calendar-table tbody tr:nth-child(odd) { background: rgba(255, 0, 255, 0.03); }
+        .calendar-table tbody tr:nth-child(even) { background: rgba(0, 229, 255, 0.02); }
+        
+        .activity-name { color: #00E5FF; font-weight: 600; min-width: 200px; }
+        .frequency { color: #FFFFFF; font-weight: 500; text-align: center; min-width: 100px; }
+        .responsables { color: #E6E6FA; min-width: 200px; }
+        .duracion { color: #FF00FF; font-weight: 600; text-align: center; min-width: 80px; }
+        
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="content">
+            <h1 class="title">Calendario de Actividades</h1>
+            
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>Actividad</th>
+                        <th>Frecuencia</th>
+                        <th>Responsables</th>
+                        <th>Duración</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="activity-name">Identificación de Puestos Críticos</td>
+                        <td class="frequency">Anual</td>
+                        <td class="responsables">RH + Líderes Depto.</td>
+                        <td class="duracion">2-3 sem</td>
+                    </tr>
+                    <tr>
+                        <td class="activity-name">Evaluación de Riesgo de Continuidad</td>
+                        <td class="frequency">Trimestral</td>
+                        <td class="responsables">Gerencia RH</td>
+                        <td class="duracion">1-2 sem</td>
+                    </tr>
+                    <tr>
+                        <td class="activity-name">Identificación de Sucesores</td>
+                        <td class="frequency">Mensual</td>
+                        <td class="responsables">RH + Líderes Depto.</td>
+                        <td class="duracion">2-3 sem</td>
+                    </tr>
+                    <tr>
+                        <td class="activity-name">Evaluación de Competencias</td>
+                        <td class="frequency">Trimestral</td>
+                        <td class="responsables">Gerencia RH + Evaluadores</td>
+                        <td class="duracion">1-2 sem</td>
+                    </tr>
+                    <tr>
+                        <td class="activity-name">Desarrollo de Planes de Sustitución</td>
+                        <td class="frequency">Mensual</td>
+                        <td class="responsables">RH + Líderes + Mentores</td>
+                        <td class="duracion">1-2 sem</td>
+                    </tr>
+                    <tr>
+                        <td class="activity-name">Monitoreo y Seguimiento</td>
+                        <td class="frequency">Mensual</td>
+                        <td class="responsables">Mentor + Líder + RH</td>
+                        <td class="duracion">Continuo</td>
+                    </tr>
+                    <tr>
+                        <td class="activity-name">Revisión Formal de Cobertura</td>
+                        <td class="frequency">Mensual</td>
+                        <td class="responsables">Gerencia RH</td>
+                        <td class="duracion">1 sem</td>
+                    </tr>
+                    <tr>
+                        <td class="activity-name">Revisión Ejecutiva de Estrategia</td>
+                        <td class="frequency">Trimestral</td>
+                        <td class="responsables">Dirección + RH</td>
+                        <td class="duracion">1-2 sem</td>
+                    </tr>
+                    <tr>
+                        <td class="activity-name">Generación de Reportes KPI</td>
+                        <td class="frequency">Mensual</td>
+                        <td class="responsables">Gerencia RH</td>
+                        <td class="duracion">3-5 días</td>
+                    </tr>
+                    <tr>
+                        <td class="activity-name">Auditoría de Datos y Seguridad</td>
+                        <td class="frequency">Trimestral</td>
+                        <td class="responsables">Admin Sistema + RH</td>
+                        <td class="duracion">1 sem</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

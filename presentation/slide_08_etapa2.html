@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Etapa 2: Evaluación de Riesgo de Continuidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%); display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+        .content { flex: 1; padding: 40px 60px 20px 80px; display: flex; flex-direction: column; }
+        .title { font-size: 36px; font-weight: 800; color: #FF00FF; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+        .objective { font-size: 14px; font-weight: 600; color: #FFFFFF; margin-bottom: 20px; }
+        .matrix-title { font-size: 14px; font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+        .matrix-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .matrix-table th { background: rgba(255, 0, 255, 0.2); color: #FF00FF; font-weight: 700; padding: 10px 8px; text-align: left; font-size: 12px; border-bottom: 2px solid #FF00FF; text-transform: uppercase; letter-spacing: 0.5px; }
+        .matrix-table td { padding: 10px 8px; font-size: 12px; color: #E6E6FA; border-bottom: 1px solid rgba(255, 0, 255, 0.2); }
+        .factor-col { color: #FFFFFF; font-weight: 600; width: 25%; }
+        .alto-col { background: rgba(255, 0, 0, 0.1); color: #FF6B6B; font-weight: 600; }
+        .medio-col { background: rgba(255, 165, 0, 0.1); color: #FFB84D; font-weight: 600; }
+        .bajo-col { background: rgba(0, 229, 255, 0.1); color: #00E5FF; font-weight: 600; }
+        .resultado-col { background: rgba(255, 0, 255, 0.15); color: #FF00FF; font-weight: 700; text-align: center; }
+        .footer-info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; font-size: 12px; color: #E6E6FA; margin-top: 20px; }
+        .info-item { display: flex; flex-direction: column; }
+        .info-label { font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .info-value { color: #FFFFFF; }
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="content">
+            <h1 class="title">Etapa 2: Evaluación de Riesgo</h1>
+            <p class="objective">Cuantificar el riesgo asociado a cada puesto crítico mediante matriz de evaluación</p>
+            
+            <div class="matrix-title">Matriz de Evaluación de Riesgo</div>
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th class="alto-col">Alto</th>
+                        <th class="medio-col">Medio</th>
+                        <th class="bajo-col">Bajo</th>
+                        <th class="resultado-col">Resultado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="factor-col">Impacto Operacional</td>
+                        <td class="alto-col">Crítico para operaciones</td>
+                        <td class="medio-col">Importante para operaciones</td>
+                        <td class="bajo-col">Limitado impacto</td>
+                        <td class="resultado-col">ALTO</td>
+                    </tr>
+                    <tr>
+                        <td class="factor-col">Tiempo de Reemplazo</td>
+                        <td class="alto-col">&gt; 6 meses</td>
+                        <td class="medio-col">3-6 meses</td>
+                        <td class="bajo-col">&lt; 3 meses</td>
+                        <td class="resultado-col">ALTO</td>
+                    </tr>
+                    <tr>
+                        <td class="factor-col">Disponibilidad Talento</td>
+                        <td class="alto-col">Muy limitada</td>
+                        <td class="medio-col">Limitada</td>
+                        <td class="bajo-col">Disponible</td>
+                        <td class="resultado-col">ALTO</td>
+                    </tr>
+                    <tr>
+                        <td class="factor-col">Conocimiento Especializado</td>
+                        <td class="alto-col">Muy alto</td>
+                        <td class="medio-col">Moderado</td>
+                        <td class="bajo-col">Bajo</td>
+                        <td class="resultado-col">ALTO</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="footer-info">
+                <div class="info-item">
+                    <span class="info-label">Responsables</span>
+                    <span class="info-value">Gerencia RH + Líderes Depto.</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Duración</span>
+                    <span class="info-value">1-2 semanas</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Frecuencia</span>
+                    <span class="info-value">Trimestral</span>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

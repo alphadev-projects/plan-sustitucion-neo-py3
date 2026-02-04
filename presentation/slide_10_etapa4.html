@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Etapa 4: Evaluación de Competencias</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%); display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+        .content { flex: 1; padding: 40px 60px 20px 80px; display: flex; flex-direction: column; }
+        .title { font-size: 36px; font-weight: 800; color: #FF00FF; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+        .objective { font-size: 14px; font-weight: 600; color: #FFFFFF; margin-bottom: 20px; }
+        .table-title { font-size: 14px; font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+        .competencies-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .competencies-table th { background: rgba(255, 0, 255, 0.2); color: #FF00FF; font-weight: 700; padding: 12px 15px; text-align: left; font-size: 12px; border-bottom: 2px solid #FF00FF; text-transform: uppercase; letter-spacing: 0.5px; }
+        .competencies-table td { padding: 12px 15px; font-size: 12px; color: #E6E6FA; border-bottom: 1px solid rgba(255, 0, 255, 0.2); }
+        .competencies-table tbody tr:nth-child(odd) { background: rgba(255, 0, 255, 0.03); }
+        .competencies-table tbody tr:nth-child(even) { background: rgba(0, 229, 255, 0.02); }
+        .comp-type { color: #00E5FF; font-weight: 700; width: 30%; }
+        .comp-examples { color: #FFFFFF; font-weight: 500; }
+        .footer-info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; font-size: 12px; color: #E6E6FA; margin-top: 20px; }
+        .info-item { display: flex; flex-direction: column; }
+        .info-label { font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .info-value { color: #FFFFFF; }
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="content">
+            <h1 class="title">Etapa 4: Evaluación de Competencias</h1>
+            <p class="objective">Identificar brechas de competencias entre sucesor y puesto crítico objetivo</p>
+            
+            <div class="table-title">Competencias Evaluadas</div>
+            <table class="competencies-table">
+                <thead>
+                    <tr>
+                        <th>Tipo de Competencia</th>
+                        <th>Ejemplos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="comp-type">Técnicas</td>
+                        <td class="comp-examples">Conocimientos específicos del puesto, herramientas, procesos, sistemas</td>
+                    </tr>
+                    <tr>
+                        <td class="comp-type">Directivas</td>
+                        <td class="comp-examples">Liderazgo, toma de decisiones, gestión de equipos, delegación</td>
+                    </tr>
+                    <tr>
+                        <td class="comp-type">Relacionales</td>
+                        <td class="comp-examples">Comunicación, trabajo en equipo, negociación, empatía</td>
+                    </tr>
+                    <tr>
+                        <td class="comp-type">Estratégicas</td>
+                        <td class="comp-examples">Pensamiento sistémico, visión de negocio, innovación, planificación</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="footer-info">
+                <div class="info-item">
+                    <span class="info-label">Responsables</span>
+                    <span class="info-value">Gerencia RH + Evaluadores Externos (opcional)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Duración</span>
+                    <span class="info-value">1-2 semanas</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Frecuencia</span>
+                    <span class="info-value">Trimestral</span>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

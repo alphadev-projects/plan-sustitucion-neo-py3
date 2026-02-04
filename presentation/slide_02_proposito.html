@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propósito y Alcance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Top accent bar */
+        .top-bar {
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #FF00FF, #00E5FF);
+        }
+
+        /* Left accent bar */
+        .left-accent {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF);
+        }
+
+        /* Main content */
+        .content {
+            flex: 1;
+            padding: 50px 60px 30px 80px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title {
+            font-size: 42px;
+            font-weight: 800;
+            color: #FF00FF;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Three column layout */
+        .sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            flex: 1;
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #00E5FF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #FF00FF;
+        }
+
+        .section-content {
+            font-size: 14px;
+            font-weight: 500;
+            color: #E6E6FA;
+            line-height: 1.6;
+        }
+
+        .bullet-item {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .bullet-icon {
+            color: #FF00FF;
+            margin-top: 2px;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .bullet-text {
+            color: #FFFFFF;
+            font-weight: 500;
+        }
+
+        /* Objectives section */
+        .objectives {
+            grid-column: 1 / -1;
+            margin-top: 20px;
+        }
+
+        .objectives-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #00E5FF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #FF00FF;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .objective-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #FFFFFF;
+        }
+
+        .objective-icon {
+            color: #00E5FF;
+            font-size: 14px;
+        }
+
+        .bottom-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #FF00FF, #00E5FF);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+
+        <div class="content">
+            <h1 class="title">Propósito y Alcance</h1>
+
+            <div class="sections">
+                <!-- Propósito -->
+                <div class="section">
+                    <div class="section-title">Propósito</div>
+                    <div class="section-content">
+                        Asegurar la continuidad operativa y el desarrollo de talento mediante la identificación, documentación y gestión de sucesores para puestos críticos.
+                    </div>
+                </div>
+
+                <!-- Alcance -->
+                <div class="section">
+                    <div class="section-title">Alcance</div>
+                    <div class="section-content">
+                        <div class="bullet-item">
+                            <div class="bullet-icon">•</div>
+                            <div class="bullet-text">Puestos Críticos</div>
+                        </div>
+                        <div class="bullet-item">
+                            <div class="bullet-icon">•</div>
+                            <div class="bullet-text">Sucesores Identificados</div>
+                        </div>
+                        <div class="bullet-item">
+                            <div class="bullet-icon">•</div>
+                            <div class="bullet-text">Todos los Departamentos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vacío -->
+                <div class="section"></div>
+
+                <!-- Objetivos Clave -->
+                <div class="objectives">
+                    <div class="objectives-title">Objetivos Clave</div>
+                    <div class="objectives-grid">
+                        <div class="objective-item">
+                            <span class="objective-icon">✓</span>
+                            <span>Continuidad Operativa</span>
+                        </div>
+                        <div class="objective-item">
+                            <span class="objective-icon">✓</span>
+                            <span>Desarrollo de Talento</span>
+                        </div>
+                        <div class="objective-item">
+                            <span class="objective-icon">✓</span>
+                            <span>Reducción de Riesgos</span>
+                        </div>
+                        <div class="objective-item">
+                            <span class="objective-icon">✓</span>
+                            <span>Planificación Estratégica</span>
+                        </div>
+                        <div class="objective-item">
+                            <span class="objective-icon">✓</span>
+                            <span>Transparencia</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

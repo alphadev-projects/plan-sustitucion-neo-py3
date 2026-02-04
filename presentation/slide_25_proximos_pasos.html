@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Próximos Pasos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%); display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+        .content { flex: 1; padding: 50px 60px 30px 80px; display: flex; flex-direction: column; }
+        .title { font-size: 42px; font-weight: 800; color: #FF00FF; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .phases-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; flex: 1; }
+        
+        .phase-box { background: rgba(255, 0, 255, 0.05); border-left: 3px solid #FF00FF; padding: 20px 18px; display: flex; flex-direction: column; }
+        
+        .phase-header { margin-bottom: 15px; }
+        
+        .phase-name { font-size: 14px; font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        
+        .phase-timeline { font-size: 13px; font-weight: 700; color: #FF00FF; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #FF00FF; }
+        
+        .phase-content { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        
+        .activity-item { display: flex; align-items: flex-start; gap: 10px; }
+        
+        .activity-icon { color: #00E5FF; flex-shrink: 0; font-weight: 700; font-size: 12px; margin-top: 2px; }
+        
+        .activity-text { color: #E6E6FA; font-size: 12px; line-height: 1.5; }
+        
+        .activity-text strong { color: #FFFFFF; font-weight: 600; }
+        
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="content">
+            <h1 class="title">Próximos Pasos</h1>
+            
+            <div class="phases-grid">
+                <!-- Fase Inicial -->
+                <div class="phase-box">
+                    <div class="phase-header">
+                        <div class="phase-name">Fase Inicial</div>
+                        <div class="phase-timeline">Mes 1-2</div>
+                    </div>
+                    <div class="phase-content">
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Capacitación:</strong> Entrenar a usuarios en sistema</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Carga de datos:</strong> Migrar información existente</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Identificación inicial:</strong> Registrar puestos críticos</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Asignación de roles:</strong> Configurar permisos de acceso</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Validación:</strong> Pruebas de integridad de datos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Operación Continua -->
+                <div class="phase-box">
+                    <div class="phase-header">
+                        <div class="phase-name">Operación Continua</div>
+                        <div class="phase-timeline">Mes 3+</div>
+                    </div>
+                    <div class="phase-content">
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Gestión diaria:</strong> Mantener datos actualizados</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Monitoreo mensual:</strong> Seguimiento de progreso</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Reportes regulares:</strong> Generación de KPIs</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Soporte técnico:</strong> Asistencia a usuarios</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Auditoría periódica:</strong> Validación de integridad</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mejora Continua -->
+                <div class="phase-box">
+                    <div class="phase-header">
+                        <div class="phase-name">Mejora Continua</div>
+                        <div class="phase-timeline">Trimestral</div>
+                    </div>
+                    <div class="phase-content">
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Análisis de feedback:</strong> Recopilar sugerencias</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Optimización de procesos:</strong> Mejorar flujos</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Actualización de datos:</strong> Revisar puestos críticos</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Enhancements técnicos:</strong> Nuevas funcionalidades</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">→</span>
+                            <span class="activity-text"><strong>Capacitación avanzada:</strong> Entrenamientos adicionales</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

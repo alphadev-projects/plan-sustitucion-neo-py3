@@ -829,3 +829,58 @@
 - [x] Paso 1: Crear trigger para automatizar llenado de cargoSucesor y departamentoSucesor (implementado en backend)
 - [x] Paso 2: Agregar validación de integridad de sucesores en formulario (procedimiento actualizarSucesor agregado)
 - [ ] Paso 3: Implementar exportación de matriz de sucesión a PDF (pendiente - requiere más tiempo)
+
+## CRÍTICO - Bugs de Sincronización y Validación (Ronda Actual)
+
+- [ ] BUG CRÍTICO: Sincronización bidireccional entre Plan de Sustitución y Plan de Sucesión
+  - [ ] Nuevos registros en Plan de Sustitución (puestos clave) NO aparecen en Plan de Sucesión
+  - [ ] Revisar relación entre tablas planes_sustitucion y sucesion_puestos
+  - [ ] Verificar que createPlan crea registro en sucesion_puestos cuando es puesto clave
+  - [ ] Verificar que updatePlan sincroniza cambios correctamente
+  - [ ] Dashboard de Sucesión no se actualiza cuando se registran nuevos planes
+
+- [ ] BUG CRÍTICO: Validación de duplicados de personas
+  - [ ] Sistema permite registrar misma persona en múltiples puestos (clave y no clave)
+  - [ ] Implementar validación que previene duplicados
+  - [ ] Agregar alerta visual cuando se intenta registrar duplicado
+  - [ ] Mostrar mensaje claro: "Esta persona ya está registrada en otro puesto"
+  - [ ] Validar en frontend (NuevoPlan.tsx) y backend (createPlan)
+  - [ ] Crear tests para validación de duplicados
+
+- [ ] Investigación: Revisar schema y procedures
+  - [ ] Verificar que sucesion_puestos tiene los datos correctos
+  - [ ] Verificar que el query en PlanSuccesion.tsx trae datos de sucesion_puestos
+  - [ ] Revisar si hay filtros que están ocultando los datos
+  - [ ] Revisar cache de tRPC que podría estar sirviendo datos viejos
+
+## RESUMEN DE CORRECCIONES - Sincronización y Validación (COMPLETADO)
+
+### Problemas Identificados y Resueltos
+
+#### 1. Sincronización Bidireccional (RESUELTO)
+- **Problema:** createPlan creaba en planesSuccesion en lugar de sucesion_puestos
+- **Impacto:** Nuevos puestos clave no aparecían en Plan de Sucesión
+- **Solución:**
+  - Corregida createPlan para crear en sucesion_puestos (tabla correcta)
+  - Corregida updatePlan para sincronizar cambios automáticamente
+  - Agregada invalidación de cache de tRPC en frontend
+  - Dashboard ahora se actualiza correctamente
+
+#### 2. Validación de Duplicados (RESUELTO)
+- **Problema:** Sistema permitía registrar misma persona en múltiples puestos
+- **Impacto:** Inconsistencias en datos y análisis de riesgo
+- **Solución:**
+  - Validación en backend (createPlan): rechaza colaboradores duplicados
+  - Validación en backend (updatePlan): valida cambios de colaborador
+  - Mejor manejo de errores en frontend (NuevoPlan.tsx)
+  - Mensajes claros al usuario
+
+#### 3. Tests Implementados
+- Tests para validación de duplicados
+- Tests para sincronización entre tablas
+- Tests para cambios de puestoClave (Si/No)
+
+### Archivos Modificados
+- server/db.ts: createPlan, updatePlan con validaciones y sincronización
+- client/src/pages/NuevoPlan.tsx: mejor manejo de errores e invalidación de cache
+- server/sync-validation.test.ts: suite de tests para validar correcciones

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Operación del Sistema</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%); display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+        .content { flex: 1; padding: 40px 60px 20px 80px; display: flex; flex-direction: column; overflow-y: auto; }
+        .title { font-size: 38px; font-weight: 800; color: #FF00FF; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .section { margin-bottom: 16px; }
+        .section-title { font-size: 13px; font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; padding-bottom: 5px; border-bottom: 2px solid #FF00FF; }
+        
+        .access-steps { display: flex; flex-direction: column; gap: 6px; }
+        .step-item { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: #E6E6FA; }
+        .step-number { background: linear-gradient(135deg, #FF00FF, #00E5FF); color: #FFFFFF; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; flex-shrink: 0; }
+        .step-text { color: #FFFFFF; font-weight: 500; line-height: 1.4; }
+        
+        .roles-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+        .roles-table th { background: rgba(255, 0, 255, 0.2); color: #FF00FF; font-weight: 700; padding: 10px 8px; text-align: center; font-size: 11px; border-bottom: 2px solid #FF00FF; text-transform: uppercase; letter-spacing: 0.5px; }
+        .roles-table th:first-child { text-align: left; }
+        .roles-table td { padding: 9px 8px; font-size: 11px; color: #E6E6FA; border-bottom: 1px solid rgba(255, 0, 255, 0.2); text-align: center; }
+        .roles-table td:first-child { text-align: left; color: #00E5FF; font-weight: 600; }
+        .roles-table tbody tr:nth-child(odd) { background: rgba(255, 0, 255, 0.03); }
+        .roles-table tbody tr:nth-child(even) { background: rgba(0, 229, 255, 0.02); }
+        .check-icon { color: #00E5FF; font-weight: 700; }
+        .cross-icon { color: #FF6B6B; font-weight: 700; }
+        
+        .security-items { display: flex; flex-direction: column; gap: 5px; }
+        .security-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #E6E6FA; }
+        .security-icon { color: #00E5FF; flex-shrink: 0; font-weight: 700; margin-top: 1px; }
+        .security-text { color: #FFFFFF; font-weight: 500; line-height: 1.3; }
+        
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="content">
+            <h1 class="title">Operación del Sistema</h1>
+            
+            <div class="section">
+                <div class="section-title">Acceso al Sistema</div>
+                <div class="access-steps">
+                    <div class="step-item">
+                        <span class="step-number">1</span>
+                        <span class="step-text">Ingresar a plataforma NEO con credenciales válidas</span>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">2</span>
+                        <span class="step-text">Autenticarse con usuario y contraseña asignados</span>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">3</span>
+                        <span class="step-text">Seleccionar módulo "Planes de Sustitución"</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Roles y Permisos</div>
+                <table class="roles-table">
+                    <thead>
+                        <tr>
+                            <th>Rol</th>
+                            <th>Lectura</th>
+                            <th>Escritura</th>
+                            <th>Reportes</th>
+                            <th>Admin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>RH Manager</td>
+                            <td><span class="check-icon">✓</span></td>
+                            <td><span class="check-icon">✓</span></td>
+                            <td><span class="check-icon">✓</span></td>
+                            <td><span class="check-icon">✓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Líder Depto.</td>
+                            <td><span class="check-icon">✓</span></td>
+                            <td><span class="check-icon">✓</span></td>
+                            <td><span class="check-icon">✓</span></td>
+                            <td><span class="cross-icon">-</span></td>
+                        </tr>
+                        <tr>
+                            <td>Colaborador</td>
+                            <td><span class="check-icon">✓</span></td>
+                            <td><span class="cross-icon">-</span></td>
+                            <td><span class="cross-icon">-</span></td>
+                            <td><span class="cross-icon">-</span></td>
+                        </tr>
+                        <tr>
+                            <td>Admin Sistema</td>
+                            <td><span class="check-icon">✓</span></td>
+                            <td><span class="check-icon">✓</span></td>
+                            <td><span class="check-icon">✓</span></td>
+                            <td><span class="check-icon">✓</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Medidas de Seguridad</div>
+                <div class="security-items">
+                    <div class="security-item">
+                        <span class="security-icon">✓</span>
+                        <span class="security-text">Autenticación requerida para acceso a la plataforma</span>
+                    </div>
+                    <div class="security-item">
+                        <span class="security-icon">✓</span>
+                        <span class="security-text">Cifrado de datos en tránsito y en reposo</span>
+                    </div>
+                    <div class="security-item">
+                        <span class="security-icon">✓</span>
+                        <span class="security-text">Logs de acceso y cambios realizados en el sistema</span>
+                    </div>
+                    <div class="security-item">
+                        <span class="security-icon">✓</span>
+                        <span class="security-text">Respaldos automáticos diarios de la base de datos</span>
+                    </div>
+                    <div class="security-item">
+                        <span class="security-icon">✓</span>
+                        <span class="security-text">Timeout de sesión: 10 minutos de inactividad</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

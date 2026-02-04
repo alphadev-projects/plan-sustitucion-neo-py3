@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas y Contacto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 60px 60px 40px 80px;
+            gap: 50px;
+        }
+
+        .left-section {
+            flex: 0 0 45%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .title {
+            font-size: 48px;
+            font-weight: 800;
+            color: #FF00FF;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            font-weight: 600;
+            color: #00E5FF;
+            margin-bottom: 40px;
+            letter-spacing: 0.5px;
+            line-height: 1.5;
+        }
+
+        .contact-section {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #00E5FF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FFFFFF;
+            line-height: 1.5;
+        }
+
+        .contact-value-secondary {
+            font-size: 14px;
+            font-weight: 500;
+            color: #E6E6FA;
+        }
+
+        .separator {
+            position: absolute;
+            left: 55%;
+            top: 10%;
+            width: 2px;
+            height: 80%;
+            background: linear-gradient(180deg, transparent, #FF00FF, transparent);
+            opacity: 0.6;
+        }
+
+        .right-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-wrapper {
+            width: 500px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 0, 255, 0.05);
+            border: 2px solid #FF00FF;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 20px;
+        }
+
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="separator"></div>
+
+        <div class="main-content">
+            <div class="left-section">
+                <h1 class="title">Preguntas y Contacto</h1>
+                
+                <p class="subtitle">
+                    Agradecemos su atención. Estamos disponibles para responder sus preguntas y comentarios sobre el Sistema de Gestión de Planes de Sustitución y Sucesión.
+                </p>
+
+                <div class="contact-section">
+                    <div class="contact-item">
+                        <span class="contact-label">Correo Electrónico</span>
+                        <span class="contact-value">rh.sucesion@empresa.com</span>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-label">Teléfono</span>
+                        <span class="contact-value">+595 (21) 123-4567</span>
+                        <span class="contact-value-secondary">Ext. 2500 - Departamento de RH</span>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-label">Departamento</span>
+                        <span class="contact-value">Gestión de Personas y Desarrollo Organizacional</span>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-label">Ubicación</span>
+                        <span class="contact-value">Asunción, Paraguay</span>
+                        <span class="contact-value-secondary">Sede Principal - Piso 3</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-section">
+                <div class="image-wrapper">
+                    <img src="/home/ubuntu/plan-sustitucion-pulido/images/succession_planning.png" alt="Succession Planning - Líderes del Futuro">
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

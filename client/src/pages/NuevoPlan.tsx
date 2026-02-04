@@ -41,7 +41,14 @@ export default function NuevoPlan() {
   );
   const { data: cargos } = trpc.empleados.cargos.useQuery();
 
-  const createPlan = trpc.planes.create.useMutation();
+  const utils = trpc.useUtils();
+  const createPlan = trpc.planes.create.useMutation({
+    onSuccess: async () => {
+      await utils.planes.list.invalidate();
+      await utils.sucesion.listar.invalidate();
+      await utils.sucesion.criticos.invalidate();
+    },
+  });
 
   const colaboradorSeleccionado = colaboradors?.find((e) => e.id === parseInt(colaboradorId));
   const reemplazoSeleccionado = reemplazos?.find((e) => e.id === parseInt(reemplazoId));
@@ -99,8 +106,13 @@ export default function NuevoPlan() {
         } : undefined,
       });
       setLocation("/planes");
-    } catch (error) {
-      alert("Error al crear el plan");
+    } catch (error: any) {
+      const errorMessage = error?.message || "Error al crear el plan";
+      if (errorMessage.includes("ya esta registrado") || errorMessage.includes("duplicado")) {
+        alert(`Validacion fallida:\n\n${errorMessage}\n\nPor favor, verifica que el colaborador no este registrado en otro plan.`);
+      } else {
+        alert(`Error: ${errorMessage}`);
+      }
     }
   };
 

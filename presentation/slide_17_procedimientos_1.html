@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Procedimientos Operativos I</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%); display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+        .content { flex: 1; padding: 50px 60px 30px 80px; display: flex; flex-direction: column; }
+        .title { font-size: 42px; font-weight: 800; color: #FF00FF; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
+        .subtitle { font-size: 16px; font-weight: 600; color: #00E5FF; margin-bottom: 25px; letter-spacing: 0.5px; }
+        .section { margin-bottom: 22px; }
+        .section-title { font-size: 14px; font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid #FF00FF; }
+        .section-content { font-size: 12px; color: #E6E6FA; line-height: 1.6; }
+        
+        .steps-list { display: flex; flex-direction: column; gap: 10px; }
+        .step-item { display: flex; align-items: flex-start; gap: 12px; }
+        .step-number { background: linear-gradient(135deg, #FF00FF, #00E5FF); color: #FFFFFF; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+        .step-text { color: #FFFFFF; font-weight: 500; padding-top: 4px; }
+        .step-description { color: #E6E6FA; font-size: 11px; margin-top: 2px; }
+        
+        .validations-list { display: flex; flex-direction: column; gap: 8px; }
+        .validation-item { display: flex; align-items: flex-start; gap: 10px; }
+        .validation-icon { color: #FF00FF; flex-shrink: 0; font-weight: 700; font-size: 12px; margin-top: 2px; }
+        .validation-text { color: #E6E6FA; font-size: 12px; line-height: 1.5; }
+        .validation-text strong { color: #FFFFFF; font-weight: 600; }
+        
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="content">
+            <h1 class="title">Procedimientos Operativos</h1>
+            <div class="subtitle">Registro de Puesto Crítico y Validaciones</div>
+            
+            <div class="section">
+                <div class="section-title">Pasos para Registro de Puesto Crítico</div>
+                <div class="section-content">
+                    <div class="steps-list">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div>
+                                <div class="step-text">Acceder a "Plan de Sucesión" → "Nuevo Puesto Crítico"</div>
+                                <div class="step-description">Navegar al módulo de gestión de puestos críticos</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div>
+                                <div class="step-text">Completar información del puesto</div>
+                                <div class="step-description">Nombre del puesto, departamento, descripción de funciones, criticidad (Alto/Medio/Bajo)</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div>
+                                <div class="step-text">Asignar líder responsable</div>
+                                <div class="step-description">Seleccionar el líder de departamento responsable del puesto</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div>
+                                <div class="step-text">Guardar registro</div>
+                                <div class="step-description">Confirmar y guardar el nuevo puesto crítico en el sistema</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Validaciones del Sistema</div>
+                <div class="section-content">
+                    <div class="validations-list">
+                        <div class="validation-item">
+                            <span class="validation-icon">✓</span>
+                            <span class="validation-text"><strong>Nombre de puesto no duplicado:</strong> No permite duplicar puesto en mismo departamento</span>
+                        </div>
+                        <div class="validation-item">
+                            <span class="validation-icon">✓</span>
+                            <span class="validation-text"><strong>Criticidad requerida:</strong> Criticidad debe ser seleccionada (Alto/Medio/Bajo)</span>
+                        </div>
+                        <div class="validation-item">
+                            <span class="validation-icon">✓</span>
+                            <span class="validation-text"><strong>Líder válido:</strong> Líder responsable debe existir en base de datos de empleados</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

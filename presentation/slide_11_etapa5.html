@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Etapa 5: Desarrollo de Plan de Sustitución</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%); display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+        .content { flex: 1; padding: 40px 60px 20px 80px; display: flex; flex-direction: column; }
+        .title { font-size: 36px; font-weight: 800; color: #FF00FF; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 2px; }
+        .objective { font-size: 13px; font-weight: 600; color: #FFFFFF; margin-bottom: 18px; }
+        .components-title { font-size: 13px; font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+        .components-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 18px; flex: 1; }
+        .component-item { background: rgba(255, 0, 255, 0.05); border-left: 3px solid #FF00FF; padding: 12px 15px; }
+        .component-label { font-size: 12px; font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+        .component-text { font-size: 12px; color: #E6E6FA; line-height: 1.4; }
+        .footer-info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; font-size: 12px; color: #E6E6FA; }
+        .info-item { display: flex; flex-direction: column; }
+        .info-label { font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .info-value { color: #FFFFFF; }
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="content">
+            <h1 class="title">Etapa 5: Plan de Sustitución</h1>
+            <p class="objective">Crear un plan de desarrollo individualizado para preparar al sucesor</p>
+            
+            <div class="components-title">Componentes del Plan</div>
+            <div class="components-grid">
+                <div class="component-item">
+                    <div class="component-label">Puesto Crítico</div>
+                    <div class="component-text">Identificación clara del puesto a cubrir en el futuro</div>
+                </div>
+                <div class="component-item">
+                    <div class="component-label">Sucesor</div>
+                    <div class="component-text">Nombre, departamento actual, cargo actual del candidato</div>
+                </div>
+                <div class="component-item">
+                    <div class="component-label">Competencias a Desarrollar</div>
+                    <div class="component-text">Listado de competencias con prioridades (Alta/Media/Baja)</div>
+                </div>
+                <div class="component-item">
+                    <div class="component-label">Actividades de Desarrollo</div>
+                    <div class="component-text">Cursos, mentorías, rotaciones, proyectos especiales</div>
+                </div>
+                <div class="component-item">
+                    <div class="component-label">Timeline</div>
+                    <div class="component-text">Fechas de inicio y finalización del plan de desarrollo</div>
+                </div>
+                <div class="component-item">
+                    <div class="component-label">Recursos</div>
+                    <div class="component-text">Presupuesto, mentores asignados, herramientas necesarias</div>
+                </div>
+                <div class="component-item">
+                    <div class="component-label">Indicadores</div>
+                    <div class="component-text">Métricas de progreso y criterios de éxito del plan</div>
+                </div>
+                <div class="component-item">
+                    <div class="component-label">Responsables</div>
+                    <div class="component-text">Mentor, líder directo, RH y otros stakeholders</div>
+                </div>
+            </div>
+
+            <div class="footer-info">
+                <div class="info-item">
+                    <span class="info-label">Responsables</span>
+                    <span class="info-value">Gerencia RH, Líder Sucesor, Mentor</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Duración</span>
+                    <span class="info-value">1-2 semanas</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Frecuencia</span>
+                    <span class="info-value">Mensual (revisión)</span>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

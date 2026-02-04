@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Procedimientos Operativos III</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%); display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+        .content { flex: 1; padding: 40px 60px 20px 80px; display: flex; flex-direction: column; overflow-y: auto; }
+        .title { font-size: 36px; font-weight: 800; color: #FF00FF; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
+        .subtitle { font-size: 16px; font-weight: 700; color: #00E5FF; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 1px; }
+        .section { margin-bottom: 18px; }
+        .section-title { font-size: 13px; font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid #FF00FF; }
+        .section-content { font-size: 12px; color: #E6E6FA; line-height: 1.5; }
+        
+        .steps-list { display: flex; flex-direction: column; gap: 8px; }
+        .step-item { display: flex; align-items: flex-start; gap: 12px; }
+        .step-number { background: linear-gradient(135deg, #FF00FF, #00E5FF); color: #FFFFFF; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+        .step-text { color: #FFFFFF; font-weight: 500; padding-top: 2px; }
+        .step-description { color: #E6E6FA; font-size: 11px; margin-top: 2px; }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .info-component { background: rgba(255, 0, 255, 0.05); border-left: 3px solid #FF00FF; padding: 12px 15px; }
+        .component-label { font-size: 12px; font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+        .component-text { font-size: 11px; color: #E6E6FA; line-height: 1.4; }
+        .component-text strong { color: #FFFFFF; font-weight: 600; }
+        
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="content">
+            <h1 class="title">Procedimientos Operativos III</h1>
+            <div class="subtitle">Creación de Plan de Acción</div>
+            
+            <div class="section">
+                <div class="section-title">Pasos para Crear Plan de Acción</div>
+                <div class="section-content">
+                    <div class="steps-list">
+                        <div class="step-item">
+                            <span class="step-number">1</span>
+                            <div>
+                                <div class="step-text">Acceder a sucesor asignado y seleccionar "Crear Plan de Acción"</div>
+                                <div class="step-description">Navegar desde el registro del sucesor a la sección de planes</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <span class="step-number">2</span>
+                            <div>
+                                <div class="step-text">Definir competencias a desarrollar</div>
+                                <div class="step-description">Seleccionar competencias (Técnicas, Directivas, Relacionales, Estratégicas) con prioridad</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <span class="step-number">3</span>
+                            <div>
+                                <div class="step-text">Asignar actividades de desarrollo</div>
+                                <div class="step-description">Agregar cursos, mentorías, rotaciones, proyectos especiales con fechas</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <span class="step-number">4</span>
+                            <div>
+                                <div class="step-text">Definir indicadores de progreso</div>
+                                <div class="step-description">Establecer métricas y criterios de éxito para cada actividad</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <span class="step-number">5</span>
+                            <div>
+                                <div class="step-text">Guardar y activar plan</div>
+                                <div class="step-description">Confirmar plan y notificar a stakeholders (mentor, líder, RH)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Información Mostrada en el Sistema</div>
+                <div class="section-content">
+                    <div class="info-grid">
+                        <div class="info-component">
+                            <div class="component-label">Puesto Crítico</div>
+                            <div class="component-text"><strong>Nombre, departamento, descripción, nivel de criticidad</strong> del puesto objetivo</div>
+                        </div>
+                        <div class="info-component">
+                            <div class="component-label">Sucesor</div>
+                            <div class="component-text"><strong>Nombre, cargo actual, departamento, antigüedad</strong> del colaborador asignado</div>
+                        </div>
+                        <div class="info-component">
+                            <div class="component-label">Competencias</div>
+                            <div class="component-text"><strong>Listado de competencias requeridas</strong> con estado (Desarrollada/En Desarrollo/No Desarrollada)</div>
+                        </div>
+                        <div class="info-component">
+                            <div class="component-label">Plan de Acción</div>
+                            <div class="component-text"><strong>Actividades programadas, fechas, responsables</strong> y estado de completitud</div>
+                        </div>
+                        <div class="info-component">
+                            <div class="component-label">Progreso</div>
+                            <div class="component-text"><strong>Porcentaje de avance, actividades completadas,</strong> evaluaciones realizadas</div>
+                        </div>
+                        <div class="info-component">
+                            <div class="component-label">Historial</div>
+                            <div class="component-text"><strong>Registro de cambios, comentarios, evaluaciones</strong> y auditoría de modificaciones</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>

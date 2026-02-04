@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Beneficios del Sistema</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%); display: flex; flex-direction: column; position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .top-bar { width: 100%; height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+        .left-accent { position: absolute; left: 0; top: 0; width: 6px; height: 100%; background: linear-gradient(180deg, #FF00FF, #00E5FF, #FF00FF); }
+        .content { flex: 1; padding: 50px 60px 30px 80px; display: flex; flex-direction: column; }
+        .title { font-size: 42px; font-weight: 800; color: #FF00FF; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .benefits-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px; flex: 1; }
+        
+        .benefit-column { display: flex; flex-direction: column; }
+        
+        .column-title { font-size: 14px; font-weight: 700; color: #00E5FF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #FF00FF; }
+        
+        .benefits-list { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+        
+        .benefit-item { display: flex; align-items: flex-start; gap: 10px; }
+        
+        .benefit-icon { color: #00E5FF; flex-shrink: 0; font-weight: 700; font-size: 14px; margin-top: 2px; }
+        
+        .benefit-text { color: #E6E6FA; font-size: 12px; line-height: 1.5; }
+        
+        .benefit-text strong { color: #FFFFFF; font-weight: 600; }
+        
+        .bottom-bar { height: 4px; background: linear-gradient(90deg, #FF00FF, #00E5FF); }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="top-bar"></div>
+        <div class="left-accent"></div>
+        <div class="content">
+            <h1 class="title">Beneficios del Sistema</h1>
+            
+            <div class="benefits-grid">
+                <!-- Para la Organización -->
+                <div class="benefit-column">
+                    <div class="column-title">Para la Organización</div>
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Continuidad operativa:</strong> Reduce riesgo de interrupción en puestos críticos</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Estabilidad estratégica:</strong> Asegura liderazgo consistente en decisiones clave</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Reducción de costos:</strong> Evita gastos de búsqueda y contratación externa</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Retención de conocimiento:</strong> Preserva expertise y relaciones comerciales</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Visibilidad estratégica:</strong> Datos para decisiones de inversión en talento</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Cumplimiento normativo:</strong> Demuestra gestión responsable de riesgos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Para los Colaboradores -->
+                <div class="benefit-column">
+                    <div class="column-title">Para los Colaboradores</div>
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Oportunidades de carrera:</strong> Claridad sobre caminos de desarrollo</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Mentoría personalizada:</strong> Acceso a mentores y líderes para desarrollo</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Capacitación estructurada:</strong> Planes de desarrollo diseñados específicamente</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Reconocimiento:</strong> Identificación de potencial y contribución</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Transparencia:</strong> Comprensión clara de criterios de promoción</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Motivación:</strong> Mayor engagement y sentido de pertenencia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Para el Departamento de RH -->
+                <div class="benefit-column">
+                    <div class="column-title">Para el Departamento de RH</div>
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Datos centralizados:</strong> Información única y confiable de sucesores</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Automatización:</strong> Reduce trabajo manual y errores administrativos</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Reportes ejecutivos:</strong> Información para decisiones de negocio</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Trazabilidad:</strong> Auditoría completa de cambios y decisiones</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Eficiencia operativa:</strong> Procesos ágiles y optimizados</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span class="benefit-text"><strong>Valor estratégico:</strong> Posiciona RH como socio de negocio</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar"></div>
+    </div>
+</body>
+</html>
