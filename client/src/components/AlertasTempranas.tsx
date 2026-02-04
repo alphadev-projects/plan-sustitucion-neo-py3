@@ -19,12 +19,12 @@ interface AlertasTempranaProps {
 export function AlertasTempranas({ puestos }: AlertasTempranaProps) {
   // Filtrar puestos críticos sin sucesor
   const puestosCriticosSinSucesor = puestos.filter(
-    (p) => p.aplicaSucesion === "Si" && !p.sucesor
+    (p) => !p.sucesor || p.sucesor.trim() === ""
   );
 
   // Filtrar puestos con sucesor (bajo riesgo)
   const puestosConSucesor = puestos.filter(
-    (p) => p.aplicaSucesion === "Si" && p.sucesor
+    (p) => p.sucesor && p.sucesor.trim() !== ""
   );
 
   const porcentajeCobertura =

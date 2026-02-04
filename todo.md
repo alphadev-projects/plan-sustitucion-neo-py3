@@ -884,3 +884,30 @@
 - server/db.ts: createPlan, updatePlan con validaciones y sincronización
 - client/src/pages/NuevoPlan.tsx: mejor manejo de errores e invalidación de cache
 - server/sync-validation.test.ts: suite de tests para validar correcciones
+
+
+## Corrección de Incoherencia - Puestos Críticos Sin Sucesor (COMPLETADO)
+
+### Problema Identificado
+- Total de puestos críticos: 9
+- Puestos con sucesor mostrados: 3
+- Puestos sin sucesor mostrados: 0 (INCORRECTO - debería ser 6)
+
+### Causa Raíz
+El filtro en `AlertasTempranas.tsx` estaba usando:
+```tsx
+(p) => p.aplicaSucesion === "Si" && !p.sucesor
+```
+
+Esto filtraba puestos que tenían `aplicaSucesion = "No"`, ocultando los 6 puestos críticos sin sucesor.
+
+### Solución Implementada
+Cambiar el filtro a:
+```tsx
+(p) => !p.sucesor || p.sucesor.trim() === ""
+```
+
+Ahora muestra TODOS los puestos críticos sin sucesor, independientemente de `aplicaSucesion`.
+
+### Archivos Modificados
+- client/src/components/AlertasTempranas.tsx: Corregido filtro de puestos sin sucesor

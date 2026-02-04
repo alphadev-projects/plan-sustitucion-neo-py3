@@ -1,0 +1,55 @@
+{
+  "query": "\n-- Verificar cantidad de registros en sucesion_puestos\nSELECT COUNT(*) as total_sucesion_puestos FROM sucesion_puestos;\n\n-- Verificar cantidad de puestos críticos en planes_sustitucion\nSELECT COUNT(*) as total_puestos_criticos FROM planes_sustitucion WHERE puestoClave = 'Si';\n\n-- Verificar puestos críticos sin sucesor\nSELECT COUNT(*) as sin_sucesor FROM sucesion_puestos WHERE sucesor = '' OR sucesor IS NULL;\n\n-- Listar todos los puestos críticos con sus sucesores\nSELECT \n  puestoClave,\n  departamentoPuestoClave,\n  cargoPuestoClave,\n  sucesor,\n  aplicaSucesion\nFROM sucesion_puestos\nORDER BY sucesor DESC;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute \n-- Verificar cantidad de registros en sucesion_puestos\nSELECT COUNT(*) as total_sucesion_puestos FROM sucesion_puestos;\n\n-- Verificar cantidad de puestos críticos en planes_sustitucion\nSELECT COUNT(*) as total_puestos_criticos FROM planes_sustitucion WHERE puestoClave = 'Si';\n\n-- Verificar puestos críticos sin sucesor\nSELECT COUNT(*) as sin_sucesor FROM sucesion_puestos WHERE sucesor = '' OR sucesor IS NULL;\n\n-- Listar todos los puestos críticos con sus sucesores\nSELECT \n  puestoClave,\n  departamentoPuestoClave,\n  cargoPuestoClave,\n  sucesor,\n  aplicaSucesion\nFROM sucesion_puestos\nORDER BY sucesor DESC;\n",
+  "rows": [
+    {
+      "total_sucesion_puestos": "9"
+    },
+    {
+      "total_sucesion_puestos": "total_puestos_criticos"
+    },
+    {
+      "total_sucesion_puestos": "9"
+    },
+    {
+      "total_sucesion_puestos": "sin_sucesor"
+    },
+    {
+      "total_sucesion_puestos": "6"
+    },
+    {
+      "total_sucesion_puestos": "puestoClave\tdepartamentoPuestoClave\tcargoPuestoClave\tsucesor\taplicaSucesion"
+    },
+    {
+      "total_sucesion_puestos": "FATIMA MARICEL GOLNNER GIMENEZ\tCumplimiento y Auditoria\tJefe de Cumplimiento y Auditoria\tULTIMO PARA PROBAR\tSi"
+    },
+    {
+      "total_sucesion_puestos": "ABRAHAN VIANCONI VILLALBA\tDesarrollo de Negocios\tEjecutivo de Ventas Corporativas\tOMAR GABRIEL SALCEDO VERA\tSi"
+    },
+    {
+      "total_sucesion_puestos": "ROQUE EVER YEGROS COLMAN\tAdministración y Finanzas\tJefe Administrativo Financiero\tALEX MARTINEZ SANDOVAL\tSi"
+    },
+    {
+      "total_sucesion_puestos": "OMAR GABRIEL SALCEDO VERA\tDesarrollo De Negocios\tEjecutivo de Ventas Corporativas - ASU\t\tNo"
+    },
+    {
+      "total_sucesion_puestos": "LIZ MABEL AVALOS VERA\tAlianzas Estrategicas\tEncargado de Alianzas Estrategicas - CDE\t\tNo"
+    },
+    {
+      "total_sucesion_puestos": "MAURICIO ALBERTO TOROSSI\tAlianzas Estrategicas\tJefe de Alianzas Estrategicas\t\tNo"
+    },
+    {
+      "total_sucesion_puestos": "GERMAN ARMANDO LEIVA BOZZO\tComercial\tGerente Comercial - ASU\t\tNo"
+    },
+    {
+      "total_sucesion_puestos": "MANUEL BARRIOS MIRANDA\tStock\tSupervisor de Stock\t\tNo"
+    },
+    {
+      "total_sucesion_puestos": "PYKASU ALBA GAMARRA SILVERO\tMarketing\tSupervisor de Marketing\t\tNo"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_sucesion_puestos\n9\ntotal_puestos_criticos\n9\nsin_sucesor\n6\npuestoClave\tdepartamentoPuestoClave\tcargoPuestoClave\tsucesor\taplicaSucesion\nFATIMA MARICEL GOLNNER GIMENEZ\tCumplimiento y Auditoria\tJefe de Cumplimiento y Auditoria\tULTIMO PARA PROBAR\tSi\nABRAHAN VIANCONI VILLALBA\tDesarrollo de Negocios\tEjecutivo de Ventas Corporativas\tOMAR GABRIEL SALCEDO VERA\tSi\nROQUE EVER YEGROS COLMAN\tAdministración y Finanzas\tJefe Administrativo Financiero\tALEX MARTINEZ SANDOVAL\tSi\nOMAR GABRIEL SALCEDO VERA\tDesarrollo De Negocios\tEjecutivo de Ventas Corporativas - ASU\t\tNo\nLIZ MABEL AVALOS VERA\tAlianzas Estrategicas\tEncargado de Alianzas Estrategicas - CDE\t\tNo\nMAURICIO ALBERTO TOROSSI\tAlianzas Estrategicas\tJefe de Alianzas Estrategicas\t\tNo\nGERMAN ARMANDO LEIVA BOZZO\tComercial\tGerente Comercial - ASU\t\tNo\nMANUEL BARRIOS MIRANDA\tStock\tSupervisor de Stock\t\tNo\nPYKASU ALBA GAMARRA SILVERO\tMarketing\tSupervisor de Marketing\t\tNo\n",
+  "stderr": "",
+  "execution_time_ms": 1021
+}
