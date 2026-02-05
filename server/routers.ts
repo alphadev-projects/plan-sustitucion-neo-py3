@@ -284,10 +284,9 @@ export const appRouter = router({
             input.departamentoPoolReemplazo!
           );
           
-          // Filtrar: excluir al colaborador seleccionado y tomar máximo 2 reemplazos
+          // Filtrar: excluir al colaborador seleccionado - REGISTRAR TODOS (sin límite)
           const reemplazosDelPool = colaboradoresPool
             .filter(c => c.nombre !== input.colaborador)
-            .slice(0, 2)
             .map(c => ({
               nombre: c.nombre,
               cargo: c.cargo,

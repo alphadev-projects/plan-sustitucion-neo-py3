@@ -987,3 +987,38 @@ El frontend solo consultaba `plan.reemplazo` (campo de tabla principal) y no con
 - Planes de tipo "pool" ahora muestran los 2 reemplazos en la tabla
 - Formato claro y legible con numeración
 - Sincronización correcta entre BD y UI
+
+
+## CORRECCIÓN - Límite de Reemplazos en Pool/Equipo (COMPLETADO)
+
+### Problema
+La lógica de pool estaba limitada a máximo 2 reemplazos con `.slice(0, 2)`, cuando debería registrar TODOS los colaboradores del cargo.
+
+### Solución Implementada
+
+#### 1. Backend - db.ts
+- Función `createPlanWithReemplazos` ahora acepta parámetro opcional `maxReemplazos`
+- Si `maxReemplazos` se pasa → Valida límite (para individual)
+- Si NO se pasa → Sin límite (para pool)
+
+#### 2. Backend - routers.ts
+- Eliminado `.slice(0, 2)` de lógica de pool
+- Ahora registra TODOS los colaboradores del cargo
+- NO pasa `maxReemplazos` a función (sin límite)
+
+### Lógica Final
+
+**Registro Individual:**
+- Máximo 2 reemplazos por plan
+- Validación: `maxReemplazos: 2`
+
+**Registro Pool/Equipo:**
+- TODOS los colaboradores del cargo (sin límite)
+- 5 colaboradores → Se registran 5
+- 10 colaboradores → Se registran 10
+- N colaboradores → Se registran N
+
+### Resultado
+- Pool/Equipo ahora registra correctamente TODOS los colaboradores
+- Individual mantiene límite de 2 reemplazos
+- Sincronización correcta con sucesion_puestos

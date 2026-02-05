@@ -1268,18 +1268,20 @@ export async function actualizarSucesor(sucesionPuestoId: number, nuevoSucesor: 
 }
 
 
-// Función para crear plan con múltiples reemplazos (hasta 2)
+// Función para crear plan con múltiples reemplazos
+// maxReemplazos: 2 para individual, sin límite para pool
 export async function createPlanWithReemplazos(
   planData: InsertPlanSustitucion,
-  reemplazos: Array<{ nombre: string; cargo: string; departamento: string }>
+  reemplazos: Array<{ nombre: string; cargo: string; departamento: string }>,
+  maxReemplazos?: number
 ) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
   try {
-    // Validar máximo 2 reemplazos
-    if (reemplazos.length > 2) {
-      throw new Error("Máximo 2 reemplazos permitidos por plan");
+    // Validar máximo de reemplazos si se especifica
+    if (maxReemplazos && reemplazos.length > maxReemplazos) {
+      throw new Error(`Máximo ${maxReemplazos} reemplazos permitidos por plan`);
     }
 
     // Validar que no haya duplicados en reemplazos
