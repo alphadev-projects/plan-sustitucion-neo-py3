@@ -1022,3 +1022,34 @@ La lógica de pool estaba limitada a máximo 2 reemplazos con `.slice(0, 2)`, cu
 - Pool/Equipo ahora registra correctamente TODOS los colaboradores
 - Individual mantiene límite de 2 reemplazos
 - Sincronización correcta con sucesion_puestos
+
+
+## CORRECCIÓN - Registros Separados para Pool/Equipo (COMPLETADO)
+
+### Cambio de Diseño
+Se revirtió el diseño de múltiples reemplazos en un solo plan a registros separados por colaborador.
+
+### Lógica Implementada
+
+**Registro Pool/Equipo:**
+- Seleccionar cargo y departamento
+- Sistema busca TODOS los colaboradores con ese cargo
+- Crea UN PLAN POR CADA COLABORADOR
+- Cada plan es un registro separado en la tabla
+- Cada registro muestra: "Pool - [Cargo]"
+
+**Ejemplo:**
+- Cargo: "Analista Técnico N2"
+- Pool tiene 5 personas
+- Resultado: 5 registros separados
+- Cada uno con tipoReemplazo = "pool"
+
+### Archivos Modificados
+- server/routers.ts: Lógica de pool actualizada para crear planes separados
+- client/src/pages/Planes.tsx: Revertida visualización a simple
+- server/routers.ts: Procedure planes.list revertido a getAllPlanes()
+
+### Nota Técnica
+- Se mantiene tabla plan_reemplazos (no se usa en este flujo)
+- Estructura simple: cada plan tiene un reemplazo
+- Sincronización con sucesion_puestos funciona correctamente
