@@ -199,22 +199,26 @@ export async function getAllPlanesWithReemplazos() {
   return planesConReemplazos;
 }
 
-export async function createPlan(plan: InsertPlanSustitucion) {
+export async function createPlan(plan: InsertPlanSustitucion, allowDuplicates = false) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
   // ✅ VALIDACIÓN 1: Verificar que el colaborador no esté registrado en otro plan
-  const existingPlans = await db
-    .select()
-    .from(planesSustitucion)
-    .where(eq(planesSustitucion.colaborador, plan.colaborador));
-  
-  if (existingPlans.length > 0) {
-    throw new Error(
-      `❌ VALIDACIÓN FALLIDA: El colaborador "${plan.colaborador}" ya está registrado en otro plan de sustitución. ` +
-      `No se permite registrar la misma persona en múltiples puestos. ` +
-      `Por favor, verifica los planes existentes o contacta a administración.`
-    );
+  // SOLO para registro individual (allowDuplicates = false)
+  // Para pool/equipo (allowDuplicates = true) NO se valida
+  if (!allowDuplicates) {
+    const existingPlans = await db
+      .select()
+      .from(planesSustitucion)
+      .where(eq(planesSustitucion.colaborador, plan.colaborador));
+    
+    if (existingPlans.length > 0) {
+      throw new Error(
+        `❌ VALIDACIÓN FALLIDA: El colaborador "${plan.colaborador}" ya está registrado en otro plan de sustitución. ` +
+        `No se permite registrar la misma persona en múltiples puestos. ` +
+        `Por favor, verifica los planes existentes o contacta a administración.`
+      );
+    }
   }
   
   const result = await db.insert(planesSustitucion).values(plan);

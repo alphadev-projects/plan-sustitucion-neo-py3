@@ -297,6 +297,7 @@ export const appRouter = router({
 
           try {
             // Crear UN PLAN POR CADA COLABORADOR del pool
+            // allowDuplicates=true porque en pool SÍ se permite el mismo colaborador en múltiples planes
             const planesCreados = await Promise.all(
               reemplazosDelPool.map(reemplazo =>
                 createPlan({
@@ -310,7 +311,7 @@ export const appRouter = router({
                   tipoReemplazo: "pool",
                   puestoClave: input.puestoClave,
                   usuario: ctx.user?.name || "usuario",
-                })
+                }, true)  // allowDuplicates = true para pool
               )
             );
 

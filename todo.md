@@ -1053,3 +1053,36 @@ Se revirtió el diseño de múltiples reemplazos en un solo plan a registros sep
 - Se mantiene tabla plan_reemplazos (no se usa en este flujo)
 - Estructura simple: cada plan tiene un reemplazo
 - Sincronización con sucesion_puestos funciona correctamente
+
+
+## CORRECCIÓN - Validación de Duplicados en Pool/Equipo (COMPLETADO)
+
+### Problema
+Validación de duplicados se aplicaba también a registros Pool/Equipo, causando error cuando se intentaba registrar múltiples planes del mismo colaborador.
+
+### Solución Implementada
+
+#### 1. Backend - db.ts
+- Función `createPlan` ahora acepta parámetro `allowDuplicates` (default: false)
+- Si `allowDuplicates = false` → Valida duplicados (para individual)
+- Si `allowDuplicates = true` → NO valida duplicados (para pool)
+
+#### 2. Backend - routers.ts
+- Lógica de pool ahora pasa `allowDuplicates = true` a createPlan
+- Permite que el mismo colaborador esté en múltiples planes del pool
+
+### Lógica Final
+
+**Registro Individual:**
+- Valida que no exista otro plan con el mismo colaborador
+- Error si ya existe
+
+**Registro Pool/Equipo:**
+- NO valida duplicados
+- Permite el mismo colaborador en múltiples planes del pool
+- Cada plan es independiente
+
+### Resultado
+- Pool/Equipo registra correctamente TODOS los colaboradores sin errores
+- Individual mantiene validación de duplicados
+- Sincronización correcta con sucesion_puestos
