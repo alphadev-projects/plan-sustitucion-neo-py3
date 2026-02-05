@@ -26,6 +26,7 @@ import {
   getAllPlanes,
   getAllPlanesWithReemplazos,
   createPlan,
+  createPlanWithMultipleReemplazos,
   updatePlan,
   deletePlan,
   getPlanById,
@@ -338,6 +339,49 @@ export const appRouter = router({
             tipoReemplazo: "individual",
             puestoClave: input.puestoClave,
             usuario: ctx.user?.name || "usuario",
+          });
+        }
+      }),
+
+
+    createIndividual: protectedProcedure
+      .input(z.object({
+        empleadoId: z.number(),
+        departamento: z.string(),
+        colaborador: z.string(),
+        cargo: z.string(),
+        departamentoReemplazo: z.string(),
+        reemplazo1: z.string().optional(),
+        reemplazo2: z.string().optional(),
+        cargoReemplazo: z.string(),
+        puestoClave: z.enum(["Si", "No"]),
+        sucesor: z.string().optional(),
+        departamentoSucesor: z.string().optional(),
+        cargoSucesor: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        try {
+          return await createPlanWithMultipleReemplazos(
+            {
+              empleadoId: input.empleadoId,
+              departamento: input.departamento,
+              colaborador: input.colaborador,
+              cargo: input.cargo,
+              departamentoReemplazo: input.departamentoReemplazo,
+              reemplazo: input.reemplazo1 || "",
+              cargoReemplazo: input.cargoReemplazo,
+              tipoReemplazo: "individual",
+              puestoClave: input.puestoClave,
+              usuario: ctx.user?.name || "usuario",
+            },
+            input.reemplazo1,
+            input.reemplazo2,
+            input.sucesor
+          );
+        } catch (error: any) {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: error?.message || "Error creando plan individual",
           });
         }
       }),

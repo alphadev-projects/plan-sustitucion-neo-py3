@@ -16,15 +16,13 @@ export default function NuevoPlan() {
   const [departamento, setDepartamento] = useState("");
   const [colaboradorId, setcolaboradorId] = useState("");
   const [departamentoReemplazo, setDepartamentoReemplazo] = useState("");
-  const [reemplazoId, setReemplazoId] = useState("");
+  const [reemplazo1Id, setReemplazo1Id] = useState("");
+  const [reemplazo2Id, setReemplazo2Id] = useState("");
   const [departamentoPoolReemplazo, setDepartamentoPoolReemplazo] = useState("");
   const [cargoPoolReemplazo, setCargoPoolReemplazo] = useState("");
   const [puestoClave, setPuestoClave] = useState(false);
-  
-  // Estados para Sucesión
-  const [departamentoSucesor, setDepartamentoSucesor] = useState("");
   const [sucesorId, setSucesorId] = useState("");
-  const [aplicaSucesion, setAplicaSucesion] = useState(false);
+  const [departamentoSucesor, setDepartamentoSucesor] = useState("");
 
   const { data: departamentos } = trpc.empleados.departamentos.useQuery();
   const { data: colaboradors } = trpc.empleados.listByDepartamento.useQuery(
@@ -42,6 +40,17 @@ export default function NuevoPlan() {
   const { data: cargos } = trpc.empleados.cargos.useQuery();
 
   const utils = trpc.useUtils();
+  
+  // Mutation para registro individual con 2 reemplazos
+  const createIndividual = trpc.planes.createIndividual.useMutation({
+    onSuccess: async () => {
+      await utils.planes.list.invalidate();
+      await utils.sucesion.listar.invalidate();
+      await utils.sucesion.criticos.invalidate();
+    },
+  });
+
+  // Mutation para registro pool (mantener compatibilidad)
   const createPlan = trpc.planes.create.useMutation({
     onSuccess: async () => {
       await utils.planes.list.invalidate();
@@ -51,7 +60,8 @@ export default function NuevoPlan() {
   });
 
   const colaboradorSeleccionado = colaboradors?.find((e) => e.id === parseInt(colaboradorId));
-  const reemplazoSeleccionado = reemplazos?.find((e) => e.id === parseInt(reemplazoId));
+  const reemplazo1Seleccionado = reemplazos?.find((e) => e.id === parseInt(reemplazo1Id));
+  const reemplazo2Seleccionado = reemplazos?.find((e) => e.id === parseInt(reemplazo2Id));
   const sucesorSeleccionado = sucesores?.find((e) => e.id === parseInt(sucesorId));
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -62,49 +72,48 @@ export default function NuevoPlan() {
       return;
     }
 
-    if (tipoReemplazo === "individual" && !reemplazoId) {
-      alert("Por favor selecciona un reemplazo o marca como NO APLICA en el dropdown");
-      return;
-    }
-
     if (tipoReemplazo === "pool" && (!departamentoPoolReemplazo || !cargoPoolReemplazo)) {
       alert("Por favor selecciona departamento y cargo para el pool");
       return;
     }
 
-    // Validar sucesión si es puesto clave
-    if (puestoClave && aplicaSucesion && !sucesorId) {
+    // Validar sucesor si es puesto clave
+    if (puestoClave && !sucesorId) {
       alert("Por favor selecciona un sucesor para este puesto clave");
       return;
     }
 
     try {
-      await createPlan.mutateAsync({
-        empleadoId: colaboradorSeleccionado.id,
-        departamento: colaboradorSeleccionado.departamento,
-        colaborador: colaboradorSeleccionado.nombre,
-        cargo: colaboradorSeleccionado.cargo,
-        tipoReemplazo: tipoReemplazo,
-        departamentoReemplazo: tipoReemplazo === "individual" 
-          ? (reemplazoId === "NO_APLICA" ? "N/A" : reemplazoSeleccionado!.departamento)
-          : departamentoPoolReemplazo,
-        reemplazo: tipoReemplazo === "individual"
-          ? (reemplazoId === "NO_APLICA" ? "NO APLICA" : reemplazoSeleccionado!.nombre)
-          : undefined,
-        cargoReemplazo: tipoReemplazo === "individual"
-          ? (reemplazoId === "NO_APLICA" ? "N/A" : reemplazoSeleccionado!.cargo)
-          : undefined,
-        cargoPoolReemplazo: tipoReemplazo === "pool" ? cargoPoolReemplazo : undefined,
-        departamentoPoolReemplazo: tipoReemplazo === "pool" ? departamentoPoolReemplazo : undefined,
-        puestoClave: puestoClave ? "Si" : "No",
-        // Datos de sucesión
-        sucesion: puestoClave ? {
-          aplicaSucesion: aplicaSucesion ? "Si" : "No",
-          sucesor: aplicaSucesion && sucesorSeleccionado ? sucesorSeleccionado.nombre : "",
-          departamentoSucesor: aplicaSucesion && sucesorSeleccionado ? sucesorSeleccionado.departamento : "",
-          cargoSucesor: aplicaSucesion && sucesorSeleccionado ? sucesorSeleccionado.cargo : "",
-        } : undefined,
-      });
+      if (tipoReemplazo === "individual") {
+        // Usar nuevo procedure para registro individual
+        await createIndividual.mutateAsync({
+          empleadoId: colaboradorSeleccionado.id,
+          departamento: colaboradorSeleccionado.departamento,
+          colaborador: colaboradorSeleccionado.nombre,
+          cargo: colaboradorSeleccionado.cargo,
+          departamentoReemplazo: departamentoReemplazo,
+          reemplazo1: reemplazo1Seleccionado?.nombre,
+          reemplazo2: reemplazo2Seleccionado?.nombre,
+          cargoReemplazo: reemplazo1Seleccionado?.cargo || "",
+          puestoClave: puestoClave ? "Si" : "No",
+          sucesor: sucesorSeleccionado?.nombre,
+          departamentoSucesor: sucesorSeleccionado?.departamento,
+          cargoSucesor: sucesorSeleccionado?.cargo,
+        });
+      } else {
+        // Mantener procedure existente para pool
+        await createPlan.mutateAsync({
+          empleadoId: colaboradorSeleccionado.id,
+          departamento: colaboradorSeleccionado.departamento,
+          colaborador: colaboradorSeleccionado.nombre,
+          cargo: colaboradorSeleccionado.cargo,
+          tipoReemplazo: "pool",
+          departamentoReemplazo: departamentoPoolReemplazo,
+          cargoPoolReemplazo: cargoPoolReemplazo,
+          departamentoPoolReemplazo: departamentoPoolReemplazo,
+          puestoClave: puestoClave ? "Si" : "No",
+        });
+      }
       setLocation("/planes");
     } catch (error: any) {
       const errorMessage = error?.message || "Error al crear el plan";
@@ -115,6 +124,8 @@ export default function NuevoPlan() {
       }
     }
   };
+
+  const isLoading = createIndividual.isPending || createPlan.isPending;
 
   return (
     <DashboardLayout>
@@ -142,23 +153,23 @@ export default function NuevoPlan() {
           <CardContent className="space-y-3 text-sm text-blue-800">
             <div>
               <p className="font-semibold">1. Selecciona el tipo de reemplazo</p>
-              <p className="text-blue-700">Elige entre reemplazo individual (una persona específica), por pool/equipo (grupo de personas con el mismo cargo), o sin reemplazo.</p>
+              <p className="text-blue-700">Elige entre reemplazo individual (hasta 2 personas específicas) o por pool/equipo (grupo de personas con el mismo cargo).</p>
             </div>
             <div>
               <p className="font-semibold">2. Selecciona el Departamento y Colaborador</p>
               <p className="text-blue-700">Elige el departamento donde trabaja el colaborador y luego selecciona su nombre de la lista.</p>
             </div>
             <div>
-              <p className="font-semibold">3. Asigna un Reemplazo</p>
-              <p className="text-blue-700">Si seleccionaste reemplazo individual, elige la persona. Si es pool, selecciona el departamento y cargo del equipo de reemplazo.</p>
+              <p className="font-semibold">3. Asigna Reemplazos (Opcional)</p>
+              <p className="text-blue-700">Para individual: puedes asignar hasta 2 reemplazos. Para pool: selecciona el departamento y cargo del equipo de reemplazo.</p>
             </div>
             <div>
               <p className="font-semibold">4. Marca como Puesto Clave (Opcional)</p>
-              <p className="text-blue-700">Si este puesto es crítico para la organización, activa el toggle "Marcar como puesto clave". Esto habilitará la sección de Sucesión.</p>
+              <p className="text-blue-700">Si este puesto es crítico para la organización, activa el toggle "Marcar como puesto clave". Esto habilitará la selección de sucesor.</p>
             </div>
             <div>
-              <p className="font-semibold">5. Configura Sucesión (Si aplica)</p>
-              <p className="text-blue-700">Si marcaste como puesto clave, podrás seleccionar un sucesor para este puesto.</p>
+              <p className="font-semibold">5. Configura Sucesor (Si aplica)</p>
+              <p className="text-blue-700">Si marcaste como puesto clave, selecciona UN sucesor para este puesto crítico.</p>
             </div>
           </CardContent>
         </Card>
@@ -173,7 +184,7 @@ export default function NuevoPlan() {
               {/* Selector de tipo de reemplazo */}
               <div className="border-b pb-6">
                 <Label className="text-base font-semibold mb-4 block">Tipo de Reemplazo</Label>
-                <div className="grid gap-4 md:grid-cols-3">
+                <div className="grid gap-4 md:grid-cols-2">
                   <div
                     onClick={() => setTipoReemplazo("individual")}
                     className={`p-4 rounded-lg border-2 cursor-pointer transition ${
@@ -183,7 +194,7 @@ export default function NuevoPlan() {
                     }`}
                   >
                     <p className="font-semibold">👤 Individual</p>
-                    <p className="text-sm text-muted-foreground">Asignar una persona específica como reemplazo</p>
+                    <p className="text-sm text-muted-foreground">Asignar hasta 2 reemplazos específicos</p>
                   </div>
                   <div
                     onClick={() => setTipoReemplazo("pool")}
@@ -227,63 +238,42 @@ export default function NuevoPlan() {
                     id="colaborador"
                     value={colaboradorId}
                     onChange={(e) => setcolaboradorId(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-lg bg-background"
                     disabled={!departamento}
-                    className="w-full px-3 py-2 border rounded-lg bg-background disabled:opacity-50"
                   >
                     <option value="">Selecciona un colaborador</option>
                     {(colaboradors || []).map((emp: any) => (
                       <option key={emp.id} value={emp.id}>
-                        {emp.nombre}
+                        {emp.nombre} - {emp.cargo}
                       </option>
                     ))}
                   </select>
                 </div>
               </div>
 
-              {colaboradorSeleccionado && (
-                <div className="bg-accent/50 p-4 rounded-lg space-y-2">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Cargo</p>
-                    <p className="font-medium">{colaboradorSeleccionado.cargo}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Área</p>
-                    <p className="font-medium">{colaboradorSeleccionado.area}</p>
-                  </div>
-                </div>
-              )}
-
-              {/* Sección de reemplazo individual */}
+              {/* Sección de reemplazos - INDIVIDUAL */}
               {tipoReemplazo === "individual" && (
-                <div className="border-t pt-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold">Información del Reemplazo Individual</h3>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => {
-                        setDepartamentoReemplazo("");
-                        setReemplazoId("NO_APLICA");
-                      }}
-                      className="gap-2"
-                    >
-                      ❌ NO APLICA - SIN REEMPLAZO
-                    </Button>
+                <div className="border-t pt-6 space-y-6">
+                  <div className="bg-amber-50 border border-amber-200 p-4 rounded-lg">
+                    <p className="text-sm text-amber-800">
+                      <strong>Reemplazos (Opcional):</strong> Puedes asignar hasta 2 reemplazos. Ambos son opcionales.
+                    </p>
                   </div>
 
                   <div className="grid gap-6 md:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="deptReemplazo">Departamento del Reemplazo</Label>
+                      <Label htmlFor="departamentoReemplazo">Departamento de Reemplazos</Label>
                       <select
-                        id="deptReemplazo"
+                        id="departamentoReemplazo"
                         value={departamentoReemplazo}
                         onChange={(e) => {
                           setDepartamentoReemplazo(e.target.value);
-                          setReemplazoId("");
+                          setReemplazo1Id("");
+                          setReemplazo2Id("");
                         }}
                         className="w-full px-3 py-2 border rounded-lg bg-background"
                       >
-                        <option value="">Selecciona un departamento</option>
+                        <option value="">Selecciona departamento</option>
                         {(departamentos || []).map((dept: string) => (
                           <option key={dept} value={dept}>
                             {dept}
@@ -291,59 +281,70 @@ export default function NuevoPlan() {
                         ))}
                       </select>
                     </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="reemplazo">Reemplazo</Label>
-                      <select
-                        id="reemplazo"
-                        value={reemplazoId}
-                        onChange={(e) => setReemplazoId(e.target.value)}
-                        disabled={!departamentoReemplazo}
-                        className="w-full px-3 py-2 border rounded-lg bg-background disabled:opacity-50"
-                      >
-                        <option value="">Selecciona un reemplazo</option>
-                        {(reemplazos || []).map((emp: any) => (
-                          <option key={emp.id} value={emp.id}>
-                            {emp.nombre}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
                   </div>
 
-                  {reemplazoSeleccionado && (
-                    <div className="bg-accent/50 p-4 rounded-lg space-y-2 mt-4">
-                      <div>
-                        <p className="text-sm text-muted-foreground">Cargo</p>
-                        <p className="font-medium">{reemplazoSeleccionado.cargo}</p>
+                  {departamentoReemplazo && (
+                    <div className="grid gap-6 md:grid-cols-2">
+                      <div className="space-y-2">
+                        <Label htmlFor="reemplazo1">Reemplazo 1 (Opcional)</Label>
+                        <select
+                          id="reemplazo1"
+                          value={reemplazo1Id}
+                          onChange={(e) => setReemplazo1Id(e.target.value)}
+                          className="w-full px-3 py-2 border rounded-lg bg-background"
+                        >
+                          <option value="">Selecciona reemplazo 1</option>
+                          {(reemplazos || []).map((emp: any) => (
+                            <option key={emp.id} value={emp.id}>
+                              {emp.nombre} - {emp.cargo}
+                            </option>
+                          ))}
+                        </select>
                       </div>
-                      <div>
-                        <p className="text-sm text-muted-foreground">Área</p>
-                        <p className="font-medium">{reemplazoSeleccionado.area}</p>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="reemplazo2">Reemplazo 2 (Opcional)</Label>
+                        <select
+                          id="reemplazo2"
+                          value={reemplazo2Id}
+                          onChange={(e) => setReemplazo2Id(e.target.value)}
+                          className="w-full px-3 py-2 border rounded-lg bg-background"
+                        >
+                          <option value="">Selecciona reemplazo 2</option>
+                          {(reemplazos || []).map((emp: any) => (
+                            <option key={emp.id} value={emp.id}>
+                              {emp.nombre} - {emp.cargo}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                     </div>
                   )}
                 </div>
               )}
 
-              {/* Sección de reemplazo por pool */}
+              {/* Sección de reemplazos - POOL */}
               {tipoReemplazo === "pool" && (
-                <div className="border-t pt-6">
-                  <h3 className="font-semibold mb-4">Información del Pool/Equipo de Reemplazo</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Se registrarán automáticamente todos los colaboradores con el cargo seleccionado en el departamento indicado.
-                  </p>
+                <div className="border-t pt-6 space-y-6">
+                  <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
+                    <p className="text-sm text-green-800">
+                      <strong>Pool/Equipo:</strong> Se registrarán TODOS los colaboradores con el cargo seleccionado como reemplazos.
+                    </p>
+                  </div>
 
                   <div className="grid gap-6 md:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="deptPoolReemplazo">Departamento del Pool</Label>
+                      <Label htmlFor="departamentoPoolReemplazo">Departamento del Pool</Label>
                       <select
-                        id="deptPoolReemplazo"
+                        id="departamentoPoolReemplazo"
                         value={departamentoPoolReemplazo}
-                        onChange={(e) => setDepartamentoPoolReemplazo(e.target.value)}
+                        onChange={(e) => {
+                          setDepartamentoPoolReemplazo(e.target.value);
+                          setCargoPoolReemplazo("");
+                        }}
                         className="w-full px-3 py-2 border rounded-lg bg-background"
                       >
-                        <option value="">Selecciona un departamento</option>
+                        <option value="">Selecciona departamento</option>
                         {(departamentos || []).map((dept: string) => (
                           <option key={dept} value={dept}>
                             {dept}
@@ -353,14 +354,15 @@ export default function NuevoPlan() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="cargoPool">Cargo del Pool</Label>
+                      <Label htmlFor="cargoPoolReemplazo">Cargo del Pool</Label>
                       <select
-                        id="cargoPool"
+                        id="cargoPoolReemplazo"
                         value={cargoPoolReemplazo}
                         onChange={(e) => setCargoPoolReemplazo(e.target.value)}
                         className="w-full px-3 py-2 border rounded-lg bg-background"
+                        disabled={!departamentoPoolReemplazo}
                       >
-                        <option value="">Selecciona un cargo</option>
+                        <option value="">Selecciona cargo</option>
                         {(cargos || []).map((cargo: string) => (
                           <option key={cargo} value={cargo}>
                             {cargo}
@@ -369,55 +371,34 @@ export default function NuevoPlan() {
                       </select>
                     </div>
                   </div>
-
-                  {departamentoPoolReemplazo && cargoPoolReemplazo && (
-                    <div className="bg-green-50 border border-green-200 p-4 rounded-lg mt-4">
-                      <p className="text-sm text-green-800">
-                        ✓ Se registrarán todos los colaboradores de <strong>{departamentoPoolReemplazo}</strong> con cargo <strong>{cargoPoolReemplazo}</strong> como reemplazos.
-                      </p>
-                    </div>
-                  )}
                 </div>
               )}
 
-              {/* Sección de puesto clave */}
-              <div className="border-t pt-6">
-                <div className="flex items-center gap-3">
+              {/* Puesto Clave y Sucesor */}
+              <div className="border-t pt-6 space-y-6">
+                <div className="flex items-center justify-between p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                  <div>
+                    <Label className="text-base font-semibold">Marcar como Puesto Clave</Label>
+                    <p className="text-sm text-muted-foreground mt-1">Este es un puesto crítico para la organización</p>
+                  </div>
                   <Switch
-                    id="puestoClave"
                     checked={puestoClave}
                     onCheckedChange={setPuestoClave}
                   />
-                  <div className="space-y-1">
-                    <Label htmlFor="puestoClave" className="cursor-pointer">Marcar como puesto clave</Label>
-                    <p className="text-sm text-muted-foreground">Este es un puesto crítico para la organización</p>
-                  </div>
                 </div>
-              </div>
 
-              {/* Sección de Sucesión (solo si es puesto clave) */}
-              {puestoClave && (
-                <div className="border-t pt-6 bg-green-50 p-4 rounded-lg space-y-4">
-                  <div>
-                    <h3 className="font-semibold text-green-900 mb-4">👥 Configurar Sucesión</h3>
-                    <p className="text-sm text-green-800 mb-4">Selecciona si deseas registrar un sucesor para este puesto clave.</p>
-                  </div>
+                {puestoClave && (
+                  <div className="space-y-4 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                    <div className="space-y-2">
+                      <Label className="text-base font-semibold">Selecciona Sucesor</Label>
+                      <p className="text-sm text-muted-foreground">Elige UN sucesor para este puesto clave</p>
+                    </div>
 
-                  <div className="flex items-center gap-3">
-                    <Switch
-                      id="aplicaSucesion"
-                      checked={aplicaSucesion}
-                      onCheckedChange={setAplicaSucesion}
-                    />
-                    <Label htmlFor="aplicaSucesion" className="cursor-pointer">¿Aplica sucesión?</Label>
-                  </div>
-
-                  {aplicaSucesion && (
-                    <div className="grid gap-6 md:grid-cols-2 mt-4">
+                    <div className="grid gap-6 md:grid-cols-2">
                       <div className="space-y-2">
-                        <Label htmlFor="deptSucesor">Departamento del Sucesor</Label>
+                        <Label htmlFor="departamentoSucesor">Departamento del Sucesor</Label>
                         <select
-                          id="deptSucesor"
+                          id="departamentoSucesor"
                           value={departamentoSucesor}
                           onChange={(e) => {
                             setDepartamentoSucesor(e.target.value);
@@ -425,7 +406,7 @@ export default function NuevoPlan() {
                           }}
                           className="w-full px-3 py-2 border rounded-lg bg-background"
                         >
-                          <option value="">Selecciona un departamento</option>
+                          <option value="">Selecciona departamento</option>
                           {(departamentos || []).map((dept: string) => (
                             <option key={dept} value={dept}>
                               {dept}
@@ -440,44 +421,24 @@ export default function NuevoPlan() {
                           id="sucesor"
                           value={sucesorId}
                           onChange={(e) => setSucesorId(e.target.value)}
+                          className="w-full px-3 py-2 border rounded-lg bg-background"
                           disabled={!departamentoSucesor}
-                          className="w-full px-3 py-2 border rounded-lg bg-background disabled:opacity-50"
                         >
-                          <option value="">Selecciona un sucesor</option>
+                          <option value="">Selecciona sucesor</option>
                           {(sucesores || []).map((emp: any) => (
                             <option key={emp.id} value={emp.id}>
-                              {emp.nombre}
+                              {emp.nombre} - {emp.cargo}
                             </option>
                           ))}
                         </select>
                       </div>
                     </div>
-                  )}
+                  </div>
+                )}
+              </div>
 
-                  {sucesorSeleccionado && (
-                    <div className="bg-white p-4 rounded-lg space-y-2 mt-4 border border-green-200">
-                      <div>
-                        <p className="text-sm text-muted-foreground">Cargo</p>
-                        <p className="font-medium">{sucesorSeleccionado.cargo}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-muted-foreground">Área</p>
-                        <p className="font-medium">{sucesorSeleccionado.area}</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {!aplicaSucesion && (
-                    <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg">
-                      <p className="text-sm text-yellow-800">
-                        ⚠️ No se registrará sucesor para este puesto clave. Podrás agregarlo posteriormente.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              <div className="flex gap-4 pt-6">
+              {/* Botones de acción */}
+              <div className="flex gap-4 pt-6 border-t">
                 <Button
                   type="button"
                   variant="outline"
@@ -487,11 +448,11 @@ export default function NuevoPlan() {
                 </Button>
                 <Button
                   type="submit"
-                  disabled={!colaboradorSeleccionado || createPlan.isPending || (tipoReemplazo === "individual" && !reemplazoId) || (tipoReemplazo === "pool" && (!departamentoPoolReemplazo || !cargoPoolReemplazo))}
+                  disabled={isLoading}
                   className="gap-2"
                 >
-                  {createPlan.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
-                  Crear Plan
+                  {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+                  {isLoading ? "Creando..." : "Crear Plan"}
                 </Button>
               </div>
             </form>

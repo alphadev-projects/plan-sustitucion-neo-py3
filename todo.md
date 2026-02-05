@@ -1086,3 +1086,53 @@ Validación de duplicados se aplicaba también a registros Pool/Equipo, causando
 - Pool/Equipo registra correctamente TODOS los colaboradores sin errores
 - Individual mantiene validación de duplicados
 - Sincronización correcta con sucesion_puestos
+
+
+## NUEVA IMPLEMENTACIÓN - Registro Individual con 2 Reemplazos + Sucesor Único
+
+### Requisitos
+
+**Registro Individual:**
+- [ ] UN SOLO plan por colaborador
+- [ ] Hasta 2 reemplazos opcionales (Reemplazo 1, Reemplazo 2)
+- [ ] Si marca "Puesto Clave" → Pedir asignar UN sucesor (de los 2 reemplazos)
+- [ ] Validación: No puede haber otro plan para el mismo colaborador
+
+**Registro Pool/Equipo:**
+- [ ] Sin límite de reemplazos (N registros según cantidad de colaboradores)
+- [ ] Validación: No puede crear pool si el colaborador ya tiene un plan (individual o pool)
+
+**Plan de Sucesión:**
+- [ ] UN SOLO sucesor por puesto clave
+- [ ] Se sincroniza con Plan de Sustitución cuando puestoClave = "Si"
+
+### Implementación
+
+**Fase 1: Backend**
+- [ ] Actualizar createPlan para guardar 2 reemplazos en plan_reemplazos
+- [ ] Agregar validación de duplicados para pool (no crear pool si ya existe plan)
+- [ ] Sincronizar sucesor con sucesion_puestos
+
+**Fase 2: Frontend**
+- [ ] Actualizar NuevoPlan.tsx con campos para 2 reemplazos
+- [ ] Mostrar dropdown de sucesor cuando marca "Puesto Clave"
+- [ ] Validar que no haya otro plan para el mismo colaborador
+
+**Fase 3: Visualización**
+- [ ] Actualizar Planes.tsx para mostrar 2 reemplazos
+- [ ] Mostrar sucesor asignado
+
+**Fase 4: Validación**
+- [ ] Tests para validar lógica completa
+
+
+## IMPLEMENTACIÓN - Registro Individual con 2 Reemplazos y Sucesor Independiente
+
+- [x] Crear función `createPlanWithMultipleReemplazos` en db.ts
+- [x] Crear procedure `planes.createIndividual` en routers.ts
+- [x] Actualizar formulario NuevoPlan.tsx con 2 campos de reemplazos opcionales
+- [x] Agregar lógica de sucesor independiente cuando marca puesto clave
+- [x] Sincronizar sucesor con sucesion_puestos
+- [x] Validar que no haya duplicados en registro individual
+- [x] Mantener compatibilidad con registro pool/equipo
+- [x] Corregir campos en plan_reemplazos (cargoReemplazo, departamentoReemplazo)

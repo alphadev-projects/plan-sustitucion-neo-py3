@@ -171,6 +171,97 @@ export async function getEmpleadoById(id: number) {
 }
 
 // Helpers para planes de sustitución
+// ✅ Función para crear plan individual CON 2 reemplazos opcionales
+export async function createPlanWithMultipleReemplazos(
+  plan: InsertPlanSustitucion,
+  reemplazo1?: string,
+  reemplazo2?: string,
+  sucesor?: string
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // VALIDACIÓN: Verificar que el colaborador no esté registrado en otro plan (individual)
+  const existingPlans = await db
+    .select()
+    .from(planesSustitucion)
+    .where(eq(planesSustitucion.colaborador, plan.colaborador));
+  
+  if (existingPlans.length > 0) {
+    throw new Error(
+      `❌ VALIDACIÓN FALLIDA: El colaborador "${plan.colaborador}" ya está registrado en otro plan de sustitución. ` +
+      `No se permite registrar la misma persona en múltiples puestos. ` +
+      `Por favor, verifica los planes existentes o contacta a administración.`
+    );
+  }
+  
+  // Crear plan con el primer reemplazo (o vacío si no hay)
+  const planData = {
+    ...plan,
+    reemplazo: reemplazo1 || "",
+  };
+  
+  const result = await db.insert(planesSustitucion).values(planData);
+  const createdPlan = await db.select().from(planesSustitucion).where(eq(planesSustitucion.id, result[0].insertId)).limit(1);
+  
+  if (!createdPlan[0]) throw new Error("Failed to create plan");
+  
+  // Calcular análisis de riesgo automático
+  const planWithRisk = await calcularAnalisisRiesgo(createdPlan[0]);
+  
+  // Actualizar el plan con los valores de riesgo calculados
+  await db
+    .update(planesSustitucion)
+    .set({
+      cargoUnico: planWithRisk.cargoUnico,
+      cantidadPersonasMismoCargo: planWithRisk.cantidadPersonasMismoCargo,
+      riesgoContinuidad: planWithRisk.riesgoContinuidad,
+      poolPotencial: planWithRisk.poolPotencial,
+      riesgoCritico: planWithRisk.riesgoCritico,
+      prioridadSucesion: planWithRisk.prioridadSucesion,
+    })
+    .where(eq(planesSustitucion.id, createdPlan[0].id));
+  
+  // Guardar los 2 reemplazos en tabla plan_reemplazos
+  if (reemplazo1) {
+    await db.insert(planReemplazos).values({
+      planSustitucionId: createdPlan[0].id,
+      reemplazo: reemplazo1,
+      cargoReemplazo: plan.cargoReemplazo,
+      departamentoReemplazo: plan.departamentoReemplazo,
+      orden: 1,
+    });
+  }
+  
+  if (reemplazo2) {
+    await db.insert(planReemplazos).values({
+      planSustitucionId: createdPlan[0].id,
+      reemplazo: reemplazo2,
+      cargoReemplazo: plan.cargoReemplazo,
+      departamentoReemplazo: plan.departamentoReemplazo,
+      orden: 2,
+    });
+  }
+  
+  // ✅ Crear registro en sucesion_puestos SOLO si es puesto clave
+  if (plan.puestoClave === "Si") {
+    const sucesorFinal = sucesor || reemplazo1 || "";
+    
+    await db.insert(sucesionPuestos).values({
+      planSustitucionId: createdPlan[0].id,
+      puestoClave: plan.colaborador,
+      departamentoPuestoClave: plan.departamento,
+      cargoPuestoClave: plan.cargo,
+      sucesor: sucesorFinal,
+      departamentoSucesor: plan.departamentoReemplazo || "",
+      cargoSucesor: plan.cargoReemplazo || "",
+      usuario: plan.usuario,
+    });
+  }
+  
+  return createdPlan[0];
+}
+
 export async function getAllPlanes() {
   const db = await getDb();
   if (!db) return [];
