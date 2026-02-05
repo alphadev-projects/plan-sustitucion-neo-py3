@@ -1136,3 +1136,24 @@ Validación de duplicados se aplicaba también a registros Pool/Equipo, causando
 - [x] Validar que no haya duplicados en registro individual
 - [x] Mantener compatibilidad con registro pool/equipo
 - [x] Corregir campos en plan_reemplazos (cargoReemplazo, departamentoReemplazo)
+
+
+## BUG - Visualización y Edición de 2 Reemplazos
+
+- [ ] BUG: Solo aparece el primer reemplazo en tabla de Planes
+- [ ] BUG: Segundo reemplazo no se visualiza
+- [ ] FEATURE: Permitir editar ambos reemplazos (no solo 1)
+- [ ] FEATURE: Crear modal de edición para cambiar reemplazos
+- [ ] FEATURE: Implementar updatePlanReemplazos en backend
+
+
+## CORRECCIÓN - Visualización y Edición de 2 Reemplazos (Ronda Actual)
+
+- [x] Función getAllPlanesWithReemplazosDetallados que trae ambos reemplazos
+- [x] Tabla Planes.tsx actualizada para mostrar Reemplazo 1 y Reemplazo 2
+- [x] Modal de edición actualizado para cargar ambos reemplazos
+- [x] Función updatePlanReemplazos para actualizar los 2 reemplazos
+- [x] Procedure update en routers.ts acepta reemplazo2
+- [x] handleEditClick y handleSaveEdit actualizados para 2 reemplazos
+- [x] Validación de duplicados eliminada de routers.ts para pool
+- [x] Compilación exitosa - sin errores TypeScript

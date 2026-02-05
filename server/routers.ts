@@ -25,6 +25,8 @@ import {
   getEmpleadoById,
   getAllPlanes,
   getAllPlanesWithReemplazos,
+  getAllPlanesWithReemplazosDetallados,
+  updatePlanReemplazos,
   createPlan,
   createPlanWithMultipleReemplazos,
   updatePlan,
@@ -69,7 +71,6 @@ import {
   syncMissingPlanes,
   createPlanWithReemplazos,
   getPlanWithReemplazos,
-  updatePlanReemplazos,
 } from "./db";
 import { getAlertasPlanes, generarReporteRiesgosCSV, obtenerHistorialPlanAccion, obtenerAuditoriaConFiltros } from "./db-helpers";
 import { planesSuccesionToCSV, generarReporteRiesgos } from "./export";
@@ -243,7 +244,7 @@ export const appRouter = router({
   // Procedures para planes de sustitución
   planes: router({
     list: publicProcedure.query(async () => {
-      return getAllPlanes();
+      return getAllPlanesWithReemplazosDetallados();
     }),
 
     getById: publicProcedure
@@ -394,6 +395,7 @@ export const appRouter = router({
         cargo: z.string().optional(),
         departamentoReemplazo: z.string().optional(),
         reemplazo: z.string().optional(),
+        reemplazo2: z.string().optional(),
         cargoReemplazo: z.string().optional(),
         puestoClave: z.enum(["Si", "No"]).optional(),
       }))

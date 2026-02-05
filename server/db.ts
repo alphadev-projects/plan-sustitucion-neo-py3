@@ -171,6 +171,72 @@ export async function getEmpleadoById(id: number) {
 }
 
 // Helpers para planes de sustitución
+
+// ✅ Función para obtener todos los planes CON sus 2 reemplazos detallados
+export async function getAllPlanesWithReemplazosDetallados() {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const planes = await db.select().from(planesSustitucion);
+  
+  // Para cada plan, obtener sus reemplazos
+  const planesConReemplazos = await Promise.all(
+    planes.map(async (plan) => {
+      const reemplazos = await db
+        .select()
+        .from(planReemplazos)
+        .where(eq(planReemplazos.planSustitucionId, plan.id))
+        .orderBy(planReemplazos.orden);
+      
+      return {
+        ...plan,
+        reemplazos: reemplazos, // Array de reemplazos
+        reemplazo1: reemplazos[0]?.reemplazo || "",
+        reemplazo2: reemplazos[1]?.reemplazo || "",
+      };
+    })
+  );
+  
+  return planesConReemplazos;
+}
+
+
+// ✅ Función para actualizar reemplazos de un plan
+export async function updatePlanReemplazos(
+  planId: number,
+  reemplazo1: string,
+  reemplazo2: string | undefined,
+  cargoReemplazo: string,
+  departamentoReemplazo: string
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Eliminar reemplazos existentes
+  await db.delete(planReemplazos).where(eq(planReemplazos.planSustitucionId, planId));
+  
+  // Insertar nuevos reemplazos
+  if (reemplazo1) {
+    await db.insert(planReemplazos).values({
+      planSustitucionId: planId,
+      reemplazo: reemplazo1,
+      cargoReemplazo,
+      departamentoReemplazo,
+      orden: 1,
+    });
+  }
+  
+  if (reemplazo2) {
+    await db.insert(planReemplazos).values({
+      planSustitucionId: planId,
+      reemplazo: reemplazo2,
+      cargoReemplazo,
+      departamentoReemplazo,
+      orden: 2,
+    });
+  }
+}
+
 // ✅ Función para crear plan individual CON 2 reemplazos opcionales
 export async function createPlanWithMultipleReemplazos(
   plan: InsertPlanSustitucion,
@@ -1435,38 +1501,3 @@ export async function getPlanWithReemplazos(planId: number) {
   }
 }
 
-// Función para actualizar reemplazos de un plan
-export async function updatePlanReemplazos(
-  planId: number,
-  reemplazos: Array<{ nombre: string; cargo: string; departamento: string }>
-) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  try {
-    // Validar máximo 2 reemplazos
-    if (reemplazos.length > 2) {
-      throw new Error("Máximo 2 reemplazos permitidos por plan");
-    }
-
-    // Eliminar reemplazos anteriores
-    await db.delete(planReemplazos).where(eq(planReemplazos.planSustitucionId, planId));
-
-    // Crear nuevos reemplazos
-    for (let i = 0; i < reemplazos.length; i++) {
-      const reemplazo = reemplazos[i];
-      await db.insert(planReemplazos).values({
-        planSustitucionId: planId,
-        reemplazo: reemplazo.nombre,
-        cargoReemplazo: reemplazo.cargo,
-        departamentoReemplazo: reemplazo.departamento,
-        orden: i + 1,
-      });
-    }
-
-    return true;
-  } catch (error) {
-    console.error("[Database] Error updating plan reemplazos:", error);
-    throw error;
-  }
-}

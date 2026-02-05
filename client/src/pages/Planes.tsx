@@ -83,10 +83,14 @@ export default function Planes() {
 
   const handleEditClick = (plan: any) => {
     setEditingPlan(plan);
-    const reemplazoEmpleado = empleados?.find((e: any) => e.nombre === plan.reemplazo);
-    setSelectedReemplazoId(reemplazoEmpleado?.id ? String(reemplazoEmpleado.id) : "");
+    // Cargar ambos reemplazos
+    const reemplazo1Empleado = empleados?.find((e: any) => e.nombre === plan.reemplazo1);
+    const reemplazo2Empleado = empleados?.find((e: any) => e.nombre === plan.reemplazo2);
+    
+    setSelectedReemplazoId(reemplazo1Empleado?.id ? String(reemplazo1Empleado.id) : "");
     setEditFormData({
-      reemplazo: plan.reemplazo,
+      reemplazo: plan.reemplazo1 || "",
+      reemplazo2: plan.reemplazo2 || "",
       departamentoReemplazo: plan.departamentoReemplazo,
       cargoReemplazo: plan.cargoReemplazo,
       puestoClave: plan.puestoClave === "Si",
@@ -139,6 +143,7 @@ export default function Planes() {
       await updatePlan.mutateAsync({
         id: editingPlan.id,
         reemplazo: editFormData.reemplazo,
+        reemplazo2: editFormData.reemplazo2 || "",
         departamentoReemplazo: editFormData.departamentoReemplazo,
         cargoReemplazo: editFormData.cargoReemplazo,
         puestoClave: editFormData.puestoClave ? "Si" : "No",
@@ -315,7 +320,13 @@ export default function Planes() {
                             <Badge variant="outline">Individual</Badge>
                           )}
                         </td>
-                        <td className="py-3 px-4">{plan.reemplazo}</td>
+                        <td className="py-3 px-4">
+                          <div className="space-y-1">
+                            {plan.reemplazo1 && <div>1. {plan.reemplazo1}</div>}
+                            {plan.reemplazo2 && <div>2. {plan.reemplazo2}</div>}
+                            {!plan.reemplazo1 && !plan.reemplazo2 && <span className="text-gray-400">Sin reemplazo</span>}
+                          </div>
+                        </td>
                         <td className="py-3 px-4 text-sm text-muted-foreground">{getSucesorForPlan(plan.id) || "Sin asignar"}</td>
                         <td className="py-3 px-4">
                           {plan.puestoClave === "Si" ? (
