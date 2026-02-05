@@ -83,6 +83,19 @@ export const planesSustitucion = mysqlTable("planes_sustitucion", {
 
 export type PlanSustitucion = typeof planesSustitucion.$inferSelect;
 export type InsertPlanSustitucion = typeof planesSustitucion.$inferInsert;
+// Tabla de Reemplazos para Planes de Sustitución (relación 1:N, máximo 2 reemplazos por plan)
+export const planReemplazos = mysqlTable("plan_reemplazos", {
+  id: int("id").autoincrement().primaryKey(),
+  planSustitucionId: int("planSustitucionId").notNull(),
+  reemplazo: varchar("reemplazo", { length: 255 }).notNull(),
+  cargoReemplazo: varchar("cargoReemplazo", { length: 200 }).notNull(),
+  departamentoReemplazo: varchar("departamentoReemplazo", { length: 150 }).notNull(),
+  orden: int("orden").default(1).notNull(), // 1 o 2 para indicar primer o segundo reemplazo
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type PlanReemplazo = typeof planReemplazos.$inferSelect;
+export type InsertPlanReemplazo = typeof planReemplazos.$inferInsert;
 
 // Tabla de Planes de Sucesión (para puestos críticos)
 export const planesSuccesion = mysqlTable("planes_sucesion", {

@@ -911,3 +911,53 @@ Ahora muestra TODOS los puestos críticos sin sucesor, independientemente de `ap
 
 ### Archivos Modificados
 - client/src/components/AlertasTempranas.tsx: Corregido filtro de puestos sin sucesor
+
+
+## BUG CRÍTICO - Registro Masivo por Pool/Equipo (Sesión Actual)
+
+- [ ] BUG CRÍTICO: Registro masivo por Pool/Equipo solo registra 1 colaborador
+  - [ ] Problema: Al registrar por Pool/Equipo con cargo "Ejecutivo de Relacionamiento", solo registra 1 en lugar de todos
+  - [ ] Debería registrar MASIVAMENTE a todos los colaboradores con el mismo cargo
+  - [ ] Investigar lógica de búsqueda de colaboradores por cargo
+  - [ ] Revisar si hay límite de registros o filtro que limita a 1
+  - [ ] Verificar que el loop de creación de planes itera sobre todos los colaboradores
+  - [ ] Crear tests para validar registro masivo
+
+
+## CORRECCIÓN - Registro Masivo por Pool/Equipo (COMPLETADO)
+
+### Problema Identificado
+- Al registrar por Pool/Equipo con cargo "Ejecutivo de Relacionamiento", solo se registraba 1 colaborador
+- Debería registrar TODOS los colaboradores con el mismo cargo como reemplazos
+
+### Causa Raíz
+La lógica anterior creaba UN plan por cada colaborador del pool, en lugar de crear UN plan con MÚLTIPLES reemplazos.
+
+### Solución Implementada
+
+#### 1. Tabla plan_reemplazos (Nueva)
+- Relación 1:N entre planes_sustitucion y plan_reemplazos
+- Permite hasta 2 reemplazos por plan
+- Campo `orden` para indicar primer o segundo reemplazo
+
+#### 2. Funciones en db.ts
+- `createPlanWithReemplazos`: Crea plan con hasta 2 reemplazos
+- `getPlanWithReemplazos`: Obtiene plan con sus reemplazos
+- `updatePlanReemplazos`: Actualiza reemplazos de un plan
+
+#### 3. Lógica en routers.ts
+- Cuando tipoReemplazo === "pool":
+  - Busca todos los colaboradores con ese cargo
+  - Excluye al colaborador seleccionado
+  - Toma máximo 2 reemplazos
+  - Crea UN SOLO plan con los 2 reemplazos
+
+### Resultado
+- UN plan para el colaborador seleccionado
+- Hasta 2 reemplazos del pool en tabla plan_reemplazos
+- Sincronización correcta con sucesion_puestos (si es puesto clave)
+
+### Archivos Modificados
+- drizzle/schema.ts: Tabla plan_reemplazos agregada
+- server/db.ts: Funciones para manejo de múltiples reemplazos
+- server/routers.ts: Lógica de pool actualizada

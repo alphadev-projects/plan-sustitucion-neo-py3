@@ -65,6 +65,9 @@ import {
   getDashboardMetricas,
   getResumenPorDepartamento,
   syncMissingPlanes,
+  createPlanWithReemplazos,
+  getPlanWithReemplazos,
+  updatePlanReemplazos,
 } from "./db";
 import { getAlertasPlanes, generarReporteRiesgosCSV, obtenerHistorialPlanAccion, obtenerAuditoriaConFiltros } from "./db-helpers";
 import { planesSuccesionToCSV, generarReporteRiesgos } from "./export";
@@ -280,31 +283,53 @@ export const appRouter = router({
             input.departamentoPoolReemplazo!
           );
           
-          const planesCreados = [];
-          for (const colaborador of colaboradoresPool) {
-            // Excluir al colaborador seleccionado del pool
-            if (colaborador.nombre === input.colaborador) {
-              continue;
-            }
-            try {
-              const plan = await createPlan({
+          // Filtrar: excluir al colaborador seleccionado y tomar máximo 2 reemplazos
+          const reemplazosDelPool = colaboradoresPool
+            .filter(c => c.nombre !== input.colaborador)
+            .slice(0, 2)
+            .map(c => ({
+              nombre: c.nombre,
+              cargo: c.cargo,
+              departamento: c.departamento,
+            }));
+
+          if (reemplazosDelPool.length === 0) {
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: "No hay reemplazos disponibles en el pool (excluyendo al colaborador seleccionado)",
+            });
+          }
+
+          try {
+            // Crear plan con múltiples reemplazos
+            const planCreado = await createPlanWithReemplazos(
+              {
                 empleadoId: input.empleadoId,
                 departamento: input.departamento,
                 colaborador: input.colaborador,
                 cargo: input.cargo,
                 departamentoReemplazo: input.departamentoPoolReemplazo!,
-                reemplazo: colaborador.nombre,
+                reemplazo: reemplazosDelPool[0].nombre,
                 cargoReemplazo: input.cargoPoolReemplazo!,
                 tipoReemplazo: "pool",
                 puestoClave: input.puestoClave,
                 usuario: ctx.user?.name || "usuario",
-              });
-              planesCreados.push(plan);
-            } catch (error) {
-              console.error("Error creando plan para", colaborador.nombre, error);
-            }
+              },
+              reemplazosDelPool
+            );
+
+            return { 
+              success: true, 
+              plan: planCreado.plan,
+              reemplazos: planCreado.reemplazos,
+              totalReemplazos: planCreado.reemplazos.length,
+            };
+          } catch (error: any) {
+            throw new TRPCError({
+              code: "INTERNAL_SERVER_ERROR",
+              message: error?.message || "Error creando plan con reemplazos del pool",
+            });
           }
-          return { success: true, planesCreados, totalCreados: planesCreados.length };
         } else {
           return createPlan({
             empleadoId: input.empleadoId,

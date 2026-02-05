@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/mysql2";
 import { eq, and, gte, lte, ne, sql } from "drizzle-orm";
-import { InsertUser, users, empleados, planesSustitucion, InsertPlanSustitucion, PlanSustitucion, planesSuccesion, planesAccion, seguimientoPlanes, InsertSeguimientoPlan, SeguimientoPlan, sucesionPuestos, InsertSucesionPuesto, SucesionPuesto, historialSucesores } from "../drizzle/schema";
+import { InsertUser, users, empleados, planesSustitucion, InsertPlanSustitucion, PlanSustitucion, planesSuccesion, planesAccion, seguimientoPlanes, InsertSeguimientoPlan, SeguimientoPlan, sucesionPuestos, InsertSucesionPuesto, SucesionPuesto, historialSucesores, planReemplazos, InsertPlanReemplazo, PlanReemplazo } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -1242,5 +1242,112 @@ export async function actualizarSucesor(sucesionPuestoId: number, nuevoSucesor: 
   } catch (error) {
     console.error("[Database] Error updating successor:", error);
     return null;
+  }
+}
+
+
+// Función para crear plan con múltiples reemplazos (hasta 2)
+export async function createPlanWithReemplazos(
+  planData: InsertPlanSustitucion,
+  reemplazos: Array<{ nombre: string; cargo: string; departamento: string }>
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  try {
+    // Validar máximo 2 reemplazos
+    if (reemplazos.length > 2) {
+      throw new Error("Máximo 2 reemplazos permitidos por plan");
+    }
+
+    // Validar que no haya duplicados en reemplazos
+    const nombresUnicos = new Set(reemplazos.map(r => r.nombre));
+    if (nombresUnicos.size !== reemplazos.length) {
+      throw new Error("No se pueden tener reemplazos duplicados");
+    }
+
+    // Validar que el colaborador no esté en los reemplazos
+    if (reemplazos.some(r => r.nombre === planData.colaborador)) {
+      throw new Error("El colaborador no puede ser su propio reemplazo");
+    }
+
+    // Crear el plan principal
+    const result = await db.insert(planesSustitucion).values(planData);
+    const planId = result[0].insertId;
+
+    // Crear registros de reemplazos
+    for (let i = 0; i < reemplazos.length; i++) {
+      const reemplazo = reemplazos[i];
+      await db.insert(planReemplazos).values({
+        planSustitucionId: planId,
+        reemplazo: reemplazo.nombre,
+        cargoReemplazo: reemplazo.cargo,
+        departamentoReemplazo: reemplazo.departamento,
+        orden: i + 1,
+      });
+    }
+
+    // Retornar el plan creado con sus reemplazos
+    const plan = await db.select().from(planesSustitucion).where(eq(planesSustitucion.id, planId)).limit(1);
+    const reemplazosCreados = await db.select().from(planReemplazos).where(eq(planReemplazos.planSustitucionId, planId)).orderBy(planReemplazos.orden);
+
+    return { plan: plan[0], reemplazos: reemplazosCreados };
+  } catch (error) {
+    console.error("[Database] Error creating plan with reemplazos:", error);
+    throw error;
+  }
+}
+
+// Función para obtener plan con sus reemplazos
+export async function getPlanWithReemplazos(planId: number) {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    const plan = await db.select().from(planesSustitucion).where(eq(planesSustitucion.id, planId)).limit(1);
+    if (!plan.length) return null;
+
+    const reemplazos = await db.select().from(planReemplazos).where(eq(planReemplazos.planSustitucionId, planId)).orderBy(planReemplazos.orden);
+
+    return { plan: plan[0], reemplazos };
+  } catch (error) {
+    console.error("[Database] Error getting plan with reemplazos:", error);
+    return null;
+  }
+}
+
+// Función para actualizar reemplazos de un plan
+export async function updatePlanReemplazos(
+  planId: number,
+  reemplazos: Array<{ nombre: string; cargo: string; departamento: string }>
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  try {
+    // Validar máximo 2 reemplazos
+    if (reemplazos.length > 2) {
+      throw new Error("Máximo 2 reemplazos permitidos por plan");
+    }
+
+    // Eliminar reemplazos anteriores
+    await db.delete(planReemplazos).where(eq(planReemplazos.planSustitucionId, planId));
+
+    // Crear nuevos reemplazos
+    for (let i = 0; i < reemplazos.length; i++) {
+      const reemplazo = reemplazos[i];
+      await db.insert(planReemplazos).values({
+        planSustitucionId: planId,
+        reemplazo: reemplazo.nombre,
+        cargoReemplazo: reemplazo.cargo,
+        departamentoReemplazo: reemplazo.departamento,
+        orden: i + 1,
+      });
+    }
+
+    return true;
+  } catch (error) {
+    console.error("[Database] Error updating plan reemplazos:", error);
+    throw error;
   }
 }
