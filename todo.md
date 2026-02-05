@@ -961,3 +961,29 @@ La lógica anterior creaba UN plan por cada colaborador del pool, en lugar de cr
 - drizzle/schema.ts: Tabla plan_reemplazos agregada
 - server/db.ts: Funciones para manejo de múltiples reemplazos
 - server/routers.ts: Lógica de pool actualizada
+
+
+## CORRECCIÓN - Visualización de Múltiples Reemplazos (COMPLETADO)
+
+### Problema
+Los datos de múltiples reemplazos se guardaban correctamente en tabla `plan_reemplazos`, pero el frontend NO los mostraba.
+
+### Causa
+El frontend solo consultaba `plan.reemplazo` (campo de tabla principal) y no consultaba la tabla `plan_reemplazos`.
+
+### Solución Implementada
+
+#### 1. Backend (db.ts)
+- Función `getAllPlanesWithReemplazos`: Retorna planes con array `reemplazosPool` que contiene todos los reemplazos
+
+#### 2. Backend (routers.ts)
+- Actualizado procedure `planes.list` para usar `getAllPlanesWithReemplazos`
+
+#### 3. Frontend (Planes.tsx)
+- Tabla ahora muestra los reemplazos del pool en formato numerado (1. Nombre, 2. Nombre)
+- Condicional que detecta si es tipo "pool" y muestra múltiples reemplazos
+
+### Resultado
+- Planes de tipo "pool" ahora muestran los 2 reemplazos en la tabla
+- Formato claro y legible con numeración
+- Sincronización correcta entre BD y UI

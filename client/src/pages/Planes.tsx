@@ -315,7 +315,19 @@ export default function Planes() {
                             <Badge variant="outline">Individual</Badge>
                           )}
                         </td>
-                        <td className="py-3 px-4">{plan.reemplazo}</td>
+                        <td className="py-3 px-4">
+                          {plan.tipoReemplazo === "pool" && plan.reemplazosPool ? (
+                            <div className="space-y-1">
+                              {plan.reemplazosPool.map((r: any, idx: number) => (
+                                <div key={idx} className="text-sm">
+                                  <span className="font-medium">{r.orden}.</span> {r.reemplazo}
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            plan.reemplazo
+                          )}
+                        </td>
                         <td className="py-3 px-4 text-sm text-muted-foreground">{getSucesorForPlan(plan.id) || "Sin asignar"}</td>
                         <td className="py-3 px-4">
                           {plan.puestoClave === "Si" ? (

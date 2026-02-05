@@ -1,0 +1,51 @@
+{
+  "query": "\n-- Verificar planes recientes\nSELECT id, colaborador, cargo, tipoReemplazo, reemplazo FROM planes_sustitucion ORDER BY createdAt DESC LIMIT 5;\n\n-- Verificar reemplazos en tabla plan_reemplazos\nSELECT * FROM plan_reemplazos ORDER BY createdAt DESC LIMIT 10;\n\n-- Contar reemplazos por plan\nSELECT planSustitucionId, COUNT(*) as cantidad_reemplazos FROM plan_reemplazos GROUP BY planSustitucionId;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user j2FTkFQTdFUnQgU.root --database TfZrNnU8ACksUNuSJSy8Lr --execute \n-- Verificar planes recientes\nSELECT id, colaborador, cargo, tipoReemplazo, reemplazo FROM planes_sustitucion ORDER BY createdAt DESC LIMIT 5;\n\n-- Verificar reemplazos en tabla plan_reemplazos\nSELECT * FROM plan_reemplazos ORDER BY createdAt DESC LIMIT 10;\n\n-- Contar reemplazos por plan\nSELECT planSustitucionId, COUNT(*) as cantidad_reemplazos FROM plan_reemplazos GROUP BY planSustitucionId;\n",
+  "rows": [
+    {
+      "id": "360001",
+      "colaborador": "EPIFANIO JAVIER VAZQUEZ GONZALEZ",
+      "cargo": "Ejecutivo de Relacionamiento",
+      "tipoReemplazo": "pool",
+      "reemplazo": "ARNALDO ANDRES ALFONSO BAEZ"
+    },
+    {
+      "id": "330004",
+      "colaborador": "AXEL RAFAEL OJEDA VARELA",
+      "cargo": "Ejecutivo Externo de Retencion",
+      "tipoReemplazo": "pool",
+      "reemplazo": "ARNALDO ANDRES ALFONSO BAEZ"
+    },
+    {
+      "id": "330003",
+      "colaborador": "ARNALDO ANDRES ALFONSO BAEZ",
+      "cargo": "Ejecutivo de Relacionamiento",
+      "tipoReemplazo": "pool",
+      "reemplazo": "DAVID EFRAIN IBERBUDEN GONZALEZ"
+    },
+    {
+      "id": "330002",
+      "colaborador": "CINTIA VERONICA CABRERA TORREZ",
+      "cargo": "Jefe de Desarrollo Humano",
+      "tipoReemplazo": "individual",
+      "reemplazo": "ALEXIS RICARDO ROBLEDO MOLINAS"
+    },
+    {
+      "id": "330001",
+      "colaborador": "ALDA CAROLINA CANO VILLALBA",
+      "cargo": "Analista de Seleccion e Integracion",
+      "tipoReemplazo": "individual",
+      "reemplazo": "LUCAS ARIEL DUARTE RIVEROS"
+    }
+  ],
+  "messages": [
+    "id\tplanSustitucionId\treemplazo\tcargoReemplazo\tdepartamentoReemplazo\torden\tcreatedAt",
+    "2\t360001\tDAVID EFRAIN IBERBUDEN GONZALEZ\tEjecutivo de Relacionamiento\tFidelización\t2\t2026-02-05 19:29:03",
+    "1\t360001\tARNALDO ANDRES ALFONSO BAEZ\tEjecutivo de Relacionamiento\tFidelización\t1\t2026-02-05 19:29:03",
+    "planSustitucionId\tcantidad_reemplazos",
+    "360001\t2"
+  ],
+  "stdout": "id\tcolaborador\tcargo\ttipoReemplazo\treemplazo\n360001\tEPIFANIO JAVIER VAZQUEZ GONZALEZ\tEjecutivo de Relacionamiento\tpool\tARNALDO ANDRES ALFONSO BAEZ\n330004\tAXEL RAFAEL OJEDA VARELA\tEjecutivo Externo de Retencion\tpool\tARNALDO ANDRES ALFONSO BAEZ\n330003\tARNALDO ANDRES ALFONSO BAEZ\tEjecutivo de Relacionamiento\tpool\tDAVID EFRAIN IBERBUDEN GONZALEZ\n330002\tCINTIA VERONICA CABRERA TORREZ\tJefe de Desarrollo Humano\tindividual\tALEXIS RICARDO ROBLEDO MOLINAS\n330001\tALDA CAROLINA CANO VILLALBA\tAnalista de Seleccion e Integracion\tindividual\tLUCAS ARIEL DUARTE RIVEROS\nid\tplanSustitucionId\treemplazo\tcargoReemplazo\tdepartamentoReemplazo\torden\tcreatedAt\n2\t360001\tDAVID EFRAIN IBERBUDEN GONZALEZ\tEjecutivo de Relacionamiento\tFidelización\t2\t2026-02-05 19:29:03\n1\t360001\tARNALDO ANDRES ALFONSO BAEZ\tEjecutivo de Relacionamiento\tFidelización\t1\t2026-02-05 19:29:03\nplanSustitucionId\tcantidad_reemplazos\n360001\t2\n",
+  "stderr": "",
+  "execution_time_ms": 1123
+}

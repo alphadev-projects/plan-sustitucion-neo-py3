@@ -177,6 +177,28 @@ export async function getAllPlanes() {
   return db.select().from(planesSustitucion);
 }
 
+
+// Función para obtener todos los planes CON sus reemplazos
+export async function getAllPlanesWithReemplazos() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const planes = await db.select().from(planesSustitucion);
+  
+  // Para cada plan, obtener sus reemplazos
+  const planesConReemplazos = await Promise.all(
+    planes.map(async (plan) => {
+      const reemplazos = await db.select().from(planReemplazos).where(eq(planReemplazos.planSustitucionId, plan.id)).orderBy(planReemplazos.orden);
+      return {
+        ...plan,
+        reemplazosPool: reemplazos,
+      };
+    })
+  );
+  
+  return planesConReemplazos;
+}
+
 export async function createPlan(plan: InsertPlanSustitucion) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");

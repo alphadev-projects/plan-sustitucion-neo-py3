@@ -24,6 +24,7 @@ import {
   getCargos,
   getEmpleadoById,
   getAllPlanes,
+  getAllPlanesWithReemplazos,
   createPlan,
   updatePlan,
   deletePlan,
@@ -241,7 +242,7 @@ export const appRouter = router({
   // Procedures para planes de sustitución
   planes: router({
     list: publicProcedure.query(async () => {
-      return getAllPlanes();
+      return getAllPlanesWithReemplazos();
     }),
 
     getById: publicProcedure
