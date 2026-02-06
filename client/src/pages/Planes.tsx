@@ -322,9 +322,13 @@ export default function Planes() {
                         </td>
                         <td className="py-3 px-4">
                           <div className="space-y-1">
-                            {plan.reemplazo1 && <div>1. {plan.reemplazo1}</div>}
-                            {plan.reemplazo2 && <div>2. {plan.reemplazo2}</div>}
-                            {!plan.reemplazo1 && !plan.reemplazo2 && <span className="text-gray-400">Sin reemplazo</span>}
+                            {plan.reemplazos && plan.reemplazos.length > 0 ? (
+                              plan.reemplazos.map((r: any, idx: number) => (
+                                <div key={idx}>{idx + 1}. {r.reemplazo}</div>
+                              ))
+                            ) : (
+                              <span className="text-gray-400">Sin reemplazo</span>
+                            )}
                           </div>
                         </td>
                         <td className="py-3 px-4 text-sm text-muted-foreground">{getSucesorForPlan(plan.id) || "Sin asignar"}</td>
