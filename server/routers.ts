@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { eq, sql } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 import { COOKIE_NAME, LOCAL_AUTH_COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
@@ -78,6 +79,7 @@ import { notifyPlanStatusChanged, notifyHighRiskPosition, notifyActionDeadlineAp
 import { notificationProcedures } from "./notification-procedures";
 import { evidenciasProcedures } from "./evidencias-procedures";
 import { auditoriaRouter } from "./auditoria-router";
+import { planesSustitucion, sucesionPuestos } from "../drizzle/schema";
 
 export const appRouter = router({
   system: systemRouter,
@@ -698,6 +700,46 @@ export const appRouter = router({
         );
       }),
   }),
+
+  planesAccionSucesion: router({
+    // Obtener todos los planes de acción de sucesión
+    listar: protectedProcedure.query(async () => {
+      return getPlanesAccionPorPuestoCritico();
+    }),
+
+    // Obtener puestos clave SIN sucesor (requieren plan de acción)
+    puestosRequierenPlan: protectedProcedure.query(async () => {
+      const db = await getDb();
+      if (!db) return [];
+      
+      // Obtener puestos clave sin sucesor
+      const puestossinSucesor = await db.select()
+        .from(sucesionPuestos)
+        .where((table: any) => {
+          return sql`${table.sucesor} = '' OR ${table.sucesor} IS NULL`;
+        });
+      
+      return puestossinSucesor || [];
+    }),
+  }),
+
+  planesAccionSustitucion: router({
+    // Obtener planes de sustitución SIN reemplazo (requieren plan de acción)
+    planesRequierenAccion: protectedProcedure.query(async () => {
+      const db = await getDb();
+      if (!db) return [];
+      
+      // Obtener planes de sustitución sin reemplazo
+      const planesSinReemplazo = await db.select()
+        .from(planesSustitucion)
+        .where((table: any) => {
+          return sql`${table.reemplazo} = '' OR ${table.reemplazo} IS NULL`;
+        });
+      
+      return planesSinReemplazo || [];
+    }),
+  }),
+
   auditoria: auditoriaRouter,
   integrity: integrityRouter,
 });

@@ -219,79 +219,12 @@ function PlanSuccesionContent() {
                         titulo={`Reporte Plan ${selectedPlan}`}
                         tipo="csv"
                       />
-                      <Dialog open={showNewActionDialog} onOpenChange={setShowNewActionDialog}>
-                      <DialogTrigger asChild>
-                        <Button size="sm">
-                          <Plus className="h-4 w-4 mr-2" />
-                          Nuevo Plan
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>Crear Plan de Acción</DialogTitle>
-                          <DialogDescription>
-                            Define una actividad para desarrollar al reemplazo
-                          </DialogDescription>
-                        </DialogHeader>
-                        <div className="space-y-4">
-                          <div>
-                            <Label>Título</Label>
-                            <Input
-                              value={newActionData.titulo}
-                              onChange={(e) =>
-                                setNewActionData({ ...newActionData, titulo: e.target.value })
-                              }
-                              placeholder="Ej: Capacitación en liderazgo"
-                            />
-                          </div>
-                          <div>
-                            <Label>Descripción</Label>
-                            <Textarea
-                              value={newActionData.descripcion}
-                              onChange={(e) =>
-                                setNewActionData({ ...newActionData, descripcion: e.target.value })
-                              }
-                              placeholder="Detalles de la actividad"
-                            />
-                          </div>
-                          <div>
-                            <Label>Responsable</Label>
-                            <Input
-                              value={newActionData.responsable}
-                              onChange={(e) =>
-                                setNewActionData({ ...newActionData, responsable: e.target.value })
-                              }
-                              placeholder="Nombre del responsable"
-                            />
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <Label>Fecha Inicio</Label>
-                              <Input
-                                type="date"
-                                value={newActionData.fechaInicio}
-                                onChange={(e) =>
-                                  setNewActionData({ ...newActionData, fechaInicio: e.target.value })
-                                }
-                              />
-                            </div>
-                            <div>
-                              <Label>Fecha Fin</Label>
-                              <Input
-                                type="date"
-                                value={newActionData.fechaFin}
-                                onChange={(e) =>
-                                  setNewActionData({ ...newActionData, fechaFin: e.target.value })
-                                }
-                              />
-                            </div>
-                          </div>
-                          <Button onClick={handleCreateAction} className="w-full">
-                            Crear Plan
-                          </Button>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
+                      <Alert>
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription>
+                          Los planes de acción se crean desde el módulo "Gestión de Planes de Acción"
+                        </AlertDescription>
+                      </Alert>
                     </div>
                   </CardHeader>
                   <CardContent>
