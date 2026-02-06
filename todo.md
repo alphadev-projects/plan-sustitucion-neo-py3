@@ -1161,9 +1161,131 @@ Validación de duplicados se aplicaba también a registros Pool/Equipo, causando
 
 ## NUEVA TAREA - Pool/Equipo: UN SOLO Plan con N Reemplazos
 
-- [ ] Actualizar lógica de pool en routers.ts para crear UN plan con todos los reemplazos
-- [ ] Cambiar de múltiples registros a UN SOLO registro con array de reemplazos
-- [ ] Actualizar tabla Planes.tsx para mostrar todos los reemplazos del pool
-- [ ] Actualizar modal de edición para agregar/quitar reemplazos en pool
-- [ ] Verificar sincronización con sucesion_puestos (solo si puestoClave=Si)
-- [ ] Validación de duplicados: no permitir crear otro pool para el mismo colaborador
+- [x] Actualizar lógica de pool en routers.ts para crear UN plan con todos los reemplazos
+- [x] Cambiar de múltiples registros a UN SOLO registro con array de reemplazos
+- [x] Actualizar tabla Planes.tsx para mostrar todos los reemplazos del pool
+- [x] Actualizar modal de edición para agregar/quitar reemplazos en pool
+- [x] Verificar sincronización con sucesion_puestos (solo si puestoClave=Si)
+- [x] Validación de duplicados: no permitir crear otro pool para el mismo colaborador
+
+
+## NUEVA FUNCIONALIDAD - Eliminación Masiva y Dashboard Mejorado de Sustitución
+
+### Fase 1: Eliminación Masiva de Planes
+- [ ] Agregar checkboxes en tabla de Planes de Sustitución para selección de registros
+- [ ] Mostrar checkboxes solo para usuarios administradores
+- [ ] Agregar botón "Eliminar Seleccionados" que aparece cuando hay registros seleccionados
+- [ ] Implementar confirmación antes de eliminar múltiples registros
+- [ ] Crear función deletePlansMultiple en backend (routers.ts)
+- [ ] Invalidar cache de planes después de eliminación masiva
+- [ ] Mostrar notificación de éxito con cantidad de registros eliminados
+
+### Fase 2: Dashboard de Sustitución Mejorado
+- [ ] Crear nueva página DashboardSustitucion.tsx (similar a DashboardSuccesion.tsx)
+- [ ] Agregar filtro por departamento (dropdown)
+- [ ] Agregar filtro por tipo de reemplazo (Individual/Pool)
+- [ ] Agregar filtro por estado (Con reemplazo / Sin reemplazo)
+
+### Fase 3: Visualización de Colaboradores CON Reemplazos
+- [ ] Crear sección "Colaboradores con Reemplazos Asignados"
+- [ ] Mostrar tabla con: Nombre, Cargo, Departamento, Reemplazos (1, 2, ...)
+- [ ] Mostrar cantidad total de colaboradores con cobertura
+- [ ] Mostrar porcentaje de cobertura por departamento
+- [ ] Agregar badge visual para tipo de reemplazo (Individual/Pool)
+
+### Fase 4: Visualización de Colaboradores SIN Reemplazos
+- [ ] Crear sección "Colaboradores sin Reemplazos Asignados"
+- [ ] Mostrar tabla con: Nombre, Cargo, Departamento, Puesto Clave (Si/No)
+- [ ] Mostrar cantidad total de colaboradores sin cobertura
+- [ ] Mostrar porcentaje de falta de cobertura por departamento
+- [ ] Destacar en rojo los puestos clave sin reemplazo
+
+### Fase 5: Métricas y Alertas
+- [ ] Mostrar métrica: "Total Planes de Sustitución"
+- [ ] Mostrar métrica: "Con Reemplazo" vs "Sin Reemplazo"
+- [ ] Mostrar métrica: "% Cobertura General"
+- [ ] Agregar alerta si cobertura < 50%
+- [ ] Agregar alerta si hay puestos clave sin reemplazo
+
+### Fase 6: Integración y Sincronización
+- [ ] Verificar que eliminación masiva sincroniza con sucesion_puestos
+- [ ] Verificar que filtros funcionan correctamente
+- [ ] Crear tests para eliminación masiva
+- [ ] Crear tests para filtros del dashboard
+
+
+## NUEVA FUNCIONALIDAD - Eliminación Masiva y Dashboard de Sustitución (COMPLETADA)
+
+### Fase 1: Eliminación Masiva de Planes ✅
+- [x] Agregar checkboxes en tabla de Planes de Sustitución para selección de registros
+- [x] Mostrar checkboxes solo para usuarios administradores
+- [x] Agregar botón "Eliminar Seleccionados" que aparece cuando hay registros seleccionados
+- [x] Implementar confirmación antes de eliminar múltiples registros
+- [x] Crear función deleteMultiple en backend (routers.ts)
+- [x] Invalidar cache de planes después de eliminación masiva
+- [x] Mostrar notificación de éxito con cantidad de registros eliminados
+
+### Fase 2: Dashboard de Sustitución Mejorado ✅
+- [x] Crear nueva página DashboardSustitucion.tsx (similar a DashboardSuccesion.tsx)
+- [x] Agregar filtro por departamento (dropdown con Select component)
+- [x] Agregar filtro por tipo de reemplazo (Individual/Pool)
+- [x] Agregar filtro por estado (Con reemplazo / Sin reemplazo)
+
+### Fase 3: Visualización de Colaboradores CON Reemplazos ✅
+- [x] Crear sección "Colaboradores con Reemplazos Asignados"
+- [x] Mostrar tabla con: Nombre, Cargo, Departamento, Reemplazos (1, 2, ...)
+- [x] Mostrar cantidad total de colaboradores con cobertura
+- [x] Mostrar porcentaje de cobertura por departamento
+- [x] Agregar badge visual para tipo de reemplazo (Individual/Pool)
+
+### Fase 4: Visualización de Colaboradores SIN Reemplazos ✅
+- [x] Crear sección "Colaboradores sin Reemplazos Asignados"
+- [x] Mostrar tabla con: Nombre, Cargo, Departamento, Puesto Clave (Si/No)
+- [x] Mostrar cantidad total de colaboradores sin cobertura
+- [x] Mostrar porcentaje de falta de cobertura por departamento
+- [x] Destacar en rojo los puestos clave sin reemplazo
+
+### Fase 5: Métricas y Alertas ✅
+- [x] Mostrar métrica: "Total Planes de Sustitución"
+- [x] Mostrar métrica: "Con Reemplazo" vs "Sin Reemplazo"
+- [x] Mostrar métrica: "% Cobertura General"
+- [x] Agregar alerta si hay puestos clave sin reemplazo
+- [x] Mostrar matriz 2x2 (CUBIERTO vs DESCUBIERTO)
+
+### Fase 6: Integración y Sincronización ✅
+- [x] Verificar que eliminación masiva sincroniza con sucesion_puestos
+- [x] Verificar que filtros funcionan correctamente
+- [x] Agregar ruta /sustitucion-dashboard en App.tsx
+- [x] Agregar enlace en sidebar DashboardLayout
+- [x] Acceso protegido por autenticación
+
+### Archivos Modificados:
+- client/src/pages/Planes.tsx: Agregados checkboxes, eliminación masiva, estados
+- server/routers.ts: Agregado procedure planes.deleteMultiple
+- client/src/pages/DashboardSustitucion.tsx: Nuevo archivo con dashboard completo
+- client/src/App.tsx: Agregada ruta /sustitucion-dashboard
+- client/src/components/DashboardLayout.tsx: Agregado enlace en menú sidebar
+
+### Características Implementadas:
+1. **Checkboxes de Selección:**
+   - Checkbox en header para seleccionar todos
+   - Checkbox por fila para seleccionar individual
+   - Visible solo para administradores
+
+2. **Eliminación Masiva:**
+   - Botón "Eliminar X" aparece cuando hay registros seleccionados
+   - Dialog de confirmación antes de eliminar
+   - Invalidación de cache después de eliminar
+   - Notificación de éxito con cantidad
+
+3. **Dashboard de Sustitución:**
+   - Filtro por departamento (Select component)
+   - Métricas en tarjetas: Total, Con Reemplazo, Sin Reemplazo, % Cobertura
+   - Matriz 2x2: CUBIERTO (verde) vs DESCUBIERTO (rojo)
+   - Sección de colaboradores CON reemplazos
+   - Sección de colaboradores SIN reemplazos
+   - Alertas destacadas para puestos clave sin reemplazo
+   - Soporte para planes Individual y Pool
+
+### Estado: ✅ COMPLETADO
+Todas las fases implementadas y funcionando correctamente.

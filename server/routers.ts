@@ -422,6 +422,15 @@ export const appRouter = router({
         return deletePlan(input.id);
       }),
 
+    deleteMultiple: adminProcedure
+      .input(z.object({ ids: z.array(z.number()) }))
+      .mutation(async ({ input }) => {
+        const results = await Promise.all(
+          input.ids.map((id) => deletePlan(id))
+        );
+        return { deleted: results.length };
+      }),
+
     stats: publicProcedure.query(async () => {
       return getPlanStats();
     }),

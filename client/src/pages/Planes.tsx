@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Download, Edit2, Trash2, Search, AlertCircle, Loader2 } from "lucide-react";
+import { Plus, Download, Edit2, Trash2, Search, AlertCircle, Loader2, Trash } from "lucide-react";
 import { Link } from "wouter";
 import * as XLSX from "xlsx";
 import {
@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 
 export default function Planes() {
@@ -30,14 +31,17 @@ export default function Planes() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterDept, setFilterDept] = useState("");
   const [filterPuestoClave, setFilterPuestoClave] = useState("");
+  const [selectedPlans, setSelectedPlans] = useState<Set<number>>(new Set());
+  const [selectAll, setSelectAll] = useState(false);
   const [editingPlan, setEditingPlan] = useState<any>(null);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [planToDelete, setPlanToDelete] = useState<any>(null);
   const [editFormData, setEditFormData] = useState<any>(null);
-    const [selectedReemplazoId, setSelectedReemplazoId] = useState<string>("");
+  const [selectedReemplazoId, setSelectedReemplazoId] = useState<string>("");
   const [selectedSucesorId, setSelectedSucesorId] = useState<string>("");
   const [sucesorDuplicado, setSucesorDuplicado] = useState<{ valido: boolean; puestoExistente?: string; departamentoExistente?: string } | null>(null);
+  const [showDeleteMultipleDialog, setShowDeleteMultipleDialog] = useState(false);
   
   const validarSucesor = trpc.sucesion.validarSucesor.useQuery(
     { sucesor: editFormData?.sucesor || "", sucesionPuestoIdActual: editingPlan?.id },
@@ -46,6 +50,7 @@ export default function Planes() {
   
   const updatePlan = trpc.planes.update.useMutation();
   const deletePlan = trpc.planes.delete.useMutation();
+  const deleteMultiplePlans = trpc.planes.deleteMultiple.useMutation();
   const utils = trpc.useUtils();
   
   // Obtener sucesor asignado para el plan actual
@@ -79,6 +84,45 @@ export default function Planes() {
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Planes");
     XLSX.writeFile(wb, "planes_sustitucion.xlsx");
+  };
+
+  const handleSelectPlan = (planId: number) => {
+    const newSelected = new Set(selectedPlans);
+    if (newSelected.has(planId)) {
+      newSelected.delete(planId);
+    } else {
+      newSelected.add(planId);
+    }
+    setSelectedPlans(newSelected);
+    setSelectAll(newSelected.size === filteredPlanes.length);
+  };
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedPlans(new Set());
+      setSelectAll(false);
+    } else {
+      const allIds = new Set(filteredPlanes.map((p) => p.id));
+      setSelectedPlans(allIds);
+      setSelectAll(true);
+    }
+  };
+
+  const handleDeleteMultiple = async () => {
+    if (selectedPlans.size === 0) return;
+
+    try {
+      await deleteMultiplePlans.mutateAsync({
+        ids: Array.from(selectedPlans),
+      });
+      await utils.planes.list.invalidate();
+      setSelectedPlans(new Set());
+      setSelectAll(false);
+      setShowDeleteMultipleDialog(false);
+      toast.success(`${selectedPlans.size} plan(es) eliminado(s) exitosamente`);
+    } catch (error) {
+      toast.error("Error al eliminar los planes");
+    }
   };
 
   const handleEditClick = (plan: any) => {
@@ -201,6 +245,7 @@ export default function Planes() {
                 <li><strong>Crear nuevo plan:</strong> Haz clic en "Nuevo Plan" para crear un plan de sustitución</li>
                 <li><strong>Editar/Eliminar:</strong> Solo administradores pueden editar o eliminar planes (solo administradores)</li>
                 <li><strong>Exportar datos:</strong> Descarga los planes en formato Excel (solo administradores)</li>
+                <li><strong>Eliminación masiva:</strong> Selecciona múltiples planes y elimina varios a la vez (solo administradores)</li>
               </ul>
             </div>
             <p className="mt-3 text-purple-700"><strong>Tip:</strong> Los puestos marcados como "Clave" son críticos para la organización y requieren atención especial.</p>
@@ -276,12 +321,25 @@ export default function Planes() {
               <CardTitle>Planes Registrados</CardTitle>
               <CardDescription>{filteredPlanes.length} planes encontrados</CardDescription>
             </div>
-            {isAdmin && (
-              <Button variant="outline" size="sm" onClick={handleExport} className="gap-2">
-                <Download className="h-4 w-4" />
-                Exportar
-              </Button>
-            )}
+            <div className="flex gap-2">
+              {isAdmin && selectedPlans.size > 0 && (
+                <Button 
+                  variant="destructive" 
+                  size="sm" 
+                  onClick={() => setShowDeleteMultipleDialog(true)}
+                  className="gap-2"
+                >
+                  <Trash className="h-4 w-4" />
+                  Eliminar {selectedPlans.size}
+                </Button>
+              )}
+              {isAdmin && (
+                <Button variant="outline" size="sm" onClick={handleExport} className="gap-2">
+                  <Download className="h-4 w-4" />
+                  Exportar
+                </Button>
+              )}
+            </div>
           </CardHeader>
           <CardContent>
             {isLoading ? (
@@ -293,6 +351,14 @@ export default function Planes() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b">
+                      {isAdmin && (
+                        <th className="text-left py-3 px-4 font-medium w-12">
+                          <Checkbox
+                            checked={selectAll}
+                            onCheckedChange={handleSelectAll}
+                          />
+                        </th>
+                      )}
                       <th className="text-left py-3 px-4 font-medium">Fecha y Hora</th>
                       <th className="text-left py-3 px-4 font-medium">Usuario</th>
                       <th className="text-left py-3 px-4 font-medium">Colaborador</th>
@@ -308,6 +374,14 @@ export default function Planes() {
                   <tbody>
                     {filteredPlanes.map((plan) => (
                       <tr key={plan.id} className="border-b hover:bg-accent/50 transition-colors">
+                        {isAdmin && (
+                          <td className="py-3 px-4">
+                            <Checkbox
+                              checked={selectedPlans.has(plan.id)}
+                              onCheckedChange={() => handleSelectPlan(plan.id)}
+                            />
+                          </td>
+                        )}
                         <td className="py-3 px-4 text-sm whitespace-nowrap">{new Date(plan.createdAt).toLocaleString()}</td>
                         <td className="py-3 px-4 text-sm font-medium">{plan.usuario}</td>
                         <td className="py-3 px-4">{plan.colaborador}</td>
@@ -476,7 +550,7 @@ export default function Planes() {
           </DialogContent>
         </Dialog>
 
-        {/* Dialog de Confirmación de Eliminación */}
+        {/* Dialog de Confirmación de Eliminación Individual */}
         <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
           <DialogContent className="max-w-md">
             <DialogHeader>
@@ -508,6 +582,42 @@ export default function Planes() {
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                 )}
                 Eliminar
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Dialog de Confirmación de Eliminación Masiva */}
+        <Dialog open={showDeleteMultipleDialog} onOpenChange={setShowDeleteMultipleDialog}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2 text-destructive">
+                <AlertCircle className="h-5 w-5" />
+                Eliminar {selectedPlans.size} Plan(es)
+              </DialogTitle>
+              <DialogDescription>
+                ¿Estás seguro de que deseas eliminar {selectedPlans.size} plan(es) de sustitución?
+              </DialogDescription>
+            </DialogHeader>
+            <div className="bg-destructive/10 p-3 rounded-lg text-sm text-destructive">
+              Esta acción no se puede deshacer y afectará a {selectedPlans.size} registro(s).
+            </div>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => setShowDeleteMultipleDialog(false)}
+              >
+                Cancelar
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={handleDeleteMultiple}
+                disabled={deleteMultiplePlans.isPending}
+              >
+                {deleteMultiplePlans.isPending && (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                )}
+                Eliminar {selectedPlans.size}
               </Button>
             </DialogFooter>
           </DialogContent>
