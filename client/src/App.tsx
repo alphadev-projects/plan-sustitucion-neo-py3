@@ -13,7 +13,7 @@ import Nomina from "./pages/Nomina";
 import GestionUsuarios from "./pages/GestionUsuarios";
 import PlanSuccesion from "./pages/PlanSuccesion";
 import PlanSuccesionDashboard from "./pages/PlanSuccesionDashboard";
-import DashboardSustitucion from "./pages/DashboardSustitucion";
+
 import Auditoria from "./pages/Auditoria";
 import HistorialSucesores from "./pages/HistorialSucesores";
 import ReportesCobertura from "./pages/ReportesCobertura";
@@ -91,13 +91,7 @@ function Router() {
           </ProtectedRoute>
         )}
       </Route>
-      <Route path="/sustitucion-dashboard">
-        {(props) => (
-          <ProtectedRoute>
-            <DashboardSustitucion {...props} />
-          </ProtectedRoute>
-        )}
-      </Route>
+
       <Route path="/auditoria">
         {(props) => (
           <ProtectedRoute requiredRole="admin">

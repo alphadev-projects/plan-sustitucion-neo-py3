@@ -220,3 +220,42 @@ export const historialSucesores = mysqlTable("historial_sucesores", {
 
 export type HistorialSucesor = typeof historialSucesores.$inferSelect;
 export type InsertHistorialSucesor = typeof historialSucesores.$inferInsert;
+
+// Tabla de Planes de Acción para Sustitución
+export const planesAccionSustitucion = mysqlTable("planes_accion_sustitucion", {
+  id: int("id").autoincrement().primaryKey(),
+  planSustitucionId: int("planSustitucionId").notNull(),
+  titulo: varchar("titulo", { length: 255 }).notNull(),
+  descripcion: text("descripcion").notNull(),
+  responsable: varchar("responsable", { length: 255 }).notNull(),
+  fechaInicio: timestamp("fechaInicio").notNull(),
+  fechaFin: timestamp("fechaFin").notNull(),
+  estado: mysqlEnum("estado", ["No Iniciado", "En Progreso", "Completado", "Retrasado"]).default("No Iniciado").notNull(),
+  progreso: int("progreso").default(0).notNull(), // Porcentaje 0-100
+  evidencia: text("evidencia"), // URL o descripción de evidencia
+  archivoEvidencia: varchar("archivoEvidencia", { length: 500 }), // Ruta del archivo en S3
+  comentarios: text("comentarios"),
+  usuario: varchar("usuario", { length: 100 }).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PlanAccionSustitucion = typeof planesAccionSustitucion.$inferSelect;
+export type InsertPlanAccionSustitucion = typeof planesAccionSustitucion.$inferInsert;
+
+// Tabla de Auditoría para Planes de Acción de Sustitución
+export const auditoriaPlanesAccionSustitucion = mysqlTable("auditoria_planes_accion_sustitucion", {
+  id: int("id").autoincrement().primaryKey(),
+  planAccionSustitucionId: int("planAccionSustitucionId").notNull(),
+  usuarioId: varchar("usuarioId", { length: 255 }).notNull(),
+  usuario: varchar("usuario", { length: 100 }).notNull(),
+  accion: mysqlEnum("accion", ["CREADO", "ACTUALIZADO", "ESTADO_CAMBIO", "PROGRESO_CAMBIO", "COMPLETADO"]).notNull(),
+  campoModificado: varchar("campoModificado", { length: 100 }),
+  valorAnterior: text("valorAnterior"),
+  valorNuevo: text("valorNuevo"),
+  descripcion: text("descripcion"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type AuditoriaPlanAccionSustitucion = typeof auditoriaPlanesAccionSustitucion.$inferSelect;
+export type InsertAuditoriaPlanAccionSustitucion = typeof auditoriaPlanesAccionSustitucion.$inferInsert;

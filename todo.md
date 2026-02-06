@@ -1289,3 +1289,64 @@ Validación de duplicados se aplicaba también a registros Pool/Equipo, causando
 
 ### Estado: ✅ COMPLETADO
 Todas las fases implementadas y funcionando correctamente.
+
+
+## FASE 3 - Consolidación de Dashboards y Módulo de Planes de Acción
+
+### Fase 1: Reemplazar Dashboard Principal
+- [ ] Reemplazar contenido de Dashboard.tsx con Dashboard Sustitución mejorado
+- [ ] Mantener ruta /dashboard pero con funcionalidades de sustitución
+- [ ] Eliminar ruta /sustitucion-dashboard (redirigir a /dashboard)
+- [ ] Actualizar menú sidebar para mostrar solo "Dashboard" (no duplicado)
+- [ ] Verificar que checkboxes de eliminación masiva funcionan
+
+### Fase 2: Sincronización Planes-Dashboard
+- [ ] Verificar que al crear plan, se actualiza Dashboard automáticamente
+- [ ] Verificar que al editar plan, se actualiza Dashboard automáticamente
+- [ ] Verificar que al eliminar plan, se actualiza Dashboard automáticamente
+- [ ] Verificar que al eliminar múltiples planes, se actualiza Dashboard automáticamente
+- [ ] Implementar invalidación de cache correctamente
+
+### Fase 3: Tabla de Planes de Acción para Sustitución
+- [ ] Crear tabla planes_accion_sustitucion en schema.ts
+- [ ] Campos: id, planSustitucionId, descripcion, estado, fechaInicio, fechaFin, responsable, avance, evidencia, comentarios, createdAt, updatedAt
+- [ ] Crear relación con tabla planes_sustitucion
+- [ ] Crear procedures tRPC para CRUD
+
+### Fase 4: Módulo de Gestión de Planes de Acción
+- [ ] Crear nueva página GestionPlanesAccion.tsx
+- [ ] Diseñar interfaz con tabs: "Sucesión" y "Sustitución"
+- [ ] Agregar ruta /planes-accion en App.tsx
+- [ ] Agregar enlace en menú sidebar
+
+### Fase 5: Interfaz Planes de Acción Sustitución
+- [ ] Crear componente para listar planes de acción de sustitución
+- [ ] Implementar CRUD (crear, editar, eliminar)
+- [ ] Agregar campos: descripción, estado, fechas, responsable, avance (0-100%), evidencia
+- [ ] Agregar indicadores visuales de estado
+- [ ] Implementar búsqueda y filtros
+
+### Fase 6: Integrar Planes de Acción Sucesión
+- [ ] Mover componente de Planes de Acción Sucesión al nuevo módulo
+- [ ] Mantener funcionalidades existentes
+- [ ] Asegurar que ambos tipos de planes coexistan sin conflictos
+
+### Fase 7: Verificación y Tests
+- [ ] Probar creación de plan de sustitución → actualiza dashboard
+- [ ] Probar edición de plan de sustitución → actualiza dashboard
+- [ ] Probar eliminación de plan de sustitución → actualiza dashboard
+- [ ] Probar eliminación masiva → actualiza dashboard
+- [ ] Probar CRUD de planes de acción sustitución
+- [ ] Probar que planes de acción sucesión siguen funcionando
+- [ ] Escribir tests para sincronización
+
+### Archivos a Modificar/Crear:
+- drizzle/schema.ts: Nueva tabla planes_accion_sustitucion
+- server/routers.ts: Procedures para planes de acción sustitución
+- client/src/pages/Dashboard.tsx: Reemplazar con Dashboard Sustitución
+- client/src/pages/DashboardSustitucion.tsx: Eliminar (contenido movido a Dashboard)
+- client/src/pages/GestionPlanesAccion.tsx: NUEVO
+- client/src/App.tsx: Actualizar rutas
+- client/src/components/DashboardLayout.tsx: Actualizar menú
+
+### Estado: EN PROGRESO

@@ -1,175 +1,372 @@
-import { trpc } from "@/lib/trpc";
-import DashboardLayout from "@/components/DashboardLayout";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { AlertCircle, CheckCircle, Users, FileText } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle, CheckCircle, Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import * as XLSX from "xlsx";
+import DashboardLayout from "@/components/DashboardLayout";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { trpc } from "@/lib/trpc";
 
-const COLORS = ["#3b82f6", "#8b5cf6", "#ec4899", "#f59e0b", "#10b981", "#06b6d4"];
+// Helper: Verificar si un plan tiene reemplazo válido
+const tieneReemplazoValido = (plan: any): boolean => {
+  if (!plan) return false;
+  
+  // Para planes pool, verificar si hay reemplazos en el array
+  if (plan.tipoReemplazo === "pool" && plan.reemplazos) {
+    return plan.reemplazos.length > 0;
+  }
+  
+  // Para planes individual, verificar si hay reemplazo1
+  if (plan.reemplazo1 && plan.reemplazo1.trim() !== "") {
+    return true;
+  }
+  
+  return false;
+};
 
 export default function Dashboard() {
-  const { data: stats, isLoading: statsLoading } = trpc.planes.stats.useQuery();
-  const { data: grouped, isLoading: groupedLoading } = trpc.planes.groupedByDepartamento.useQuery();
+  const { data: planes, isLoading } = trpc.planes.list.useQuery();
+  const [departamentoFiltro, setDepartamentoFiltro] = useState<string>("Todos");
 
-  if (statsLoading || groupedLoading) {
+  // Obtener lista de departamentos únicos
+  const departamentos = useMemo(() => {
+    if (!planes) return ["Todos"];
+    const depts = new Set(planes.map((p: any) => p.departamento));
+    return ["Todos", ...Array.from(depts).sort()];
+  }, [planes]);
+
+  // Filtrar planes por departamento
+  const planesFiltrados = useMemo(() => {
+    if (!planes) return [];
+    if (departamentoFiltro === "Todos") {
+      return planes;
+    }
+    return planes.filter((p: any) => p.departamento === departamentoFiltro);
+  }, [planes, departamentoFiltro]);
+
+  // Separar planes con y sin reemplazo
+  const planesConReemplazo = useMemo(() => {
+    return planesFiltrados.filter((p: any) => tieneReemplazoValido(p));
+  }, [planesFiltrados]);
+
+  const planesSinReemplazo = useMemo(() => {
+    return planesFiltrados.filter((p: any) => !tieneReemplazoValido(p));
+  }, [planesFiltrados]);
+
+  // Estadísticas
+  const estadisticas = useMemo(() => {
+    const total = planesFiltrados.length;
+    const conCobertura = planesConReemplazo.length;
+    const sinCobertura = planesSinReemplazo.length;
+    const porcentajeCobertura = total > 0 ? Math.round((conCobertura / total) * 100) : 0;
+    
+    // Contar puestos clave sin reemplazo
+    const puestosClavesSinReemplazo = planesSinReemplazo.filter(
+      (p: any) => p.puestoClave === "Si"
+    ).length;
+
+    return { 
+      total, 
+      conCobertura, 
+      sinCobertura, 
+      porcentajeCobertura,
+      puestosClavesSinReemplazo
+    };
+  }, [planesFiltrados, planesConReemplazo, planesSinReemplazo]);
+
+  // Función para exportar colaboradores CON reemplazo
+  const handleExportConReemplazo = () => {
+    const data = planesConReemplazo.map((plan: any) => ({
+      "Colaborador": plan.colaborador,
+      "Cargo": plan.cargo,
+      "Departamento": plan.departamento,
+      "Tipo Reemplazo": plan.tipoReemplazo === "pool" ? "Pool" : "Individual",
+      "Reemplazo(s)": plan.tipoReemplazo === "pool" && plan.reemplazos
+        ? plan.reemplazos.map((r: any) => r.reemplazo).join(", ")
+        : plan.reemplazo1,
+      "Puesto Clave": plan.puestoClave === "Si" ? "Sí" : "No",
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Con Reemplazo");
+    XLSX.writeFile(wb, `colaboradores_con_reemplazo_${departamentoFiltro === "Todos" ? "general" : departamentoFiltro}.xlsx`);
+  };
+
+  // Función para exportar colaboradores SIN reemplazo
+  const handleExportSinReemplazo = () => {
+    const data = planesSinReemplazo.map((plan: any) => ({
+      "Colaborador": plan.colaborador,
+      "Cargo": plan.cargo,
+      "Departamento": plan.departamento,
+      "Puesto Clave": plan.puestoClave === "Si" ? "Sí" : "No",
+      "Prioridad": plan.puestoClave === "Si" ? "Alta" : "Normal",
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sin Reemplazo");
+    XLSX.writeFile(wb, `colaboradores_sin_reemplazo_${departamentoFiltro === "Todos" ? "general" : departamentoFiltro}.xlsx`);
+  };
+
+  if (isLoading) {
     return (
       <DashboardLayout>
-        <div className="space-y-8">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {[1, 2, 3, 4].map((i) => (
-              <Card key={i} className="animate-pulse">
-                <CardHeader className="pb-2">
-                  <div className="h-4 bg-muted rounded w-3/4"></div>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-8 bg-muted rounded w-1/2"></div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+        <div className="flex items-center justify-center min-h-screen">
+          <p>Cargando...</p>
         </div>
       </DashboardLayout>
     );
   }
 
-  const departamentoData = Object.entries(grouped || {}).map(([dept, count]) => ({
-    name: dept,
-    planes: count,
-  }));
-
-  const coberturaData = [
-    {
-      name: "Con Cobertura",
-      value: stats?.departamentosConCobertura || 0,
-    },
-    {
-      name: "Sin Cobertura",
-      value: (stats?.departamentosSinCobertura || []).length,
-    },
-  ];
-
   return (
     <DashboardLayout>
-      <div className="space-y-8">
+      <div className="space-y-6">
+        {/* Encabezado */}
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground mt-2">Análisis de planes de sustitución y cobertura organizacional</p>
+          <h1 className="text-3xl font-bold">Dashboard de Sustitución</h1>
+          <p className="text-gray-600">Visualización de planes de sustitución y cobertura de reemplazos</p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card className="border-2 hover:border-primary/50 transition-colors">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total de Planes</CardTitle>
-              <FileText className="h-4 w-4 text-primary" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats?.totalPlanes || 0}</div>
-              <p className="text-xs text-muted-foreground mt-1">Planes registrados</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-2 hover:border-primary/50 transition-colors">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Puestos Clave</CardTitle>
-              <CheckCircle className="h-4 w-4 text-amber-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats?.puestosClaveCount || 0}</div>
-              <p className="text-xs text-muted-foreground mt-1">Posiciones críticas</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-2 hover:border-primary/50 transition-colors">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Departamentos Cubiertos</CardTitle>
-              <Users className="h-4 w-4 text-green-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats?.departamentosConCobertura || 0}</div>
-              <p className="text-xs text-muted-foreground mt-1">Con plan de sustitución</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-2 hover:border-primary/50 transition-colors">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Sin Cobertura</CardTitle>
-              <AlertCircle className="h-4 w-4 text-red-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{(stats?.departamentosSinCobertura || []).length}</div>
-              <p className="text-xs text-muted-foreground mt-1">Requieren atención</p>
-            </CardContent>
-          </Card>
+        {/* Filtro por Departamento */}
+        <div className="flex items-center gap-4">
+          <label className="text-sm font-medium">Departamento:</label>
+          <Select value={departamentoFiltro} onValueChange={setDepartamentoFiltro}>
+            <SelectTrigger className="w-64">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {departamentos.map((dept) => (
+                <SelectItem key={dept} value={dept}>
+                  {dept}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
+        {/* Tarjetas de Resumen */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Card>
-            <CardHeader>
-              <CardTitle>Planes por Departamento</CardTitle>
-              <CardDescription>Distribución de planes de sustitución</CardDescription>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium">Total Planes</CardTitle>
             </CardHeader>
             <CardContent>
-              {departamentoData.length > 0 ? (
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={departamentoData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} interval={0} />
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="planes" fill="#3b82f6" radius={[8, 8, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              ) : (
-                <div className="h-[300px] flex items-center justify-center text-muted-foreground">
-                  No hay datos disponibles
-                </div>
-              )}
+              <div className="text-2xl font-bold">{estadisticas.total}</div>
+              <p className="text-xs text-gray-500">De sustitución</p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader>
-              <CardTitle>Cobertura de Departamentos</CardTitle>
-              <CardDescription>Departamentos con y sin plan de sustitución</CardDescription>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium">Con Reemplazo</CardTitle>
             </CardHeader>
             <CardContent>
-              {coberturaData.some((d) => d.value > 0) ? (
-                <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
-                    <Pie
-                      data={coberturaData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ name, value }) => `${name}: ${value}`}
-                      outerRadius={100}
-                      fill="#8884d8"
-                      dataKey="value"
-                    >
-                      {coberturaData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-              ) : (
-                <div className="h-[300px] flex items-center justify-center text-muted-foreground">
-                  No hay datos disponibles
-                </div>
-              )}
+              <div className="text-2xl font-bold text-green-600">{estadisticas.conCobertura}</div>
+              <p className="text-xs text-gray-500">Cobertura asignada</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium">Sin Reemplazo</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-red-600">{estadisticas.sinCobertura}</div>
+              <p className="text-xs text-gray-500">Requieren atención</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium">% Cobertura</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-blue-600">{estadisticas.porcentajeCobertura}%</div>
+              <p className="text-xs text-gray-500">De reemplazo</p>
             </CardContent>
           </Card>
         </div>
 
-        {(stats?.departamentosSinCobertura || []).length > 0 && (
-          <Alert className="border-red-200 bg-red-50 dark:bg-red-950">
-            <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
-            <AlertDescription className="text-red-800 dark:text-red-200">
-              <strong>Departamentos sin cobertura:</strong> {(stats?.departamentosSinCobertura || []).join(", ")}
+        {/* Matriz 2x2 */}
+        <div className="grid grid-cols-2 gap-4">
+          {/* CON REEMPLAZO */}
+          <Card className="border-green-200 bg-green-50">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                <CardTitle className="text-green-700">CUBIERTO</CardTitle>
+              </div>
+              <CardDescription className="text-green-600">Con Reemplazo Asignado</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-green-600 mb-2">{estadisticas.conCobertura}</div>
+              <p className="text-sm text-green-700">✓ Cobertura garantizada</p>
+            </CardContent>
+          </Card>
+
+          {/* SIN REEMPLAZO */}
+          <Card className="border-red-200 bg-red-50">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <AlertCircle className="w-5 h-5 text-red-600" />
+                <CardTitle className="text-red-700">DESCUBIERTO</CardTitle>
+              </div>
+              <CardDescription className="text-red-600">Sin Reemplazo</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-red-600 mb-2">{estadisticas.sinCobertura}</div>
+              <p className="text-sm text-red-700">⚠️ Acción requerida</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Alerta de Puestos Clave sin Reemplazo */}
+        {estadisticas.puestosClavesSinReemplazo > 0 && (
+          <Alert className="border-red-200 bg-red-50">
+            <AlertCircle className="h-4 w-4 text-red-600" />
+            <AlertDescription className="text-red-700">
+              <strong>⚠️ Atención:</strong> Hay {estadisticas.puestosClavesSinReemplazo} puesto(s) clave sin reemplazo asignado. Estos requieren atención inmediata.
             </AlertDescription>
           </Alert>
         )}
+
+        {/* Sección: Colaboradores CON Reemplazo (CUBIERTO) */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="text-green-700">Colaboradores con Reemplazo Asignado</CardTitle>
+              <CardDescription>Posiciones con cobertura de sustitución garantizada</CardDescription>
+            </div>
+            {planesConReemplazo.length > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleExportConReemplazo}
+                className="gap-2"
+              >
+                <Download className="h-4 w-4" />
+                Descargar
+              </Button>
+            )}
+          </CardHeader>
+          <CardContent>
+            {planesConReemplazo.length === 0 ? (
+              <p className="text-gray-500">No hay colaboradores con reemplazo asignado</p>
+            ) : (
+              <div className="space-y-4">
+                {planesConReemplazo.map((plan: any) => (
+                  <div key={plan.id} className="border rounded-lg p-4 bg-green-50">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Colaborador</p>
+                        <p className="font-semibold">{plan.colaborador}</p>
+                        <p className="text-xs text-gray-500">{plan.cargo}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Reemplazo(s)</p>
+                        <div className="space-y-1">
+                          {plan.tipoReemplazo === "pool" && plan.reemplazos ? (
+                            plan.reemplazos.map((r: any, idx: number) => (
+                              <div key={idx} className="text-sm font-semibold text-green-700">
+                                {idx + 1}. {r.reemplazo}
+                              </div>
+                            ))
+                          ) : (
+                            <p className="text-sm font-semibold text-green-700">{plan.reemplazo1}</p>
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Tipo</p>
+                        <Badge className={plan.tipoReemplazo === "pool" ? "bg-blue-500" : "bg-gray-500"}>
+                          {plan.tipoReemplazo === "pool" ? "Pool" : "Individual"}
+                        </Badge>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Estado</p>
+                        {plan.puestoClave === "Si" ? (
+                          <Badge className="bg-amber-500">Puesto Clave</Badge>
+                        ) : (
+                          <Badge variant="outline">Regular</Badge>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Sección: Colaboradores SIN Reemplazo (DESCUBIERTO) */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="text-red-700">Colaboradores sin Reemplazo - Acción Requerida</CardTitle>
+              <CardDescription>Posiciones que requieren asignación de reemplazo</CardDescription>
+            </div>
+            {planesSinReemplazo.length > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleExportSinReemplazo}
+                className="gap-2"
+              >
+                <Download className="h-4 w-4" />
+                Descargar
+              </Button>
+            )}
+          </CardHeader>
+          <CardContent>
+            {planesSinReemplazo.length === 0 ? (
+              <Alert className="bg-green-50 border-green-200">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <AlertDescription className="text-green-700">
+                  ¡Excelente! Todos los colaboradores tienen reemplazo asignado.
+                </AlertDescription>
+              </Alert>
+            ) : (
+              <div className="space-y-4">
+                {planesSinReemplazo.map((plan: any) => (
+                  <div key={plan.id} className="border border-red-200 rounded-lg p-4 bg-red-50">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Colaborador</p>
+                        <p className="font-semibold">{plan.colaborador}</p>
+                        <p className="text-xs text-gray-500">{plan.cargo}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Departamento</p>
+                        <p className="font-semibold">{plan.departamento}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Puesto Clave</p>
+                        {plan.puestoClave === "Si" ? (
+                          <Badge className="bg-red-600">Crítico</Badge>
+                        ) : (
+                          <Badge variant="outline">Regular</Badge>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Estado</p>
+                        <p className="font-semibold text-red-700">Sin Reemplazo</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </DashboardLayout>
   );
