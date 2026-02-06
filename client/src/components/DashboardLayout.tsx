@@ -31,6 +31,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 const allMenuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard", requiresAdmin: true },
   { icon: FileText, label: "Planes de Sustitución", path: "/planes", requiresAdmin: false },
+  { icon: FileText, label: "Gestión de Planes de Acción", path: "/planes-accion", requiresAdmin: false },
 
   { icon: Briefcase, label: "Plan de Sucesión", path: "/sucesion", requiresAdmin: true },
   { icon: BarChart3, label: "Dashboard Sucesión", path: "/sucesion-dashboard", requiresAdmin: true },

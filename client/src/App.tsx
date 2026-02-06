@@ -13,6 +13,7 @@ import Nomina from "./pages/Nomina";
 import GestionUsuarios from "./pages/GestionUsuarios";
 import PlanSuccesion from "./pages/PlanSuccesion";
 import PlanSuccesionDashboard from "./pages/PlanSuccesionDashboard";
+import GestionPlanesAccion from "./pages/GestionPlanesAccion";
 
 import Auditoria from "./pages/Auditoria";
 import HistorialSucesores from "./pages/HistorialSucesores";
@@ -88,6 +89,14 @@ function Router() {
         {(props) => (
           <ProtectedRoute requiredRole="admin">
             <PlanSuccesionDashboard {...props} />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/planes-accion">
+        {(props) => (
+          <ProtectedRoute>
+            <GestionPlanesAccion {...props} />
           </ProtectedRoute>
         )}
       </Route>
