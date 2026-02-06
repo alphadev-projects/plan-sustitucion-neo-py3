@@ -298,29 +298,29 @@ export const appRouter = router({
           }
 
           try {
-            // Crear UN PLAN POR CADA COLABORADOR del pool
-            // allowDuplicates=true porque en pool SÍ se permite el mismo colaborador en múltiples planes
-            const planesCreados = await Promise.all(
-              reemplazosDelPool.map(reemplazo =>
-                createPlan({
-                  empleadoId: input.empleadoId,
-                  departamento: input.departamento,
-                  colaborador: input.colaborador,
-                  cargo: input.cargo,
-                  departamentoReemplazo: input.departamentoPoolReemplazo!,
-                  reemplazo: reemplazo.nombre,
-                  cargoReemplazo: input.cargoPoolReemplazo!,
-                  tipoReemplazo: "pool",
-                  puestoClave: input.puestoClave,
-                  usuario: ctx.user?.name || "usuario",
-                }, true)  // allowDuplicates = true para pool
-              )
-            );
+            // Crear UN SOLO PLAN con TODOS los reemplazos del pool
+            const planCreado = await createPlanWithMultipleReemplazos({
+              empleadoId: input.empleadoId,
+              departamento: input.departamento,
+              colaborador: input.colaborador,
+              cargo: input.cargo,
+              departamentoReemplazo: input.departamentoPoolReemplazo!,
+              cargoReemplazo: input.cargoPoolReemplazo!,
+              tipoReemplazo: "pool",
+              puestoClave: input.puestoClave,
+              usuario: ctx.user?.name || "usuario",
+              reemplazos: reemplazosDelPool.map(r => ({
+                nombre: r.nombre,
+                cargo: input.cargoPoolReemplazo!,
+                departamento: input.departamentoPoolReemplazo!,
+              })),
+              allowDuplicates: true,  // Pool permite duplicados
+            });
 
             return { 
               success: true, 
-              planes: planesCreados,
-              totalPlanesCreados: planesCreados.length,
+              plan: planCreado,
+              totalReemplazosCreados: reemplazosDelPool.length,
             };
           } catch (error: any) {
             throw new TRPCError({
@@ -362,23 +362,36 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         try {
-          return await createPlanWithMultipleReemplazos(
-            {
-              empleadoId: input.empleadoId,
-              departamento: input.departamento,
-              colaborador: input.colaborador,
-              cargo: input.cargo,
-              departamentoReemplazo: input.departamentoReemplazo,
-              reemplazo: input.reemplazo1 || "",
-              cargoReemplazo: input.cargoReemplazo,
-              tipoReemplazo: "individual",
-              puestoClave: input.puestoClave,
-              usuario: ctx.user?.name || "usuario",
-            },
-            input.reemplazo1,
-            input.reemplazo2,
-            input.sucesor
-          );
+          // Construir array de reemplazos (máximo 2 para individual)
+          const reemplazos = [];
+          if (input.reemplazo1) {
+            reemplazos.push({
+              nombre: input.reemplazo1,
+              cargo: input.cargoReemplazo,
+              departamento: input.departamentoReemplazo,
+            });
+          }
+          if (input.reemplazo2) {
+            reemplazos.push({
+              nombre: input.reemplazo2,
+              cargo: input.cargoReemplazo,
+              departamento: input.departamentoReemplazo,
+            });
+          }
+
+          return await createPlanWithMultipleReemplazos({
+            empleadoId: input.empleadoId,
+            departamento: input.departamento,
+            colaborador: input.colaborador,
+            cargo: input.cargo,
+            departamentoReemplazo: input.departamentoReemplazo,
+            cargoReemplazo: input.cargoReemplazo,
+            tipoReemplazo: "individual",
+            puestoClave: input.puestoClave,
+            usuario: ctx.user?.name || "usuario",
+            reemplazos: reemplazos,
+            allowDuplicates: false,  // Individual no permite duplicados
+          });
         } catch (error: any) {
           throw new TRPCError({
             code: "INTERNAL_SERVER_ERROR",

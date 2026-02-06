@@ -1157,3 +1157,13 @@ Validación de duplicados se aplicaba también a registros Pool/Equipo, causando
 - [x] handleEditClick y handleSaveEdit actualizados para 2 reemplazos
 - [x] Validación de duplicados eliminada de routers.ts para pool
 - [x] Compilación exitosa - sin errores TypeScript
+
+
+## NUEVA TAREA - Pool/Equipo: UN SOLO Plan con N Reemplazos
+
+- [ ] Actualizar lógica de pool en routers.ts para crear UN plan con todos los reemplazos
+- [ ] Cambiar de múltiples registros a UN SOLO registro con array de reemplazos
+- [ ] Actualizar tabla Planes.tsx para mostrar todos los reemplazos del pool
+- [ ] Actualizar modal de edición para agregar/quitar reemplazos en pool
+- [ ] Verificar sincronización con sucesion_puestos (solo si puestoClave=Si)
+- [ ] Validación de duplicados: no permitir crear otro pool para el mismo colaborador
