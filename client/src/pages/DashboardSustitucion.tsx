@@ -2,7 +2,9 @@ import { useState, useMemo } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, CheckCircle } from "lucide-react";
+import { AlertCircle, CheckCircle, Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import * as XLSX from "xlsx";
 import DashboardLayout from "@/components/DashboardLayout";
 import {
   Select,
@@ -79,6 +81,41 @@ export default function DashboardSustitucion() {
       puestosClavesSinReemplazo
     };
   }, [planesFiltrados, planesConReemplazo, planesSinReemplazo]);
+
+  // Función para exportar colaboradores CON reemplazo
+  const handleExportConReemplazo = () => {
+    const data = planesConReemplazo.map((plan: any) => ({
+      "Colaborador": plan.colaborador,
+      "Cargo": plan.cargo,
+      "Departamento": plan.departamento,
+      "Tipo Reemplazo": plan.tipoReemplazo === "pool" ? "Pool" : "Individual",
+      "Reemplazo(s)": plan.tipoReemplazo === "pool" && plan.reemplazos
+        ? plan.reemplazos.map((r: any) => r.reemplazo).join(", ")
+        : plan.reemplazo1,
+      "Puesto Clave": plan.puestoClave === "Si" ? "Sí" : "No",
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Con Reemplazo");
+    XLSX.writeFile(wb, `colaboradores_con_reemplazo_${departamentoFiltro === "Todos" ? "general" : departamentoFiltro}.xlsx`);
+  };
+
+  // Función para exportar colaboradores SIN reemplazo
+  const handleExportSinReemplazo = () => {
+    const data = planesSinReemplazo.map((plan: any) => ({
+      "Colaborador": plan.colaborador,
+      "Cargo": plan.cargo,
+      "Departamento": plan.departamento,
+      "Puesto Clave": plan.puestoClave === "Si" ? "Sí" : "No",
+      "Prioridad": plan.puestoClave === "Si" ? "Alta" : "Normal",
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sin Reemplazo");
+    XLSX.writeFile(wb, `colaboradores_sin_reemplazo_${departamentoFiltro === "Todos" ? "general" : departamentoFiltro}.xlsx`);
+  };
 
   if (isLoading) {
     return (
@@ -204,9 +241,22 @@ export default function DashboardSustitucion() {
 
         {/* Sección: Colaboradores CON Reemplazo (CUBIERTO) */}
         <Card>
-          <CardHeader>
-            <CardTitle className="text-green-700">Colaboradores con Reemplazo Asignado</CardTitle>
-            <CardDescription>Posiciones con cobertura de sustitución garantizada</CardDescription>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="text-green-700">Colaboradores con Reemplazo Asignado</CardTitle>
+              <CardDescription>Posiciones con cobertura de sustitución garantizada</CardDescription>
+            </div>
+            {planesConReemplazo.length > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleExportConReemplazo}
+                className="gap-2"
+              >
+                <Download className="h-4 w-4" />
+                Descargar
+              </Button>
+            )}
           </CardHeader>
           <CardContent>
             {planesConReemplazo.length === 0 ? (
@@ -259,9 +309,22 @@ export default function DashboardSustitucion() {
 
         {/* Sección: Colaboradores SIN Reemplazo (DESCUBIERTO) */}
         <Card>
-          <CardHeader>
-            <CardTitle className="text-red-700">Colaboradores sin Reemplazo - Acción Requerida</CardTitle>
-            <CardDescription>Posiciones que requieren asignación de reemplazo</CardDescription>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="text-red-700">Colaboradores sin Reemplazo - Acción Requerida</CardTitle>
+              <CardDescription>Posiciones que requieren asignación de reemplazo</CardDescription>
+            </div>
+            {planesSinReemplazo.length > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleExportSinReemplazo}
+                className="gap-2"
+              >
+                <Download className="h-4 w-4" />
+                Descargar
+              </Button>
+            )}
           </CardHeader>
           <CardContent>
             {planesSinReemplazo.length === 0 ? (
