@@ -1,0 +1,1 @@
+ALTER TABLE `planes_accion_sustitucion` ADD `departamento` varchar(255) DEFAULT 'General' NOT NULL;
