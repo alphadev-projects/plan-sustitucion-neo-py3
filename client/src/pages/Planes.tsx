@@ -459,18 +459,31 @@ export default function Planes() {
                 <div className="space-y-4">
                 <div className="space-y-2">
                   <Label>Reemplazo</Label>
-                  <select
-                    value={selectedReemplazoId}
-                    onChange={(e) => handleReemplazoChange(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg bg-background"
-                  >
-                    <option value="">Seleccionar colaborador...</option>
-                    {(empleados || []).map((emp: any) => (
-                      <option key={emp.id} value={String(emp.id)}>
-                        {emp.nombre} - {emp.cargo}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="flex gap-2">
+                    <select
+                      value={selectedReemplazoId}
+                      onChange={(e) => handleReemplazoChange(e.target.value)}
+                      className="flex-1 px-3 py-2 border rounded-lg bg-background"
+                    >
+                      <option value="">Seleccionar colaborador...</option>
+                      {(empleados || []).map((emp: any) => (
+                        <option key={emp.id} value={String(emp.id)}>
+                          {emp.nombre} - {emp.cargo}
+                        </option>
+                      ))}
+                    </select>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setSelectedReemplazoId("");
+                        setEditFormData({ ...editFormData, reemplazo: "", departamentoReemplazo: "", cargoReemplazo: "" });
+                      }}
+                      className="whitespace-nowrap"
+                    >
+                      No Aplica
+                    </Button>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <Label>Departamento Reemplazo</Label>

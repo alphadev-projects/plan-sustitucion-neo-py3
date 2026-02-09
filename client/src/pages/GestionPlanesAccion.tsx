@@ -30,6 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 
 export default function GestionPlanesAccion() {
   const [activeTab, setActiveTab] = useState<"sucesion" | "sustitucion">("sucesion");
@@ -273,11 +274,31 @@ function FormularioPlanAccionSucesion({ puestoId, onClose }: { puestoId: number;
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const crearPlan = trpc.sucesion.accionCrear.useMutation();
+  const utils = trpc.useUtils();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí iría la mutación para crear el plan
-    console.log({ titulo, descripcion, responsable, fechaInicio, fechaFin });
-    onClose();
+    try {
+      await crearPlan.mutateAsync({
+        planSuccesionId: puestoId,
+        titulo,
+        descripcion,
+        responsable,
+        fechaInicio: new Date(fechaInicio),
+        fechaFin: new Date(fechaFin),
+      });
+      toast.success("Plan de acción creado exitosamente");
+      utils.planesAccionSucesion.listar.invalidate();
+      setTitulo("");
+      setDescripcion("");
+      setResponsable("");
+      setFechaInicio("");
+      setFechaFin("");
+      onClose();
+    } catch (error: any) {
+      toast.error(error.message || "Error al crear el plan de acción");
+    }
   };
 
   return (
@@ -351,11 +372,31 @@ function FormularioPlanAccionSustitucion({ planId, onClose }: { planId: number; 
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const crearPlan = trpc.sucesion.accionCrear.useMutation();
+  const utils = trpc.useUtils();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí iría la mutación para crear el plan
-    console.log({ titulo, descripcion, responsable, fechaInicio, fechaFin });
-    onClose();
+    try {
+      await crearPlan.mutateAsync({
+        planSuccesionId: planId,
+        titulo,
+        descripcion,
+        responsable,
+        fechaInicio: new Date(fechaInicio),
+        fechaFin: new Date(fechaFin),
+      });
+      toast.success("Plan de acción creado exitosamente");
+      utils.planesAccionSucesion.listar.invalidate();
+      setTitulo("");
+      setDescripcion("");
+      setResponsable("");
+      setFechaInicio("");
+      setFechaFin("");
+      onClose();
+    } catch (error: any) {
+      toast.error(error.message || "Error al crear el plan de acción");
+    }
   };
 
   return (
