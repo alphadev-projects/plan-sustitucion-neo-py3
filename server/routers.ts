@@ -741,8 +741,6 @@ export const appRouter = router({
           estado: planesAccionSustitucion.estado,
           progreso: planesAccionSustitucion.progreso,
           usuario: planesAccionSustitucion.usuario,
-          createdAt: planesAccionSustitucion.createdAt,
-          updatedAt: planesAccionSustitucion.updatedAt,
         })
           .from(planesAccionSustitucion);
         
@@ -778,7 +776,8 @@ export const appRouter = router({
             estado: "No Iniciado",
             progreso: 0,
             usuario: ctx.user?.name || "usuario",
-            departamento: "General"
+            departamento: "General",
+            cargo: "N/A"
           });
           return { success: true }
         } catch (error: any) {

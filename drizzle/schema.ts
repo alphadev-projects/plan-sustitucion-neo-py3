@@ -233,9 +233,8 @@ export const planesAccionSustitucion = mysqlTable("planes_accion_sustitucion", {
   estado: mysqlEnum("estado", ["No Iniciado", "En Progreso", "Completado", "Retrasado"]).default("No Iniciado").notNull(),
   progreso: int("progreso").default(0).notNull(),
   departamento: varchar("departamento", { length: 255 }).default("General").notNull(),
+  cargo: varchar("cargo", { length: 255 }).default("N/A").notNull(),
   usuario: varchar("usuario", { length: 100 }).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
 export type PlanAccionSustitucion = typeof planesAccionSustitucion.$inferSelect;
