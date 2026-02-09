@@ -234,6 +234,7 @@ export const planesAccionSustitucion = mysqlTable("planes_accion_sustitucion", {
   progreso: int("progreso").default(0).notNull(),
   departamento: varchar("departamento", { length: 255 }).default("General").notNull(),
   cargo: varchar("cargo", { length: 255 }).default("N/A").notNull(),
+  colaborador: varchar("colaborador", { length: 255 }).default("N/A").notNull(),
   usuario: varchar("usuario", { length: 100 }).notNull(),
 });
 

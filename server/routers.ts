@@ -766,19 +766,12 @@ export const appRouter = router({
         if (!db) throw new Error("No database connection");
         
         try {
-          await db.insert(planesAccionSustitucion).values({
-            planSustitucionId: input.planSustitucionId,
-            titulo: input.titulo,
-            descripcion: input.descripcion || "",
-            responsable: input.responsable,
-            fechaInicio: input.fechaInicio,
-            fechaFin: input.fechaFin,
-            estado: "No Iniciado",
-            progreso: 0,
-            usuario: ctx.user?.name || "usuario",
-            departamento: "General",
-            cargo: "N/A"
-          });
+          const query = sql`
+            INSERT INTO planes_accion_sustitucion 
+            (planSustitucionId, titulo, descripcion, responsable, fechaInicio, fechaFin, estado, progreso, departamento, cargo, colaborador, usuario)
+            VALUES (${input.planSustitucionId}, ${input.titulo}, ${input.descripcion || ""}, ${input.responsable}, ${input.fechaInicio}, ${input.fechaFin}, ${'No Iniciado'}, ${0}, ${'General'}, ${'N/A'}, ${'N/A'}, ${ctx.user?.name || 'usuario'})
+          `;
+          await db.execute(query);
           return { success: true }
         } catch (error: any) {
           console.error("Error creating plan:", error);
