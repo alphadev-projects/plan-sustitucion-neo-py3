@@ -39,14 +39,17 @@ export default function GestionPlanesAccion() {
 
   // Consultas para Planes de Acción de Sucesión
   const { data: planesAccionSucesion = [], isLoading: loadingSucesion } = 
-    trpc.planesAccionSucesion?.listar?.useQuery?.() || { data: [], isLoading: false };
+    trpc.planesAccionSucesion.listar.useQuery();
 
   const { data: puestosRequierenPlan = [], isLoading: loadingPuestos } = 
-    trpc.planesAccionSucesion?.puestosRequierenPlan?.useQuery?.() || { data: [], isLoading: false };
+    trpc.planesAccionSucesion.puestosRequierenPlan.useQuery();
 
   // Consultas para Planes de Acción de Sustitución
+  const { data: planesAccionSustitucion = [], isLoading: loadingSustitucion } = 
+    trpc.planesAccionSustitucion.listar.useQuery();
+
   const { data: planesRequierenAccion = [], isLoading: loadingPlanes } = 
-    trpc.planesAccionSustitucion?.planesRequierenAccion?.useQuery?.() || { data: [], isLoading: false };
+    trpc.planesAccionSustitucion.planesRequierenAccion.useQuery();
 
   const getEstadoColor = (estado: string) => {
     switch (estado) {

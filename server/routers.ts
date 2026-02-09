@@ -79,7 +79,7 @@ import { notifyPlanStatusChanged, notifyHighRiskPosition, notifyActionDeadlineAp
 import { notificationProcedures } from "./notification-procedures";
 import { evidenciasProcedures } from "./evidencias-procedures";
 import { auditoriaRouter } from "./auditoria-router";
-import { planesSustitucion, sucesionPuestos } from "../drizzle/schema";
+import { planesSustitucion, sucesionPuestos, planesAccionSustitucion } from "../drizzle/schema";
 
 export const appRouter = router({
   system: systemRouter,
@@ -724,6 +724,17 @@ export const appRouter = router({
   }),
 
   planesAccionSustitucion: router({
+    // Obtener todos los planes de acción de sustitución
+    listar: protectedProcedure.query(async () => {
+      const db = await getDb();
+      if (!db) return [];
+      
+      const planes = await db.select()
+        .from(planesAccionSustitucion);
+      
+      return planes || [];
+    }),
+
     // Obtener planes de sustitución SIN reemplazo (requieren plan de acción)
     planesRequierenAccion: protectedProcedure.query(async () => {
       const db = await getDb();
