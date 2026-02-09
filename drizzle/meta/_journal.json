@@ -127,6 +127,13 @@
       "when": 1770376750920,
       "tag": "0018_reflective_legion",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "5",
+      "when": 1770659994289,
+      "tag": "0019_adorable_thunderbolt",
+      "breakpoints": true
     }
   ]
 }

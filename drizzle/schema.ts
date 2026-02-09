@@ -232,9 +232,6 @@ export const planesAccionSustitucion = mysqlTable("planes_accion_sustitucion", {
   fechaFin: timestamp("fechaFin").notNull(),
   estado: mysqlEnum("estado", ["No Iniciado", "En Progreso", "Completado", "Retrasado"]).default("No Iniciado").notNull(),
   progreso: int("progreso").default(0).notNull(), // Porcentaje 0-100
-  evidencia: text("evidencia"), // URL o descripción de evidencia
-  archivoEvidencia: varchar("archivoEvidencia", { length: 500 }), // Ruta del archivo en S3
-  comentarios: text("comentarios"),
   usuario: varchar("usuario", { length: 100 }).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
