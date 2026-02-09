@@ -281,7 +281,17 @@ export default function Dashboard() {
                               </div>
                             ))
                           ) : (
-                            <p className="text-sm font-semibold text-green-700">{plan.reemplazo1}</p>
+                            <div className="space-y-1">
+                              {plan.reemplazo1 && (
+                                <p className="text-sm font-semibold text-green-700">1. {plan.reemplazo1}</p>
+                              )}
+                              {plan.reemplazo2 && (
+                                <p className="text-sm font-semibold text-green-700">2. {plan.reemplazo2}</p>
+                              )}
+                              {plan.reemplazo3 && (
+                                <p className="text-sm font-semibold text-green-700">3. {plan.reemplazo3}</p>
+                              )}
+                            </div>
                           )}
                         </div>
                       </div>

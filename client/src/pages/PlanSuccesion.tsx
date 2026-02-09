@@ -3,59 +3,19 @@ import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { AlertCircle, Plus, Clock, Edit2, Trash2 } from "lucide-react";
+import { AlertCircle, Clock, Edit2, Trash2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import DashboardLayout from "@/components/DashboardLayout";
-import { PlanAccionMaintenance } from "@/components/PlanAccionMaintenance";
-import { BotonDescargarReporte } from "@/components/BotonDescargarReporte";
 
 function PlanSuccesionContent() {
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
-  const [showNewActionDialog, setShowNewActionDialog] = useState(false);
-  const [newActionData, setNewActionData] = useState({
-    titulo: "",
-    descripcion: "",
-    responsable: "",
-    fechaInicio: "",
-    fechaFin: "",
-  });
+
 
   // Queries
   const { data: planesSuccesion, isLoading: loadingPlanes, error: errorPlanes } = trpc.sucesion.listar.useQuery();
   const { data: planesCriticos, error: errorCriticos } = trpc.sucesion.criticos.useQuery();
-  const { data: planesAccion, refetch: refetchAcciones } = trpc.sucesion.accionesListar.useQuery(
-    { planSuccesionId: selectedPlan || 0 },
-    { enabled: !!selectedPlan }
-  );
-
   // Mutations
-  const crearAccion = trpc.sucesion.accionCrear.useMutation();
   const utils = trpc.useUtils();
-
-  const handleCreateAction = async () => {
-    if (!selectedPlan || !newActionData.titulo) return;
-
-    try {
-      await crearAccion.mutateAsync({
-        planSuccesionId: selectedPlan,
-        titulo: newActionData.titulo,
-        descripcion: newActionData.descripcion,
-        responsable: newActionData.responsable,
-        fechaInicio: new Date(newActionData.fechaInicio),
-        fechaFin: new Date(newActionData.fechaFin),
-      });
-
-      setNewActionData({ titulo: "", descripcion: "", responsable: "", fechaInicio: "", fechaFin: "" });
-      setShowNewActionDialog(false);
-      refetchAcciones();
-    } catch (error) {
-      console.error("Error creating action:", error);
-    }
-  };
 
   const getRiskBadgeColor = (riesgo: string) => {
     switch (riesgo) {
@@ -206,48 +166,7 @@ function PlanSuccesionContent() {
                   </CardContent>
                 </Card>
 
-                {/* Planes de Acción */}
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between">
-                    <div>
-                      <CardTitle>Planes de Acción</CardTitle>
-                      <CardDescription>Actividades para desarrollar reemplazos</CardDescription>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <BotonDescargarReporte 
-                        planAccionId={selectedPlan || 0} 
-                        titulo={`Reporte Plan ${selectedPlan}`}
-                        tipo="csv"
-                      />
-                      <Alert>
-                        <AlertCircle className="h-4 w-4" />
-                        <AlertDescription>
-                          Los planes de acción se crean desde el módulo "Gestión de Planes de Acción"
-                        </AlertDescription>
-                      </Alert>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    {planesAccion && planesAccion.length > 0 ? (
-                      <div className="space-y-4">
-                        {planesAccion.map((accion) => (
-                          <PlanAccionMaintenance
-                            key={accion.id}
-                            planAccionId={accion.id}
-                            titulo={accion.titulo}
-                            descripcion={accion.descripcion}
-                            responsable={accion.responsable}
-                            fechaFin={accion.fechaFin}
-                            estado={accion.estado}
-                            progreso={accion.progreso}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-sm text-gray-600">No hay planes de acción aún</p>
-                    )}
-                  </CardContent>
-                </Card>
+
               </>
             ) : (
               <Card>
