@@ -753,6 +753,39 @@ export const appRouter = router({
       }
     }),
 
+    // Crear plan de acción para sustitución
+    accionCrear: adminProcedure
+      .input(z.object({
+        planSustitucionId: z.number(),
+        titulo: z.string(),
+        descripcion: z.string().optional(),
+        responsable: z.string(),
+        fechaInicio: z.date(),
+        fechaFin: z.date(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        if (!db) throw new Error("No database connection");
+        
+        try {
+          await db.insert(planesAccionSustitucion).values({
+            planSustitucionId: input.planSustitucionId,
+            titulo: input.titulo,
+            descripcion: input.descripcion || "",
+            responsable: input.responsable,
+            fechaInicio: input.fechaInicio,
+            fechaFin: input.fechaFin,
+            estado: "No Iniciado",
+            progreso: 0,
+            usuario: ctx.user?.name || "usuario",
+          });
+          return { success: true }
+        } catch (error: any) {
+          console.error("Error creating plan:", error);
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error.message });
+        }
+      }),
+
     // Obtener planes de sustitución SIN reemplazo (requieren plan de acción)
     planesRequierenAccion: protectedProcedure.query(async () => {
       const db = await getDb();

@@ -437,14 +437,14 @@ function FormularioPlanAccionSustitucion({ planId, onClose }: { planId: number; 
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
 
-  const crearPlan = trpc.sucesion.accionCrear.useMutation();
+  const crearPlan = trpc.planesAccionSustitucion.accionCrear.useMutation();
   const utils = trpc.useUtils();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await crearPlan.mutateAsync({
-        planSuccesionId: planId,
+        planSustitucionId: planId,
         titulo,
         descripcion,
         responsable,
@@ -452,7 +452,7 @@ function FormularioPlanAccionSustitucion({ planId, onClose }: { planId: number; 
         fechaFin: new Date(fechaFin),
       });
       toast.success("Plan de acción creado exitosamente");
-      utils.planesAccionSucesion.listar.invalidate();
+      utils.planesAccionSustitucion.listar.invalidate();
       setTitulo("");
       setDescripcion("");
       setResponsable("");
