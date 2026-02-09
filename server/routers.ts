@@ -726,13 +726,31 @@ export const appRouter = router({
   planesAccionSustitucion: router({
     // Obtener todos los planes de acción de sustitución
     listar: protectedProcedure.query(async () => {
-      const db = await getDb();
-      if (!db) return [];
-      
-      const planes = await db.select()
-        .from(planesAccionSustitucion);
-      
-      return planes || [];
+      try {
+        const db = await getDb();
+        if (!db) return [];
+        
+        const planes = await db.select({
+          id: planesAccionSustitucion.id,
+          planSustitucionId: planesAccionSustitucion.planSustitucionId,
+          titulo: planesAccionSustitucion.titulo,
+          descripcion: planesAccionSustitucion.descripcion,
+          responsable: planesAccionSustitucion.responsable,
+          fechaInicio: planesAccionSustitucion.fechaInicio,
+          fechaFin: planesAccionSustitucion.fechaFin,
+          estado: planesAccionSustitucion.estado,
+          progreso: planesAccionSustitucion.progreso,
+          usuario: planesAccionSustitucion.usuario,
+          createdAt: planesAccionSustitucion.createdAt,
+          updatedAt: planesAccionSustitucion.updatedAt,
+        })
+          .from(planesAccionSustitucion);
+        
+        return planes || [];
+      } catch (error: any) {
+        console.error("Error al obtener planes de acción de sustitución:", error);
+        return [];
+      }
     }),
 
     // Obtener planes de sustitución SIN reemplazo (requieren plan de acción)

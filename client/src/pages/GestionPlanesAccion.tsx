@@ -262,6 +262,68 @@ export default function GestionPlanesAccion() {
                 )}
               </CardContent>
             </Card>
+            {/* Sección: Planes de Acción Existentes */}
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold">Planes de Acción Existentes</h2>
+              {loadingSustitucion ? (
+                <div className="flex items-center justify-center p-8">
+                  <p>Cargando planes de acción...</p>
+                </div>
+              ) : planesAccionSustitucion && planesAccionSustitucion.length > 0 ? (
+                <div className="space-y-4">
+                  {planesAccionSustitucion.map((plan: any) => (
+                    <Card key={plan.id}>
+                      <CardHeader>
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <CardTitle className="text-lg">{plan.titulo}</CardTitle>
+                            <CardDescription>{plan.descripcion}</CardDescription>
+                          </div>
+                          <Badge className={getEstadoColor(plan.estado)}>
+                            {plan.estado}
+                          </Badge>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                          <div>
+                            <p className="text-sm text-gray-600">Responsable</p>
+                            <p className="font-semibold">{plan.responsable}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-600">Progreso</p>
+                            <p className={`font-semibold ${getProgresoColor(plan.progreso)}`}>
+                              {plan.progreso}%
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-600">Fecha Inicio</p>
+                            <p className="font-semibold">
+                              {new Date(plan.fechaInicio).toLocaleDateString()}
+                            </p>
+                          </div>
+                          <div className="flex gap-2 justify-end">
+                            <Button variant="outline" size="sm">
+                              <Edit2 className="h-4 w-4" />
+                            </Button>
+                            <Button variant="outline" size="sm" className="text-red-600">
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <Alert>
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>
+                    No hay planes de acción registrados aún.
+                  </AlertDescription>
+                </Alert>
+              )}
+            </div>
           </TabsContent>
         </Tabs>
       </div>
