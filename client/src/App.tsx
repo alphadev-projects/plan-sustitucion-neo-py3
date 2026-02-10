@@ -14,6 +14,7 @@ import GestionUsuarios from "./pages/GestionUsuarios";
 import PlanSuccesion from "./pages/PlanSuccesion";
 import PlanSuccesionDashboard from "./pages/PlanSuccesionDashboard";
 import GestionPlanesAccion from "./pages/GestionPlanesAccion";
+import DashboardPlanesAccion from "./pages/DashboardPlanesAccion";
 
 import Auditoria from "./pages/Auditoria";
 import HistorialSucesores from "./pages/HistorialSucesores";
@@ -97,6 +98,14 @@ function Router() {
         {(props) => (
           <ProtectedRoute>
             <GestionPlanesAccion {...props} />
+          </ProtectedRoute>
+        )}
+      </Route>
+
+      <Route path="/dashboard-planes-accion">
+        {(props) => (
+          <ProtectedRoute requiredRole="admin">
+            <DashboardPlanesAccion {...props} />
           </ProtectedRoute>
         )}
       </Route>

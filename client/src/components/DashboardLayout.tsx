@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users, FileText, Briefcase, BarChart3, History, TrendingUp, AlertCircle } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Users, FileText, Briefcase, BarChart3, History, TrendingUp, AlertCircle, Activity } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -32,6 +32,7 @@ const allMenuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard", requiresAdmin: true },
   { icon: FileText, label: "Planes de Sustitución", path: "/planes", requiresAdmin: false },
   { icon: FileText, label: "Gestión de Planes de Acción", path: "/planes-accion", requiresAdmin: false },
+  { icon: BarChart3, label: "Dashboard Planes de Acción", path: "/dashboard-planes-accion", requiresAdmin: true },
 
   { icon: Briefcase, label: "Plan de Sucesión", path: "/sucesion", requiresAdmin: true },
   { icon: BarChart3, label: "Dashboard Sucesión", path: "/sucesion-dashboard", requiresAdmin: true },

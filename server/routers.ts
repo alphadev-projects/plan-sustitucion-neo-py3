@@ -828,6 +828,57 @@ export const appRouter = router({
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error.message });
         }
       }),
+
+    validarCompletacion: protectedProcedure
+      .input(z.object({ planSustitucionId: z.number() }))
+      .query(async ({ input }) => {
+        const db = await getDb();
+        if (!db) return { todosCompletados: false, planes: [] };
+        
+        try {
+          const planes = await db.select()
+            .from(planesAccionSustitucion)
+            .where(eq(planesAccionSustitucion.planSustitucionId, input.planSustitucionId));
+          
+          if (planes.length === 0) {
+            return { todosCompletados: false, planes: [], mensaje: "No hay planes de accion" };
+          }
+          
+          const todosCompletados = planes.every((p: any) => p.progreso === 100 && p.estado === "Completado");
+          return { todosCompletados, planes, cantidad: planes.length };
+        } catch (error: any) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error.message });
+        }
+      }),
+
+    asignarSustituto: adminProcedure
+      .input(z.object({
+        planSustitucionId: z.number(),
+        tipo: z.enum(["existente", "nuevo", "capacitacion"]),
+        valor: z.string(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        if (!db) throw new Error("No database connection");
+        
+        try {
+          let nombreSustituto = "";
+          
+          if (input.tipo === "existente" || input.tipo === "capacitacion") {
+            nombreSustituto = input.valor;
+          } else if (input.tipo === "nuevo") {
+            nombreSustituto = input.valor;
+          }
+          
+          await db.update(planesSustitucion)
+            .set({ reemplazo: nombreSustituto })
+            .where(eq(planesSustitucion.id, input.planSustitucionId));
+          
+          return { success: true, mensaje: "Sustituto asignado correctamente" };
+        } catch (error: any) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error.message });
+        }
+      }),
   }),
 
   auditoria: auditoriaRouter,
