@@ -1350,3 +1350,17 @@ Todas las fases implementadas y funcionando correctamente.
 - client/src/components/DashboardLayout.tsx: Actualizar menú
 
 ### Estado: EN PROGRESO
+
+
+## FASE 4 - Recuperar Formato Original de Planes de Acción
+
+### Funcionalidades a Restaurar
+- [ ] Integrar componente PlanAccionMaintenance en Gestión de Planes de Acción
+- [ ] Crear procedures para comentarios en planes de sustitución
+- [ ] Crear procedures para subir evidencias (archivos) en planes de sustitución
+- [ ] Crear componente DescargaEvidencias para planes de sustitución
+- [ ] Crear componente HistorialPlanAccion para planes de sustitución
+- [ ] Agregar soporte de adjuntos con validación de tipos
+- [ ] Implementar descarga de evidencias como ZIP
+- [ ] Implementar historial de cambios automático
+- [ ] Realizar pruebas completas de edición, comentarios y evidencias
