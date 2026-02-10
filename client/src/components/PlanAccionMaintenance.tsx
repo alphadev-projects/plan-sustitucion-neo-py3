@@ -38,6 +38,7 @@ export function PlanAccionMaintenance({
 }: PlanAccionMaintenanceProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [nuevoEstado, setNuevoEstado] = useState(estado);
+  const [nuevoProgreso, setNuevoProgreso] = useState(progreso);
   const [comentario, setComentario] = useState("");
   const [archivos, setArchivos] = useState<File[]>([]);
   const [subiendo, setSubiendo] = useState(false);
@@ -65,15 +66,7 @@ export function PlanAccionMaintenance({
     try {
       setSubiendo(true);
 
-      // Calcular progreso basado en estado
-      let nuevoProgreso = progreso;
-      if (nuevoEstado === "En Progreso" && progreso === 0) {
-        nuevoProgreso = 50;
-      } else if (nuevoEstado === "Completado") {
-        nuevoProgreso = 100;
-      } else if (nuevoEstado === "No Iniciado") {
-        nuevoProgreso = 0;
-      }
+      // El progreso se actualiza manualmente desde el slider
 
       // Actualizar estado del plan
       await updateMutation.mutateAsync({
@@ -219,6 +212,22 @@ export function PlanAccionMaintenance({
                   ? "Se establecerá automáticamente a 100% de progreso"
                   : ""}
               </p>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Progreso Manual: {nuevoProgreso}%</label>
+              <div className="flex items-center gap-4">
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="5"
+                  value={nuevoProgreso}
+                  onChange={(e) => setNuevoProgreso(parseInt(e.target.value))}
+                  className="flex-1"
+                />
+                <span className="text-sm font-medium w-12 text-right">{nuevoProgreso}%</span>
+              </div>
             </div>
 
             <div className="space-y-2">

@@ -1364,3 +1364,17 @@ Todas las fases implementadas y funcionando correctamente.
 - [ ] Implementar descarga de evidencias como ZIP
 - [ ] Implementar historial de cambios automático
 - [ ] Realizar pruebas completas de edición, comentarios y evidencias
+
+
+## FASE 5 - Múltiples Planes de Acción y Control Manual de Progreso
+
+- [ ] Agregar control manual de porcentaje de avance (slider/input) en planes de acción
+- [ ] Implementar creación secuencial de múltiples planes de acción en un solo registro
+- [ ] Crear diálogo de validación cuando progreso = 100%
+- [ ] Implementar selector de sustituto/sucesor de lista de colaboradores existentes
+- [ ] Agregar opción de entrada manual para contrataciones nuevas
+- [ ] Agregar opción "Capacitación Completada" para colaboradores existentes
+- [ ] Guardar sustituto/sucesor en registro principal de Planes de Sustitución/Sucesión
+- [ ] Agregar historial de sustitutos/sucesores asignados
+- [ ] Crear notificaciones de éxito al completar ciclo
+- [ ] Realizar pruebas completas
