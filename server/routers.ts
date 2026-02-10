@@ -721,6 +721,40 @@ export const appRouter = router({
       
       return puestossinSucesor || [];
     }),
+
+    crear: protectedProcedure
+      .input(z.object({
+        titulo: z.string(),
+        descripcion: z.string().optional(),
+        responsable: z.string(),
+        fechaInicio: z.date(),
+        fechaFin: z.date(),
+        estado: z.enum(["No Iniciado", "En Progreso", "Completado", "Retrasado"]),
+        progreso: z.number(),
+        planSustitucionId: z.number().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("No database connection");
+        
+        try {
+          const resultado = await db.insert(planesAccionSustitucion).values({
+            planSustitucionId: input.planSustitucionId || 0,
+            titulo: input.titulo,
+            descripcion: input.descripcion || "",
+            responsable: input.responsable,
+            fechaInicio: input.fechaInicio,
+            fechaFin: input.fechaFin,
+            estado: input.estado,
+            progreso: input.progreso,
+            usuario: "",
+          });
+          
+          return { success: true, id: resultado };
+        } catch (error: any) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error.message });
+        }
+      }),
   }),
 
   planesAccionSustitucion: router({

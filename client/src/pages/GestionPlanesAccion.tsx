@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -32,10 +31,23 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { PlanAccionMaintenance } from "@/components/PlanAccionMaintenance";
+import { useState } from "react";
 
 export default function GestionPlanesAccion() {
   const [activeTab, setActiveTab] = useState<"sucesion" | "sustitucion">("sucesion");
   const [expandedPlan, setExpandedPlan] = useState<number | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<any>(null);
+  const [formData, setFormData] = useState({
+    titulo: "",
+    descripcion: "",
+    responsable: "",
+    fechaInicio: "",
+    fechaFin: "",
+  });
+
+  // Mutation para crear plan de acción
+  const crearPlanMutation = trpc.planesAccionSucesion.crear.useMutation();
 
   // Consultas para Planes de Acción de Sucesión
   const { data: planesAccionSucesion = [], isLoading: loadingSucesion } = 
@@ -50,6 +62,33 @@ export default function GestionPlanesAccion() {
 
   const { data: planesRequierenAccion = [], isLoading: loadingPlanes } = 
     trpc.planesAccionSustitucion.planesRequierenAccion.useQuery();
+
+  const handleCrearPlan = async (tipo: "sucesion" | "sustitucion") => {
+    if (!formData.titulo || !formData.responsable || !formData.fechaInicio || !formData.fechaFin) {
+      toast.error("Por favor completa todos los campos requeridos");
+      return;
+    }
+
+    try {
+      await crearPlanMutation.mutateAsync({
+        titulo: formData.titulo,
+        descripcion: formData.descripcion,
+        responsable: formData.responsable,
+        fechaInicio: new Date(formData.fechaInicio),
+        fechaFin: new Date(formData.fechaFin),
+        estado: "No Iniciado",
+        progreso: 0,
+        planSustitucionId: selectedPlan?.id || 0,
+      });
+      
+      toast.success("Plan de acción creado exitosamente");
+      setDialogOpen(false);
+      setFormData({ titulo: "", descripcion: "", responsable: "", fechaInicio: "", fechaFin: "" });
+      setSelectedPlan(null);
+    } catch (error: any) {
+      toast.error(error.message || "Error al crear el plan");
+    }
+  };
 
   const getEstadoColor = (estado: string) => {
     switch (estado) {
@@ -106,7 +145,14 @@ export default function GestionPlanesAccion() {
                           <p className="font-semibold">{puesto.puestoClave}</p>
                           <p className="text-sm text-gray-600">{puesto.departamentoPuestoClave}</p>
                         </div>
-                        <Button size="sm" className="gap-2">
+                        <Button 
+                          size="sm" 
+                          className="gap-2"
+                          onClick={() => {
+                            setSelectedPlan(puesto);
+                            setDialogOpen(true);
+                          }}
+                        >
                           <Plus className="h-4 w-4" />
                           Crear Plan
                         </Button>
@@ -207,7 +253,14 @@ export default function GestionPlanesAccion() {
                           <p className="font-semibold">{plan.colaborador}</p>
                           <p className="text-sm text-gray-600">{plan.cargo} - {plan.departamento}</p>
                         </div>
-                        <Button size="sm" className="gap-2">
+                                     <Button 
+                          size="sm" 
+                          className="gap-2"
+                          onClick={() => {
+                            setSelectedPlan(plan);
+                            setDialogOpen(true);
+                          }}
+                        >
                           <Plus className="h-4 w-4" />
                           Crear Plan
                         </Button>
@@ -284,6 +337,85 @@ export default function GestionPlanesAccion() {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Diálogo para crear plan de acción */}
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Crear Plan de Acción</DialogTitle>
+              <DialogDescription>
+                Ingresa los detalles del nuevo plan de acción
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="titulo">Título</Label>
+                <Input
+                  id="titulo"
+                  placeholder="Ej: Capacitación en nuevos sistemas"
+                  value={formData.titulo}
+                  onChange={(e) => setFormData({ ...formData, titulo: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="descripcion">Descripción</Label>
+                <Textarea
+                  id="descripcion"
+                  placeholder="Describe el plan de acción"
+                  value={formData.descripcion}
+                  onChange={(e) => setFormData({ ...formData, descripcion: e.target.value })}
+                  rows={3}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="responsable">Responsable</Label>
+                <Input
+                  id="responsable"
+                  placeholder="Nombre del responsable"
+                  value={formData.responsable}
+                  onChange={(e) => setFormData({ ...formData, responsable: e.target.value })}
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="fechaInicio">Fecha Inicio</Label>
+                  <Input
+                    id="fechaInicio"
+                    type="date"
+                    value={formData.fechaInicio}
+                    onChange={(e) => setFormData({ ...formData, fechaInicio: e.target.value })}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="fechaFin">Fecha Fin</Label>
+                  <Input
+                    id="fechaFin"
+                    type="date"
+                    value={formData.fechaFin}
+                    onChange={(e) => setFormData({ ...formData, fechaFin: e.target.value })}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-2 justify-end">
+              <Button variant="outline" onClick={() => setDialogOpen(false)}>
+                Cancelar
+              </Button>
+              <Button 
+                onClick={() => handleCrearPlan(activeTab)}
+                disabled={crearPlanMutation.isPending}
+              >
+                {crearPlanMutation.isPending ? "Creando..." : "Crear"}
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </DashboardLayout>
   );
