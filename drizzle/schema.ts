@@ -257,3 +257,21 @@ export const auditoriaPlanesAccionSustitucion = mysqlTable("auditoria_planes_acc
 
 export type AuditoriaPlanAccionSustitucion = typeof auditoriaPlanesAccionSustitucion.$inferSelect;
 export type InsertAuditoriaPlanAccionSustitucion = typeof auditoriaPlanesAccionSustitucion.$inferInsert;
+
+
+// Tabla de historial de cambios para auditoría de planes de acción
+export const historialCambiosPlanesAccion = mysqlTable("historial_cambios_planes_accion", {
+  id: int("id").autoincrement().primaryKey(),
+  planAccionId: int("planAccionId").notNull(),
+  tipo: varchar("tipo", { length: 50 }).notNull(), // 'sucesion' o 'sustitucion'
+  usuarioModifico: varchar("usuarioModifico", { length: 100 }).notNull(),
+  fechaCambio: timestamp("fechaCambio").defaultNow().notNull(),
+  campoModificado: varchar("campoModificado", { length: 100 }).notNull(),
+  valorAnterior: text("valorAnterior"),
+  valorNuevo: text("valorNuevo"),
+  descripcion: text("descripcion"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type HistorialCambiosPlanesAccion = typeof historialCambiosPlanesAccion.$inferSelect;
+export type InsertHistorialCambiosPlanesAccion = typeof historialCambiosPlanesAccion.$inferInsert;

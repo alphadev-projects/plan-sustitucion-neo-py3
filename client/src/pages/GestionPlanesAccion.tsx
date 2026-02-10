@@ -36,6 +36,9 @@ export default function GestionPlanesAccion() {
   const [activeTab, setActiveTab] = useState<"sucesion" | "sustitucion">("sucesion");
   const [openDialogSucesion, setOpenDialogSucesion] = useState(false);
   const [openDialogSustitucion, setOpenDialogSustitucion] = useState(false);
+  const [editingPlan, setEditingPlan] = useState<any>(null);
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [deletingPlanId, setDeletingPlanId] = useState<number | null>(null);
 
   // Consultas para Planes de Acción de Sucesión
   const { data: planesAccionSucesion = [], isLoading: loadingSucesion } = 
@@ -50,6 +53,10 @@ export default function GestionPlanesAccion() {
 
   const { data: planesRequierenAccion = [], isLoading: loadingPlanes } = 
     trpc.planesAccionSustitucion.planesRequierenAccion.useQuery();
+  // Mutaciones para editar y eliminar planes
+  const actualizarPlan = trpc.planesAccionSustitucion.accionActualizar.useMutation();
+  const eliminarPlan = trpc.planesAccionSustitucion.accionEliminar.useMutation();
+  const utils = trpc.useUtils();
 
   const getEstadoColor = (estado: string) => {
     switch (estado) {
@@ -185,10 +192,10 @@ export default function GestionPlanesAccion() {
                             </p>
                           </div>
                           <div className="flex gap-2 justify-end">
-                            <Button variant="outline" size="sm">
+                            <Button variant="outline" size="sm" onClick={() => { setEditingPlan(plan); setOpenEditDialog(true); }}>
                               <Edit2 className="h-4 w-4" />
                             </Button>
-                            <Button variant="outline" size="sm" className="text-red-600">
+                            <Button variant="outline" size="sm" className="text-red-600" onClick={() => setDeletingPlanId(plan.id)}>
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
@@ -303,10 +310,10 @@ export default function GestionPlanesAccion() {
                             </p>
                           </div>
                           <div className="flex gap-2 justify-end">
-                            <Button variant="outline" size="sm">
+                            <Button variant="outline" size="sm" onClick={() => { setEditingPlan(plan); setOpenEditDialog(true); }}>
                               <Edit2 className="h-4 w-4" />
                             </Button>
-                            <Button variant="outline" size="sm" className="text-red-600">
+                            <Button variant="outline" size="sm" className="text-red-600" onClick={() => setDeletingPlanId(plan.id)}>
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
@@ -326,6 +333,39 @@ export default function GestionPlanesAccion() {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Diálogos para editar y eliminar */}
+        <DialogoEditarPlan 
+          plan={editingPlan} 
+          open={openEditDialog} 
+          onOpenChange={setOpenEditDialog}
+          onSave={async (data) => {
+            try {
+              await actualizarPlan.mutateAsync(data);
+              await utils.planesAccionSustitucion.listar.invalidate();
+              toast.success("Plan actualizado exitosamente");
+            } catch (error) {
+              toast.error("Error al actualizar el plan");
+            }
+          }}
+        />
+        <DialogoConfirmarEliminar 
+          planId={deletingPlanId} 
+          onConfirm={async () => {
+            try {
+              if (deletingPlanId) {
+                await eliminarPlan.mutateAsync({ id: deletingPlanId });
+                await utils.planesAccionSustitucion.listar.invalidate();
+                toast.success("Plan eliminado exitosamente");
+              }
+            } catch (error) {
+              toast.error("Error al eliminar el plan");
+            } finally {
+              setDeletingPlanId(null);
+            }
+          }}
+          onCancel={() => setDeletingPlanId(null)}
+        />
       </div>
     </DashboardLayout>
   );
@@ -524,5 +564,99 @@ function FormularioPlanAccionSustitucion({ planId, onClose }: { planId: number; 
         <Button type="submit">Crear Plan</Button>
       </div>
     </form>
+  );
+}
+
+
+// Componente: Diálogo para editar plan de acción
+function DialogoEditarPlan({ 
+  plan, 
+  open, 
+  onOpenChange, 
+  onSave 
+}: { 
+  plan: any; 
+  open: boolean; 
+  onOpenChange: (open: boolean) => void;
+  onSave: (data: any) => void;
+}) {
+  const [titulo, setTitulo] = useState(plan?.titulo || "");
+  const [estado, setEstado] = useState(plan?.estado || "No Iniciado");
+  const [progreso, setProgreso] = useState(plan?.progreso || 0);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave({ id: plan.id, titulo, estado, progreso: parseInt(progreso) });
+    onOpenChange(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Editar Plan de Acción</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <Label>Título</Label>
+            <Input value={titulo} onChange={(e) => setTitulo(e.target.value)} />
+          </div>
+          <div>
+            <Label>Estado</Label>
+            <Select value={estado} onValueChange={setEstado}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="No Iniciado">No Iniciado</SelectItem>
+                <SelectItem value="En Progreso">En Progreso</SelectItem>
+                <SelectItem value="Completado">Completado</SelectItem>
+                <SelectItem value="Retrasado">Retrasado</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Label>Progreso (%)</Label>
+            <Input type="number" min="0" max="100" value={progreso} onChange={(e) => setProgreso(e.target.value)} />
+          </div>
+          <div className="flex gap-2 justify-end">
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+              Cancelar
+            </Button>
+            <Button type="submit">Guardar Cambios</Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// Componente: Diálogo para confirmar eliminación
+function DialogoConfirmarEliminar({ 
+  planId, 
+  onConfirm, 
+  onCancel 
+}: { 
+  planId: number | null; 
+  onConfirm: () => void;
+  onCancel: () => void;
+}) {
+  return (
+    <Dialog open={planId !== null} onOpenChange={(open) => { if (!open) onCancel(); }}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Confirmar Eliminación</DialogTitle>
+        </DialogHeader>
+        <p>¿Estás seguro de que deseas eliminar este plan de acción? Esta acción no se puede deshacer.</p>
+        <div className="flex gap-2 justify-end">
+          <Button type="button" variant="outline" onClick={onCancel}>
+            Cancelar
+          </Button>
+          <Button type="button" className="bg-red-600 hover:bg-red-700" onClick={onConfirm}>
+            Eliminar
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

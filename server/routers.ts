@@ -793,6 +793,41 @@ export const appRouter = router({
       
       return planesSinReemplazo || [];
     }),
+
+    accionActualizar: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        titulo: z.string().optional(),
+        estado: z.enum(["No Iniciado", "En Progreso", "Completado", "Retrasado"]).optional(),
+        progreso: z.number().min(0).max(100).optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        if (!db) throw new Error("No database connection");
+        try {
+          const updates: any = {};
+          if (input.titulo) updates.titulo = input.titulo;
+          if (input.estado) updates.estado = input.estado;
+          if (input.progreso !== undefined) updates.progreso = input.progreso;
+          await db.update(planesAccionSustitucion).set(updates).where(eq(planesAccionSustitucion.id, input.id));
+          return { success: true };
+        } catch (error: any) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error.message });
+        }
+      }),
+
+    accionEliminar: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        if (!db) throw new Error("No database connection");
+        try {
+          await db.delete(planesAccionSustitucion).where(eq(planesAccionSustitucion.id, input.id));
+          return { success: true };
+        } catch (error: any) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error.message });
+        }
+      }),
   }),
 
   auditoria: auditoriaRouter,
